@@ -1,23 +1,23 @@
 ---
-announcement_mode: "auto"
-announcement_text: "FEEFEFFEEFFE"
+announcement_mode: auto
+announcement_text: ""
 announcement_link: ""
-contact_email: "contact@lamaisonrosedewallerand.com"
-contact_phone: "+33 6 15 37 56 72"
-address_line_1: "59 rue Daubigny"
-address_line_2: "95430 Auvers-sur-Oise"
-instagram_url: "https://www.instagram.com/lamaisonrosedewallerand/"
-helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand"
-helloasso_organization_slug: "la-maison-rose-de-wallerand"
-home_hero_image: "/assets/uploads/maison-rose-facade-hero.jpg"
-helloasso_checkout_membership_item_name: "Adhesion individuelle a La Maison Rose de Wallerand"
+contact_email: contact@lamaisonrosedewallerand.com
+contact_phone: +33 6 15 37 56 72
+address_line_1: 59 rue Daubigny
+address_line_2: 95430 Auvers-sur-Oise
+instagram_url: https://www.instagram.com/lamaisonrosedewallerand/
+helloasso_url: https://www.helloasso.com/associations/la-maison-rose-de-wallerand
+helloasso_organization_slug: la-maison-rose-de-wallerand
+home_hero_image: /assets/uploads/maison-rose-facade-complete.jpg
+helloasso_checkout_membership_item_name: Adhesion individuelle a La Maison Rose de Wallerand
 helloasso_checkout_membership_amount: 20
-helloasso_checkout_membership_couple_item_name: "Adhesion couple a La Maison Rose de Wallerand"
+helloasso_checkout_membership_couple_item_name: Adhesion couple a La Maison Rose de Wallerand
 helloasso_checkout_membership_couple_amount: 30
-helloasso_checkout_support_item_name: "Soutien a La Maison Rose de Wallerand"
+helloasso_checkout_support_item_name: Soutien a La Maison Rose de Wallerand
 helloasso_checkout_default_amount: 50
 helloasso_checkout_min_amount: 10
-helloasso_checkout_suggested_amounts: "20,50,100,250"
+helloasso_checkout_suggested_amounts: 20,50,100,250
 helloasso_widget_url: ""
 helloasso_widget_height: 780
 ---
