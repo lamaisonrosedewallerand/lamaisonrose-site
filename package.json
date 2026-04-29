@@ -1,0 +1,12 @@
+{
+  "name": "lamaisonrose-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-content.mjs",
+    "dev": "python3 -m http.server 8000"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

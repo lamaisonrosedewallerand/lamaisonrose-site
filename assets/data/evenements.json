@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-04-29T09:10:50.738Z",
+  "count": 3,
+  "items": [
+    {
+      "slug": "atelier-rencontre-autour-de-la-gravure",
+      "title": "Atelier-rencontre autour de la gravure",
+      "date": "2026-06-07",
+      "time": "15h00 - 17h30",
+      "location": "La Maison Rose de Wallerand",
+      "image": "",
+      "entry": "Entree payante",
+      "helloasso_url": "https://www.helloasso.com/",
+      "status": "a-venir",
+      "featured": false,
+      "body": "Un rendez-vous ouvert au public pour rencontrer le lieu, assister a une\ndemonstration et echanger autour des techniques de gravure.",
+      "descriptionText": "Un rendez vous ouvert au public pour rencontrer le lieu, assister a une demonstration et echanger autour des techniques de gravure.",
+      "descriptionHtml": "<p>Un rendez-vous ouvert au public pour rencontrer le lieu, assister a une demonstration et echanger autour des techniques de gravure.</p>"
+    },
+    {
+      "slug": "exposition-chat-au-vert",
+      "title": "Exposition Chat au vert",
+      "date": "2026-04-12",
+      "time": "14h00 - 19h00",
+      "location": "La Maison Rose de Wallerand",
+      "image": "",
+      "entry": "Entree libre",
+      "helloasso_url": "",
+      "status": "passe",
+      "featured": false,
+      "body": "Une exposition d'estampes contemporaines, pensee comme un temps de decouverte\net de partage autour du lieu.",
+      "descriptionText": "Une exposition d'estampes contemporaines, pensee comme un temps de decouverte et de partage autour du lieu.",
+      "descriptionHtml": "<p>Une exposition d&#39;estampes contemporaines, pensee comme un temps de decouverte et de partage autour du lieu.</p>"
+    },
+    {
+      "slug": "les-estampes-auversoises-2026",
+      "title": "Les Estampes Auversoises 2026",
+      "date": "2026-05-29",
+      "time": "Vernissage a 18h30",
+      "location": "La Maison Rose de Wallerand",
+      "image": "",
+      "entry": "Entree libre",
+      "helloasso_url": "",
+      "status": "a-venir",
+      "featured": true,
+      "body": "Les Estampes Auversoises s'inscrivent comme un rendez-vous fort du lieu autour\nde l'estampe et des artistes.\n\nL'evenement participe au rayonnement de la Maison Rose et a son ambition\nculturelle.",
+      "descriptionText": "Les Estampes Auversoises s'inscrivent comme un rendez vous fort du lieu autour de l'estampe et des artistes. L'evenement participe au rayonnement de la Maison Rose et a son ambition culturelle.",
+      "descriptionHtml": "<p>Les Estampes Auversoises s&#39;inscrivent comme un rendez-vous fort du lieu autour de l&#39;estampe et des artistes.</p>\n<p>L&#39;evenement participe au rayonnement de la Maison Rose et a son ambition culturelle.</p>"
+    }
+  ]
+}

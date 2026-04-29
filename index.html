@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Maison Rose de Wallerand</title>
+    <meta
+      name="description"
+      content="Lieu d'art, d'estampes et de transmission a Auvers-sur-Oise."
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script src="/assets/site.js" defer></script>
+  </head>
+  <body data-page="accueil">
+    <div data-include="/partials/header.html"></div>
+
+    <main>
+      <section class="hero">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Association artistique et culturelle</p>
+            <h1>La Maison Rose de Wallerand</h1>
+            <p class="lead">
+              Lieu d'art, d'estampes et de transmission a Auvers-sur-Oise.
+            </p>
+            <p>
+              Ancien atelier d'ete du peintre Charles-Francois Daubigny, la Maison
+              Rose de Wallerand est aujourd'hui un lieu vivant dedie a la gravure,
+              aux artistes en residence, aux stages et aux evenements.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="/stages.html">Voir les stages</a>
+              <a class="button button--secondary" href="/evenements.html">Voir l'agenda</a>
+            </div>
+          </div>
+
+          <aside class="hero-panel">
+            <p class="eyebrow">Important</p>
+            <h2>HelloAsso reste le point d'inscription</h2>
+            <p>
+              Le site presente les activites, mais les reservations, adhesions et
+              paiements restent entierement geres sur HelloAsso.
+            </p>
+            <p>
+              Cela garde un site leger, sans base de donnees, sans comptes
+              utilisateurs et sans tunnel de paiement a maintenir.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell grid-three">
+          <article class="feature-card">
+            <p class="eyebrow">Le lieu</p>
+            <h3>Un lieu historique tourne vers le present</h3>
+            <p>
+              La Maison Rose prolonge l'histoire d'un atelier d'artistes du
+              19eme siecle tout en portant une ambition actuelle.
+            </p>
+            <a class="button button--secondary" href="/le-lieu.html">Decouvrir le lieu</a>
+          </article>
+
+          <article class="feature-card">
+            <p class="eyebrow">Transmission</p>
+            <h3>Cours et stages de gravure</h3>
+            <p>
+              Des formats a taille humaine, avec des informations simples: dates,
+              niveau, tarif, places et lien HelloAsso.
+            </p>
+            <a class="button button--secondary" href="/stages.html">Voir les stages</a>
+          </article>
+
+          <article class="feature-card">
+            <p class="eyebrow">Agenda</p>
+            <h3>Expositions, rencontres et rendez-vous</h3>
+            <p>
+              Le site affiche automatiquement les evenements saisis dans le CMS,
+              sans back-office lourd.
+            </p>
+            <a class="button button--secondary" href="/evenements.html">Voir l'agenda</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section--tint">
+        <div class="shell">
+          <div class="section-head">
+            <p class="eyebrow">A la une</p>
+            <h2>Stages mis en avant</h2>
+            <p>
+              Ces cartes sont alimentees automatiquement a partir du dossier
+              <code>content/stages</code>.
+            </p>
+          </div>
+          <div class="listing-grid" id="featured-stages"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <p class="eyebrow">Agenda</p>
+            <h2>Evenements a venir</h2>
+            <p>
+              Les fiches visibles ici viennent du dossier
+              <code>content/evenements</code> puis sont converties automatiquement
+              en JSON avant le deploiement.
+            </p>
+          </div>
+          <div class="listing-grid" id="featured-events"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell text-columns">
+          <article class="content-card">
+            <p class="eyebrow">Association</p>
+            <h2>Faire vivre un lieu d'art</h2>
+            <p>
+              L'association porte un projet simple et ambitieux: accueillir,
+              transmettre, exposer et faire vivre la creation.
+            </p>
+            <a class="button button--secondary" href="/association.html">Lire la page association</a>
+          </article>
+
+          <article class="content-card">
+            <p class="eyebrow">Adhesion</p>
+            <h2>Rejoindre l'association</h2>
+            <p>
+              Adherer a la Maison Rose de Wallerand, c'est soutenir un lieu
+              artistique independant et recevoir les informations sur ses activites.
+            </p>
+            <a class="button button--secondary" href="/adherer.html">Adherer</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div data-include="/partials/footer.html"></div>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evenements - La Maison Rose de Wallerand</title>
+    <meta
+      name="description"
+      content="Agenda artistique de la Maison Rose de Wallerand."
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script src="/assets/site.js" defer></script>
+  </head>
+  <body data-page="evenements">
+    <div data-include="/partials/header.html"></div>
+
+    <main>
+      <section class="page-hero">
+        <div class="shell">
+          <p class="eyebrow">Agenda</p>
+          <h1>Evenements artistiques</h1>
+          <p class="lead">
+            Expositions, rencontres et rendez-vous autour de la gravure et de la
+            creation.
+          </p>
+          <p>
+            Le client pourra ajouter de nouveaux evenements depuis <code>/admin</code>
+            sans toucher au code.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <div class="note-card">
+            <p class="eyebrow">Reservation</p>
+            <p>
+              Si un evenement a besoin d'un lien de reservation, il suffit de
+              renseigner le champ HelloAsso dans le CMS. Sinon la fiche peut rester
+              en entree libre.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell listing-stack" id="events-list"></div>
+      </section>
+    </main>
+
+    <div data-include="/partials/footer.html"></div>
+  </body>
+</html>

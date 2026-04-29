@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-04-29T09:10:50.735Z",
+  "count": 3,
+  "items": [
+    {
+      "slug": "stage-gravure-eau-forte",
+      "title": "Stage de gravure eau-forte",
+      "date": "2026-07-04",
+      "time": "10h00 - 17h30",
+      "price": "120 EUR",
+      "duration": "1 jour",
+      "places": 6,
+      "level": "Intermediaire",
+      "image": "",
+      "helloasso_url": "",
+      "status": "complet",
+      "featured": false,
+      "body": "Un stage pour decouvrir ou approfondir la gravure eau-forte dans un cadre\npropice a l'experimentation.\n\nLe format favorise le temps du geste, l'accompagnement et l'echange autour des\ntechniques de l'estampe.",
+      "descriptionText": "Un stage pour decouvrir ou approfondir la gravure eau forte dans un cadre propice a l'experimentation. Le format favorise le temps du geste, l'accompagnement et l'echange autour des techniques de l'estampe.",
+      "descriptionHtml": "<p>Un stage pour decouvrir ou approfondir la gravure eau-forte dans un cadre propice a l&#39;experimentation.</p>\n<p>Le format favorise le temps du geste, l&#39;accompagnement et l&#39;echange autour des techniques de l&#39;estampe.</p>"
+    },
+    {
+      "slug": "stage-gravure-pointe-seche",
+      "title": "Stage de gravure pointe seche",
+      "date": "2026-03-15",
+      "time": "14h00 - 18h00",
+      "price": "70 EUR",
+      "duration": "Une demi-journee",
+      "places": 10,
+      "level": "Debutant",
+      "image": "",
+      "helloasso_url": "",
+      "status": "passe",
+      "featured": false,
+      "body": "Un temps consacre a la pointe seche et a l'estampe, pense comme une premiere\napproche accessible.",
+      "descriptionText": "Un temps consacre a la pointe seche et a l'estampe, pense comme une premiere approche accessible.",
+      "descriptionHtml": "<p>Un temps consacre a la pointe seche et a l&#39;estampe, pense comme une premiere approche accessible.</p>"
+    },
+    {
+      "slug": "stage-linogravure",
+      "title": "Stage de linogravure",
+      "date": "2026-06-20",
+      "time": "10h00 - 17h00",
+      "price": "95 EUR",
+      "duration": "1 jour",
+      "places": 8,
+      "level": "Debutant",
+      "image": "",
+      "helloasso_url": "https://www.helloasso.com/",
+      "status": "ouvert",
+      "featured": true,
+      "body": "Une initiation a la linogravure dans un cadre artistique et chaleureux a\nAuvers-sur-Oise.\n\n- Decouverte du geste, de la plaque et de l'impression\n- Petit groupe pour garder un vrai accompagnement\n- Materiel de base presente sur place",
+      "descriptionText": "Une initiation a la linogravure dans un cadre artistique et chaleureux a Auvers sur Oise. Decouverte du geste, de la plaque et de l'impression Petit groupe pour garder un vrai accompagnement Materiel de base presente sur place",
+      "descriptionHtml": "<p>Une initiation a la linogravure dans un cadre artistique et chaleureux a Auvers-sur-Oise.</p>\n<ul>\n<li>Decouverte du geste, de la plaque et de l&#39;impression</li>\n<li>Petit groupe pour garder un vrai accompagnement</li>\n<li>Materiel de base presente sur place</li>\n</ul>"
+    }
+  ]
+}
