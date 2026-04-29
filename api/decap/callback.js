@@ -1,6 +1,80 @@
-import { buildCookie, getSiteOrigin, htmlPage, parseCookies } from "./_helpers.js";
+import {
+  buildCookie,
+  enforceAdminAccess,
+  getSiteOrigin,
+  htmlPage,
+  parseCookies,
+  parseEnvList,
+  rejectRequest
+} from "./_helpers.js";
+
+async function fetchGitHubResource(url, accessToken) {
+  const response = await fetch(url, {
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${accessToken}`,
+      "User-Agent": "lamaisonrose-site-decap-oauth"
+    }
+  });
+
+  const payload = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error("Impossible de verifier le compte GitHub connecte.");
+  }
+
+  return payload;
+}
+
+async function ensureAllowedGitHubAccount(accessToken) {
+  const allowedUsers = parseEnvList(process.env.ADMIN_GITHUB_ALLOWED_USERS || "");
+  const allowedOrgs = parseEnvList(process.env.ADMIN_GITHUB_ALLOWED_ORGS || "");
+
+  if (!allowedUsers.length && !allowedOrgs.length) {
+    return { login: null, checked: false };
+  }
+
+  const user = await fetchGitHubResource("https://api.github.com/user", accessToken);
+  const login = String(user?.login || "").toLowerCase();
+
+  if (allowedUsers.includes(login)) {
+    return { login, checked: true };
+  }
+
+  if (allowedOrgs.length) {
+    const orgs = await fetchGitHubResource("https://api.github.com/user/orgs", accessToken);
+    const orgLogins = Array.isArray(orgs)
+      ? orgs.map((org) => String(org?.login || "").toLowerCase())
+      : [];
+
+    if (allowedOrgs.some((org) => orgLogins.includes(org))) {
+      return { login, checked: true };
+    }
+  }
+
+  throw new Error(
+    "Ce compte GitHub n'est pas autorise pour l'administration. Ajoute-le a la liste blanche avant de reessayer."
+  );
+}
 
 export default async function handler(req, res) {
+  if (req.method !== "GET") {
+    res.statusCode = 405;
+    res.setHeader("Allow", "GET");
+    res.end("Method Not Allowed");
+    return;
+  }
+
+  if (
+    !enforceAdminAccess(req, res, {
+      bucket: "decap-callback",
+      limit: 20,
+      windowMs: 10 * 60 * 1000
+    })
+  ) {
+    return;
+  }
+
   const clientId = process.env.GITHUB_OAUTH_CLIENT_ID;
   const clientSecret = process.env.GITHUB_OAUTH_CLIENT_SECRET;
   const { code, state } = req.query;
@@ -72,10 +146,28 @@ export default async function handler(req, res) {
     return;
   }
 
+  try {
+    await ensureAllowedGitHubAccount(payload.access_token);
+  } catch (error) {
+    res.setHeader(
+      "Set-Cookie",
+      buildCookie("decap_oauth_state", "", { maxAge: 0, secure: secureCookie })
+    );
+    rejectRequest(
+      res,
+      403,
+      "Compte non autorise",
+      "Compte GitHub refuse",
+      error.message ||
+        "Ce compte GitHub n'est pas autorise a ouvrir l'administration."
+    );
+    return;
+  }
+
   const oauthPayload = JSON.stringify({
     token: payload.access_token,
     provider: "github"
-  });
+  }).replace(/</g, "\\u003c");
 
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/html; charset=utf-8");
