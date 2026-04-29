@@ -41,7 +41,7 @@
   .hv-tag .lbl { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--terre); margin-bottom: 4px; display: block; }
   .hv-tag .val { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--ink); }
   .hv-tag .val strong { font-style: normal; font-weight: 500; }
-  .scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 4; font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--grey-soft); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .scroll-hint { position: absolute; bottom: 30px; right: 34px; z-index: 4; font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--grey-soft); display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
   .scroll-hint .line { width: 1px; height: 36px; background: linear-gradient(180deg, var(--grey-soft), transparent); animation: drip 2.4s ease-in-out infinite; }
   @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
@@ -63,6 +63,8 @@
 
   /* Headline event */
   .headline { padding: 130px 0; position: relative; }
+  .headline,
+  .hero { overflow: clip; }
   .headline-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
   .headline-text .tag { display: inline-block; padding: 6px 14px; background: var(--terre); color: var(--cream); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 28px; }
   .headline-text h2 { font-size: clamp(44px, 5.2vw, 78px); line-height: 1; margin-bottom: 24px; }
@@ -71,6 +73,7 @@
   .headline-meta > div { flex: 1 1 140px; min-width: 0; }
   .headline-meta div .lbl { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); margin-bottom: 6px; }
   .headline-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--ink); }
+  .headline-meta div .val { overflow-wrap: anywhere; }
   .headline-text p { color: var(--grey); margin-bottom: 32px; max-width: 480px; }
   .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0 32px; max-width: 480px; }
   .countdown .cell { background: var(--cream-2); padding: 16px 8px; text-align: center; border: 1px solid var(--line); }
@@ -136,12 +139,12 @@
     .marquee-track span { font-size: 22px; }
     .headline { padding: 72px 0; }
     .headline-text {
-      padding: 28px 22px;
+      padding: 24px 20px;
       background: rgba(255,255,255,.52);
       border: 1px solid var(--line);
     }
     .headline-text h2 {
-      font-size: clamp(34px, 9vw, 48px);
+      font-size: clamp(32px, 8vw, 44px);
       margin-bottom: 18px;
     }
     .headline-meta {
@@ -157,8 +160,15 @@
       border-bottom: 1px solid var(--line);
     }
     .headline-meta > div:last-child { border-bottom: 0; }
+    .headline-meta div .val {
+      font-size: 19px;
+      line-height: 1.3;
+    }
     .headline-text p { font-size: 15px; margin-bottom: 22px; }
     .headline-text p { max-width: none; }
+    .headline-visual {
+      aspect-ratio: 5 / 4;
+    }
     .hl-corner { top: 12px; right: 12px; width: 84px; height: 84px; }
     .hl-corner span { font-size: 12px; }
     .hl-corner span strong { font-size: 18px; }
@@ -184,8 +194,37 @@
     .manifesto { padding: 88px 0 74px; }
     .manifesto h2 { font-size: clamp(34px, 9vw, 48px); margin-bottom: 34px; }
     .headline { padding: 64px 0; }
+    .headline-grid { gap: 18px; }
+    .headline-text {
+      padding: 20px 16px;
+    }
+    .headline-text .tag {
+      margin-bottom: 16px;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+    }
+    .headline-text h2 {
+      font-size: clamp(28px, 9vw, 38px);
+      line-height: 1.02;
+    }
+    .headline-meta div .val {
+      font-size: 17px;
+    }
     .countdown { gap: 6px; max-width: none; grid-template-columns: 1fr 1fr; }
-    .countdown .cell .n { font-size: 30px; }
+    .countdown .cell {
+      padding: 12px 6px;
+    }
+    .countdown .cell .n { font-size: 28px; }
+    .countdown .cell .l { font-size: 9px; letter-spacing: 0.18em; }
+    .headline-visual {
+      aspect-ratio: 6 / 5;
+    }
+    .hl-corner {
+      top: 10px;
+      right: 10px;
+      width: 74px;
+      height: 74px;
+    }
     .teasers { padding: 64px 0; }
     .teaser { padding: 30px 24px; }
     .wstrip { padding: 64px 0; }

@@ -10,14 +10,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/site.css" />
 <style>
-  .feat { padding: 80px 0 120px; }
+  .feat { padding: 80px 0 120px; overflow: clip; }
   .feat-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
   .feat .tag { display: inline-block; padding: 6px 14px; background: var(--terre); color: var(--cream); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 28px; }
   .feat h2 { font-size: clamp(48px, 6vw, 86px); line-height: 1; margin-bottom: 24px; }
   .feat h2 .it { font-style: italic; color: var(--terre); }
   .feat-meta { display: flex; gap: 36px; margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
   .feat-meta div .lbl { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); margin-bottom: 6px; }
-  .feat-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--ink); }
+  .feat-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--ink); overflow-wrap: anywhere; }
   .feat p { color: var(--grey); margin-bottom: 32px; max-width: 480px; }
   .feat-visual { aspect-ratio: 4/5; position: relative; }
   .feat-visual .img { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(184,101,79,.85), rgba(26,22,20,.85)), repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 2px, transparent 2px 9px); overflow: hidden; }
@@ -75,6 +75,20 @@
   }
   @media (max-width: 820px) {
     .feat { padding: 56px 0 82px; }
+    .feat-grid { gap: 28px; }
+    .feat-visual {
+      order: -1;
+      aspect-ratio: 5 / 4;
+    }
+    .feat-corner {
+      top: 14px;
+      right: 14px;
+      width: 74px;
+      height: 74px;
+      transform: rotate(4deg);
+    }
+    .feat-corner span { font-size: 11px; }
+    .feat-corner span strong { font-size: 18px; }
     .feat h2 {
       font-size: clamp(34px, 9vw, 48px);
       margin-bottom: 18px;
@@ -93,7 +107,7 @@
       border-bottom: 1px solid var(--line);
     }
     .feat-meta > div:last-child { border-bottom: 0; }
-    .feat p { max-width: none; margin-bottom: 24px; font-size: 15px; }
+    .feat p { max-width: none; margin-bottom: 22px; font-size: 15px; }
     .agenda { padding: 84px 0; }
     .ev-row {
       grid-template-columns: 72px 1fr;
@@ -120,6 +134,42 @@
     .past { padding: 82px 0; }
   }
   @media (max-width: 700px) {
+    .feat { padding: 42px 0 68px; }
+    .feat-grid { gap: 22px; }
+    .feat h2 {
+      font-size: clamp(28px, 10vw, 38px);
+      line-height: 0.96;
+      margin-bottom: 14px;
+    }
+    .feat-meta {
+      margin: 16px 0 18px;
+    }
+    .feat-meta > div {
+      padding: 10px 0;
+    }
+    .feat-meta div .lbl {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+    }
+    .feat-meta div .val {
+      font-size: 17px;
+      line-height: 1.28;
+    }
+    .feat p {
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+    .feat-visual {
+      aspect-ratio: 6 / 5;
+    }
+    .feat-visual .img::before {
+      font-size: clamp(42px, 18vw, 72px);
+    }
+    .feat-visual .img::after {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+    }
     .ev-row {
       grid-template-columns: 1fr;
       gap: 10px;
@@ -139,6 +189,22 @@
       margin: 0 0 14px;
     }
     .ev-date .mo { margin-top: 0; }
+    .ev-row h3 {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+    .ev-row p {
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .ev-row .ev-action {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .ev-row .arrow {
+      width: 40px;
+      height: 40px;
+    }
   }
   @media (max-width: 600px) {
     .past-grid { grid-template-columns: 1fr; }

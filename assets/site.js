@@ -432,13 +432,46 @@ function initBurger() {
   }
 
   burger.dataset.bound = "true";
-  burger.addEventListener("click", () => {
+  const syncExpanded = () => {
+    burger.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+  };
+
+  burger.addEventListener("click", (event) => {
+    event.stopPropagation();
     nav.classList.toggle("open");
+    syncExpanded();
   });
 
   nav.querySelectorAll(".menu a, .nav-cta").forEach((link) => {
-    link.addEventListener("click", () => nav.classList.remove("open"));
+    link.addEventListener("click", () => {
+      nav.classList.remove("open");
+      syncExpanded();
+    });
   });
+
+  document.addEventListener("click", (event) => {
+    if (!nav.classList.contains("open")) {
+      return;
+    }
+
+    if (nav.contains(event.target)) {
+      return;
+    }
+
+    nav.classList.remove("open");
+    syncExpanded();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !nav.classList.contains("open")) {
+      return;
+    }
+
+    nav.classList.remove("open");
+    syncExpanded();
+  });
+
+  syncExpanded();
 }
 
 function initStageFilters() {
@@ -1471,7 +1504,7 @@ function injectChrome(activeKey) {
           </span>
         </a>
         <nav>
-          <ul class="menu">
+          <ul class="menu" id="site-menu">
             <li><a href="index.html" data-k="home">Accueil</a></li>
             <li><a href="le-lieu.html" data-k="lieu">Le Lieu</a></li>
             <li><a href="stages.html" data-k="stages">Stages &amp; Cours</a></li>
@@ -1482,10 +1515,12 @@ function injectChrome(activeKey) {
             <li class="menu-mobile-only"><a href="adherer.html" data-k="adherer">Adhérer</a></li>
           </ul>
         </nav>
-        <a href="adherer.html" class="nav-cta" data-k="adherer">Adhérer <span class="arr">→</span></a>
-        <button class="burger" aria-label="Menu">
-          <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
-        </button>
+        <div class="nav-actions">
+          <a href="adherer.html" class="nav-cta" data-k="adherer">Adhérer <span class="arr">→</span></a>
+          <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="site-menu">
+            <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
+          </button>
+        </div>
       </div>
     </header>
   `;

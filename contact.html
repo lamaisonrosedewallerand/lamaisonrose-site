@@ -73,16 +73,35 @@
     .ct { padding: 72px 0; }
     .ct-grid { gap: 28px; }
     .ct-info { order: -1; }
+    .ct-info {
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      padding: 18px 18px 6px;
+    }
     .ct-info h3 { margin-bottom: 14px; }
     .ct-info .blk { padding: 16px 0; }
     .ct-info .val { font-size: 17px; }
-    .map { aspect-ratio: 1 / 1; }
+    .map { aspect-ratio: 5 / 4; }
   }
   @media (max-width: 680px) {
     .row2 { grid-template-columns: 1fr; gap: 18px; }
     .ct-form { padding: 26px 18px; }
-    .ct-form .submit { align-items: stretch; }
+    .ct-form h3 { font-size: 24px; }
+    .ct-form .lede { margin-bottom: 22px; font-size: 14px; }
+    .ct-form .submit {
+      align-items: stretch;
+      gap: 12px;
+    }
+    .ct-form .submit .ok,
+    .ct-form .submit .err {
+      font-size: 16px;
+    }
     .map-shell { padding: 12px; }
+    .map-actions {
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .map-note { font-size: 13px; }
   }
 </style>
 </head>
@@ -96,7 +115,7 @@
       <div class="crumbs"><a href="index.html">Accueil</a> · Contact</div>
       <h1>Nous <em>écrire,</em> venir nous voir.</h1>
     </div>
-    <p class="lede reveal d2">Pour une résidence, un stage, une exposition ou une visite, le plus direct est de nous écrire ou de nous appeler. Le site ne stocke aucun message.</p>
+    <p class="lede reveal d2">Pour une résidence, un stage, une exposition ou une visite, le plus direct est de nous écrire ou de nous appeler. Le site ne stocke aucun message et transmet seulement votre demande.</p>
   </div>
 </section>
 
