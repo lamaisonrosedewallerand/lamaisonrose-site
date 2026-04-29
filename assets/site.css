@@ -334,8 +334,13 @@ footer {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 14px;
   }
-  .nav-inner nav { display: none; }
-  .nav.open nav { display: block; }
+  .nav-inner nav {
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: visible;
+  }
+  .nav.open nav { width: 0; height: 0; }
   .menu { display: none; }
   .burger { display: inline-flex; }
   .nav-cta {
@@ -526,11 +531,11 @@ footer {
   }
 
   .wrap {
-    padding: 0 18px;
+    padding: 0 20px;
   }
 
   .nav-inner {
-    padding: 14px 18px;
+    padding: 14px 20px;
     gap: 10px;
   }
 
