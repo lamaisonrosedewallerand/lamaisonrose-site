@@ -234,6 +234,16 @@ img { max-width: 100%; display: block; }
   margin-bottom: 24px; max-width: 14ch;
   text-wrap: balance;
 }
+.page-hero-copy {
+  max-width: 44rem;
+}
+.page-hero h1 .line {
+  display: block;
+  text-wrap: balance;
+}
+.page-hero h1 .line + .line {
+  margin-top: -0.04em;
+}
 .page-hero h1 em { color: var(--terre); font-style: italic; font-weight: 300; }
 .page-hero .lede {
   font-family: 'Cormorant Garamond', serif;
@@ -570,6 +580,7 @@ footer {
     max-width: 38rem;
     font-size: 16px;
     line-height: 1.54;
+    text-wrap: pretty;
   }
 
   .sec-head {
@@ -672,19 +683,24 @@ footer {
   }
 
   .page-hero .lede {
-    max-width: none;
+    max-width: 28ch;
     font-family: 'Inter', system-ui, sans-serif;
     font-style: normal;
     font-size: 14px;
     line-height: 1.6;
+    text-wrap: pretty;
   }
 
   .page-hero h1 {
-    max-width: 9.6ch;
-    font-size: clamp(28px, 8.8vw, 34px);
+    max-width: none;
+    font-size: clamp(29px, 8.6vw, 35px);
     margin-bottom: 12px;
-    line-height: 0.94;
+    line-height: 0.92;
     letter-spacing: -0.03em;
+  }
+
+  .page-hero-copy {
+    max-width: 17rem;
   }
 
   .page-hero-grid {
