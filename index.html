@@ -1,142 +1,217 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Lieu d'art, d'estampes et de transmission a Auvers-sur-Oise."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="accueil">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La Maison Rose de Wallerand — Maison d'art et d'estampes, Auvers-sur-Oise</title>
+<meta name="description" content="Maison d'art à Auvers-sur-Oise dédiée à la gravure, l'estampe et la transmission. Stages, expositions et événements toute l'année." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  /* Hero */
+  .hero { position: relative; min-height: calc(100vh - 70px); display: flex; align-items: stretch; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 32px; gap: 48px; align-items: center; }
+  .hero-text { padding: 80px 0 100px; position: relative; z-index: 2; }
+  .hero h1 { font-size: clamp(48px, 6vw, 92px); line-height: 0.98; letter-spacing: -0.015em; margin-bottom: 28px; }
+  .hero h1 .it { font-style: italic; color: var(--terre); font-weight: 300; }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--grey); margin-bottom: 22px; max-width: 520px; line-height: 1.5; }
+  .hero-lede { font-size: 16px; color: var(--grey); max-width: 480px; margin-bottom: 40px; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-visual { position: relative; height: 100%; min-height: 540px; display: flex; align-items: center; justify-content: center; }
+  .hv-frame { position: relative; width: 100%; height: 78vh; max-height: 680px; border-radius: 4px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(26,22,20,.25); }
+  .hv-frame .img { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,.35), transparent 60%), linear-gradient(160deg, #E8C4B8 0%, #D4A09A 45%, #B8826F 100%); }
+  .hv-frame .img::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(26,22,20,.18) 100%), repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,255,255,.04) 18px 19px); }
+  .hv-frame .img::after { content: ""; position: absolute; left: 14%; right: 14%; bottom: 0; height: 62%; background: linear-gradient(180deg, rgba(184,101,79,.08), rgba(142,70,54,.35)), repeating-linear-gradient(0deg, rgba(0,0,0,.03) 0 2px, transparent 2px 5px); clip-path: polygon(0 18%, 8% 0, 92% 0, 100% 18%, 100% 100%, 0 100%); }
+  .hv-windows { position: absolute; left: 22%; right: 22%; bottom: 8%; height: 38%; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; z-index: 2; }
+  .hv-windows .w { background: linear-gradient(180deg, #F2EBE1 0%, #E8DDD0 100%); border: 2px solid #6B4030; border-radius: 2px 2px 30% 30% / 2px 2px 8% 8%; position: relative; box-shadow: inset 0 0 0 4px #F2EBE1, inset 0 0 0 5px #6B4030; }
+  .hv-windows .w::after { content: ""; position: absolute; inset: 6px; background: linear-gradient(0deg, transparent 49%, #6B4030 49% 51%, transparent 51%), linear-gradient(90deg, transparent 49%, #6B4030 49% 51%, transparent 51%); }
+  .hv-tag { position: absolute; background: var(--cream); padding: 14px 20px; border-radius: 2px; box-shadow: 0 14px 30px -12px rgba(26,22,20,.22); z-index: 3; }
+  .hv-tag.t1 { top: 8%; left: -6%; transform: rotate(-3deg); }
+  .hv-tag.t2 { bottom: 10%; right: -8%; transform: rotate(2deg); }
+  .hv-tag .lbl { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--terre); margin-bottom: 4px; display: block; }
+  .hv-tag .val { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--ink); }
+  .hv-tag .val strong { font-style: normal; font-weight: 500; }
+  .scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 4; font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--grey-soft); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .scroll-hint .line { width: 1px; height: 36px; background: linear-gradient(180deg, var(--grey-soft), transparent); animation: drip 2.4s ease-in-out infinite; }
+  @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
-    <main>
-      <section class="hero">
-        <div class="shell hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Association artistique et culturelle</p>
-            <h1>La Maison Rose de Wallerand</h1>
-            <p class="lead">
-              Lieu d'art, d'estampes et de transmission a Auvers-sur-Oise.
-            </p>
-            <p>
-              Ancien atelier d'ete du peintre Charles-Francois Daubigny, la Maison
-              Rose de Wallerand est aujourd'hui un lieu vivant dedie a la gravure,
-              aux artistes en residence, aux stages et aux evenements.
-            </p>
-            <div class="hero-actions">
-              <a class="button" href="/stages.html">Voir les stages</a>
-              <a class="button button--secondary" href="/evenements.html">Voir l'agenda</a>
-            </div>
-          </div>
+  /* Manifesto */
+  .manifesto { padding: 140px 0 120px; text-align: center; }
+  .manifesto .small { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--terre); margin-bottom: 40px; }
+  .manifesto h2 { font-size: clamp(36px, 4.4vw, 64px); line-height: 1.1; max-width: 950px; margin: 0 auto 56px; font-weight: 300; }
+  .manifesto h2 em { color: var(--terre); }
+  .manifesto-quote { max-width: 540px; margin: 0 auto; padding-top: 40px; border-top: 1px solid var(--line); }
+  .manifesto-quote p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--grey); line-height: 1.5; margin-bottom: 16px; }
+  .manifesto-quote .sign { font-family: 'Caveat', cursive; font-size: 26px; color: var(--terre); }
 
-          <aside class="hero-panel">
-            <p class="eyebrow">Important</p>
-            <h2>HelloAsso reste le point d'inscription</h2>
-            <p>
-              Le site presente les activites, mais les reservations, adhesions et
-              paiements restent entierement geres sur HelloAsso.
-            </p>
-            <p>
-              Cela garde un site leger, sans base de donnees, sans comptes
-              utilisateurs et sans tunnel de paiement a maintenir.
-            </p>
-          </aside>
-        </div>
-      </section>
+  /* Marquee */
+  .marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 28px 0; background: var(--cream-2); }
+  .marquee-track { display: flex; gap: 60px; animation: scroll 38s linear infinite; width: max-content; }
+  .marquee-track span { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic; color: var(--grey); white-space: nowrap; }
+  .marquee-track .dot { color: var(--terre); font-style: normal; }
+  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-      <section class="section">
-        <div class="shell grid-three">
-          <article class="feature-card">
-            <p class="eyebrow">Le lieu</p>
-            <h3>Un lieu historique tourne vers le present</h3>
-            <p>
-              La Maison Rose prolonge l'histoire d'un atelier d'artistes du
-              19eme siecle tout en portant une ambition actuelle.
-            </p>
-            <a class="button button--secondary" href="/le-lieu.html">Decouvrir le lieu</a>
-          </article>
+  /* Headline event */
+  .headline { padding: 130px 0; position: relative; }
+  .headline-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
+  .headline-text .tag { display: inline-block; padding: 6px 14px; background: var(--terre); color: var(--cream); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 28px; }
+  .headline-text h2 { font-size: clamp(44px, 5.2vw, 78px); line-height: 1; margin-bottom: 24px; }
+  .headline-text h2 .it { font-style: italic; color: var(--terre); }
+  .headline-meta { display: flex; gap: 36px; margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .headline-meta div .lbl { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); margin-bottom: 6px; }
+  .headline-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--ink); }
+  .headline-text p { color: var(--grey); margin-bottom: 32px; max-width: 480px; }
+  .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0 32px; max-width: 480px; }
+  .countdown .cell { background: var(--cream-2); padding: 16px 8px; text-align: center; border: 1px solid var(--line); }
+  .countdown .cell .n { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--terre); line-height: 1; display: block; margin-bottom: 6px; }
+  .countdown .cell .l { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); }
+  .headline-visual { position: relative; aspect-ratio: 4/5; }
+  .hl-img { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(184,101,79,.85), rgba(26,22,20,.85)), repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 2px, transparent 2px 9px); overflow: hidden; }
+  .hl-img::before { content: "Estampes"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); font-family: 'Cormorant Garamond', serif; font-size: clamp(60px, 9vw, 130px); font-style: italic; color: rgba(250,246,241,.92); letter-spacing: -0.02em; line-height: 0.9; text-align: center; white-space: pre; }
+  .hl-img::after { content: "Auversoises\A 2026"; white-space: pre; position: absolute; bottom: 8%; left: 0; right: 0; text-align: center; font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--rose); font-family: 'Inter', sans-serif; }
+  .hl-corner { position: absolute; top: -14px; right: -14px; width: 110px; height: 110px; background: var(--rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; transform: rotate(8deg); z-index: 2; }
+  .hl-corner span { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--ink); line-height: 1.2; }
+  .hl-corner span strong { display: block; font-style: normal; font-size: 22px; }
 
-          <article class="feature-card">
-            <p class="eyebrow">Transmission</p>
-            <h3>Cours et stages de gravure</h3>
-            <p>
-              Des formats a taille humaine, avec des informations simples: dates,
-              niveau, tarif, places et lien HelloAsso.
-            </p>
-            <a class="button button--secondary" href="/stages.html">Voir les stages</a>
-          </article>
+  /* Teasers */
+  .teasers { padding: 130px 0; background: var(--cream-2); }
+  .teaser-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  .teaser { background: var(--cream); padding: 40px 36px; transition: transform .4s ease, box-shadow .4s ease; }
+  .teaser:hover { transform: translateY(-6px); box-shadow: 0 24px 40px -28px rgba(26,22,20,.25); }
+  .teaser .num { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--terre); margin-bottom: 18px; display: block; }
+  .teaser h3 { font-size: 30px; line-height: 1.1; margin-bottom: 14px; }
+  .teaser h3 em { font-style: italic; color: var(--terre); }
+  .teaser p { color: var(--grey); font-size: 15px; margin-bottom: 24px; }
+  .teaser .more { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 3px; transition: color .25s, border-color .25s; }
+  .teaser:hover .more { color: var(--terre); border-color: var(--terre); }
 
-          <article class="feature-card">
-            <p class="eyebrow">Agenda</p>
-            <h3>Expositions, rencontres et rendez-vous</h3>
-            <p>
-              Le site affiche automatiquement les evenements saisis dans le CMS,
-              sans back-office lourd.
-            </p>
-            <a class="button button--secondary" href="/evenements.html">Voir l'agenda</a>
-          </article>
-        </div>
-      </section>
+  /* Wallerand strip */
+  .wstrip { background: var(--ink); color: #E8DDD0; padding: 100px 0; text-align: center; }
+  .wstrip .num { color: var(--rose); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; }
+  .wstrip h2 { color: var(--cream); font-size: clamp(40px, 5vw, 64px); line-height: 1.1; margin: 18px auto 24px; max-width: 16ch; }
+  .wstrip h2 em { color: var(--rose); font-style: italic; }
+  .wstrip p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: rgba(232,221,208,.78); max-width: 600px; margin: 0 auto 32px; }
+  .wstrip .btn-light { color: var(--ink); }
 
-      <section class="section section--tint">
-        <div class="shell">
-          <div class="section-head">
-            <p class="eyebrow">A la une</p>
-            <h2>Stages mis en avant</h2>
-            <p>
-              Ces cartes sont alimentees automatiquement a partir du dossier
-              <code>content/stages</code>.
-            </p>
-          </div>
-          <div class="listing-grid" id="featured-stages"></div>
-        </div>
-      </section>
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 0; }
+    .hero-visual { min-height: 400px; }
+    .hv-frame { height: 60vh; }
+    .headline-grid { grid-template-columns: 1fr; gap: 50px; }
+    .teaser-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) { .countdown { gap: 6px; } .hv-tag.t1 { left: 4%; } .hv-tag.t2 { right: 4%; } }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
 
-      <section class="section">
-        <div class="shell">
-          <div class="section-head">
-            <p class="eyebrow">Agenda</p>
-            <h2>Evenements a venir</h2>
-            <p>
-              Les fiches visibles ici viennent du dossier
-              <code>content/evenements</code> puis sont converties automatiquement
-              en JSON avant le deploiement.
-            </p>
-          </div>
-          <div class="listing-grid" id="featured-events"></div>
-        </div>
-      </section>
+<section class="hero" id="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="eyebrow reveal">Maison d'art · Fondée par Wallerand</div>
+      <h1 class="reveal d2">La Maison<br/><span class="it">Rose</span> de Wallerand</h1>
+      <p class="hero-sub reveal d3">Maison d'art et d'estampes —<br/>Auvers-sur-Oise, Val-d'Oise.</p>
+      <p class="hero-lede reveal d3">Un lieu où l'encre rencontre le papier, où les artistes transmettent, où les visiteurs deviennent créateurs.</p>
+      <div class="cta-row reveal d4">
+        <a href="stages.html" class="btn btn-primary">Découvrir nos stages <span class="arr">→</span></a>
+        <a href="adherer.html" class="btn btn-ghost">Adhérer à l'association</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal d3">
+      <div class="hv-frame">
+        <div class="img" aria-label="Façade de la Maison Rose"></div>
+        <div class="hv-windows"><div class="w"></div><div class="w"></div></div>
+      </div>
+      <div class="hv-tag t1"><span class="lbl">Atelier</span><span class="val"><strong>Gravure</strong> sur cuivre</span></div>
+      <div class="hv-tag t2"><span class="lbl">Depuis</span><span class="val"><strong>1987</strong> — Auvers</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Découvrir</span><span class="line"></span></div>
+</section>
 
-      <section class="section">
-        <div class="shell text-columns">
-          <article class="content-card">
-            <p class="eyebrow">Association</p>
-            <h2>Faire vivre un lieu d'art</h2>
-            <p>
-              L'association porte un projet simple et ambitieux: accueillir,
-              transmettre, exposer et faire vivre la creation.
-            </p>
-            <a class="button button--secondary" href="/association.html">Lire la page association</a>
-          </article>
+<section class="manifesto wrap">
+  <p class="small reveal">— Manifeste —</p>
+  <h2 class="reveal d2">Ici, le geste précède le mot. <em>L'encre choisit son papier,</em> la presse retient son souffle, et la trace, lentement, devient œuvre.</h2>
+  <div class="manifesto-quote reveal d3">
+    <p>« On ne grave pas pour reproduire le monde, on grave pour s'y inscrire. »</p>
+    <span class="sign">— Wallerand</span>
+  </div>
+</section>
 
-          <article class="content-card">
-            <p class="eyebrow">Adhesion</p>
-            <h2>Rejoindre l'association</h2>
-            <p>
-              Adherer a la Maison Rose de Wallerand, c'est soutenir un lieu
-              artistique independant et recevoir les informations sur ses activites.
-            </p>
-            <a class="button button--secondary" href="/adherer.html">Adherer</a>
-          </article>
-        </div>
-      </section>
-    </main>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Gravure sur cuivre <span class="dot">✦</span></span>
+    <span>Estampe originale <span class="dot">✦</span></span>
+    <span>Auvers-sur-Oise <span class="dot">✦</span></span>
+    <span>Pointe sèche <span class="dot">✦</span></span>
+    <span>Lithographie <span class="dot">✦</span></span>
+    <span>Aquatinte <span class="dot">✦</span></span>
+    <span>Hommage à Wallerand <span class="dot">✦</span></span>
+    <span>Gravure sur cuivre <span class="dot">✦</span></span>
+    <span>Estampe originale <span class="dot">✦</span></span>
+    <span>Auvers-sur-Oise <span class="dot">✦</span></span>
+    <span>Pointe sèche <span class="dot">✦</span></span>
+    <span>Lithographie <span class="dot">✦</span></span>
+    <span>Aquatinte <span class="dot">✦</span></span>
+    <span>Hommage à Wallerand <span class="dot">✦</span></span>
+  </div>
+</div>
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+<section class="headline wrap" id="home-featured-event">
+  <div class="empty-note">Chargement de l'événement à la une…</div>
+</section>
+
+<section class="teasers">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="left reveal">
+        <span class="num-tag">— Découvrir la Maison</span>
+        <h2>Trois <span class="it">portes</span> d'entrée.</h2>
+      </div>
+      <p class="right reveal d2">Stages, événements, et l'histoire d'un lieu : trois manières d'entrer dans la Maison Rose.</p>
+    </div>
+    <div class="teaser-grid">
+      <a href="stages.html" class="teaser reveal">
+        <span class="num">— 01 / Apprendre</span>
+        <h3>Stages &amp; <em>cours</em></h3>
+        <p>Initiation à la pointe sèche, aquatinte, taille-douce, lithographie. Trente stages par saison, encadrés par des graveurs en résidence.</p>
+        <span class="more">Voir le programme →</span>
+      </a>
+      <a href="evenements.html" class="teaser reveal d2">
+        <span class="num">— 02 / Vivre</span>
+        <h3>Événements &amp; <em>expositions</em></h3>
+        <p>Estampes Auversoises, vernissages, concerts au jardin, lectures et résidences d'artistes. Le calendrier d'une saison.</p>
+        <span class="more">Voir l'agenda →</span>
+      </a>
+      <a href="le-lieu.html" class="teaser reveal d3">
+        <span class="num">— 03 / Visiter</span>
+        <h3>Le <em>lieu,</em> la maison</h3>
+        <p>Trois ateliers, un jardin de tilleuls, une bibliothèque de papiers anciens, et la presse Hopkinson — toujours la presse.</p>
+        <span class="more">Visiter →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="wstrip">
+  <div class="wrap">
+    <p class="num reveal">— Hommage</p>
+    <h2 class="reveal d2">Wallerand, <em>la main et le silence.</em></h2>
+    <p class="reveal d3">« Le papier garde la mémoire des mains qui l'ont touché. C'est cela, graver : laisser une mémoire qui ne soit pas la sienne. »</p>
+    <a href="wallerand.html" class="btn btn-light reveal d4">Découvrir Wallerand <span class="arr">→</span></a>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+
+<script src="assets/site.js"></script>
+<script>
+  injectChrome('home');
+</script>
+</body>
 </html>

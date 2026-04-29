@@ -1,63 +1,188 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Le lieu - La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Le lieu historique et artistique de la Maison Rose de Wallerand."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="lieu">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Le Lieu — La Maison Rose de Wallerand</title>
+<meta name="description" content="Trois ateliers, un jardin de tilleuls, une presse Hopkinson de 1924 — découvrez La Maison Rose, lieu d'art à Auvers-sur-Oise." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .place-grid-large { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: 240px; gap: 14px; padding: 80px 0; }
+  .pg { overflow: hidden; position: relative; }
+  .pg.t { grid-row: span 2; }
+  .pg.w { grid-column: span 2; }
+  .pg .ph { position: absolute; inset: 0; transition: transform 1.2s ease; }
+  .pg:hover .ph { transform: scale(1.04); }
+  .pg .lbl { position: absolute; bottom: 14px; left: 14px; background: rgba(250,246,241,.95); color: var(--ink); padding: 6px 12px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; z-index: 2; }
+  .ph-1 { background: linear-gradient(160deg, #E8C4B8 0%, #B8826F 100%); }
+  .ph-1::after { content: ""; position: absolute; inset: 25% 18% 0 18%; background: linear-gradient(180deg, #C68876 0%, #8E4636 100%); clip-path: polygon(0 35%, 50% 0, 100% 35%, 100% 100%, 0 100%); }
+  .ph-2 { background: radial-gradient(circle at 50% 50%, #2B2522 0%, #1A1614 80%); }
+  .ph-2::after { content: ""; position: absolute; inset: 35% 30%; background: radial-gradient(circle, rgba(232,196,184,.85) 0%, transparent 70%); }
+  .ph-3 { background: linear-gradient(180deg, #F2EBE1 0%, #DCD2C4 100%); }
+  .ph-3::after { content: ""; position: absolute; inset: 20%; background: repeating-linear-gradient(90deg, rgba(26,22,20,.4) 0 1px, transparent 1px 9px); }
+  .ph-4 { background: linear-gradient(45deg, #B8654F 0%, #8E4636 100%); }
+  .ph-4::after { content: ""; position: absolute; inset: 15%; border: 1px solid rgba(250,246,241,.45); background: repeating-linear-gradient(0deg, transparent 0 12px, rgba(250,246,241,.08) 12px 13px); }
+  .ph-5 { background: radial-gradient(ellipse at 30% 30%, #E8C4B8, transparent 60%), linear-gradient(180deg, #F2EBE1, #E8DDD0); }
+  .ph-5::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 25% 60%, rgba(184,101,79,.6) 0 8%, transparent 9%), radial-gradient(circle at 55% 40%, rgba(26,22,20,.4) 0 5%, transparent 6%), radial-gradient(circle at 75% 70%, rgba(184,101,79,.4) 0 6%, transparent 7%); }
+  .ph-6 { background: linear-gradient(135deg, #DCD2C4 0%, #B8826F 100%); }
+  .ph-6::after { content: ""; position: absolute; inset: 30% 20%; background: linear-gradient(180deg, #6B4030 0%, #2B2522 100%); border-radius: 50% 50% 0 0; }
 
-    <main>
-      <section class="page-hero">
-        <div class="shell">
-          <p class="eyebrow">Le lieu</p>
-          <h1>Un atelier du 19eme siecle tourne vers l'avenir</h1>
-          <p class="lead">
-            Au coeur d'Auvers-sur-Oise, la Maison Rose de Wallerand est un lieu de
-            travail, de residence et de rencontre.
-          </p>
-        </div>
-      </section>
+  .history { padding: 130px 0; background: var(--cream-2); }
+  .history-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+  .history-text h2 { font-size: clamp(40px, 4.6vw, 64px); line-height: 1.05; margin: 18px 0 32px; }
+  .history-text h2 em { font-style: italic; color: var(--terre); }
+  .history-text p { color: var(--grey); margin-bottom: 18px; }
 
-      <section class="section">
-        <div class="shell grid-three">
-          <article class="feature-card">
-            <p class="eyebrow">Atelier</p>
-            <h3>L'atelier</h3>
-            <p>
-              L'atelier est au coeur de la Maison. C'est un espace de travail, de
-              gravure, d'exposition et de transmission.
-            </p>
-          </article>
+  .timeline { position: relative; padding-left: 36px; }
+  .timeline::before { content: ""; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 1px; background: var(--terre); }
+  .ev { position: relative; margin-bottom: 38px; }
+  .ev::before { content: ""; position: absolute; left: -34px; top: 8px; width: 13px; height: 13px; border-radius: 50%; background: var(--cream-2); border: 2px solid var(--terre); }
+  .ev .yr { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-style: italic; color: var(--terre); display: block; line-height: 1; margin-bottom: 8px; }
+  .ev h4 { font-size: 22px; margin-bottom: 6px; font-family: 'Cormorant Garamond', serif; }
+  .ev p { color: var(--grey); font-size: 15px; }
 
-          <article class="feature-card">
-            <p class="eyebrow">Residence</p>
-            <h3>Une residence d'artistes</h3>
-            <p>
-              La Maison Rose accueille des artistes dans un cadre propice a la
-              recherche, a la production et a la rencontre avec le public.
-            </p>
-          </article>
+  .visit { padding: 130px 0; }
+  .visit-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center; }
+  .visit-card { background: var(--cream-2); padding: 48px; }
+  .visit-card h3 { font-size: 32px; margin-bottom: 24px; }
+  .visit-card .row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .visit-card .row:last-child { border-bottom: 0; }
+  .visit-card .row .k { color: var(--grey-soft); letter-spacing: 0.04em; }
+  .visit-card .row .v { color: var(--ink); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; }
+  .visit-text h2 { font-size: clamp(36px, 4vw, 56px); line-height: 1.05; margin-bottom: 24px; }
+  .visit-text h2 em { font-style: italic; color: var(--terre); }
+  .visit-text p { color: var(--grey); margin-bottom: 20px; }
 
-          <article class="feature-card">
-            <p class="eyebrow">Acces</p>
-            <h3>Venir nous voir</h3>
-            <p>
-              Situee a Auvers-sur-Oise, la Maison Rose se decouvre a l'occasion des
-              evenements, expositions et stages.
-            </p>
-          </article>
-        </div>
-      </section>
-    </main>
+  .map { aspect-ratio: 5/3; position: relative; background: var(--cream-2); overflow: hidden; }
+  .map .grid {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px),
+      repeating-linear-gradient(0deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px),
+      linear-gradient(135deg, #F2EBE1 0%, #E8DDD0 100%);
+  }
+  .map .road { position: absolute; }
+  .map .r1 { left: 0; right: 0; top: 55%; height: 3px; background: var(--terre); }
+  .map .r2 { top: 0; bottom: 0; left: 60%; width: 3px; background: var(--terre); }
+  .map .r3 { left: 10%; right: 30%; top: 30%; height: 2px; background: rgba(184,101,79,.5); transform: rotate(8deg); transform-origin: left; }
+  .map .pin {
+    position: absolute; left: 60%; top: 55%;
+    transform: translate(-50%, -100%);
+    width: 32px; height: 32px;
+    background: var(--ink); border-radius: 50% 50% 50% 0;
+    transform: translate(-50%, -100%) rotate(-45deg);
+    z-index: 2;
+  }
+  .map .pin::after { content: ""; position: absolute; inset: 9px; background: var(--rose); border-radius: 50%; }
+  .map .lbl-here {
+    position: absolute; left: 60%; top: 55%; transform: translate(20px, -50%);
+    background: var(--cream); padding: 8px 14px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px;
+    box-shadow: 0 8px 20px -10px rgba(26,22,20,.2);
+    z-index: 3;
+  }
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+  @media (max-width: 1024px) {
+    .place-grid-large { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+    .pg.w { grid-column: span 2; }
+    .history-inner, .visit-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 600px) {
+    .place-grid-large { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+    .pg.t, .pg.w { grid-column: auto; grid-row: auto; }
+    .visit-card { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
+
+<section class="page-hero wrap">
+  <div class="page-hero-grid">
+    <div class="reveal">
+      <div class="crumbs"><a href="index.html">Accueil</a> · Le Lieu</div>
+      <h1>Une maison <em>habitée</em> par l'art et le temps.</h1>
+    </div>
+    <p class="lede reveal d2">Au cœur d'Auvers-sur-Oise, à quelques pas de la maison du docteur Gachet, La Maison Rose ouvre ses portes depuis bientôt quarante ans.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="place-grid-large">
+    <div class="pg t reveal"><div class="ph ph-1"></div><span class="lbl">Façade</span></div>
+    <div class="pg reveal d2"><div class="ph ph-2"></div><span class="lbl">Atelier de gravure</span></div>
+    <div class="pg reveal d3"><div class="ph ph-3"></div><span class="lbl">Bibliothèque de papiers</span></div>
+    <div class="pg w reveal"><div class="ph ph-4"></div><span class="lbl">La presse Hopkinson, 1924</span></div>
+    <div class="pg reveal d2"><div class="ph ph-5"></div><span class="lbl">Encres de Charbonnel</span></div>
+    <div class="pg reveal d3"><div class="ph ph-6"></div><span class="lbl">Le jardin</span></div>
+  </div>
+</section>
+
+<section class="history">
+  <div class="wrap">
+    <div class="history-inner">
+      <div class="history-text reveal">
+        <span class="num-tag">— Histoire</span>
+        <h2>Quatre décennies de <em>gravure.</em></h2>
+        <p>Acquise en 1972 par le peintre Wallerand, la maison du 14 rue des Vignes était d'abord son atelier privé. En 1987, il en fait le siège d'une association ouverte aux artistes de passage et aux apprentis graveurs.</p>
+        <p>Aujourd'hui, le lieu accueille trois ateliers en activité, une presse historique, et continue d'inviter chaque année des artistes en résidence.</p>
+      </div>
+      <div class="timeline reveal d2">
+        <div class="ev"><span class="yr">1972</span><h4>Wallerand s'installe à Auvers</h4><p>Acquisition de la maison de la rue des Vignes.</p></div>
+        <div class="ev"><span class="yr">1987</span><h4>Naissance de l'association</h4><p>Premiers stages d'initiation à la gravure ouverts au public.</p></div>
+        <div class="ev"><span class="yr">1996</span><h4>Acquisition de la presse</h4><p>La presse Hopkinson de 1924 rejoint l'atelier principal.</p></div>
+        <div class="ev"><span class="yr">2009</span><h4>Disparition de Wallerand</h4><p>L'association poursuit son œuvre. Création des Estampes Auversoises.</p></div>
+        <div class="ev"><span class="yr">2018</span><h4>Rénovation des ateliers</h4><p>Trois espaces de travail entièrement repensés.</p></div>
+        <div class="ev"><span class="yr">2026</span><h4>Année anniversaire</h4><p>39 ans d'existence. Programmation spéciale d'expositions.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="visit">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="left reveal">
+        <span class="num-tag">— Visiter</span>
+        <h2>Venir à <span class="it">la Maison.</span></h2>
+      </div>
+      <p class="right reveal d2">L'entrée est libre du mercredi au dimanche, 14h–18h. Pour les groupes et les visites guidées, prendre contact à l'avance.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="visit-card reveal">
+        <h3>Informations pratiques</h3>
+        <div class="row"><span class="k">Adresse</span><span class="v">14 rue des Vignes, 95430 Auvers-sur-Oise</span></div>
+        <div class="row"><span class="k">Ouverture</span><span class="v">Mer–Dim · 14h–18h</span></div>
+        <div class="row"><span class="k">Entrée</span><span class="v">Libre</span></div>
+        <div class="row"><span class="k">Visite guidée</span><span class="v">Sur rendez-vous</span></div>
+        <div class="row"><span class="k">Train</span><span class="v">Ligne H · Auvers-sur-Oise</span></div>
+        <div class="row"><span class="k">Stationnement</span><span class="v">Place de la Mairie</span></div>
+      </div>
+      <div class="visit-text reveal d2">
+        <h2>À deux pas du <em>chemin Daubigny.</em></h2>
+        <p>La Maison Rose se trouve dans le vieux Auvers, à dix minutes à pied de la gare et à proximité immédiate du musée Daubigny et de l'auberge Ravoux.</p>
+        <p>Une visite peut facilement se prolonger par une promenade jusqu'à l'église ou aux champs peints par Van Gogh — un après-midi entier au cœur de l'histoire impressionniste.</p>
+        <a href="contact.html" class="btn btn-primary">Demander un itinéraire <span class="arr">→</span></a>
+      </div>
+    </div>
+    <div class="map reveal" style="margin-top: 60px;">
+      <div class="grid"></div>
+      <div class="road r1"></div>
+      <div class="road r2"></div>
+      <div class="road r3"></div>
+      <span class="pin"></span>
+      <span class="lbl-here">La Maison Rose</span>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+<script src="assets/site.js"></script>
+<script>injectChrome('lieu');</script>
+</body>
 </html>

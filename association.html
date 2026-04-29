@@ -1,64 +1,176 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Association - La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Presentation de l'association La Maison Rose de Wallerand."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="association">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>L'Association — La Maison Rose de Wallerand</title>
+<meta name="description" content="Association loi 1901 dédiée à la gravure et à la transmission. Découvrez nos missions, notre équipe et nos chiffres clés." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .miss { padding: 110px 0; }
+  .miss-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+  .miss .num-tag { display: block; margin-bottom: 18px; }
+  .miss h3 { font-size: 28px; line-height: 1.15; margin-bottom: 14px; }
+  .miss h3 em { font-style: italic; color: var(--terre); }
+  .miss p { color: var(--grey); }
 
-    <main>
-      <section class="page-hero">
-        <div class="shell">
-          <p class="eyebrow">L'association</p>
-          <h1>Une association artistique ancree dans un lieu vivant</h1>
-          <p class="lead">
-            La Maison Rose de Wallerand fait vivre un lieu singulier a
-            Auvers-sur-Oise, entre histoire, gravure, residence et evenements.
-          </p>
-        </div>
-      </section>
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats .stat { padding: 36px 28px; border-right: 1px solid var(--line); }
+  .stats .stat:last-child { border-right: 0; }
+  .stats .n { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 5vw, 72px); color: var(--terre); line-height: 1; display: block; margin-bottom: 10px; }
+  .stats .l { font-size: 12px; letter-spacing: 0.06em; color: var(--grey); line-height: 1.4; }
 
-      <section class="section">
-        <div class="shell text-columns">
-          <article class="content-card">
-            <p class="eyebrow">Mission</p>
-            <h2>Faire vivre un lieu d'art</h2>
-            <p>
-              L'association porte un projet simple et ambitieux: faire de la Maison
-              Rose un lieu d'accueil, de creation, de transmission et de partage.
-            </p>
-            <p>
-              Elle soutient les artistes, organise des stages, propose des
-              evenements et entretient le lien entre patrimoine et creation
-              contemporaine.
-            </p>
-          </article>
+  .team { padding: 130px 0; background: var(--cream-2); }
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .person .img { aspect-ratio: 4/5; position: relative; overflow: hidden; margin-bottom: 18px; }
+  .person .ph { position: absolute; inset: 0; transition: transform 1.2s; }
+  .person:hover .ph { transform: scale(1.05); }
+  .ph-p1 { background: radial-gradient(ellipse at 50% 30%, #C68876, #6B4030); }
+  .ph-p2 { background: radial-gradient(ellipse at 50% 35%, #E8C4B8, #8E4636); }
+  .ph-p3 { background: radial-gradient(ellipse at 50% 30%, #DCD2C4, #4A4540); }
+  .ph-p4 { background: radial-gradient(ellipse at 50% 35%, #B8826F, #2B2522); }
+  .person .role { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--terre); margin-bottom: 6px; display: block; }
+  .person h4 { font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 6px; }
+  .person p { font-size: 14px; color: var(--grey); }
 
-          <article class="content-card">
-            <p class="eyebrow">Histoire</p>
-            <h2>Daubigny, Wallerand, aujourd'hui</h2>
-            <p>
-              Ancien atelier d'ete de Charles-Francois Daubigny, la Maison Rose a
-              garde la memoire des artistes qui l'ont habitee.
-            </p>
-            <p>
-              Plus recemment, Wallerand lui a redonne une energie singuliere.
-              Aujourd'hui, l'association poursuit cet elan en regardant vers
-              l'avenir.
-            </p>
-          </article>
-        </div>
-      </section>
-    </main>
+  .docs { padding: 110px 0; }
+  .docs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .doc {
+    padding: 32px; background: var(--cream-2);
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background .3s, transform .3s;
+  }
+  .doc:hover { background: var(--ink); color: var(--cream); transform: translateY(-4px); }
+  .doc:hover h4, .doc:hover .meta { color: inherit; }
+  .doc h4 { font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 4px; }
+  .doc .meta { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-soft); }
+  .doc .arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid currentColor; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+  @media (max-width: 1024px) {
+    .miss-grid { grid-template-columns: 1fr; gap: 32px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stats .stat:nth-child(2) { border-right: 0; }
+    .stats .stat:nth-child(1), .stats .stat:nth-child(2) { border-bottom: 1px solid var(--line); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .docs-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: 1fr; }
+    .stats .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+    .stats .stat:last-child { border-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
+
+<section class="page-hero wrap">
+  <div class="page-hero-grid">
+    <div class="reveal">
+      <div class="crumbs"><a href="index.html">Accueil</a> · L'Association</div>
+      <h1>Une association de <em>passionnés.</em></h1>
+    </div>
+    <p class="lede reveal d2">La Maison Rose de Wallerand est une association loi 1901, fondée en 1987, portée par un conseil d'administration de neuf membres et une vingtaine de bénévoles.</p>
+  </div>
+</section>
+
+<section class="miss wrap">
+  <div class="sec-head">
+    <div class="left reveal">
+      <span class="num-tag">— Nos missions</span>
+      <h2>Trois <span class="it">engagements.</span></h2>
+    </div>
+    <p class="right reveal d2">Faire vivre un patrimoine artistique vivant, soutenir la création contemporaine, et partager les techniques traditionnelles d'estampe.</p>
+  </div>
+  <div class="miss-grid">
+    <div class="reveal">
+      <span class="num-tag">— 01</span>
+      <h3>Préserver <em>un patrimoine</em></h3>
+      <p>Conservation et entretien d'un atelier complet, d'une presse historique et d'une bibliothèque de papiers anciens. Inventaire annuel des fonds et plaques de Wallerand.</p>
+    </div>
+    <div class="reveal d2">
+      <span class="num-tag">— 02</span>
+      <h3>Soutenir <em>la création</em></h3>
+      <p>Trois résidences d'artistes par an, bourses de tirage, accueil de projets en cours. Mise à disposition gratuite de l'atelier pour les artistes adhérents.</p>
+    </div>
+    <div class="reveal d3">
+      <span class="num-tag">— 03</span>
+      <h3>Transmettre <em>un savoir</em></h3>
+      <p>Une trentaine de stages par saison, des journées portes ouvertes, des partenariats avec les écoles d'Auvers et la médiathèque du Val-d'Oise.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="stats">
+    <div class="stat reveal"><span class="n">39</span><span class="l">années d'existence</span></div>
+    <div class="stat reveal d2"><span class="n">240</span><span class="l">artistes accueillis depuis 1987</span></div>
+    <div class="stat reveal d3"><span class="n">32</span><span class="l">stages par saison</span></div>
+    <div class="stat reveal d4"><span class="n">1 924</span><span class="l">épreuves tirées en 2025</span></div>
+  </div>
+</section>
+
+<section class="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="left reveal">
+        <span class="num-tag">— Le bureau</span>
+        <h2>Celles et ceux qui <span class="it">portent la Maison.</span></h2>
+      </div>
+      <p class="right reveal d2">Un conseil d'administration bénévole, élu en assemblée générale chaque année, et soutenu par une vingtaine de bénévoles actifs.</p>
+    </div>
+    <div class="team-grid">
+      <div class="person reveal">
+        <div class="img"><div class="ph ph-p1"></div></div>
+        <span class="role">— Présidente</span>
+        <h4>Hélène Brunet</h4>
+        <p>Graveuse, ancienne résidente, en charge de la programmation artistique.</p>
+      </div>
+      <div class="person reveal d2">
+        <div class="img"><div class="ph ph-p2"></div></div>
+        <span class="role">— Trésorier</span>
+        <h4>Pierre Lacombe</h4>
+        <p>Chef d'entreprise retraité, gestion financière et partenariats.</p>
+      </div>
+      <div class="person reveal d3">
+        <div class="img"><div class="ph ph-p3"></div></div>
+        <span class="role">— Secrétaire</span>
+        <h4>Anne Reverdy</h4>
+        <p>Historienne de l'art, archives, communication et publications.</p>
+      </div>
+      <div class="person reveal d4">
+        <div class="img"><div class="ph ph-p4"></div></div>
+        <span class="role">— Vice-présidente</span>
+        <h4>Marthe Vernier</h4>
+        <p>Enseignante en arts plastiques, coordination des stages et résidences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs wrap">
+  <div class="sec-head">
+    <div class="left reveal">
+      <span class="num-tag">— Documents</span>
+      <h2>Transparence &amp; <span class="it">archives.</span></h2>
+    </div>
+    <p class="right reveal d2">Conformément à notre statut associatif, l'ensemble de nos documents officiels est consultable et téléchargeable.</p>
+  </div>
+  <div class="docs-grid">
+    <a href="#" class="doc reveal"><div><h4>Statuts de l'association</h4><span class="meta">PDF · 4 pages · 2024</span></div><span class="arrow">↓</span></a>
+    <a href="#" class="doc reveal d2"><div><h4>Rapport moral 2025</h4><span class="meta">PDF · 12 pages</span></div><span class="arrow">↓</span></a>
+    <a href="#" class="doc reveal"><div><h4>Bilan financier 2025</h4><span class="meta">PDF · 8 pages</span></div><span class="arrow">↓</span></a>
+    <a href="#" class="doc reveal d2"><div><h4>Programme saison 2026</h4><span class="meta">PDF · 24 pages</span></div><span class="arrow">↓</span></a>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+<script src="assets/site.js"></script>
+<script>injectChrome('assoc');</script>
+</body>
 </html>

@@ -1,53 +1,133 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Evenements - La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Agenda artistique de la Maison Rose de Wallerand."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="evenements">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Événements — La Maison Rose de Wallerand</title>
+<meta name="description" content="Estampes Auversoises, vernissages, concerts au jardin, lectures et résidences. Le calendrier d'une saison à La Maison Rose." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .feat { padding: 80px 0 120px; }
+  .feat-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
+  .feat .tag { display: inline-block; padding: 6px 14px; background: var(--terre); color: var(--cream); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 28px; }
+  .feat h2 { font-size: clamp(48px, 6vw, 86px); line-height: 1; margin-bottom: 24px; }
+  .feat h2 .it { font-style: italic; color: var(--terre); }
+  .feat-meta { display: flex; gap: 36px; margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .feat-meta div .lbl { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); margin-bottom: 6px; }
+  .feat-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--ink); }
+  .feat p { color: var(--grey); margin-bottom: 32px; max-width: 480px; }
+  .feat-visual { aspect-ratio: 4/5; position: relative; }
+  .feat-visual .img { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(184,101,79,.85), rgba(26,22,20,.85)), repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 2px, transparent 2px 9px); overflow: hidden; }
+  .feat-visual .img::before { content: "Estampes"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); font-family: 'Cormorant Garamond', serif; font-size: clamp(60px, 9vw, 130px); font-style: italic; color: rgba(250,246,241,.92); line-height: 0.9; text-align: center; }
+  .feat-visual .img::after { content: "Auversoises 2026"; position: absolute; bottom: 8%; left: 0; right: 0; text-align: center; font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--rose); font-family: 'Inter', sans-serif; }
+  .feat-corner { position: absolute; top: -14px; right: -14px; width: 110px; height: 110px; background: var(--rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: rotate(8deg); z-index: 2; text-align: center; }
+  .feat-corner span { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--ink); line-height: 1.2; }
+  .feat-corner span strong { display: block; font-style: normal; font-size: 22px; }
 
-    <main>
-      <section class="page-hero">
-        <div class="shell">
-          <p class="eyebrow">Agenda</p>
-          <h1>Evenements artistiques</h1>
-          <p class="lead">
-            Expositions, rencontres et rendez-vous autour de la gravure et de la
-            creation.
-          </p>
-          <p>
-            Le client pourra ajouter de nouveaux evenements depuis <code>/admin</code>
-            sans toucher au code.
-          </p>
-        </div>
-      </section>
+  .agenda { padding: 110px 0; background: var(--cream-2); }
+  .ev-row {
+    display: grid; grid-template-columns: 140px 1fr 1fr auto;
+    gap: 40px; align-items: center;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    transition: background .3s;
+  }
+  .ev-row:hover { background: rgba(255,255,255,.5); padding-left: 16px; padding-right: 16px; margin: 0 -16px; }
+  .ev-date { font-family: 'Cormorant Garamond', serif; }
+  .ev-date .day { font-size: 56px; line-height: 0.9; color: var(--terre); display: block; }
+  .ev-date .mo { font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey); margin-top: 6px; display: block; font-family: 'Inter', sans-serif; }
+  .ev-row h3 { font-size: 26px; line-height: 1.15; margin-bottom: 6px; }
+  .ev-row h3 em { font-style: italic; color: var(--terre); }
+  .ev-row .ev-cat { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-soft); }
+  .ev-row p { font-size: 14px; color: var(--grey); }
+  .ev-row .ev-action { display: flex; gap: 10px; align-items: center; }
+  .ev-row .arrow {
+    width: 44px; height: 44px;
+    border-radius: 50%; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .3s;
+  }
+  .ev-row:hover .arrow { background: var(--ink); border-color: var(--ink); color: var(--cream); }
 
-      <section class="section">
-        <div class="shell">
-          <div class="note-card">
-            <p class="eyebrow">Reservation</p>
-            <p>
-              Si un evenement a besoin d'un lien de reservation, il suffit de
-              renseigner le champ HelloAsso dans le CMS. Sinon la fiche peut rester
-              en entree libre.
-            </p>
-          </div>
-        </div>
-      </section>
+  .past { padding: 100px 0; }
+  .past-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  .past-card .img { aspect-ratio: 4/3; position: relative; overflow: hidden; margin-bottom: 18px; }
+  .past-card .img .ph { position: absolute; inset: 0; transition: transform 1.2s; }
+  .past-card:hover .img .ph { transform: scale(1.04); }
+  .past-card .img .ph.a { background: linear-gradient(135deg, #B8654F 0%, #2B2522 100%); }
+  .past-card .img .ph.a::after { content: ""; position: absolute; inset: 25%; border: 1px solid var(--rose); }
+  .past-card .img .ph.b { background: radial-gradient(circle at 50% 30%, #E8C4B8, #8E4636 80%); }
+  .past-card .img .ph.b::after { content: ""; position: absolute; inset: 30% 25% 0; background: linear-gradient(180deg, #6B4030, #2B2522); }
+  .past-card .img .ph.c { background: linear-gradient(180deg, #F2EBE1, #DCD2C4); }
+  .past-card .img .ph.c::after { content: ""; position: absolute; inset: 20%; background: repeating-linear-gradient(45deg, rgba(26,22,20,.4) 0 1px, transparent 1px 8px); }
+  .past-card .yr { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--terre); margin-bottom: 6px; display: block; }
+  .past-card h4 { font-size: 22px; }
 
-      <section class="section">
-        <div class="shell listing-stack" id="events-list"></div>
-      </section>
-    </main>
+  @media (max-width: 1024px) {
+    .feat-grid { grid-template-columns: 1fr; gap: 50px; }
+    .ev-row { grid-template-columns: 100px 1fr; gap: 20px; }
+    .ev-row .ev-action, .ev-row p { display: none; }
+    .past-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .past-grid { grid-template-columns: 1fr; }
+    .ev-date .day { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+<section class="page-hero wrap">
+  <div class="page-hero-grid">
+    <div class="reveal">
+      <div class="crumbs"><a href="index.html">Accueil</a> · Événements</div>
+      <h1>Une saison <em>vivante.</em></h1>
+    </div>
+    <p class="lede reveal d2">Estampes Auversoises, expositions, vernissages, concerts au jardin et lectures : la Maison s'ouvre régulièrement au public. Entrée libre la plupart du temps.</p>
+  </div>
+</section>
+
+<section class="feat wrap" id="events-featured">
+  <div class="empty-note">Chargement de l'événement à la une…</div>
+</section>
+
+<section class="agenda">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="left reveal">
+        <span class="num-tag">— Agenda 2026</span>
+        <h2>Tous les <span class="it">rendez-vous.</span></h2>
+      </div>
+      <p class="right reveal d2">Une dizaine de rendez-vous publics par saison. Inscription en ligne pour les soirées sur réservation.</p>
+    </div>
+
+    <div class="ev-list reveal" id="events-upcoming">
+      <div class="empty-note">Chargement des rendez-vous…</div>
+    </div>
+  </div>
+</section>
+
+<section class="past wrap">
+  <div class="sec-head">
+    <div class="left reveal">
+      <span class="num-tag">— Archives</span>
+      <h2>Saisons <span class="it">passées.</span></h2>
+    </div>
+    <p class="right reveal d2">Quelques rendez-vous marquants des dernières années.</p>
+  </div>
+  <div class="past-grid" id="events-past">
+    <div class="empty-note">Chargement des archives…</div>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+<script src="assets/site.js"></script>
+<script>injectChrome('events');</script>
+</body>
 </html>

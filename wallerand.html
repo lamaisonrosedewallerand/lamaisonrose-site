@@ -1,59 +1,161 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Wallerand - La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Artistes, residences et esprit du lieu a la Maison Rose de Wallerand."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="wallerand">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wallerand — La Maison Rose de Wallerand</title>
+<meta name="description" content="Hommage à Wallerand (1934–2009), peintre et graveur fondateur de La Maison Rose à Auvers-sur-Oise." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .w-hero { background: var(--ink); color: #E8DDD0; padding: 100px 0 110px; position: relative; overflow: hidden; border-bottom: 0; }
+  .w-hero::before { content: ""; position: absolute; top: -10%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(184,101,79,.18), transparent 70%); }
+  .w-hero .crumbs { color: rgba(232,221,208,.6); margin-bottom: 22px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .w-hero .crumbs a:hover { color: var(--rose); }
+  .w-hero-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: center; position: relative; }
+  .w-portrait { aspect-ratio: 3/4; position: relative; overflow: hidden; }
+  .w-portrait .ph { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 35%, #C68876 0%, #6B4030 60%, #2B2522 100%); }
+  .w-portrait .ph::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, rgba(0,0,0,0) 0 14%, rgba(0,0,0,.55) 50%), repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 4px); }
+  .w-portrait .corner { position: absolute; width: 30px; height: 30px; border: 1px solid var(--rose); }
+  .w-portrait .corner.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+  .w-portrait .corner.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+  .w-text h1 { color: var(--cream); font-size: clamp(48px, 6vw, 90px); line-height: 1; margin: 16px 0 24px; }
+  .w-text h1 em { color: var(--rose); font-style: italic; }
+  .w-text .yrs { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--rose); margin-bottom: 28px; }
+  .w-text p { color: rgba(232,221,208,.78); margin-bottom: 18px; max-width: 580px; }
 
-    <main>
-      <section class="page-hero">
-        <div class="shell">
-          <p class="eyebrow">Wallerand</p>
-          <h1>Un lieu pour les artistes</h1>
-          <p class="lead">
-            La Maison Rose affirme sa vocation de residence et de lieu de creation.
-          </p>
-          <p>
-            Cette page peut accueillir plus tard une collection Decap CMS dediee aux
-            artistes si vous souhaitez rendre cette partie editable par formulaire.
-          </p>
-        </div>
-      </section>
+  .bio { padding: 130px 0; }
+  .bio-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; }
+  .bio aside { position: sticky; top: 100px; align-self: start; }
+  .bio aside h4 { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 18px; color: var(--terre); }
+  .bio aside ul { list-style: none; }
+  .bio aside li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .bio aside li a:hover { color: var(--terre); }
+  .bio article h2 { font-size: clamp(36px, 4vw, 56px); line-height: 1.05; margin: 36px 0 24px; }
+  .bio article h2:first-child { margin-top: 0; }
+  .bio article h2 em { font-style: italic; color: var(--terre); }
+  .bio article p { color: var(--grey); margin-bottom: 18px; max-width: 640px; }
+  .bio article .pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-style: italic;
+    color: var(--ink); padding: 30px 0 30px 30px;
+    border-left: 2px solid var(--terre);
+    margin: 40px 0;
+    line-height: 1.4;
+  }
+  .bio article .pull .sign { display: block; margin-top: 14px; font-size: 18px; font-family: 'Caveat', cursive; color: var(--terre); }
 
-      <section class="section">
-        <div class="shell text-columns">
-          <article class="content-card">
-            <p class="eyebrow">Ambition</p>
-            <h2>Etre reconnu comme residence d'artistes</h2>
-            <p>
-              L'ambition du lieu est claire: consolider sa place comme maison d'art
-              vivante a Auvers-sur-Oise, capable d'accueillir des artistes et de
-              faire dialoguer patrimoine et present.
-            </p>
-          </article>
+  .works { padding: 130px 0; background: var(--cream-2); }
+  .works h2 { font-size: clamp(36px, 4.4vw, 60px); margin-bottom: 50px; }
+  .works h2 em { font-style: italic; color: var(--terre); }
+  .works-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .work { aspect-ratio: 4/5; position: relative; overflow: hidden; cursor: pointer; }
+  .work .ph { position: absolute; inset: 0; transition: transform 1.2s; }
+  .work:hover .ph { transform: scale(1.05); }
+  .work .cap { position: absolute; bottom: 14px; left: 14px; right: 14px; background: rgba(250,246,241,.95); padding: 8px 12px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; opacity: 0; transform: translateY(8px); transition: all .35s; }
+  .work:hover .cap { opacity: 1; transform: none; }
+  .w-1 { background: linear-gradient(135deg, #B8654F, #2B2522); }
+  .w-2 { background: radial-gradient(circle at 30% 40%, #E8C4B8, #6B4030 80%); }
+  .w-3 { background: linear-gradient(180deg, #F2EBE1, #DCD2C4); }
+  .w-3::after { content: ""; position: absolute; inset: 20%; background: repeating-linear-gradient(45deg, rgba(26,22,20,.5) 0 1px, transparent 1px 8px); }
+  .w-4 { background: linear-gradient(160deg, #E8C4B8, #8E4636); }
+  .w-5 { background: radial-gradient(circle at 60% 50%, #DCD2C4, #6B4030); }
+  .w-6 { background: linear-gradient(180deg, #2B2522, #1A1614); }
+  .w-6::after { content: ""; position: absolute; inset: 30%; background: radial-gradient(ellipse, rgba(232,196,184,.7), transparent 70%); }
+  .w-7 { background: linear-gradient(45deg, #C68876, #2B2522); }
+  .w-8 { background: linear-gradient(135deg, #F2EBE1, #B8826F); }
 
-          <article class="content-card">
-            <p class="eyebrow">Transmission</p>
-            <h2>Un esprit de creation partagee</h2>
-            <p>
-              Le site garde une place pour raconter les residences, les projets
-              artistiques et les filiations autour de Wallerand sans imposer de
-              structure technique lourde.
-            </p>
-          </article>
-        </div>
-      </section>
-    </main>
+  @media (max-width: 1024px) {
+    .w-hero-grid { grid-template-columns: 1fr; gap: 50px; }
+    .bio-grid { grid-template-columns: 1fr; gap: 40px; }
+    .bio aside { position: static; }
+    .works-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+<section class="w-hero">
+  <div class="wrap">
+    <div class="w-hero-grid">
+      <div class="w-portrait reveal">
+        <div class="ph"></div>
+        <div class="corner tl"></div>
+        <div class="corner br"></div>
+      </div>
+      <div class="w-text reveal d2">
+        <div class="crumbs"><a href="index.html">Accueil</a> · Wallerand</div>
+        <span class="num-tag" style="color: var(--rose);">— Hommage</span>
+        <h1>Wallerand,<br/><em>la main et le silence.</em></h1>
+        <p class="yrs">Paris, 1934 — Auvers-sur-Oise, 2009</p>
+        <p>Peintre et graveur, Wallerand s'établit à Auvers-sur-Oise en 1972. C'est dans cette maison qu'il fonde, vingt ans plus tard, l'atelier dont les portes ne se sont jamais refermées.</p>
+        <p>Son œuvre — paysages de l'Oise, portraits, eaux-fortes — dialogue avec la grande tradition impressionniste tout en s'en émancipant. La transmission fut, pour lui, indissociable du métier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bio">
+  <div class="wrap">
+    <div class="bio-grid">
+      <aside class="reveal">
+        <h4>Repères</h4>
+        <ul>
+          <li><a href="#origines">Origines</a></li>
+          <li><a href="#auvers">Auvers, 1972</a></li>
+          <li><a href="#oeuvre">L'œuvre gravée</a></li>
+          <li><a href="#transmission">Transmission</a></li>
+          <li><a href="#heritage">Héritage</a></li>
+        </ul>
+      </aside>
+      <article class="reveal d2">
+        <h2 id="origines">Origines, <em>années d'apprentissage</em></h2>
+        <p>Né à Paris en 1934 dans une famille de typographes, Wallerand grandit entre les casses de plomb et les odeurs d'encre. Il fréquente l'École des Beaux-Arts à partir de 1953, où il suit l'enseignement de Maurice Brianchon en peinture et de Lucien Coutaud en gravure.</p>
+        <p>Premiers envois au Salon d'Automne en 1958. Première exposition personnelle à la galerie Drouant en 1962, autour d'une série de paysages parisiens.</p>
+
+        <h2 id="auvers">Auvers, <em>1972</em></h2>
+        <p>L'achat de la maison de la rue des Vignes marque un tournant. Wallerand quitte progressivement Paris, installe son atelier dans la grande pièce du rez-de-chaussée, et commence à travailler sur ce qui deviendra son cycle le plus connu : les paysages de l'Oise.</p>
+
+        <p class="pull">« On ne grave pas pour reproduire le monde, on grave pour s'y inscrire. »<span class="sign">— Lettre à Henri Cueco, 1981</span></p>
+
+        <h2 id="oeuvre">L'œuvre <em>gravée</em></h2>
+        <p>Près de quatre cents plaques gravées entre 1965 et 2007. Pointe sèche, eau-forte, aquatinte — Wallerand explore toutes les techniques de la taille-douce, avec une prédilection pour les noirs profonds et les blancs réservés.</p>
+        <p>Son atelier est répertorié auprès de la Bibliothèque nationale de France depuis 1989. Plusieurs musées (Musée d'Art Moderne de la Ville de Paris, Musée Daubigny, Cabinet des Estampes de Lille) conservent des épreuves de ses tirages.</p>
+
+        <h2 id="transmission">Transmission</h2>
+        <p>« Apprendre est la moitié du métier. Enseigner est l'autre. » Cette phrase, souvent répétée, résume la conviction de Wallerand. Dès 1987, il ouvre la maison aux artistes, puis aux apprentis. Trente-cinq résidences successives, plus de deux cents stages, et une génération entière de graveurs francophones formée — au moins en partie — entre ces murs.</p>
+
+        <h2 id="heritage">Héritage</h2>
+        <p>Disparu en 2009, Wallerand a légué l'intégralité de son fonds à l'association. Plaques, presses, papiers, bibliothèque, correspondances : tout est conservé sur place, consultable sur rendez-vous par les chercheurs et les artistes.</p>
+        <p>Une biographie complète, signée Hélène Brunet, paraîtra aux éditions du Buisson en 2027.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="works">
+  <div class="wrap">
+    <h2 class="reveal">Quelques <em>œuvres</em>.</h2>
+    <div class="works-grid">
+      <div class="work reveal"><div class="ph w-1"></div><span class="cap">Champ d'Auvers, 1978</span></div>
+      <div class="work reveal d2"><div class="ph w-2"></div><span class="cap">Visage de Marthe, 1981</span></div>
+      <div class="work reveal d3"><div class="ph w-3"></div><span class="cap">Le grand mur, 1985</span></div>
+      <div class="work reveal d4"><div class="ph w-4"></div><span class="cap">Tilleuls, été, 1989</span></div>
+      <div class="work reveal"><div class="ph w-5"></div><span class="cap">Suite de l'Oise IV, 1992</span></div>
+      <div class="work reveal d2"><div class="ph w-6"></div><span class="cap">Nuit, 1995</span></div>
+      <div class="work reveal d3"><div class="ph w-7"></div><span class="cap">Auberge, 1999</span></div>
+      <div class="work reveal d4"><div class="ph w-8"></div><span class="cap">Le jardin, 2003</span></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+<script src="assets/site.js"></script>
+<script>injectChrome('wallerand');</script>
+</body>
 </html>

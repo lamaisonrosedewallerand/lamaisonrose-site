@@ -1,54 +1,156 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Stages - La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Stages de gravure a la Maison Rose de Wallerand."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="stages">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stages &amp; Cours — La Maison Rose de Wallerand</title>
+<meta name="description" content="Stages de gravure à Auvers-sur-Oise : pointe sèche, taille-douce, aquatinte, lithographie. Tous niveaux, petits groupes." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .filters {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    padding: 32px 0 60px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 60px;
+  }
+  .filter {
+    padding: 10px 18px; border-radius: 999px;
+    border: 1px solid var(--line); background: transparent;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--grey); cursor: pointer;
+    font-family: inherit; transition: all .25s;
+  }
+  .filter:hover { border-color: var(--ink); color: var(--ink); }
+  .filter.on { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 
-    <main>
-      <section class="page-hero">
-        <div class="shell">
-          <p class="eyebrow">Cours et stages</p>
-          <h1>Stages de gravure</h1>
-          <p class="lead">
-            La Maison Rose propose des stages de gravure dans un cadre artistique,
-            exigeant et accessible.
-          </p>
-          <p>
-            Chaque fiche stage affiche automatiquement les informations saisies dans
-            le CMS: date, horaire, niveau, tarif, nombre de places et lien
-            HelloAsso.
-          </p>
-        </div>
-      </section>
+  .stage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-bottom: 80px; }
+  .stage-card { transition: transform .5s ease; }
+  .stage-card:hover { transform: translateY(-6px); }
+  .stage-img { position: relative; aspect-ratio: 4/5; overflow: hidden; margin-bottom: 24px; background: var(--cream-2); }
+  .stage-img .ph { position: absolute; inset: 0; transition: transform 1.2s ease; }
+  .stage-card:hover .stage-img .ph { transform: scale(1.04); }
+  .stage-img .ph.a { background: radial-gradient(ellipse at 60% 40%, rgba(232,196,184,.6), transparent 60%), linear-gradient(135deg, #C68876 0%, #8E4636 100%); }
+  .stage-img .ph.a::after { content: ""; position: absolute; inset: 18% 22%; background: repeating-linear-gradient(90deg, rgba(26,22,20,.7) 0 1px, transparent 1px 12px), repeating-linear-gradient(0deg, rgba(26,22,20,.5) 0 1px, transparent 1px 14px); border: 2px solid rgba(26,22,20,.7); }
+  .stage-img .ph.b { background: linear-gradient(180deg, #F2EBE1 0%, #DCD2C4 100%); }
+  .stage-img .ph.b::after { content: ""; position: absolute; inset: 12%; background: radial-gradient(circle at 30% 40%, rgba(26,22,20,.85) 0 12%, transparent 13%), radial-gradient(circle at 70% 30%, rgba(26,22,20,.65) 0 8%, transparent 9%), radial-gradient(circle at 50% 70%, rgba(184,101,79,.75) 0 14%, transparent 15%), radial-gradient(circle at 25% 75%, rgba(26,22,20,.5) 0 6%, transparent 7%); }
+  .stage-img .ph.c { background: linear-gradient(160deg, #E8C4B8, #D4A09A 60%, #B8826F); }
+  .stage-img .ph.c::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(35deg, rgba(26,22,20,.16) 0 1px, transparent 1px 7px), repeating-linear-gradient(-35deg, rgba(26,22,20,.1) 0 1px, transparent 1px 9px); }
+  .stage-img .ph.d { background: linear-gradient(180deg, #2B2522, #1A1614); }
+  .stage-img .ph.d::after { content: ""; position: absolute; inset: 20%; background: radial-gradient(ellipse at 50% 50%, rgba(232,196,184,.7), transparent 60%); }
+  .stage-img .ph.e { background: linear-gradient(160deg, #DCD2C4, #B8826F); }
+  .stage-img .ph.e::after { content: ""; position: absolute; inset: 25%; background: linear-gradient(45deg, #6B4030 0%, #2B2522 100%); transform: rotate(15deg); }
+  .stage-img .ph.f { background: radial-gradient(circle at 40% 30%, #F2EBE1, #E8C4B8 70%); }
+  .stage-img .ph.f::after { content: ""; position: absolute; inset: 30% 25%; border: 2px solid rgba(26,22,20,.6); background: repeating-linear-gradient(0deg, transparent 0 10px, rgba(26,22,20,.15) 10px 11px); }
+  .stage-img .badge { position: absolute; top: 16px; left: 16px; padding: 6px 12px; background: var(--cream); color: var(--ink); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; z-index: 2; }
+  .stage-img .pricetag { position: absolute; bottom: 16px; right: 16px; background: var(--ink); color: var(--cream); padding: 10px 16px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; z-index: 2; }
+  .stage-card h3 { font-size: 26px; line-height: 1.15; margin-bottom: 12px; }
+  .stage-card .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; color: var(--grey-soft); margin-bottom: 14px; letter-spacing: 0.04em; }
+  .stage-card .meta span::before { content: "— "; color: var(--terre); }
+  .stage-card .meta span:first-child::before { content: ""; }
+  .stage-card p { font-size: 14px; color: var(--grey); margin-bottom: 18px; }
+  .stage-card .actions { display: flex; gap: 12px; align-items: center; }
+  .stage-card .reg {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 999px;
+    background: var(--ink); color: var(--cream);
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    transition: background .25s, transform .25s;
+  }
+  .stage-card .reg:hover { background: var(--terre); transform: translateY(-1px); }
+  .stage-card .more {
+    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--grey); transition: color .25s;
+  }
+  .stage-card .more:hover { color: var(--terre); }
 
-      <section class="section">
-        <div class="shell">
-          <div class="note-card">
-            <p class="eyebrow">Fonctionnement</p>
-            <p>
-              Le site ne prend pas de paiement. Si un stage est ouvert et qu'un lien
-              HelloAsso est renseigne, le bouton d'inscription apparait
-              automatiquement.
-            </p>
-          </div>
-        </div>
-      </section>
+  .info-block { background: var(--cream-2); padding: 100px 0; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+  .info-block h2 { font-size: clamp(36px, 4vw, 56px); line-height: 1.05; margin-bottom: 60px; max-width: 18ch; }
+  .info-block h2 em { font-style: italic; color: var(--terre); }
+  .info-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; margin-bottom: 12px;
+  }
+  .info-card .num-tag { display: block; margin-bottom: 16px; }
+  .info-card p { font-size: 15px; color: var(--grey); }
 
-      <section class="section">
-        <div class="shell listing-stack" id="stages-list"></div>
-      </section>
-    </main>
+  @media (max-width: 1024px) {
+    .stage-grid { grid-template-columns: repeat(2, 1fr); }
+    .info-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    .stage-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+<section class="page-hero wrap">
+  <div class="page-hero-grid">
+    <div class="reveal">
+      <div class="crumbs"><a href="index.html">Accueil</a> · Stages &amp; Cours</div>
+      <h1>Apprendre <em>le geste,</em> l'encre, la presse.</h1>
+    </div>
+    <p class="lede reveal d2">Tout au long de l'année, des graveurs en résidence vous initient aux techniques traditionnelles. Petits groupes (5 à 7 personnes), matériel fourni, presse Hopkinson de 1924.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="filters reveal">
+    <button class="filter on" data-f="all">Tous les stages</button>
+    <button class="filter" data-f="deb">Débutant</button>
+    <button class="filter" data-f="int">Intermédiaire</button>
+    <button class="filter" data-f="adv">Avancé</button>
+    <button class="filter" data-f="open">Ouverts</button>
+  </div>
+
+  <div class="stage-grid" id="stages-grid">
+    <div class="empty-note">Chargement des stages…</div>
+  </div>
+</div>
+
+<section class="wrap archive-block" id="stages-archives-wrap" hidden>
+  <div class="sec-head">
+    <div class="left reveal">
+      <span class="num-tag">— Archives</span>
+      <h2>Stages <span class="it">passés.</span></h2>
+    </div>
+    <p class="right reveal d2">Les ateliers terminés restent visibles ici pour garder une mémoire du programme.</p>
+  </div>
+  <div class="stage-grid archive-grid" id="stages-archives"></div>
+</section>
+
+<section class="info-block">
+  <div class="wrap">
+    <h2 class="reveal">Tout ce qu'il faut <em>savoir</em> avant de venir.</h2>
+    <div class="info-grid">
+      <div class="info-card reveal">
+        <span class="num-tag">— 01</span>
+        <h4>Matériel</h4>
+        <p>Le matériel (cuivre, encres, papiers, outils) est intégralement fourni. Vous repartez avec vos épreuves originales — comptez 3 à 5 tirages par stage.</p>
+      </div>
+      <div class="info-card reveal d2">
+        <span class="num-tag">— 02</span>
+        <h4>Tarifs adhérents</h4>
+        <p>Les adhérents bénéficient de 15% de remise sur l'ensemble des stages. L'adhésion (à partir de 30€/an) s'amortit dès le second stage.</p>
+      </div>
+      <div class="info-card reveal d3">
+        <span class="num-tag">— 03</span>
+        <h4>Annulation</h4>
+        <p>Remboursement intégral jusqu'à 15 jours avant le stage. En-deçà, report possible sur une autre date dans la saison.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+<script src="assets/site.js"></script>
+<script>injectChrome('stages');</script>
+</body>
 </html>

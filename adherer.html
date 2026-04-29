@@ -1,60 +1,219 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Adherer - La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Adhesion a l'association La Maison Rose de Wallerand."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="adherer">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adhérer — La Maison Rose de Wallerand</title>
+<meta name="description" content="Soutenez la création et rejoignez La Maison Rose de Wallerand. Adhésion à partir de 30€/an via HelloAsso." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .join { background: var(--rose); padding: 130px 0; position: relative; overflow: hidden; }
+  .join::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(26,22,20,.025) 0 1px, transparent 1px 14px); pointer-events: none; }
+  .join-head { text-align: center; margin-bottom: 70px; position: relative; }
+  .join-head .crumbs { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terre-dark); margin-bottom: 22px; }
+  .join-head .crumbs a:hover { color: var(--ink); }
+  .join-head h1 { font-size: clamp(48px, 6vw, 86px); line-height: 1; max-width: 880px; margin: 0 auto 24px; }
+  .join-head h1 em { font-style: italic; }
+  .join-head p { max-width: 540px; margin: 0 auto; color: var(--ink-soft); font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; }
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; position: relative; }
+  .tier { background: var(--cream); padding: 44px 36px; position: relative; transition: transform .4s ease, box-shadow .4s ease; }
+  .tier:hover { transform: translateY(-8px); box-shadow: 0 30px 50px -30px rgba(26,22,20,.3); }
+  .tier.featured { background: var(--ink); color: var(--cream); }
+  .tier .lvl { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--terre); margin-bottom: 28px; }
+  .tier.featured .lvl { color: var(--rose); }
+  .tier h3 { font-size: 30px; line-height: 1.1; margin-bottom: 8px; color: inherit; }
+  .tier .price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 28px; font-family: 'Cormorant Garamond', serif; }
+  .tier .price .a { font-size: 56px; line-height: 1; color: var(--ink); }
+  .tier.featured .price .a { color: var(--cream); }
+  .tier .price .b { font-size: 18px; color: var(--grey); font-style: italic; }
+  .tier.featured .price .b { color: var(--rose); }
+  .tier ul { list-style: none; margin-bottom: 36px; }
+  .tier li { padding: 10px 0; border-bottom: 1px solid rgba(26,22,20,.1); font-size: 14px; color: var(--grey); display: flex; gap: 10px; align-items: flex-start; }
+  .tier.featured li { color: rgba(232,221,208,.78); border-bottom-color: rgba(232,221,208,.15); }
+  .tier li::before { content: "—"; color: var(--terre); flex-shrink: 0; }
+  .tier.featured li::before { color: var(--rose); }
+  .tier .btn { width: 100%; justify-content: center; }
+  .tier.featured .btn-primary { background: var(--rose); color: var(--ink); }
+  .tier.featured .btn-primary:hover { background: var(--cream); }
+  .tier .ribbon { position: absolute; top: -14px; right: 24px; background: var(--terre); color: var(--cream); padding: 6px 14px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; }
 
-    <main>
-      <section class="page-hero">
-        <div class="shell">
-          <p class="eyebrow">Adhesion</p>
-          <h1>Rejoindre la Maison Rose de Wallerand</h1>
-          <p class="lead">
-            Adherer a l'association, c'est soutenir un lieu artistique independant
-            et recevoir les informations sur ses activites.
-          </p>
-        </div>
-      </section>
+  .why { padding: 130px 0; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .why h2 { font-size: clamp(40px, 4.6vw, 64px); line-height: 1.05; margin-bottom: 24px; }
+  .why h2 em { font-style: italic; color: var(--terre); }
+  .why p { color: var(--grey); margin-bottom: 18px; max-width: 480px; }
+  .why .pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-style: italic;
+    color: var(--ink); padding: 30px 0 30px 30px;
+    border-left: 2px solid var(--terre);
+    margin: 32px 0 0;
+    line-height: 1.4;
+  }
+  .why .pull .sign { display: block; margin-top: 14px; font-size: 18px; font-family: 'Caveat', cursive; color: var(--terre); }
+  .why-img { aspect-ratio: 5/6; position: relative; overflow: hidden; }
+  .why-img .ph { position: absolute; inset: 0; background: linear-gradient(135deg, #E8C4B8, #B8826F 60%, #6B4030); }
+  .why-img .ph::after { content: ""; position: absolute; inset: 20%; border: 1px solid rgba(250,246,241,.5); }
 
-      <section class="section">
-        <div class="shell text-columns">
-          <article class="content-card">
-            <p class="eyebrow">Pourquoi adherer</p>
-            <h2>Soutenir un projet culturel vivant</h2>
-            <p>
-              L'adhesion permet de soutenir un projet culturel vivant, de suivre
-              l'actualite du lieu et, selon les modalites retenues, de beneficier
-              d'avantages sur certaines activites.
-            </p>
-          </article>
+  .donate { padding: 110px 0; background: var(--cream-2); text-align: center; }
+  .donate h2 { font-size: clamp(36px, 4vw, 56px); margin-bottom: 18px; }
+  .donate h2 em { font-style: italic; color: var(--terre); }
+  .donate p { max-width: 540px; margin: 0 auto 30px; color: var(--grey); }
+  .donate .amounts { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 26px; }
+  .donate .amt { padding: 14px 28px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--ink); transition: all .25s; }
+  .donate .amt:hover, .donate .amt.on { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .donate small { display: block; margin-top: 18px; color: var(--grey-soft); font-size: 12px; letter-spacing: 0.04em; }
 
-          <article class="content-card">
-            <p class="eyebrow">Paiement</p>
-            <h2>Adhesion en ligne via HelloAsso</h2>
-            <p>
-              Le site ne gere pas d'encaissement. Le bouton ci-dessous doit pointer
-              vers la page HelloAsso officielle de l'association.
-            </p>
-            <div class="button-row">
-              <a class="button" href="https://www.helloasso.com/" target="_blank" rel="noreferrer">
-                Ouvrir HelloAsso
-              </a>
-            </div>
-          </article>
-        </div>
-      </section>
-    </main>
+  .faq { padding: 130px 0; }
+  .faq h2 { font-size: clamp(36px, 4vw, 56px); margin-bottom: 50px; }
+  .faq h2 em { font-style: italic; color: var(--terre); }
+  .faq-item { border-top: 1px solid var(--line); padding: 24px 0; cursor: pointer; }
+  .faq-item:last-child { border-bottom: 1px solid var(--line); }
+  .faq-item .q { display: flex; justify-content: space-between; align-items: center; font-family: 'Cormorant Garamond', serif; font-size: 24px; }
+  .faq-item .q em { font-style: italic; color: var(--terre); }
+  .faq-item .a { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s ease; color: var(--grey); }
+  .faq-item.open .a { max-height: 240px; padding-top: 14px; }
+  .faq-item .toggle { transition: transform .3s; }
+  .faq-item.open .toggle { transform: rotate(45deg); }
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+  @media (max-width: 1024px) {
+    .tiers { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; gap: 50px; }
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
+
+<section class="join">
+  <div class="wrap">
+    <div class="join-head">
+      <div class="crumbs reveal"><a href="index.html">Accueil</a> · Adhérer</div>
+      <span class="num-tag reveal">— Soutenir la Maison</span>
+      <h1 class="reveal d2">Soutenez la création,<br/><em>rejoignez la Maison.</em></h1>
+      <p class="reveal d3">Adhérer, c'est faire vivre un atelier, accueillir des artistes, et préserver un savoir-faire pour celles et ceux qui viendront après nous.</p>
+    </div>
+    <div class="tiers">
+      <article class="tier reveal">
+        <span class="lvl">— Ami</span>
+        <h3>Petite encre</h3>
+        <div class="price"><span class="a">30</span><span class="b">€ / an</span></div>
+        <ul>
+          <li>Adhésion à l'association</li>
+          <li>Newsletter trimestrielle</li>
+          <li>Invitation aux vernissages</li>
+          <li>Tarif réduit sur les stages</li>
+        </ul>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/adhesions/petite-encre" target="_blank" rel="noopener" class="btn btn-primary">Adhérer <span class="arr">→</span></a>
+      </article>
+
+      <article class="tier featured reveal d2">
+        <span class="ribbon">Recommandé</span>
+        <span class="lvl">— Soutien</span>
+        <h3>Pleine page</h3>
+        <div class="price"><span class="a">60</span><span class="b">€ / an</span></div>
+        <ul>
+          <li>Tous les avantages Petite encre</li>
+          <li>Une épreuve numérotée par an</li>
+          <li>Accès libre à la bibliothèque</li>
+          <li>Atelier libre 2× par mois</li>
+          <li>Visites privées d'expositions</li>
+        </ul>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/adhesions/pleine-page" target="_blank" rel="noopener" class="btn btn-primary">Adhérer <span class="arr">→</span></a>
+      </article>
+
+      <article class="tier reveal d3">
+        <span class="lvl">— Bienfaiteur</span>
+        <h3>Grande gravure</h3>
+        <div class="price"><span class="a">120</span><span class="b">€ / an</span></div>
+        <ul>
+          <li>Tous les avantages Pleine page</li>
+          <li>Deux épreuves numérotées</li>
+          <li>Mention sur le mur des donateurs</li>
+          <li>Stage offert (valeur 120€)</li>
+          <li>Reçu fiscal</li>
+        </ul>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/adhesions/grande-gravure" target="_blank" rel="noopener" class="btn btn-primary">Adhérer <span class="arr">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="why wrap">
+  <div class="why-grid">
+    <div class="reveal">
+      <span class="num-tag">— Pourquoi adhérer</span>
+      <h2>Une <em>communauté</em> autour d'un atelier vivant.</h2>
+      <p>Adhérer, ce n'est pas seulement nous soutenir financièrement. C'est rejoindre un cercle de passionnés, recevoir nos invitations privées, croiser des artistes, et — si vous le souhaitez — venir tirer vos propres épreuves.</p>
+      <p>L'adhésion représente près de 35% de notre budget annuel. Sans elle, l'atelier ne pourrait pas vivre.</p>
+      <p class="pull">« Une association, c'est une presse à plusieurs mains. Chacune compte. »<span class="sign">— Hélène Brunet, présidente</span></p>
+    </div>
+    <div class="why-img reveal d2"><div class="ph"></div></div>
+  </div>
+</section>
+
+<section class="donate">
+  <div class="wrap">
+    <span class="num-tag reveal">— Don ponctuel</span>
+    <h2 class="reveal d2">Faire un <em>don</em> sans adhérer.</h2>
+    <p class="reveal d3">Vous préférez soutenir l'association sans adhérer ? Tout don est précieux et ouvre droit à une déduction fiscale de 66%.</p>
+    <div class="amounts reveal d3">
+      <button class="amt" data-a="20">20 €</button>
+      <button class="amt on" data-a="50">50 €</button>
+      <button class="amt" data-a="100">100 €</button>
+      <button class="amt" data-a="250">250 €</button>
+      <button class="amt" data-a="x">Autre</button>
+    </div>
+    <div class="reveal d4">
+      <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/formulaires/don" target="_blank" rel="noopener" class="btn btn-primary" id="donateBtn">Faire un don de 50€ <span class="arr">→</span></a>
+    </div>
+    <small>Paiement sécurisé via HelloAsso · Reçu fiscal délivré automatiquement</small>
+  </div>
+</section>
+
+<section class="faq wrap">
+  <h2 class="reveal">Questions <em>fréquentes</em></h2>
+  <div class="faq-item reveal">
+    <div class="q"><span>Comment se passe le <em>paiement</em> ?</span><span class="toggle">+</span></div>
+    <div class="a"><p>Le paiement est entièrement sécurisé par HelloAsso, plateforme de référence pour les associations en France. Vous recevrez immédiatement un reçu et votre carte d'adhérent par e-mail.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <div class="q"><span>L'adhésion est-elle <em>déductible</em> ?</span><span class="toggle">+</span></div>
+    <div class="a"><p>Oui. La Maison Rose étant association d'intérêt général, votre adhésion ouvre droit à une réduction d'impôt de 66% du montant versé (dans la limite de 20% du revenu imposable).</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <div class="q"><span>Quand l'adhésion <em>commence-t-elle</em> ?</span><span class="toggle">+</span></div>
+    <div class="a"><p>Votre adhésion court de date à date sur 12 mois. Vous recevez un e-mail de rappel un mois avant la fin pour la renouveler — ou la résilier librement.</p></div>
+  </div>
+  <div class="faq-item reveal">
+    <div class="q"><span>Puis-je <em>offrir</em> une adhésion ?</span><span class="toggle">+</span></div>
+    <div class="a"><p>Tout à fait. Lors du paiement, indiquez les coordonnées du bénéficiaire et nous lui adresserons une carte d'adhérent personnalisée. Idéal pour un cadeau de naissance, anniversaire ou départ en retraite.</p></div>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+<script src="assets/site.js"></script>
+<script>
+  injectChrome();
+  // FAQ
+  document.querySelectorAll('.faq-item').forEach(it => {
+    it.addEventListener('click', () => it.classList.toggle('open'));
+  });
+  // Don amounts
+  const btn = document.getElementById('donateBtn');
+  document.querySelectorAll('.amt').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelectorAll('.amt').forEach(x => x.classList.remove('on'));
+      a.classList.add('on');
+      const v = a.dataset.a;
+      btn.innerHTML = (v === 'x' ? 'Choisir mon montant' : `Faire un don de ${v}€`) + ' <span class="arr">→</span>';
+    });
+  });
+</script>
+</body>
 </html>

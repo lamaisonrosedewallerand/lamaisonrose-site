@@ -1,67 +1,160 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact - La Maison Rose de Wallerand</title>
-    <meta
-      name="description"
-      content="Informations pratiques et contact pour la Maison Rose de Wallerand."
-    />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script src="/assets/site.js" defer></script>
-  </head>
-  <body data-page="contact">
-    <div data-include="/partials/header.html"></div>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — La Maison Rose de Wallerand</title>
+<meta name="description" content="Nous écrire, venir nous voir, organiser une visite de groupe. Toutes les coordonnées de La Maison Rose à Auvers-sur-Oise." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .ct { padding: 100px 0; }
+  .ct-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; }
 
-    <main>
-      <section class="page-hero">
-        <div class="shell">
-          <p class="eyebrow">Contact</p>
-          <h1>Nous contacter</h1>
-          <p class="lead">
-            Une question sur les stages, les evenements, la residence ou
-            l'association ? Cette page peut rester volontairement simple et
-            rassurante.
-          </p>
-        </div>
-      </section>
+  .ct-form { background: var(--cream-2); padding: 48px; }
+  .ct-form h3 { font-size: 28px; margin-bottom: 8px; }
+  .ct-form h3 em { font-style: italic; color: var(--terre); }
+  .ct-form .lede { color: var(--grey); margin-bottom: 32px; font-size: 15px; }
+  .field { margin-bottom: 22px; }
+  .field label { display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey); margin-bottom: 8px; }
+  .field input, .field select, .field textarea {
+    width: 100%; background: transparent;
+    border: 0; border-bottom: 1px solid var(--line);
+    padding: 10px 0; font-family: inherit; font-size: 15px;
+    color: var(--ink); outline: none;
+    transition: border-color .25s;
+  }
+  .field textarea { min-height: 110px; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--terre); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .ct-form .submit { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; flex-wrap: wrap; gap: 16px; }
+  .ct-form .ok { font-size: 13px; color: var(--terre); display: none; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; }
+  .ct-form.sent .ok { display: block; }
+  .ct-form.sent button, .ct-form.sent .field { display: none; }
 
-      <section class="section">
-        <div class="shell contact-grid">
-          <article class="content-card">
-            <p class="eyebrow">Informations pratiques</p>
-            <h2>Coordonnees a confirmer avant mise en ligne</h2>
-            <p>
-              Adresse, email principal et horaires peuvent etre ajustes ici une fois
-              les informations finales validees.
-            </p>
-          </article>
+  .ct-info h3 { font-size: 26px; margin-bottom: 24px; }
+  .ct-info h3 em { font-style: italic; color: var(--terre); }
+  .ct-info .blk { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .ct-info .blk:last-of-type { border-bottom: 0; }
+  .ct-info .lbl { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); margin-bottom: 8px; }
+  .ct-info .val { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic; color: var(--ink); line-height: 1.4; }
+  .ct-info .val a:hover { color: var(--terre); }
 
-          <article class="content-card">
-            <p class="eyebrow">Adresse</p>
-            <h2>Auvers-sur-Oise</h2>
-            <p>Ajouter ici l'adresse complete du lieu.</p>
-          </article>
+  .map-bloc { padding: 0 0 130px; }
+  .map { aspect-ratio: 21/9; position: relative; overflow: hidden; }
+  .map .grid { position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px), repeating-linear-gradient(0deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px), linear-gradient(135deg, #F2EBE1 0%, #E8DDD0 100%); }
+  .map .road { position: absolute; }
+  .map .r1 { left: 0; right: 0; top: 60%; height: 3px; background: var(--terre); }
+  .map .r2 { top: 0; bottom: 0; left: 55%; width: 3px; background: var(--terre); }
+  .map .pin { position: absolute; left: 55%; top: 60%; width: 32px; height: 32px; background: var(--ink); border-radius: 50% 50% 50% 0; transform: translate(-50%, -100%) rotate(-45deg); z-index: 2; }
+  .map .pin::after { content: ""; position: absolute; inset: 9px; background: var(--rose); border-radius: 50%; }
+  .map .lbl { position: absolute; left: 55%; top: 60%; transform: translate(20px, -50%); background: var(--cream); padding: 8px 14px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; box-shadow: 0 8px 20px -10px rgba(26,22,20,.2); z-index: 3; }
 
-          <article class="content-card">
-            <p class="eyebrow">Email</p>
-            <h2>Contact principal</h2>
-            <p>Ajouter ici l'email de contact officiel.</p>
-          </article>
+  @media (max-width: 1024px) {
+    .ct-grid { grid-template-columns: 1fr; gap: 40px; }
+    .ct-form { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<main>
 
-          <article class="content-card">
-            <p class="eyebrow">Acces</p>
-            <h2>Venir nous voir</h2>
-            <p>
-              Cette page peut aussi contenir un lien Google Maps ou des indications
-              de transport, sans formulaire de collecte de donnees.
-            </p>
-          </article>
-        </div>
-      </section>
-    </main>
+<section class="page-hero wrap">
+  <div class="page-hero-grid">
+    <div class="reveal">
+      <div class="crumbs"><a href="index.html">Accueil</a> · Contact</div>
+      <h1>Nous <em>écrire,</em> venir nous voir.</h1>
+    </div>
+    <p class="lede reveal d2">Pour toute question concernant les stages, les visites de groupe, les résidences ou les locations d'atelier — nous répondons sous 48h.</p>
+  </div>
+</section>
 
-    <div data-include="/partials/footer.html"></div>
-  </body>
+<section class="ct wrap">
+  <div class="ct-grid">
+    <form class="ct-form reveal" id="ctForm">
+      <h3>Vous nous <em>écrivez</em></h3>
+      <p class="lede">Tous les champs marqués d'un astérisque (*) sont obligatoires.</p>
+
+      <div class="row2">
+        <div class="field"><label>Prénom *</label><input type="text" required /></div>
+        <div class="field"><label>Nom *</label><input type="text" required /></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>E-mail *</label><input type="email" required /></div>
+        <div class="field"><label>Téléphone</label><input type="tel" /></div>
+      </div>
+      <div class="field">
+        <label>Sujet *</label>
+        <select required>
+          <option value="">— Choisir —</option>
+          <option>Renseignements stages</option>
+          <option>Visite de groupe</option>
+          <option>Résidence d'artiste</option>
+          <option>Location d'atelier</option>
+          <option>Presse &amp; partenariats</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="field"><label>Votre message *</label><textarea required></textarea></div>
+      <div class="submit">
+        <button type="submit" class="btn btn-primary">Envoyer <span class="arr">→</span></button>
+        <span class="ok">Merci, votre message est en route. Nous revenons vers vous sous 48h.</span>
+      </div>
+    </form>
+
+    <div class="ct-info reveal d2">
+      <h3>Nos <em>coordonnées</em></h3>
+      <div class="blk">
+        <div class="lbl">Adresse</div>
+        <div class="val">14 rue des Vignes<br/>95430 Auvers-sur-Oise</div>
+      </div>
+      <div class="blk">
+        <div class="lbl">E-mail</div>
+        <div class="val"><a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></div>
+      </div>
+      <div class="blk">
+        <div class="lbl">Téléphone</div>
+        <div class="val">+33 (0)1 30 36 00 00</div>
+      </div>
+      <div class="blk">
+        <div class="lbl">Horaires d'ouverture</div>
+        <div class="val">Mer–Dim · 14h–18h<br/>Visites guidées sur RDV</div>
+      </div>
+      <div class="blk">
+        <div class="lbl">Réseaux</div>
+        <div class="val"><a href="#">Instagram</a> · <a href="#">Facebook</a></div>
+      </div>
+      <div class="blk">
+        <div class="lbl">Administratif</div>
+        <div class="val" style="font-size: 14px; font-style: normal; font-family: inherit; color: var(--grey);">Association loi 1901 · SIREN 343 567 891 · APE 9001Z</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="map-bloc wrap">
+  <div class="map reveal">
+    <div class="grid"></div>
+    <div class="road r1"></div>
+    <div class="road r2"></div>
+    <span class="pin"></span>
+    <span class="lbl">14 rue des Vignes</span>
+  </div>
+</section>
+
+</main>
+<div id="site-foot"></div>
+<script src="assets/site.js"></script>
+<script>
+  injectChrome('contact');
+  document.getElementById('ctForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.target.classList.add('sent');
+    window.scrollTo({ top: e.target.offsetTop - 100, behavior: 'smooth' });
+  });
+</script>
+</body>
 </html>
