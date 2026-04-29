@@ -50,6 +50,32 @@ function isEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean(value, 200));
 }
 
+function isLikelyRealName(value) {
+  const normalized = clean(value, 120);
+
+  if (normalized.length < 2) {
+    return false;
+  }
+
+  if (!/[aeiouyàâäéèêëîïôöùûüÿæœ]/i.test(normalized)) {
+    return false;
+  }
+
+  if (/[^a-zàâäéèêëîïôöùûüÿæœç' -]/i.test(normalized)) {
+    return false;
+  }
+
+  if (/(.)\1\1/i.test(normalized)) {
+    return false;
+  }
+
+  if (/^(test|admin|unknown|prenom|nom)$/i.test(normalized)) {
+    return false;
+  }
+
+  return true;
+}
+
 function parseAmount(value) {
   const raw = typeof value === "number" ? String(value) : clean(value, 30).replace(",", ".");
   const amount = Number(raw);
@@ -81,17 +107,24 @@ function buildPayload(body, settings, origin) {
     throw new Error("Validation impossible.");
   }
 
-  const purpose = clean(body.purpose, 40) === "membership" ? "membership" : "support";
+  const rawPurpose = clean(body.purpose, 40);
+  const purpose =
+    rawPurpose === "membership_single" || rawPurpose === "membership_couple"
+      ? rawPurpose
+      : "support";
   const firstName = clean(body.first_name, 120);
   const lastName = clean(body.last_name, 120);
   const email = clean(body.email, 180);
   const phone = clean(body.phone, 80);
   const message = clean(body.message, 1200);
-  const amount = parseAmount(body.amount);
+  const supportAmount = parseAmount(body.amount);
   const minAmount = Math.max(Number(settings.helloasso_checkout_min_amount) || 10, 1);
   const maxAmount = 10000;
+  const membershipAmount = Number(settings.helloasso_checkout_membership_amount) || 20;
+  const membershipCoupleAmount =
+    Number(settings.helloasso_checkout_membership_couple_amount) || 30;
 
-  if (!firstName || !lastName || !email || Number.isNaN(amount)) {
+  if (!firstName || !lastName || !email) {
     throw new Error("Merci de remplir les champs obligatoires du paiement.");
   }
 
@@ -99,17 +132,40 @@ function buildPayload(body, settings, origin) {
     throw new Error("L'adresse e-mail ne semble pas valide.");
   }
 
-  if (amount < minAmount || amount > maxAmount) {
+  if (!isLikelyRealName(firstName) || !isLikelyRealName(lastName) || firstName === lastName) {
+    throw new Error(
+      "HelloAsso demande un vrai prénom et un vrai nom. Merci d'éviter les valeurs de test."
+    );
+  }
+
+  const amount =
+    purpose === "membership_single"
+      ? membershipAmount
+      : purpose === "membership_couple"
+        ? membershipCoupleAmount
+        : supportAmount;
+
+  if (Number.isNaN(amount)) {
+    throw new Error("Merci d'indiquer un montant valide.");
+  }
+
+  if (purpose === "support" && (amount < minAmount || amount > maxAmount)) {
     throw new Error(
       `Merci de choisir un montant compris entre ${minAmount} € et ${maxAmount} €.`
     );
   }
 
   const itemName =
-    purpose === "membership"
+    purpose === "membership_single"
       ? clean(
           settings.helloasso_checkout_membership_item_name ||
-            "Adhesion a La Maison Rose de Wallerand",
+            "Adhesion individuelle a La Maison Rose de Wallerand",
+          250
+        )
+      : purpose === "membership_couple"
+        ? clean(
+            settings.helloasso_checkout_membership_couple_item_name ||
+              "Adhesion couple a La Maison Rose de Wallerand",
           250
         )
       : clean(
@@ -131,7 +187,7 @@ function buildPayload(body, settings, origin) {
       backUrl: pageUrl,
       errorUrl: `${pageUrl}?helloasso=error`,
       returnUrl: pageUrl,
-      containsDonation: purpose !== "membership",
+      containsDonation: purpose === "support",
       payer: {
         firstName,
         lastName,

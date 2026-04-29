@@ -315,7 +315,7 @@
     <div class="checkout-grid">
       <form class="checkout-form" id="haCheckoutForm">
         <h3>Créer un <em>checkout</em></h3>
-        <p class="lede">Choisissez le type de soutien, indiquez votre montant puis continuez vers HelloAsso.</p>
+        <p class="lede">Choisissez une adhésion individuelle à 20 €, une adhésion couple à 30 € ou un soutien libre, puis continuez vers HelloAsso.</p>
 
         <p class="checkout-disabled" id="helloasso-checkout-disabled" hidden>Le checkout direct est en cours d'activation sur ce déploiement. Le lien HelloAsso ci-dessous reste disponible.</p>
 
@@ -325,7 +325,8 @@
           <label>Type de soutien *</label>
           <select name="purpose" required>
             <option value="support">Soutien libre</option>
-            <option value="membership">Adhésion</option>
+            <option value="membership_single">Adhésion individuelle · 20 €</option>
+            <option value="membership_couple">Adhésion couple · 30 €</option>
           </select>
         </div>
 

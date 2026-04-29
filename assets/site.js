@@ -16,7 +16,10 @@ const DEFAULT_SITE_SETTINGS = {
   helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
   helloasso_organization_slug: "la-maison-rose-de-wallerand",
   home_hero_image: "assets/official-house.jpg",
-  helloasso_checkout_membership_item_name: "Adhesion a La Maison Rose de Wallerand",
+  helloasso_checkout_membership_item_name: "Adhesion individuelle a La Maison Rose de Wallerand",
+  helloasso_checkout_membership_amount: 20,
+  helloasso_checkout_membership_couple_item_name: "Adhesion couple a La Maison Rose de Wallerand",
+  helloasso_checkout_membership_couple_amount: 30,
   helloasso_checkout_support_item_name: "Soutien a La Maison Rose de Wallerand",
   helloasso_checkout_default_amount: 50,
   helloasso_checkout_min_amount: 10,
@@ -82,6 +85,42 @@ function parseSuggestedAmounts(value) {
     .split(",")
     .map((entry) => Number(String(entry).trim().replace(",", ".")))
     .filter((amount) => Number.isFinite(amount) && amount > 0);
+}
+
+function getCheckoutModeSettings(settings, purpose) {
+  const singleAmount = Number(settings.helloasso_checkout_membership_amount) || 20;
+  const coupleAmount = Number(settings.helloasso_checkout_membership_couple_amount) || 30;
+
+  if (purpose === "membership_single") {
+    return {
+      label:
+        settings.helloasso_checkout_membership_item_name ||
+        "Adhesion individuelle a La Maison Rose de Wallerand",
+      amount: singleAmount,
+      locked: true,
+      suggestedAmounts: [singleAmount]
+    };
+  }
+
+  if (purpose === "membership_couple") {
+    return {
+      label:
+        settings.helloasso_checkout_membership_couple_item_name ||
+        "Adhesion couple a La Maison Rose de Wallerand",
+      amount: coupleAmount,
+      locked: true,
+      suggestedAmounts: [coupleAmount]
+    };
+  }
+
+  return {
+    label:
+      settings.helloasso_checkout_support_item_name ||
+      "Soutien a La Maison Rose de Wallerand",
+    amount: Number(settings.helloasso_checkout_default_amount) || 50,
+    locked: false,
+    suggestedAmounts: parseSuggestedAmounts(settings.helloasso_checkout_suggested_amounts)
+  };
 }
 
 function truncateText(value, limit = 180) {
@@ -1016,13 +1055,10 @@ function updateCheckoutReturnState(mount, type, message) {
 function setCheckoutSummary(form, settings) {
   const amountField = form.querySelector('[name="amount"]');
   const purposeField = form.querySelector('[name="purpose"]');
-  const summary = form.querySelector("[data-checkout-summary]");
+  const summary = document.querySelector("[data-checkout-summary]");
   const amount = Number(String(amountField?.value || "").replace(",", "."));
-  const purpose = purposeField?.value === "membership" ? "membership" : "support";
-  const itemName =
-    purpose === "membership"
-      ? settings.helloasso_checkout_membership_item_name
-      : settings.helloasso_checkout_support_item_name;
+  const purpose = String(purposeField?.value || "support");
+  const mode = getCheckoutModeSettings(settings, purpose);
 
   if (!summary) {
     return;
@@ -1037,39 +1073,73 @@ function setCheckoutSummary(form, settings) {
 
   summary.textContent =
     Number.isFinite(amount) && amount > 0
-      ? `${itemName} · ${formatEuroAmount(amount)}`
-      : itemName;
+      ? `${mode.label} · ${formatEuroAmount(amount)}`
+      : mode.label;
 }
 
 function renderCheckoutAmountButtons(form, settings) {
   const mount = form.querySelector("[data-checkout-amounts]");
   const amountField = form.querySelector('[name="amount"]');
+  const purposeField = form.querySelector('[name="purpose"]');
 
-  if (!mount || !amountField) {
+  if (!mount || !amountField || !purposeField) {
     return;
   }
 
-  const suggestedAmounts = parseSuggestedAmounts(settings.helloasso_checkout_suggested_amounts);
+  function rerenderButtons() {
+    const mode = getCheckoutModeSettings(settings, purposeField.value);
 
-  mount.innerHTML = suggestedAmounts
-    .map(
-      (amount) => `
-        <button type="button" class="amt" data-checkout-amount="${amount}">
-          ${escapeHtml(formatEuroAmount(amount))}
-        </button>
-      `
-    )
-    .join("");
+    mount.innerHTML = mode.suggestedAmounts
+      .map(
+        (amount) => `
+          <button type="button" class="amt" data-checkout-amount="${amount}">
+            ${escapeHtml(formatEuroAmount(amount))}
+          </button>
+        `
+      )
+      .join("");
 
-  mount.querySelectorAll("[data-checkout-amount]").forEach((button) => {
-    button.addEventListener("click", () => {
-      amountField.value = button.getAttribute("data-checkout-amount") || "";
-      mount
-        .querySelectorAll("[data-checkout-amount]")
-        .forEach((item) => item.classList.toggle("on", item === button));
-      amountField.dispatchEvent(new Event("input", { bubbles: true }));
+    amountField.readOnly = mode.locked;
+    amountField.value = String(mode.amount);
+
+    mount.querySelectorAll("[data-checkout-amount]").forEach((button) => {
+      button.addEventListener("click", () => {
+        amountField.value = button.getAttribute("data-checkout-amount") || "";
+        amountField.dispatchEvent(new Event("input", { bubbles: true }));
+      });
     });
-  });
+
+    amountField.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+
+  purposeField.addEventListener("change", rerenderButtons);
+  rerenderButtons();
+}
+
+function isLikelyRealName(value) {
+  const normalized = String(value || "").trim();
+
+  if (normalized.length < 2) {
+    return false;
+  }
+
+  if (!/[aeiouyàâäéèêëîïôöùûüÿæœ]/i.test(normalized)) {
+    return false;
+  }
+
+  if (/[^a-zàâäéèêëîïôöùûüÿæœç' -]/i.test(normalized)) {
+    return false;
+  }
+
+  if (/(.)\1\1/i.test(normalized)) {
+    return false;
+  }
+
+  if (/^(test|admin|unknown|prenom|nom)$/i.test(normalized)) {
+    return false;
+  }
+
+  return true;
 }
 
 async function reconcileCheckoutReturn(mount) {
@@ -1172,10 +1242,6 @@ async function initHelloAssoCheckout() {
 
   renderCheckoutAmountButtons(form, settings);
 
-  if (amountField && !amountField.value) {
-    amountField.value = String(Number(settings.helloasso_checkout_default_amount) || 50);
-  }
-
   if (amountField) {
     amountField.min = String(Number(settings.helloasso_checkout_min_amount) || 10);
     amountField.addEventListener("input", () => setCheckoutSummary(form, settings));
@@ -1217,6 +1283,17 @@ async function initHelloAssoCheckout() {
     }
 
     const payload = Object.fromEntries(new FormData(form).entries());
+    const firstName = String(payload.first_name || "").trim();
+    const lastName = String(payload.last_name || "").trim();
+
+    if (!isLikelyRealName(firstName) || !isLikelyRealName(lastName) || firstName === lastName) {
+      updateCheckoutFormStatus(
+        form,
+        "error",
+        "HelloAsso demande un vrai prénom et un vrai nom. Évite les valeurs de test ou trop approximatives."
+      );
+      return;
+    }
 
     if (button) {
       button.disabled = true;
