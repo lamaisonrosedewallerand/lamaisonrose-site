@@ -205,9 +205,26 @@
     .helloasso-block { padding: 84px 0; }
   }
   @media (max-width: 680px) {
-    .join { padding: 88px 0; }
-    .join-head { margin-bottom: 42px; }
-    .join-head h1 { font-size: clamp(38px, 11vw, 56px); }
+    .join { padding: 76px 0 82px; }
+    .join-head { margin-bottom: 42px; padding: 0 4px; }
+    .join-head .crumbs {
+      margin-bottom: 12px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      line-height: 1.45;
+    }
+    .join-head h1 {
+      font-size: clamp(34px, 10.5vw, 48px);
+      line-height: 1.02;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .join-head p {
+      max-width: 30rem;
+      font-size: 18px;
+      line-height: 1.54;
+      text-wrap: balance;
+    }
     .tier { padding: 32px 24px; }
     .tier .price .a { font-size: clamp(28px, 10vw, 42px); }
     .why { padding: 84px 0; }
