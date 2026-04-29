@@ -568,7 +568,7 @@ footer {
 
   .page-hero .lede {
     max-width: 34rem;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.52;
   }
 
@@ -672,16 +672,17 @@ footer {
   }
 
   .page-hero .lede {
-    max-width: 30rem;
-    font-size: 16px;
-    line-height: 1.58;
+    max-width: 34ch;
+    font-size: 15px;
+    line-height: 1.56;
   }
 
   .page-hero h1 {
-    max-width: 11ch;
-    font-size: clamp(32px, 10vw, 42px);
-    margin-bottom: 14px;
-    line-height: 1.01;
+    max-width: 13.5ch;
+    font-size: clamp(30px, 9.2vw, 40px);
+    margin-bottom: 16px;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
   }
 
   .page-hero-grid {
