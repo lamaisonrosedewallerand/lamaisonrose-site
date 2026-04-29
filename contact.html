@@ -56,9 +56,19 @@
     .ct-grid { grid-template-columns: 1fr; gap: 40px; }
     .ct-form { padding: 32px 24px; }
   }
+  @media (max-width: 820px) {
+    .ct { padding: 72px 0; }
+    .ct-grid { gap: 28px; }
+    .ct-info { order: -1; }
+    .ct-info h3 { margin-bottom: 14px; }
+    .ct-info .blk { padding: 16px 0; }
+    .ct-info .val { font-size: 17px; }
+    .map { aspect-ratio: 1 / 1; }
+  }
   @media (max-width: 680px) {
     .row2 { grid-template-columns: 1fr; gap: 18px; }
-    .ct { padding: 72px 0; }
+    .ct-form { padding: 26px 18px; }
+    .ct-form .submit { align-items: stretch; }
     .map .lbl { left: 16px; right: 16px; top: auto; bottom: 16px; transform: none; }
   }
 </style>
@@ -118,7 +128,7 @@
       </div>
       <div class="blk">
         <div class="lbl">E-mail</div>
-        <div class="val"><a href="mailto:mulrichm@hotmail.com">mulrichm@hotmail.com</a></div>
+        <div class="val"><a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></div>
       </div>
       <div class="blk">
         <div class="lbl">Téléphone</div>
@@ -169,7 +179,7 @@
       data.get('message') || ''
     ].join('\n');
 
-    window.location.href = `mailto:mulrichm@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:contact@lamaisonrosedewallerand.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 </script>
 </body>

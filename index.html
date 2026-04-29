@@ -60,6 +60,7 @@
   .headline-text h2 { font-size: clamp(44px, 5.2vw, 78px); line-height: 1; margin-bottom: 24px; }
   .headline-text h2 .it { font-style: italic; color: var(--terre); }
   .headline-meta { display: flex; gap: 36px; margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .headline-meta > div { flex: 1 1 140px; min-width: 0; }
   .headline-meta div .lbl { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); margin-bottom: 6px; }
   .headline-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--ink); }
   .headline-text p { color: var(--grey); margin-bottom: 32px; max-width: 480px; }
@@ -109,6 +110,35 @@
     .headline-grid { grid-template-columns: 1fr; gap: 50px; }
     .teaser-grid { grid-template-columns: 1fr; }
   }
+  @media (max-width: 820px) {
+    .hero-grid { padding: 0 18px 28px; gap: 18px; }
+    .hero-text { padding: 44px 0 10px; }
+    .hero-visual { min-height: 320px; }
+    .hv-frame { height: min(54vh, 420px); min-height: 280px; }
+    .hv-windows { left: 18%; right: 18%; bottom: 10%; gap: 10px; }
+    .hv-tag { padding: 10px 14px; max-width: 170px; }
+    .hv-tag.t1 { top: 14px; left: 10px; transform: none; }
+    .hv-tag.t2 { right: 10px; bottom: 14px; transform: none; }
+    .manifesto { padding: 88px 0 80px; }
+    .manifesto .small { margin-bottom: 24px; }
+    .marquee { padding: 18px 0; }
+    .marquee-track { gap: 30px; }
+    .marquee-track span { font-size: 22px; }
+    .headline { padding: 88px 0; }
+    .headline-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+      margin: 24px 0;
+      padding: 18px 0;
+    }
+    .headline-text p { max-width: none; }
+    .hl-corner { top: 12px; right: 12px; width: 84px; height: 84px; }
+    .hl-corner span { font-size: 12px; }
+    .hl-corner span strong { font-size: 18px; }
+    .teasers { padding: 88px 0; }
+    .wstrip { padding: 82px 0; }
+  }
   @media (max-width: 680px) {
     .hero { min-height: auto; }
     .hero-grid { padding: 0 18px; gap: 18px; }
@@ -127,8 +157,8 @@
     .manifesto { padding: 88px 0 74px; }
     .manifesto h2 { font-size: clamp(34px, 9vw, 48px); margin-bottom: 34px; }
     .headline { padding: 88px 0; }
-    .headline-meta { gap: 18px; margin: 24px 0; padding: 18px 0; }
-    .countdown { gap: 6px; max-width: none; }
+    .headline-meta { grid-template-columns: 1fr; gap: 12px; }
+    .countdown { gap: 6px; max-width: none; grid-template-columns: 1fr 1fr; }
     .countdown .cell .n { font-size: 30px; }
     .teasers { padding: 88px 0; }
     .teaser { padding: 30px 24px; }

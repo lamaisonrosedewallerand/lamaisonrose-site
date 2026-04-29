@@ -728,9 +728,10 @@ function injectChrome(activeKey) {
             <li><a href="wallerand.html" data-k="wallerand">Wallerand</a></li>
             <li><a href="association.html" data-k="assoc">L'Association</a></li>
             <li><a href="contact.html" data-k="contact">Contact</a></li>
+            <li class="menu-mobile-only"><a href="adherer.html" data-k="adherer">Adhérer</a></li>
           </ul>
         </nav>
-        <a href="adherer.html" class="nav-cta">Adhérer <span class="arr">→</span></a>
+        <a href="adherer.html" class="nav-cta" data-k="adherer">Adhérer <span class="arr">→</span></a>
         <button class="burger" aria-label="Menu">
           <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
         </button>
@@ -759,7 +760,7 @@ function injectChrome(activeKey) {
           <div class="contact">
             <h4>Contact</h4>
             <ul>
-              <li><a href="mailto:mulrichm@hotmail.com">mulrichm@hotmail.com</a></li>
+              <li><a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></li>
               <li><a href="tel:+33615375672">06 15 37 56 72</a></li>
               <li><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener">Instagram →</a></li>
               <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener">HelloAsso →</a></li>

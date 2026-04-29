@@ -75,7 +75,7 @@
   .faq-item .q { display: flex; justify-content: space-between; align-items: center; font-family: 'Cormorant Garamond', serif; font-size: 24px; }
   .faq-item .q em { font-style: italic; color: var(--terre); }
   .faq-item .a { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s ease; color: var(--grey); }
-  .faq-item.open .a { max-height: 240px; padding-top: 14px; }
+  .faq-item.open .a { max-height: 420px; padding-top: 14px; }
   .faq-item .toggle { transition: transform .3s; }
   .faq-item.open .toggle { transform: rotate(45deg); }
 
@@ -83,11 +83,24 @@
     .tiers { grid-template-columns: 1fr; }
     .why-grid { grid-template-columns: 1fr; gap: 50px; }
   }
+  @media (max-width: 820px) {
+    .tier .price {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .why-img {
+      aspect-ratio: 4 / 3;
+    }
+  }
   @media (max-width: 680px) {
     .join { padding: 88px 0; }
     .join-head { margin-bottom: 42px; }
+    .join-head h1 { font-size: clamp(38px, 11vw, 56px); }
     .tier { padding: 32px 24px; }
+    .tier .price .a { font-size: clamp(28px, 10vw, 42px); }
     .why { padding: 84px 0; }
+    .why .pull { padding: 22px 0 22px 18px; font-size: 22px; }
     .donate { padding: 82px 0; }
     .faq { padding: 88px 0; }
     .faq-item .q { font-size: 20px; align-items: flex-start; gap: 14px; }
@@ -200,7 +213,7 @@
 <div id="site-foot"></div>
 <script src="assets/site.js"></script>
 <script>
-  injectChrome();
+  injectChrome('adherer');
   // FAQ
   document.querySelectorAll('.faq-item').forEach(it => {
     it.addEventListener('click', () => it.classList.toggle('open'));

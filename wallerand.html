@@ -73,12 +73,17 @@
     .bio aside { position: static; }
     .works-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 680px) {
+  @media (max-width: 820px) {
     .w-hero { padding: 64px 0 74px; }
-    .w-text .yrs { margin-bottom: 18px; }
     .bio { padding: 88px 0; }
-    .bio article .pull { padding: 22px 0 22px 18px; font-size: 22px; }
+    .bio aside ul { display: grid; gap: 10px; }
+    .bio aside li { padding: 12px 0; }
     .works { padding: 88px 0; }
+    .work .cap { opacity: 1; transform: none; }
+  }
+  @media (max-width: 680px) {
+    .w-text .yrs { margin-bottom: 18px; }
+    .bio article .pull { padding: 22px 0 22px 18px; font-size: 22px; }
     .works-grid { grid-template-columns: 1fr; }
   }
 </style>

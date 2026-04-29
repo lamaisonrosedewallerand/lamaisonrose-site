@@ -16,4 +16,4 @@ Les 4 et 5 avril 2026 de 10h à 17h.
 Stage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand.
 
 Inscription obligatoire auprès de h.bautista@sfr.fr ou de
-mulrichm@hotmail.com.
+contact@lamaisonrosedewallerand.com.
