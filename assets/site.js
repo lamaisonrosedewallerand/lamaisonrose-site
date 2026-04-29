@@ -1,6 +1,22 @@
 const DATA_URLS = {
   stages: "assets/data/stages.json",
-  evenements: "assets/data/evenements.json"
+  evenements: "assets/data/evenements.json",
+  site: "assets/data/site-settings.json"
+};
+
+const DEFAULT_SITE_SETTINGS = {
+  announcement_mode: "auto",
+  announcement_text: "",
+  announcement_link: "",
+  contact_email: "contact@lamaisonrosedewallerand.com",
+  contact_phone: "+33 6 15 37 56 72",
+  address_line_1: "59 rue Daubigny",
+  address_line_2: "95430 Auvers-sur-Oise",
+  instagram_url: "https://www.instagram.com/lamaisonrosedewallerand/",
+  helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
+  home_hero_image: "assets/official-house.jpg",
+  helloasso_widget_url: "",
+  helloasso_widget_height: 780
 };
 
 const PLACEHOLDERS = {
@@ -9,8 +25,11 @@ const PLACEHOLDERS = {
 };
 
 const collectionCache = new Map();
+const singletonCache = new Map();
 let revealObserver;
 let countdownTimer;
+let publicConfigPromise;
+let helloAssoResizeBound = false;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -23,6 +42,20 @@ function escapeHtml(value) {
 
 function escapeAttr(value) {
   return escapeHtml(value);
+}
+
+function formatPhoneHref(value) {
+  return `tel:${String(value || "").replace(/[^\d+]/g, "")}`;
+}
+
+function normaliseWidgetUrl(value) {
+  const trimmed = String(value || "").trim();
+
+  if (!trimmed) {
+    return "";
+  }
+
+  return trimmed.includes("/widget") ? trimmed : `${trimmed.replace(/\/$/, "")}/widget`;
 }
 
 function truncateText(value, limit = 180) {
@@ -210,6 +243,51 @@ async function fetchCollection(name) {
   const items = Array.isArray(payload.items) ? payload.items : [];
   collectionCache.set(name, items);
   return items;
+}
+
+async function fetchSingleton(name) {
+  if (singletonCache.has(name)) {
+    return singletonCache.get(name);
+  }
+
+  const response = await fetch(DATA_URLS[name], { cache: "no-store" });
+
+  if (!response.ok) {
+    throw new Error(`Impossible de charger ${name}`);
+  }
+
+  const payload = await response.json();
+  const item = payload && typeof payload.item === "object" ? payload.item : {};
+  singletonCache.set(name, item);
+  return item;
+}
+
+async function fetchSiteSettings() {
+  try {
+    const item = await fetchSingleton("site");
+    return { ...DEFAULT_SITE_SETTINGS, ...item };
+  } catch (error) {
+    console.warn("Réglages du site indisponibles, valeurs par défaut utilisées.", error);
+    return { ...DEFAULT_SITE_SETTINGS };
+  }
+}
+
+async function fetchPublicConfig() {
+  if (publicConfigPromise) {
+    return publicConfigPromise;
+  }
+
+  publicConfigPromise = fetch("/api/public-config", { cache: "no-store" })
+    .then(async (response) => {
+      if (!response.ok) {
+        return {};
+      }
+
+      return response.json();
+    })
+    .catch(() => ({}));
+
+  return publicConfigPromise;
 }
 
 function initNavScroll() {
@@ -587,6 +665,269 @@ function renderEventRow(event) {
   `;
 }
 
+function setTextContent(selector, value) {
+  document.querySelectorAll(selector).forEach((node) => {
+    node.textContent = value;
+  });
+}
+
+function setLinkContent(selector, href, text) {
+  document.querySelectorAll(selector).forEach((node) => {
+    node.textContent = text;
+    node.setAttribute("href", href);
+  });
+}
+
+function setHref(selector, href) {
+  document.querySelectorAll(selector).forEach((node) => {
+    node.setAttribute("href", href);
+  });
+}
+
+function applyHomeHeroImage(imageUrl) {
+  const value = String(imageUrl || "").trim() || DEFAULT_SITE_SETTINGS.home_hero_image;
+  const escaped = value.replace(/"/g, '\\"');
+  document.documentElement.style.setProperty("--home-hero-image", `url("${escaped}")`);
+}
+
+function applySiteSettingsToDom(settings) {
+  setTextContent("[data-site-address-line-1]", settings.address_line_1);
+  setTextContent("[data-site-address-line-2]", settings.address_line_2);
+  setLinkContent(
+    "[data-site-email]",
+    `mailto:${settings.contact_email}`,
+    settings.contact_email
+  );
+  setLinkContent(
+    "[data-site-phone]",
+    formatPhoneHref(settings.contact_phone),
+    settings.contact_phone
+  );
+  setHref("[data-site-instagram]", settings.instagram_url);
+  setHref("[data-site-helloasso]", settings.helloasso_url);
+  applyHomeHeroImage(settings.home_hero_image);
+}
+
+async function resolveUtilityAnnouncement(settings) {
+  if (settings.announcement_mode === "off") {
+    return null;
+  }
+
+  if (settings.announcement_mode === "custom" && settings.announcement_text) {
+    return {
+      prefix: "Actualité",
+      main: settings.announcement_text,
+      href: settings.announcement_link || "evenements.html"
+    };
+  }
+
+  const events = await fetchCollection("evenements");
+  const upcoming = events
+    .filter((item) => item.status !== "passe")
+    .sort(sortByDateAscending);
+  const nextEvent = upcoming[0];
+
+  if (!nextEvent) {
+    return {
+      prefix: "Lieu culturel · Résidence d'artistes",
+      main: "Auvers-sur-Oise · 30 km de Paris",
+      href: "le-lieu.html"
+    };
+  }
+
+  return {
+    prefix: "Prochain événement",
+    main: `${nextEvent.title} — ${formatLongDate(nextEvent.date)}`,
+    href: nextEvent.helloasso_url || "evenements.html"
+  };
+}
+
+function applyUtilityAnnouncement(announcement) {
+  const util = document.getElementById("site-util");
+  const link = document.getElementById("site-util-link");
+  const prefix = document.getElementById("site-util-prefix");
+  const main = document.getElementById("site-util-main");
+
+  if (!util || !link || !prefix || !main) {
+    return;
+  }
+
+  if (!announcement) {
+    util.hidden = true;
+    return;
+  }
+
+  util.hidden = false;
+  prefix.textContent = announcement.prefix;
+  main.textContent = announcement.main;
+  link.setAttribute("href", announcement.href || "evenements.html");
+
+  if (/^https?:\/\//.test(announcement.href || "")) {
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener");
+  } else {
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+  }
+}
+
+function bindHelloAssoResize() {
+  if (helloAssoResizeBound) {
+    return;
+  }
+
+  helloAssoResizeBound = true;
+  window.addEventListener("message", (event) => {
+    const frame = document.getElementById("haWidget");
+
+    if (!frame || event.source !== frame.contentWindow) {
+      return;
+    }
+
+    const height = Number(event.data && event.data.height);
+
+    if (height > 200) {
+      frame.style.height = `${height}px`;
+    }
+  });
+}
+
+function renderHelloAssoWidget(settings) {
+  const mount = document.getElementById("helloasso-widget");
+
+  if (!mount) {
+    return;
+  }
+
+  const widgetUrl = normaliseWidgetUrl(settings.helloasso_widget_url);
+  const frameHeight = Number(settings.helloasso_widget_height) || 780;
+
+  if (!widgetUrl) {
+    mount.innerHTML = `
+      <div class="helloasso-fallback">
+        <p>Aucun widget HelloAsso n'est affiché pour le moment. Retrouvez les campagnes actives, adhésions ou soutiens directement sur la page HelloAsso de l'association.</p>
+        <a href="${escapeAttr(
+          settings.helloasso_url
+        )}" target="_blank" rel="noopener" class="btn btn-primary">Ouvrir HelloAsso <span class="arr">→</span></a>
+      </div>
+    `;
+    return;
+  }
+
+  mount.innerHTML = `
+    <iframe
+      id="haWidget"
+      title="HelloAsso"
+      allowtransparency="true"
+      scrolling="auto"
+      src="${escapeAttr(widgetUrl)}"
+      style="width:100%;height:${frameHeight}px;border:none;"
+      loading="lazy"
+    ></iframe>
+  `;
+
+  bindHelloAssoResize();
+}
+
+async function hydrateMaps() {
+  const frames = document.querySelectorAll("[data-map-frame]");
+
+  if (!frames.length) {
+    return;
+  }
+
+  const config = await fetchPublicConfig();
+  const src =
+    config.googleMapsEmbedUrl ||
+    "https://www.google.com/maps?q=59%20rue%20Daubigny%2C%2095430%20Auvers-sur-Oise&output=embed";
+
+  frames.forEach((frame) => {
+    frame.setAttribute("src", src);
+  });
+
+  document.querySelectorAll("[data-map-directions]").forEach((link) => {
+    if (config.googleMapsDirectionsUrl) {
+      link.setAttribute("href", config.googleMapsDirectionsUrl);
+    }
+  });
+}
+
+function updateContactFormStatus(form, type, message) {
+  const ok = form.querySelector("[data-form-ok]");
+  const err = form.querySelector("[data-form-error]");
+
+  if (ok) {
+    ok.textContent = type === "ok" ? message : "";
+    ok.classList.toggle("show", type === "ok");
+  }
+
+  if (err) {
+    err.textContent = type === "error" ? message : "";
+    err.classList.toggle("show", type === "error");
+  }
+}
+
+function initContactForm() {
+  const form = document.getElementById("ctForm");
+
+  if (!form || form.dataset.bound === "true") {
+    return;
+  }
+
+  form.dataset.bound = "true";
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const button = form.querySelector('button[type="submit"]');
+    const data = new FormData(form);
+    const payload = Object.fromEntries(data.entries());
+
+    updateContactFormStatus(form, "", "");
+    form.classList.remove("sent");
+
+    if (button) {
+      button.disabled = true;
+      button.dataset.label = button.innerHTML;
+      button.innerHTML = "Envoi en cours…";
+    }
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(
+          result.message ||
+            "Le message n'a pas pu être envoyé pour le moment. Réessaie dans un instant."
+        );
+      }
+
+      form.reset();
+      form.classList.add("sent");
+      updateContactFormStatus(
+        form,
+        "ok",
+        "Merci, votre message a bien été envoyé à l'association."
+      );
+    } catch (error) {
+      updateContactFormStatus(
+        form,
+        "error",
+        error.message ||
+          "Le message n'a pas pu être envoyé. Vérifie la configuration du formulaire sur Vercel."
+      );
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = button.dataset.label || "Envoyer";
+      }
+    }
+  });
+}
+
 function renderPastEventCard(event, index, revealClass = "") {
   const cardClass = ["past-card", "reveal", revealClass].filter(Boolean).join(" ");
   const placeholder = PLACEHOLDERS.event[index % PLACEHOLDERS.event.length];
@@ -707,8 +1048,11 @@ async function renderEvenementsPage() {
 
 function injectChrome(activeKey) {
   const navMarkup = `
-    <div class="util">
-      <span>Lieu culturel · Résidence d'artistes · Tisseur de liens</span> <strong>Auvers-sur-Oise · 30 km de Paris</strong>
+    <div class="util" id="site-util">
+      <a href="evenements.html" id="site-util-link">
+        <span id="site-util-prefix">Lieu culturel · Résidence d'artistes</span>
+        <strong id="site-util-main">Auvers-sur-Oise · 30 km de Paris</strong>
+      </a>
     </div>
     <header class="nav" id="nav">
       <div class="nav-inner">
@@ -751,8 +1095,8 @@ function injectChrome(activeKey) {
           <div>
             <h4>Visiter</h4>
             <ul>
-              <li>59 rue Daubigny</li>
-              <li>95430 Auvers-sur-Oise</li>
+              <li data-site-address-line-1>59 rue Daubigny</li>
+              <li data-site-address-line-2>95430 Auvers-sur-Oise</li>
               <li>Selon la programmation et sur rendez-vous</li>
               <li><a href="contact.html">Itinéraire →</a></li>
             </ul>
@@ -760,10 +1104,10 @@ function injectChrome(activeKey) {
           <div class="contact">
             <h4>Contact</h4>
             <ul>
-              <li><a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></li>
-              <li><a href="tel:+33615375672">06 15 37 56 72</a></li>
-              <li><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener">Instagram →</a></li>
-              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener">HelloAsso →</a></li>
+              <li><a href="mailto:contact@lamaisonrosedewallerand.com" data-site-email>contact@lamaisonrosedewallerand.com</a></li>
+              <li><a href="tel:+33615375672" data-site-phone>+33 6 15 37 56 72</a></li>
+              <li><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener" data-site-instagram>@lamaisonrosedewallerand</a></li>
+              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" data-site-helloasso>HelloAsso →</a></li>
             </ul>
           </div>
           <div>
@@ -811,9 +1155,20 @@ function injectChrome(activeKey) {
   initNewsletterForm();
   initSmoothAnchors();
   initBurger();
+
+  fetchSiteSettings()
+    .then(async (settings) => {
+      applySiteSettingsToDom(settings);
+      renderHelloAssoWidget(settings);
+      applyUtilityAnnouncement(await resolveUtilityAnnouncement(settings));
+    })
+    .catch((error) => {
+      console.warn("Impossible d'appliquer les réglages du site.", error);
+    });
 }
 
 window.injectChrome = injectChrome;
+window.initContactForm = initContactForm;
 
 document.addEventListener("DOMContentLoaded", async () => {
   registerReveals(document);
@@ -823,7 +1178,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   initBurger();
 
   try {
-    await Promise.all([renderHomeFeaturedEvent(), renderStagesPage(), renderEvenementsPage()]);
+    await Promise.all([
+      renderHomeFeaturedEvent(),
+      renderStagesPage(),
+      renderEvenementsPage(),
+      hydrateMaps()
+    ]);
   } catch (error) {
     console.error(error);
   }

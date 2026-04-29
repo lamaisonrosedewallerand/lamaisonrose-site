@@ -56,34 +56,17 @@
   .visit-text h2 em { font-style: italic; color: var(--terre); }
   .visit-text p { color: var(--grey); margin-bottom: 20px; }
 
-  .map { aspect-ratio: 5/3; position: relative; background: var(--cream-2); overflow: hidden; }
-  .map .grid {
-    position: absolute; inset: 0;
-    background:
-      repeating-linear-gradient(90deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px),
-      repeating-linear-gradient(0deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px),
-      linear-gradient(135deg, #F2EBE1 0%, #E8DDD0 100%);
+  .map-shell { margin-top: 60px; background: var(--cream-2); padding: 18px; border: 1px solid var(--line); }
+  .map { aspect-ratio: 5/3; width: 100%; border: 0; display: block; background: #ebe3d8; }
+  .map-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+    flex-wrap: wrap;
   }
-  .map .road { position: absolute; }
-  .map .r1 { left: 0; right: 0; top: 55%; height: 3px; background: var(--terre); }
-  .map .r2 { top: 0; bottom: 0; left: 60%; width: 3px; background: var(--terre); }
-  .map .r3 { left: 10%; right: 30%; top: 30%; height: 2px; background: rgba(184,101,79,.5); transform: rotate(8deg); transform-origin: left; }
-  .map .pin {
-    position: absolute; left: 60%; top: 55%;
-    transform: translate(-50%, -100%);
-    width: 32px; height: 32px;
-    background: var(--ink); border-radius: 50% 50% 50% 0;
-    transform: translate(-50%, -100%) rotate(-45deg);
-    z-index: 2;
-  }
-  .map .pin::after { content: ""; position: absolute; inset: 9px; background: var(--rose); border-radius: 50%; }
-  .map .lbl-here {
-    position: absolute; left: 60%; top: 55%; transform: translate(20px, -50%);
-    background: var(--cream); padding: 8px 14px;
-    font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px;
-    box-shadow: 0 8px 20px -10px rgba(26,22,20,.2);
-    z-index: 3;
-  }
+  .map-note { color: var(--grey); font-size: 14px; max-width: 42rem; }
 
   @media (max-width: 1024px) {
     .place-grid-large { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
@@ -103,7 +86,7 @@
     .visit-card { padding: 32px 24px; }
     .visit-card .row { display: block; padding: 12px 0; }
     .visit-card .row .v { display: block; margin-top: 6px; }
-    .map .lbl-here { left: 16px; right: 16px; top: auto; bottom: 16px; transform: none; }
+    .map-shell { padding: 12px; }
   }
 </style>
 </head>
@@ -164,7 +147,7 @@
     <div class="visit-grid">
       <div class="visit-card reveal">
         <h3>Informations pratiques</h3>
-        <div class="row"><span class="k">Adresse</span><span class="v">59 rue Daubigny, 95430 Auvers-sur-Oise</span></div>
+        <div class="row"><span class="k">Adresse</span><span class="v"><span data-site-address-line-1>59 rue Daubigny</span>, <span data-site-address-line-2>95430 Auvers-sur-Oise</span></span></div>
         <div class="row"><span class="k">Lieu</span><span class="v">Ancien atelier d'été de Charles-François Daubigny</span></div>
         <div class="row"><span class="k">Capacité</span><span class="v">3 chambres indépendantes, cuisine équipée, 2 salles de bain, patio</span></div>
         <div class="row"><span class="k">Atelier</span><span class="v">62 m² avec 6 m sous plafond</span></div>
@@ -178,13 +161,26 @@
         <a href="contact.html" class="btn btn-primary">Préparer une visite <span class="arr">→</span></a>
       </div>
     </div>
-    <div class="map reveal" style="margin-top: 60px;">
-      <div class="grid"></div>
-      <div class="road r1"></div>
-      <div class="road r2"></div>
-      <div class="road r3"></div>
-      <span class="pin"></span>
-      <span class="lbl-here">59 rue Daubigny</span>
+    <div class="map-shell reveal">
+      <iframe
+        class="map"
+        data-map-frame
+        title="Carte du lieu"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=59%20rue%20Daubigny%2C%2095430%20Auvers-sur-Oise&output=embed"
+      ></iframe>
+      <div class="map-actions">
+        <p class="map-note">Retrouvez l'ancien atelier d'été de Charles-François Daubigny directement dans Google Maps.</p>
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=59%20rue%20Daubigny%2C%2095430%20Auvers-sur-Oise"
+          target="_blank"
+          rel="noopener"
+          class="btn btn-ghost"
+          data-map-directions
+        >Ouvrir l'itinéraire</a>
+      </div>
     </div>
   </div>
 </section>

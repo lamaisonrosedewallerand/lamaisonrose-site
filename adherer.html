@@ -67,6 +67,20 @@
   .donate .amt:hover, .donate .amt.on { background: var(--ink); color: var(--cream); border-color: var(--ink); }
   .donate small { display: block; margin-top: 18px; color: var(--grey-soft); font-size: 12px; letter-spacing: 0.04em; }
 
+  .helloasso-block { padding: 110px 0; }
+  .helloasso-shell { background: var(--cream-2); padding: 22px; border: 1px solid var(--line); }
+  .helloasso-frame,
+  .helloasso-fallback { background: var(--cream); }
+  .helloasso-fallback {
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .helloasso-fallback p {
+    max-width: 42rem;
+    margin: 0 auto 18px;
+    color: var(--grey);
+  }
+
   .faq { padding: 130px 0; }
   .faq h2 { font-size: clamp(36px, 4vw, 56px); margin-bottom: 50px; }
   .faq h2 em { font-style: italic; color: var(--terre); }
@@ -92,6 +106,7 @@
     .why-img {
       aspect-ratio: 4 / 3;
     }
+    .helloasso-block { padding: 84px 0; }
   }
   @media (max-width: 680px) {
     .join { padding: 88px 0; }
@@ -102,6 +117,7 @@
     .why { padding: 84px 0; }
     .why .pull { padding: 22px 0 22px 18px; font-size: 22px; }
     .donate { padding: 82px 0; }
+    .helloasso-shell { padding: 12px; }
     .faq { padding: 88px 0; }
     .faq-item .q { font-size: 20px; align-items: flex-start; gap: 14px; }
   }
@@ -130,7 +146,7 @@
           <li>Recevoir les confirmations depuis HelloAsso</li>
           <li>Ne laisser aucune donnée bancaire sur le site vitrine</li>
         </ul>
-        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary">Voir sur HelloAsso <span class="arr">→</span></a>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary" data-site-helloasso>Voir sur HelloAsso <span class="arr">→</span></a>
       </article>
 
       <article class="tier featured reveal d2">
@@ -145,7 +161,7 @@
           <li>Conserver une gestion simple, sans back-office complexe</li>
           <li>Retrouver les actions en cours au même endroit</li>
         </ul>
-        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary">Soutenir via HelloAsso <span class="arr">→</span></a>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary" data-site-helloasso>Soutenir via HelloAsso <span class="arr">→</span></a>
       </article>
 
       <article class="tier reveal d3">
@@ -186,6 +202,22 @@
       <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary">Ouvrir la page HelloAsso <span class="arr">→</span></a>
     </div>
     <small>Le site vitrine n'encaisse rien directement et ne conserve aucune donnée de paiement.</small>
+  </div>
+</section>
+
+<section class="helloasso-block wrap">
+  <div class="sec-head">
+    <div class="left reveal">
+      <span class="num-tag">— HelloAsso intégré</span>
+      <h2>Le formulaire <span class="it">directement sur le site.</span></h2>
+    </div>
+    <p class="right reveal d2">Si vous collez l'URL d'un widget HelloAsso dans l'admin, le formulaire officiel s'affichera ici sans quitter le site.</p>
+  </div>
+  <div class="helloasso-shell reveal" id="helloasso-widget">
+    <div class="helloasso-fallback">
+      <p>Le formulaire HelloAsso pourra s'afficher directement ici lorsqu'une campagne ou une adhésion sera ouverte.</p>
+      <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary" data-site-helloasso>Ouvrir HelloAsso <span class="arr">→</span></a>
+    </div>
   </div>
 </section>
 

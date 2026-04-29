@@ -19,6 +19,14 @@ const collections = [
   }
 ];
 
+const singletons = [
+  {
+    name: "site",
+    sourceFile: path.join(rootDir, "content/site/settings.md"),
+    outputFile: path.join(rootDir, "assets/data/site-settings.json")
+  }
+];
+
 async function main() {
   for (const collection of collections) {
     const items = await loadCollection(collection.sourceDir);
@@ -31,6 +39,19 @@ async function main() {
     await mkdir(path.dirname(collection.outputFile), { recursive: true });
     await writeFile(collection.outputFile, `${JSON.stringify(payload, null, 2)}\n`);
     console.log(`Built ${collection.name}: ${items.length} item(s)`);
+  }
+
+  for (const singleton of singletons) {
+    const raw = await readFile(singleton.sourceFile, "utf8");
+    const item = parseMarkdownDocument(path.basename(singleton.sourceFile), raw);
+    const payload = {
+      generatedAt: new Date().toISOString(),
+      item
+    };
+
+    await mkdir(path.dirname(singleton.outputFile), { recursive: true });
+    await writeFile(singleton.outputFile, `${JSON.stringify(payload, null, 2)}\n`);
+    console.log(`Built ${singleton.name}: 1 item`);
   }
 }
 

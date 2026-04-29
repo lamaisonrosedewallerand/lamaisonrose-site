@@ -9,6 +9,34 @@ media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
+  - name: "site"
+    label: "Reglages du site"
+    files:
+      - label: "Reglages generaux"
+        name: "settings"
+        file: "content/site/settings.md"
+        fields:
+          - label: "Mode annonce header"
+            name: "announcement_mode"
+            widget: "select"
+            options:
+              - { label: "Auto : prochain evenement", value: "auto" }
+              - { label: "Texte personnalise", value: "custom" }
+              - { label: "Masquer l'annonce", value: "off" }
+            default: "auto"
+          - { label: "Texte annonce personnalisee", name: "announcement_text", widget: "string", required: false }
+          - { label: "Lien annonce personnalisee", name: "announcement_link", widget: "string", required: false }
+          - { label: "E-mail principal", name: "contact_email", widget: "string" }
+          - { label: "Telephone", name: "contact_phone", widget: "string" }
+          - { label: "Adresse ligne 1", name: "address_line_1", widget: "string" }
+          - { label: "Adresse ligne 2", name: "address_line_2", widget: "string" }
+          - { label: "Lien Instagram", name: "instagram_url", widget: "string", required: false }
+          - { label: "Lien HelloAsso principal", name: "helloasso_url", widget: "string", required: false }
+          - { label: "Image hero accueil", name: "home_hero_image", widget: "image", required: false }
+          - { label: "URL widget HelloAsso", name: "helloasso_widget_url", widget: "string", required: false, hint: "Exemple : .../adhesions/nom/widget ou .../formulaires/1/widget" }
+          - { label: "Hauteur widget HelloAsso", name: "helloasso_widget_height", widget: "number", value_type: "int", min: 500, required: false, default: 780 }
+          - { label: "Note interne", name: "body", widget: "markdown", required: false }
+
   - name: "stages"
     label: "Stages"
     folder: "content/stages"

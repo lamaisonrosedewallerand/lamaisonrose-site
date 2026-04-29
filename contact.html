@@ -17,6 +17,7 @@
   .ct-form h3 { font-size: 28px; margin-bottom: 8px; }
   .ct-form h3 em { font-style: italic; color: var(--terre); }
   .ct-form .lede { color: var(--grey); margin-bottom: 32px; font-size: 15px; }
+  .field.is-hidden { display: none; }
   .field { margin-bottom: 22px; }
   .field label { display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey); margin-bottom: 8px; }
   .field input, .field select, .field textarea {
@@ -30,9 +31,18 @@
   .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--terre); }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .ct-form .submit { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; flex-wrap: wrap; gap: 16px; }
-  .ct-form .ok { font-size: 13px; color: var(--terre); display: none; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; }
-  .ct-form.sent .ok { display: block; }
-  .ct-form.sent button, .ct-form.sent .field { display: none; }
+  .ct-form .ok,
+  .ct-form .err {
+    display: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+  }
+  .ct-form .ok { color: var(--terre); }
+  .ct-form .err { color: var(--terre-dark); }
+  .ct-form .ok.show,
+  .ct-form .err.show { display: block; }
+  .ct-form button[disabled] { opacity: 0.72; pointer-events: none; }
 
   .ct-info h3 { font-size: 26px; margin-bottom: 24px; }
   .ct-info h3 em { font-style: italic; color: var(--terre); }
@@ -43,14 +53,17 @@
   .ct-info .val a:hover { color: var(--terre); }
 
   .map-bloc { padding: 0 0 130px; }
-  .map { aspect-ratio: 21/9; position: relative; overflow: hidden; }
-  .map .grid { position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px), repeating-linear-gradient(0deg, transparent 0 60px, rgba(26,22,20,.06) 60px 61px), linear-gradient(135deg, #F2EBE1 0%, #E8DDD0 100%); }
-  .map .road { position: absolute; }
-  .map .r1 { left: 0; right: 0; top: 60%; height: 3px; background: var(--terre); }
-  .map .r2 { top: 0; bottom: 0; left: 55%; width: 3px; background: var(--terre); }
-  .map .pin { position: absolute; left: 55%; top: 60%; width: 32px; height: 32px; background: var(--ink); border-radius: 50% 50% 50% 0; transform: translate(-50%, -100%) rotate(-45deg); z-index: 2; }
-  .map .pin::after { content: ""; position: absolute; inset: 9px; background: var(--rose); border-radius: 50%; }
-  .map .lbl { position: absolute; left: 55%; top: 60%; transform: translate(20px, -50%); background: var(--cream); padding: 8px 14px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; box-shadow: 0 8px 20px -10px rgba(26,22,20,.2); z-index: 3; }
+  .map-shell { background: var(--cream-2); padding: 18px; border: 1px solid var(--line); }
+  .map { aspect-ratio: 21/9; width: 100%; border: 0; display: block; background: #ebe3d8; }
+  .map-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .map-note { color: var(--grey); font-size: 14px; }
 
   @media (max-width: 1024px) {
     .ct-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -69,7 +82,7 @@
     .row2 { grid-template-columns: 1fr; gap: 18px; }
     .ct-form { padding: 26px 18px; }
     .ct-form .submit { align-items: stretch; }
-    .map .lbl { left: 16px; right: 16px; top: auto; bottom: 16px; transform: none; }
+    .map-shell { padding: 12px; }
   }
 </style>
 </head>
@@ -90,8 +103,10 @@
 <section class="ct wrap">
   <div class="ct-grid">
     <form class="ct-form reveal" id="ctForm">
-      <h3>Préparer un <em>e-mail</em></h3>
-      <p class="lede">Le formulaire ci-dessous ouvre votre messagerie avec un message déjà préparé. Aucune donnée n'est enregistrée sur le site.</p>
+      <h3>Envoyer un <em>message</em></h3>
+      <p class="lede">Le formulaire envoie directement votre message à l'association depuis le site. Aucune donnée n'est stockée ici.</p>
+
+      <div class="field is-hidden"><label>Société</label><input type="text" name="company" autocomplete="off" tabindex="-1" /></div>
 
       <div class="row2">
         <div class="field"><label>Prénom *</label><input type="text" name="first_name" required /></div>
@@ -115,8 +130,9 @@
       </div>
       <div class="field"><label>Votre message *</label><textarea name="message" required></textarea></div>
       <div class="submit">
-        <button type="submit" class="btn btn-primary">Ouvrir mon e-mail <span class="arr">→</span></button>
-        <span class="ok">Votre messagerie s'ouvre avec le message prérempli.</span>
+        <button type="submit" class="btn btn-primary">Envoyer le message <span class="arr">→</span></button>
+        <span class="ok" data-form-ok></span>
+        <span class="err" data-form-error></span>
       </div>
     </form>
 
@@ -124,15 +140,15 @@
       <h3>Nos <em>coordonnées</em></h3>
       <div class="blk">
         <div class="lbl">Adresse</div>
-        <div class="val">59 rue Daubigny<br/>95430 Auvers-sur-Oise</div>
+        <div class="val"><span data-site-address-line-1>59 rue Daubigny</span><br/><span data-site-address-line-2>95430 Auvers-sur-Oise</span></div>
       </div>
       <div class="blk">
         <div class="lbl">E-mail</div>
-        <div class="val"><a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></div>
+        <div class="val"><a href="mailto:contact@lamaisonrosedewallerand.com" data-site-email>contact@lamaisonrosedewallerand.com</a></div>
       </div>
       <div class="blk">
         <div class="lbl">Téléphone</div>
-        <div class="val"><a href="tel:+33615375672">+33 6 15 37 56 72</a></div>
+        <div class="val"><a href="tel:+33615375672" data-site-phone>+33 6 15 37 56 72</a></div>
       </div>
       <div class="blk">
         <div class="lbl">Accueil</div>
@@ -140,7 +156,7 @@
       </div>
       <div class="blk">
         <div class="lbl">Instagram</div>
-        <div class="val"><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener">@lamaisonrosedewallerand</a></div>
+        <div class="val"><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener" data-site-instagram>@lamaisonrosedewallerand</a></div>
       </div>
       <div class="blk">
         <div class="lbl">Pratique</div>
@@ -151,12 +167,26 @@
 </section>
 
 <section class="map-bloc wrap">
-  <div class="map reveal">
-    <div class="grid"></div>
-    <div class="road r1"></div>
-    <div class="road r2"></div>
-    <span class="pin"></span>
-    <span class="lbl">59 rue Daubigny</span>
+  <div class="map-shell reveal">
+    <iframe
+      class="map"
+      data-map-frame
+      title="Carte La Maison Rose de Wallerand"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=59%20rue%20Daubigny%2C%2095430%20Auvers-sur-Oise&output=embed"
+    ></iframe>
+    <div class="map-actions">
+      <p class="map-note">Carte Google Maps centrée sur la Maison Rose, avec itinéraire possible en un clic.</p>
+      <a
+        href="https://www.google.com/maps/dir/?api=1&destination=59%20rue%20Daubigny%2C%2095430%20Auvers-sur-Oise"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-ghost"
+        data-map-directions
+      >Itinéraire Google Maps</a>
+    </div>
   </div>
 </section>
 
@@ -165,22 +195,7 @@
 <script src="assets/site.js"></script>
 <script>
   injectChrome('contact');
-  document.getElementById('ctForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const fullName = `${data.get('first_name') || ''} ${data.get('last_name') || ''}`.trim();
-    const subject = data.get('topic') || 'Message depuis le site';
-    const body = [
-      `Nom : ${fullName}`,
-      `E-mail : ${data.get('email') || ''}`,
-      `Téléphone : ${data.get('phone') || ''}`,
-      '',
-      'Message :',
-      data.get('message') || ''
-    ].join('\n');
-
-    window.location.href = `mailto:contact@lamaisonrosedewallerand.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  });
+  initContactForm();
 </script>
 </body>
 </html>
