@@ -26,8 +26,8 @@
   .team { padding: 130px 0; background: var(--cream-2); }
   .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
   .person .img { aspect-ratio: 4/5; position: relative; overflow: hidden; margin-bottom: 18px; }
-  .person .ph { position: absolute; inset: 0; transition: transform 1.2s; }
-  .person:hover .ph { transform: scale(1.05); }
+  .person .img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s; }
+  .person:hover .img img { transform: scale(1.05); }
   .ph-p1 { background: radial-gradient(ellipse at 50% 30%, #C68876, #6B4030); }
   .ph-p2 { background: radial-gradient(ellipse at 50% 35%, #E8C4B8, #8E4636); }
   .ph-p3 { background: radial-gradient(ellipse at 50% 30%, #DCD2C4, #4A4540); }
@@ -142,25 +142,25 @@
     </div>
     <div class="team-grid">
       <div class="person reveal">
-        <div class="img"><div class="ph ph-p1"></div></div>
+        <div class="img"><img src="/assets/uploads/maison-rose-exposition.jpg" alt="Visiteur découvrant une exposition à la Maison Rose" loading="lazy" /></div>
         <span class="role">— Expositions</span>
         <h4>Expositions &amp; estampes</h4>
         <p>Les Estampes Auversoises, les expositions temporaires et les accrochages thématiques donnent leur rythme à la saison.</p>
       </div>
       <div class="person reveal d2">
-        <div class="img"><div class="ph ph-p2"></div></div>
+        <div class="img"><img src="/assets/uploads/maison-rose-facade-complete.jpg" alt="Façade de la Maison Rose de Wallerand à Auvers-sur-Oise" loading="lazy" /></div>
         <span class="role">— Résidences</span>
         <h4>Résidences d'artistes</h4>
         <p>Le lieu accueille des artistes qui viennent travailler, séjourner et exposer dans un cadre patrimonial et inspirant.</p>
       </div>
       <div class="person reveal d3">
-        <div class="img"><div class="ph ph-p3"></div></div>
+        <div class="img"><img src="/assets/uploads/maison-rose-accrochage.jpg" alt="Accrochage d'œuvres dans l'une des pièces de la Maison Rose" loading="lazy" /></div>
         <span class="role">— Transmission</span>
         <h4>Stages &amp; ateliers</h4>
         <p>Gravure, initiation, jeunes publics et ateliers ponctuels prolongent l'esprit d'atelier et la circulation des savoirs.</p>
       </div>
       <div class="person reveal d4">
-        <div class="img"><div class="ph ph-p4"></div></div>
+        <div class="img"><img src="/assets/uploads/maison-rose-vie-du-lieu.jpg" alt="Rencontre et moment de vie culturelle à la Maison Rose" loading="lazy" /></div>
         <span class="role">— Rencontres</span>
         <h4>Conférences, concerts, performances</h4>
         <p>La Maison Rose ouvre ses portes à des formats variés pour faire vivre la culture dans toute sa diversité.</p>

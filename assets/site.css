@@ -11,7 +11,7 @@
   --grey-soft: #7A726B;
   --line: #DCD2C4;
   --max: 1320px;
-  --home-hero-image: url("assets/official-house.jpg");
+  --home-hero-image: url("/assets/uploads/maison-rose-facade-hero.jpg");
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

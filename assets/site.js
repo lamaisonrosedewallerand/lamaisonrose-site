@@ -15,7 +15,7 @@ const DEFAULT_SITE_SETTINGS = {
   instagram_url: "https://www.instagram.com/lamaisonrosedewallerand/",
   helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
   helloasso_organization_slug: "la-maison-rose-de-wallerand",
-  home_hero_image: "assets/official-house.jpg",
+  home_hero_image: "/assets/uploads/maison-rose-facade-hero.jpg",
   helloasso_checkout_membership_item_name: "Adhesion individuelle a La Maison Rose de Wallerand",
   helloasso_checkout_membership_amount: 20,
   helloasso_checkout_membership_couple_item_name: "Adhesion couple a La Maison Rose de Wallerand",

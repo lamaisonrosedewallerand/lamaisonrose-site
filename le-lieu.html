@@ -14,21 +14,21 @@
   .pg { overflow: hidden; position: relative; }
   .pg.t { grid-row: span 2; }
   .pg.w { grid-column: span 2; }
-  .pg .ph { position: absolute; inset: 0; transition: transform 1.2s ease; }
+  .pg .ph {
+    position: absolute;
+    inset: 0;
+    transition: transform 1.2s ease;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
   .pg:hover .ph { transform: scale(1.04); }
   .pg .lbl { position: absolute; bottom: 14px; left: 14px; background: rgba(250,246,241,.95); color: var(--ink); padding: 6px 12px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; z-index: 2; }
-  .ph-1 { background: linear-gradient(160deg, #E8C4B8 0%, #B8826F 100%); }
-  .ph-1::after { content: ""; position: absolute; inset: 25% 18% 0 18%; background: linear-gradient(180deg, #C68876 0%, #8E4636 100%); clip-path: polygon(0 35%, 50% 0, 100% 35%, 100% 100%, 0 100%); }
-  .ph-2 { background: radial-gradient(circle at 50% 50%, #2B2522 0%, #1A1614 80%); }
-  .ph-2::after { content: ""; position: absolute; inset: 35% 30%; background: radial-gradient(circle, rgba(232,196,184,.85) 0%, transparent 70%); }
-  .ph-3 { background: linear-gradient(180deg, #F2EBE1 0%, #DCD2C4 100%); }
-  .ph-3::after { content: ""; position: absolute; inset: 20%; background: repeating-linear-gradient(90deg, rgba(26,22,20,.4) 0 1px, transparent 1px 9px); }
-  .ph-4 { background: linear-gradient(45deg, #B8654F 0%, #8E4636 100%), url("assets/official-presse.jpg") center/cover; background-blend-mode: multiply; }
-  .ph-4::after { content: ""; position: absolute; inset: 15%; border: 1px solid rgba(250,246,241,.45); background: repeating-linear-gradient(0deg, transparent 0 12px, rgba(250,246,241,.08) 12px 13px); }
-  .ph-5 { background: radial-gradient(ellipse at 30% 30%, #E8C4B8, transparent 60%), linear-gradient(180deg, #F2EBE1, #E8DDD0); }
-  .ph-5::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 25% 60%, rgba(184,101,79,.6) 0 8%, transparent 9%), radial-gradient(circle at 55% 40%, rgba(26,22,20,.4) 0 5%, transparent 6%), radial-gradient(circle at 75% 70%, rgba(184,101,79,.4) 0 6%, transparent 7%); }
-  .ph-6 { background: linear-gradient(135deg, #DCD2C4 0%, #B8826F 100%); }
-  .ph-6::after { content: ""; position: absolute; inset: 30% 20%; background: linear-gradient(180deg, #6B4030 0%, #2B2522 100%); border-radius: 50% 50% 0 0; }
+  .ph-1 { background-image: linear-gradient(180deg, rgba(26,22,20,.04), rgba(26,22,20,.22)), url("/assets/uploads/maison-rose-facade-complete.jpg"); background-position: center 58%; }
+  .ph-2 { background-image: linear-gradient(180deg, rgba(26,22,20,.08), rgba(26,22,20,.18)), url("/assets/uploads/maison-rose-exposition.jpg"); background-position: center 44%; }
+  .ph-3 { background-image: linear-gradient(180deg, rgba(26,22,20,.04), rgba(26,22,20,.14)), url("/assets/uploads/maison-rose-accrochage.jpg"); background-position: center 32%; }
+  .ph-4 { background-image: linear-gradient(180deg, rgba(26,22,20,.18), rgba(26,22,20,.34)), url("/assets/uploads/maison-rose-vie-du-lieu.jpg"); background-position: center; }
+  .ph-5 { background-image: linear-gradient(180deg, rgba(26,22,20,.02), rgba(26,22,20,.12)), url("/assets/uploads/maison-rose-roses-affiche.jpg"); background-position: center 34%; }
+  .ph-6 { background-image: linear-gradient(180deg, rgba(26,22,20,.02), rgba(26,22,20,.18)), url("/assets/uploads/maison-rose-facade-hero.jpg"); background-position: center 54%; }
 
   .history { padding: 130px 0; background: var(--cream-2); }
   .history-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
@@ -136,11 +136,11 @@
 <section class="wrap">
   <div class="place-grid-large">
     <div class="pg t reveal"><div class="ph ph-1"></div><span class="lbl">Façade</span></div>
-    <div class="pg reveal d2"><div class="ph ph-2"></div><span class="lbl">Atelier de 62 m²</span></div>
-    <div class="pg reveal d3"><div class="ph ph-3"></div><span class="lbl">6 m sous plafond</span></div>
-    <div class="pg w reveal"><div class="ph ph-4"></div><span class="lbl">La presse et l'atelier</span></div>
-    <div class="pg reveal d2"><div class="ph ph-5"></div><span class="lbl">Trois chambres</span></div>
-    <div class="pg reveal d3"><div class="ph ph-6"></div><span class="lbl">Patio et vie de maison</span></div>
+    <div class="pg reveal d2"><div class="ph ph-2"></div><span class="lbl">Exposition &amp; accrochages</span></div>
+    <div class="pg reveal d3"><div class="ph ph-3"></div><span class="lbl">Détails du lieu</span></div>
+    <div class="pg w reveal"><div class="ph ph-4"></div><span class="lbl">Vie du lieu</span></div>
+    <div class="pg reveal d2"><div class="ph ph-5"></div><span class="lbl">Maison en fleurs</span></div>
+    <div class="pg reveal d3"><div class="ph ph-6"></div><span class="lbl">Mémoire de la maison</span></div>
   </div>
 </section>
 
