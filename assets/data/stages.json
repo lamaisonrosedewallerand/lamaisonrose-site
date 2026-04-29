@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-04-29T11:09:06.996Z",
-  "count": 3,
+  "generatedAt": "2026-04-29T12:58:05.099Z",
+  "count": 4,
   "items": [
     {
       "slug": "stage-gravure-eau-forte",
@@ -52,6 +52,18 @@
       "body": "Une initiation a la linogravure dans un cadre artistique et chaleureux a\nAuvers-sur-Oise.\n\n- Decouverte du geste, de la plaque et de l'impression\n- Petit groupe pour garder un vrai accompagnement\n- Materiel de base presente sur place",
       "descriptionText": "Une initiation a la linogravure dans un cadre artistique et chaleureux a Auvers sur Oise. Decouverte du geste, de la plaque et de l'impression Petit groupe pour garder un vrai accompagnement Materiel de base presente sur place",
       "descriptionHtml": "<p>Une initiation a la linogravure dans un cadre artistique et chaleureux a Auvers-sur-Oise.</p>\n<ul>\n<li>Decouverte du geste, de la plaque et de l&#39;impression</li>\n<li>Petit groupe pour garder un vrai accompagnement</li>\n<li>Materiel de base presente sur place</li>\n</ul>"
+    },
+    {
+      "slug": "trop-bine",
+      "title": "TROP BINE ",
+      "price": "120 € ",
+      "places": 18,
+      "status": "ouvert",
+      "featured": false,
+      "image": "",
+      "body": "aefafea",
+      "descriptionText": "aefafea",
+      "descriptionHtml": "<p>aefafea</p>"
     }
   ]
 }
