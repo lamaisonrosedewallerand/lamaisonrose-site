@@ -1562,6 +1562,15 @@ function injectChrome(activeKey) {
             </ul>
           </div>
         </div>
+        <div class="foot-support">
+          <div class="foot-support-copy">
+            <span class="ey">Avec le soutien de</span>
+            <p>Patrimoine d’Île-de-France · Région Île-de-France</p>
+          </div>
+          <div class="foot-support-logo">
+            <img src="/assets/uploads/logo-patrimoine-ile-de-france.jpg" alt="Logo Patrimoine d’Île-de-France et Région Île-de-France" loading="lazy" />
+          </div>
+        </div>
         <div class="foot-bot">
           <div>© 2026 La Maison Rose de Wallerand</div>
           <div class="links">

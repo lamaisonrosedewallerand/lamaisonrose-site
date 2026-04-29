@@ -76,6 +76,11 @@
   @media (max-width: 820px) {
     .feat { padding: 56px 0 82px; }
     .feat-grid { gap: 28px; }
+    .feat-grid > .reveal:first-child {
+      padding: 18px 18px 20px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+    }
     .feat-visual {
       order: -1;
       aspect-ratio: 5 / 4;
@@ -136,6 +141,9 @@
   @media (max-width: 700px) {
     .feat { padding: 42px 0 68px; }
     .feat-grid { gap: 22px; }
+    .feat-grid > .reveal:first-child {
+      padding: 16px;
+    }
     .feat h2 {
       font-size: clamp(28px, 10vw, 38px);
       line-height: 0.96;
