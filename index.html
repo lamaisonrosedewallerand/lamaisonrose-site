@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>La Maison Rose de Wallerand — Maison d'art et d'estampes, Auvers-sur-Oise</title>
-<meta name="description" content="Maison d'art à Auvers-sur-Oise dédiée à la gravure, l'estampe et la transmission. Stages, expositions et événements toute l'année." />
+<title>La Maison Rose de Wallerand — Lieu culturel et résidence d'artistes à Auvers-sur-Oise</title>
+<meta name="description" content="Lieu culturel à Auvers-sur-Oise, ancien atelier d'artistes de Charles-François Daubigny. Résidences, gravure, expositions et événements toute l'année." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
@@ -88,7 +88,14 @@
   .teaser:hover .more { color: var(--terre); border-color: var(--terre); }
 
   /* Wallerand strip */
-  .wstrip { background: var(--ink); color: #E8DDD0; padding: 100px 0; text-align: center; }
+  .wstrip {
+    background:
+      linear-gradient(180deg, rgba(26,22,20,.88), rgba(26,22,20,.92)),
+      url("assets/official-auvers-spect10.jpg") center/cover;
+    color: #E8DDD0;
+    padding: 100px 0;
+    text-align: center;
+  }
   .wstrip .num { color: var(--rose); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; }
   .wstrip h2 { color: var(--cream); font-size: clamp(40px, 5vw, 64px); line-height: 1.1; margin: 18px auto 24px; max-width: 16ch; }
   .wstrip h2 em { color: var(--rose); font-style: italic; }
@@ -102,7 +109,31 @@
     .headline-grid { grid-template-columns: 1fr; gap: 50px; }
     .teaser-grid { grid-template-columns: 1fr; }
   }
-  @media (max-width: 600px) { .countdown { gap: 6px; } .hv-tag.t1 { left: 4%; } .hv-tag.t2 { right: 4%; } }
+  @media (max-width: 680px) {
+    .hero { min-height: auto; }
+    .hero-grid { padding: 0 18px; gap: 18px; }
+    .hero-text { padding: 42px 0 24px; }
+    .hero h1 { margin-bottom: 20px; }
+    .hero-sub { font-size: 20px; margin-bottom: 16px; }
+    .hero-lede { margin-bottom: 28px; font-size: 15px; }
+    .hero-visual { min-height: 300px; }
+    .hv-frame { height: 52vh; min-height: 300px; }
+    .hv-tag { padding: 10px 14px; }
+    .hv-tag .lbl { letter-spacing: 0.14em; }
+    .hv-tag .val { font-size: 15px; }
+    .hv-tag.t1 { top: 12px; left: 10px; }
+    .hv-tag.t2 { right: 10px; bottom: 12px; }
+    .scroll-hint { display: none; }
+    .manifesto { padding: 88px 0 74px; }
+    .manifesto h2 { font-size: clamp(34px, 9vw, 48px); margin-bottom: 34px; }
+    .headline { padding: 88px 0; }
+    .headline-meta { gap: 18px; margin: 24px 0; padding: 18px 0; }
+    .countdown { gap: 6px; max-width: none; }
+    .countdown .cell .n { font-size: 30px; }
+    .teasers { padding: 88px 0; }
+    .teaser { padding: 30px 24px; }
+    .wstrip { padding: 82px 0; }
+  }
 </style>
 </head>
 <body>
@@ -112,13 +143,13 @@
 <section class="hero" id="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <div class="eyebrow reveal">Maison d'art · Fondée par Wallerand</div>
+      <div class="eyebrow reveal">Lieu culturel · Résidence d'artistes · Tisseur de liens</div>
       <h1 class="reveal d2">La Maison<br/><span class="it">Rose</span> de Wallerand</h1>
-      <p class="hero-sub reveal d3">Maison d'art et d'estampes —<br/>Auvers-sur-Oise, Val-d'Oise.</p>
-      <p class="hero-lede reveal d3">Un lieu où l'encre rencontre le papier, où les artistes transmettent, où les visiteurs deviennent créateurs.</p>
+      <p class="hero-sub reveal d3">À 30 km de Paris, au cœur du centre historique d'Auvers-sur-Oise.</p>
+      <p class="hero-lede reveal d3">Ancien atelier d'été de Charles-François Daubigny, la Maison Rose accueille des artistes en résidence, des stages de gravure et des événements culturels tout au long de l'année.</p>
       <div class="cta-row reveal d4">
         <a href="stages.html" class="btn btn-primary">Découvrir nos stages <span class="arr">→</span></a>
-        <a href="adherer.html" class="btn btn-ghost">Adhérer à l'association</a>
+        <a href="evenements.html" class="btn btn-ghost">Voir l'agenda</a>
       </div>
     </div>
     <div class="hero-visual reveal d3">
@@ -126,38 +157,38 @@
         <div class="img" aria-label="Façade de la Maison Rose"></div>
         <div class="hv-windows"><div class="w"></div><div class="w"></div></div>
       </div>
-      <div class="hv-tag t1"><span class="lbl">Atelier</span><span class="val"><strong>Gravure</strong> sur cuivre</span></div>
-      <div class="hv-tag t2"><span class="lbl">Depuis</span><span class="val"><strong>1987</strong> — Auvers</span></div>
+      <div class="hv-tag t1"><span class="lbl">Atelier</span><span class="val"><strong>62 m²</strong> · 6 m sous plafond</span></div>
+      <div class="hv-tag t2"><span class="lbl">Résidence</span><span class="val"><strong>3 chambres</strong> · patio</span></div>
     </div>
   </div>
   <div class="scroll-hint"><span>Découvrir</span><span class="line"></span></div>
 </section>
 
 <section class="manifesto wrap">
-  <p class="small reveal">— Manifeste —</p>
-  <h2 class="reveal d2">Ici, le geste précède le mot. <em>L'encre choisit son papier,</em> la presse retient son souffle, et la trace, lentement, devient œuvre.</h2>
+  <p class="small reveal">— L'esprit du lieu —</p>
+  <h2 class="reveal d2">Un ancien atelier d'artistes devenu <em>lieu de vie, de résidence et de transmission,</em> pour mieux explorer le présent et l'avenir.</h2>
   <div class="manifesto-quote reveal d3">
-    <p>« On ne grave pas pour reproduire le monde, on grave pour s'y inscrire. »</p>
-    <span class="sign">— Wallerand</span>
+    <p>La Maison Rose est avant tout un lieu vivant qui accueille expositions, performances, concerts, conférences, ateliers et rencontres.</p>
+    <span class="sign">— La Maison Rose de Wallerand</span>
   </div>
 </section>
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>Gravure sur cuivre <span class="dot">✦</span></span>
-    <span>Estampe originale <span class="dot">✦</span></span>
-    <span>Auvers-sur-Oise <span class="dot">✦</span></span>
+    <span>Eau-forte <span class="dot">✦</span></span>
+    <span>Aquatinte <span class="dot">✦</span></span>
+    <span>Taille-douce <span class="dot">✦</span></span>
     <span>Pointe sèche <span class="dot">✦</span></span>
     <span>Lithographie <span class="dot">✦</span></span>
-    <span>Aquatinte <span class="dot">✦</span></span>
-    <span>Hommage à Wallerand <span class="dot">✦</span></span>
-    <span>Gravure sur cuivre <span class="dot">✦</span></span>
-    <span>Estampe originale <span class="dot">✦</span></span>
+    <span>Transfert &amp; impression <span class="dot">✦</span></span>
     <span>Auvers-sur-Oise <span class="dot">✦</span></span>
+    <span>Eau-forte <span class="dot">✦</span></span>
+    <span>Aquatinte <span class="dot">✦</span></span>
+    <span>Taille-douce <span class="dot">✦</span></span>
     <span>Pointe sèche <span class="dot">✦</span></span>
     <span>Lithographie <span class="dot">✦</span></span>
-    <span>Aquatinte <span class="dot">✦</span></span>
-    <span>Hommage à Wallerand <span class="dot">✦</span></span>
+    <span>Transfert &amp; impression <span class="dot">✦</span></span>
+    <span>Auvers-sur-Oise <span class="dot">✦</span></span>
   </div>
 </div>
 
@@ -178,19 +209,19 @@
       <a href="stages.html" class="teaser reveal">
         <span class="num">— 01 / Apprendre</span>
         <h3>Stages &amp; <em>cours</em></h3>
-        <p>Initiation à la pointe sèche, aquatinte, taille-douce, lithographie. Trente stages par saison, encadrés par des graveurs en résidence.</p>
+        <p>Techniques de gravure à l'eau-forte, aquatinte, taille-douce, pointe sèche, lithographie, transfert et impression.</p>
         <span class="more">Voir le programme →</span>
       </a>
       <a href="evenements.html" class="teaser reveal d2">
         <span class="num">— 02 / Vivre</span>
         <h3>Événements &amp; <em>expositions</em></h3>
-        <p>Estampes Auversoises, vernissages, concerts au jardin, lectures et résidences d'artistes. Le calendrier d'une saison.</p>
+        <p>Expositions, performances artistiques, conférences, concerts, ateliers et rendez-vous ouverts à un public très large.</p>
         <span class="more">Voir l'agenda →</span>
       </a>
       <a href="le-lieu.html" class="teaser reveal d3">
         <span class="num">— 03 / Visiter</span>
         <h3>Le <em>lieu,</em> la maison</h3>
-        <p>Trois ateliers, un jardin de tilleuls, une bibliothèque de papiers anciens, et la presse Hopkinson — toujours la presse.</p>
+        <p>Un atelier de 62 m², trois chambres indépendantes, une cuisine équipée, deux salles de bain et un patio au cœur d'Auvers.</p>
         <span class="more">Visiter →</span>
       </a>
     </div>
@@ -200,8 +231,8 @@
 <section class="wstrip">
   <div class="wrap">
     <p class="num reveal">— Hommage</p>
-    <h2 class="reveal d2">Wallerand, <em>la main et le silence.</em></h2>
-    <p class="reveal d3">« Le papier garde la mémoire des mains qui l'ont touché. C'est cela, graver : laisser une mémoire qui ne soit pas la sienne. »</p>
+    <h2 class="reveal d2">Wallerand, <em>un élan qui continue.</em></h2>
+    <p class="reveal d3">Wallerand a vécu ici de 2014 à 2021 et a redonné à la Maison Rose sa vocation d'atelier et de foyer d'artistes. Nous poursuivons aujourd'hui cet élan artistique.</p>
     <a href="wallerand.html" class="btn btn-light reveal d4">Découvrir Wallerand <span class="arr">→</span></a>
   </div>
 </section>

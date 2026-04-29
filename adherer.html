@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Adhérer — La Maison Rose de Wallerand</title>
-<meta name="description" content="Soutenez la création et rejoignez La Maison Rose de Wallerand. Adhésion à partir de 30€/an via HelloAsso." />
+<meta name="description" content="Soutenez La Maison Rose de Wallerand via HelloAsso. Le site présente l'association et renvoie vers les liens d'adhésion et de don." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
@@ -26,7 +26,7 @@
   .tier.featured .lvl { color: var(--rose); }
   .tier h3 { font-size: 30px; line-height: 1.1; margin-bottom: 8px; color: inherit; }
   .tier .price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 28px; font-family: 'Cormorant Garamond', serif; }
-  .tier .price .a { font-size: 56px; line-height: 1; color: var(--ink); }
+  .tier .price .a { font-size: clamp(34px, 4.8vw, 56px); line-height: 1; color: var(--ink); }
   .tier.featured .price .a { color: var(--cream); }
   .tier .price .b { font-size: 18px; color: var(--grey); font-style: italic; }
   .tier.featured .price .b { color: var(--rose); }
@@ -83,6 +83,15 @@
     .tiers { grid-template-columns: 1fr; }
     .why-grid { grid-template-columns: 1fr; gap: 50px; }
   }
+  @media (max-width: 680px) {
+    .join { padding: 88px 0; }
+    .join-head { margin-bottom: 42px; }
+    .tier { padding: 32px 24px; }
+    .why { padding: 84px 0; }
+    .donate { padding: 82px 0; }
+    .faq { padding: 88px 0; }
+    .faq-item .q { font-size: 20px; align-items: flex-start; gap: 14px; }
+  }
 </style>
 </head>
 <body>
@@ -95,83 +104,75 @@
       <div class="crumbs reveal"><a href="index.html">Accueil</a> · Adhérer</div>
       <span class="num-tag reveal">— Soutenir la Maison</span>
       <h1 class="reveal d2">Soutenez la création,<br/><em>rejoignez la Maison.</em></h1>
-      <p class="reveal d3">Adhérer, c'est faire vivre un atelier, accueillir des artistes, et préserver un savoir-faire pour celles et ceux qui viendront après nous.</p>
+      <p class="reveal d3">Le site ne gère ni paiement ni compte utilisateur : les adhésions et soutiens passent entièrement par HelloAsso.</p>
     </div>
     <div class="tiers">
       <article class="tier reveal">
-        <span class="lvl">— Ami</span>
-        <h3>Petite encre</h3>
-        <div class="price"><span class="a">30</span><span class="b">€ / an</span></div>
+        <span class="lvl">— Adhésion</span>
+        <h3>Rejoindre l'association</h3>
+        <div class="price"><span class="a">HelloAsso</span><span class="b">plateforme sécurisée</span></div>
         <ul>
-          <li>Adhésion à l'association</li>
-          <li>Newsletter trimestrielle</li>
-          <li>Invitation aux vernissages</li>
-          <li>Tarif réduit sur les stages</li>
+          <li>Retrouver les campagnes d'adhésion en cours</li>
+          <li>Payer directement sur la plateforme de l'association</li>
+          <li>Recevoir les confirmations depuis HelloAsso</li>
+          <li>Ne laisser aucune donnée bancaire sur le site vitrine</li>
         </ul>
-        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/adhesions/petite-encre" target="_blank" rel="noopener" class="btn btn-primary">Adhérer <span class="arr">→</span></a>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary">Voir sur HelloAsso <span class="arr">→</span></a>
       </article>
 
       <article class="tier featured reveal d2">
         <span class="ribbon">Recommandé</span>
         <span class="lvl">— Soutien</span>
-        <h3>Pleine page</h3>
-        <div class="price"><span class="a">60</span><span class="b">€ / an</span></div>
+        <h3>Soutenir la Maison Rose</h3>
+        <div class="price"><span class="a">Association</span><span class="b">arts et culture</span></div>
         <ul>
-          <li>Tous les avantages Petite encre</li>
-          <li>Une épreuve numérotée par an</li>
-          <li>Accès libre à la bibliothèque</li>
-          <li>Atelier libre 2× par mois</li>
-          <li>Visites privées d'expositions</li>
+          <li>Aider un lieu culturel d'Auvers-sur-Oise à vivre</li>
+          <li>Favoriser résidences, expositions et ateliers</li>
+          <li>Passer par un outil connu des associations françaises</li>
+          <li>Conserver une gestion simple, sans back-office complexe</li>
+          <li>Retrouver les actions en cours au même endroit</li>
         </ul>
-        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/adhesions/pleine-page" target="_blank" rel="noopener" class="btn btn-primary">Adhérer <span class="arr">→</span></a>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary">Soutenir via HelloAsso <span class="arr">→</span></a>
       </article>
 
       <article class="tier reveal d3">
-        <span class="lvl">— Bienfaiteur</span>
-        <h3>Grande gravure</h3>
-        <div class="price"><span class="a">120</span><span class="b">€ / an</span></div>
+        <span class="lvl">— Participer</span>
+        <h3>Suivre la programmation</h3>
+        <div class="price"><span class="a">Site</span><span class="b">vitrine et agenda</span></div>
         <ul>
-          <li>Tous les avantages Pleine page</li>
-          <li>Deux épreuves numérotées</li>
-          <li>Mention sur le mur des donateurs</li>
-          <li>Stage offert (valeur 120€)</li>
-          <li>Reçu fiscal</li>
+          <li>Voir les stages et événements publiés</li>
+          <li>Contacter l'association avant de soutenir</li>
+          <li>Repérer les liens utiles sans créer de compte</li>
+          <li>Découvrir le lieu et son histoire avant sa visite</li>
         </ul>
-        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/adhesions/grande-gravure" target="_blank" rel="noopener" class="btn btn-primary">Adhérer <span class="arr">→</span></a>
+        <a href="evenements.html" class="btn btn-primary">Voir l'agenda <span class="arr">→</span></a>
       </article>
     </div>
   </div>
 </section>
 
 <section class="why wrap">
-  <div class="why-grid">
-    <div class="reveal">
-      <span class="num-tag">— Pourquoi adhérer</span>
-      <h2>Une <em>communauté</em> autour d'un atelier vivant.</h2>
-      <p>Adhérer, ce n'est pas seulement nous soutenir financièrement. C'est rejoindre un cercle de passionnés, recevoir nos invitations privées, croiser des artistes, et — si vous le souhaitez — venir tirer vos propres épreuves.</p>
-      <p>L'adhésion représente près de 35% de notre budget annuel. Sans elle, l'atelier ne pourrait pas vivre.</p>
-      <p class="pull">« Une association, c'est une presse à plusieurs mains. Chacune compte. »<span class="sign">— Hélène Brunet, présidente</span></p>
+    <div class="why-grid">
+      <div class="reveal">
+        <span class="num-tag">— Pourquoi adhérer</span>
+        <h2>Un soutien <em>simple et clair.</em></h2>
+        <p>La Maison Rose permet à un public très large d'avoir accès à la culture en organisant régulièrement des événements culturels libres d'accès dans un lieu magnifique, inspirant et chargé d'histoire.</p>
+        <p>Le choix d'un site statique relié à HelloAsso garde une gestion légère : la programmation reste facile à consulter, tandis que les adhésions et paiements restent centralisés sur une plateforme dédiée.</p>
+        <p class="pull">La culture est pensée ici comme un remède puissant aux maux de notre société, à travers les expositions, les performances, les conférences, les concerts et les ateliers.<span class="sign">— Présentation HelloAsso de l'association</span></p>
+      </div>
+      <div class="why-img reveal d2"><div class="ph"></div></div>
     </div>
-    <div class="why-img reveal d2"><div class="ph"></div></div>
-  </div>
 </section>
 
 <section class="donate">
   <div class="wrap">
-    <span class="num-tag reveal">— Don ponctuel</span>
-    <h2 class="reveal d2">Faire un <em>don</em> sans adhérer.</h2>
-    <p class="reveal d3">Vous préférez soutenir l'association sans adhérer ? Tout don est précieux et ouvre droit à une déduction fiscale de 66%.</p>
-    <div class="amounts reveal d3">
-      <button class="amt" data-a="20">20 €</button>
-      <button class="amt on" data-a="50">50 €</button>
-      <button class="amt" data-a="100">100 €</button>
-      <button class="amt" data-a="250">250 €</button>
-      <button class="amt" data-a="x">Autre</button>
-    </div>
+    <span class="num-tag reveal">— HelloAsso</span>
+    <h2 class="reveal d2">Un point unique pour <em>adhérer ou soutenir.</em></h2>
+    <p class="reveal d3">Retrouvez la page officielle de l'association sur HelloAsso pour consulter les actions en cours et les formulaires disponibles.</p>
     <div class="reveal d4">
-      <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand/formulaires/don" target="_blank" rel="noopener" class="btn btn-primary" id="donateBtn">Faire un don de 50€ <span class="arr">→</span></a>
+      <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary">Ouvrir la page HelloAsso <span class="arr">→</span></a>
     </div>
-    <small>Paiement sécurisé via HelloAsso · Reçu fiscal délivré automatiquement</small>
+    <small>Le site vitrine n'encaisse rien directement et ne conserve aucune donnée de paiement.</small>
   </div>
 </section>
 
@@ -179,19 +180,19 @@
   <h2 class="reveal">Questions <em>fréquentes</em></h2>
   <div class="faq-item reveal">
     <div class="q"><span>Comment se passe le <em>paiement</em> ?</span><span class="toggle">+</span></div>
-    <div class="a"><p>Le paiement est entièrement sécurisé par HelloAsso, plateforme de référence pour les associations en France. Vous recevrez immédiatement un reçu et votre carte d'adhérent par e-mail.</p></div>
+    <div class="a"><p>Le paiement et les éventuelles adhésions se font uniquement sur HelloAsso. Le site vitrine n'encaisse rien directement.</p></div>
   </div>
   <div class="faq-item reveal">
-    <div class="q"><span>L'adhésion est-elle <em>déductible</em> ?</span><span class="toggle">+</span></div>
-    <div class="a"><p>Oui. La Maison Rose étant association d'intérêt général, votre adhésion ouvre droit à une réduction d'impôt de 66% du montant versé (dans la limite de 20% du revenu imposable).</p></div>
+    <div class="q"><span>Que trouve-t-on sur <em>HelloAsso</em> ?</span><span class="toggle">+</span></div>
+    <div class="a"><p>La page HelloAsso centralise les actions actives de l'association : adhésions, soutiens ou campagnes en cours lorsqu'elles sont ouvertes.</p></div>
   </div>
   <div class="faq-item reveal">
-    <div class="q"><span>Quand l'adhésion <em>commence-t-elle</em> ?</span><span class="toggle">+</span></div>
-    <div class="a"><p>Votre adhésion court de date à date sur 12 mois. Vous recevez un e-mail de rappel un mois avant la fin pour la renouveler — ou la résilier librement.</p></div>
+    <div class="q"><span>Et s'il n'y a pas de campagne <em>ouverte</em> ?</span><span class="toggle">+</span></div>
+    <div class="a"><p>Dans ce cas, la page HelloAsso de l'association reste le bon point d'entrée. Vous pouvez aussi écrire directement à la Maison Rose depuis la page contact.</p></div>
   </div>
   <div class="faq-item reveal">
-    <div class="q"><span>Puis-je <em>offrir</em> une adhésion ?</span><span class="toggle">+</span></div>
-    <div class="a"><p>Tout à fait. Lors du paiement, indiquez les coordonnées du bénéficiaire et nous lui adresserons une carte d'adhérent personnalisée. Idéal pour un cadeau de naissance, anniversaire ou départ en retraite.</p></div>
+    <div class="q"><span>Faut-il créer un <em>compte</em> sur le site ?</span><span class="toggle">+</span></div>
+    <div class="a"><p>Non. Le site reste volontairement simple : il présente les contenus et renvoie vers HelloAsso pour les démarches qui demandent une inscription ou un paiement.</p></div>
   </div>
 </section>
 
@@ -203,16 +204,6 @@
   // FAQ
   document.querySelectorAll('.faq-item').forEach(it => {
     it.addEventListener('click', () => it.classList.toggle('open'));
-  });
-  // Don amounts
-  const btn = document.getElementById('donateBtn');
-  document.querySelectorAll('.amt').forEach(a => {
-    a.addEventListener('click', () => {
-      document.querySelectorAll('.amt').forEach(x => x.classList.remove('on'));
-      a.classList.add('on');
-      const v = a.dataset.a;
-      btn.innerHTML = (v === 'x' ? 'Choisir mon montant' : `Faire un don de ${v}€`) + ' <span class="arr">→</span>';
-    });
   });
 </script>
 </body>

@@ -1,19 +1,19 @@
 ---
-title: "Stage de linogravure"
-date: "2026-06-20"
-time: "10h00 - 17h00"
-price: "95 EUR"
-duration: "1 jour"
-places: 8
-level: "Debutant"
-image: ""
-helloasso_url: "https://www.helloasso.com/"
-status: "ouvert"
-featured: true
+title: "Stage de linogravure par Hélène Bautista"
+date: "2026-02-14"
+time: "10h - 17h"
+price: "Sur demande"
+duration: "2 jours"
+places: ""
+level: "Tous niveaux"
+image: "assets/uploads/stage-linogravure-fevrier-2026.jpg"
+helloasso_url: ""
+status: "passe"
+featured: false
 ---
-Une initiation a la linogravure dans un cadre artistique et chaleureux a
-Auvers-sur-Oise.
+Samedi 14 et dimanche 15 février 2026.
 
-- Decouverte du geste, de la plaque et de l'impression
-- Petit groupe pour garder un vrai accompagnement
-- Materiel de base presente sur place
+Stage de linogravure proposé par Hélène Bautista à la Maison Rose de
+Wallerand.
+
+Inscription obligatoire sur les e-mails indiqués par l'association.

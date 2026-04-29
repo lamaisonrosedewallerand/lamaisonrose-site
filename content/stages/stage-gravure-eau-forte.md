@@ -1,18 +1,20 @@
 ---
-title: "Stage de gravure eau-forte"
-date: "2026-07-04"
-time: "10h00 - 17h30"
-price: "120 EUR"
-duration: "1 jour"
-places: 6
-level: "Intermediaire"
-image: ""
+title: "Stage gravure Eau-forte"
+date: "2026-02-28"
+time: "10h - 17h"
+price: "Sur demande"
+duration: "2 jours"
+places: ""
+level: "Tous niveaux"
+image: "assets/uploads/stage-gravure-eau-forte-2026.jpg"
 helloasso_url: ""
-status: "complet"
+status: "passe"
 featured: false
 ---
-Un stage pour decouvrir ou approfondir la gravure eau-forte dans un cadre
-propice a l'experimentation.
+Le samedi 28 février et dimanche 1er mars 2026.
 
-Le format favorise le temps du geste, l'accompagnement et l'echange autour des
-techniques de l'estampe.
+Stage de gravure eau-forte programmé à la Maison Rose de Wallerand, de 10h à
+17h.
+
+Inscription obligatoire avant le 25 février auprès du contact indiqué par
+l'association.

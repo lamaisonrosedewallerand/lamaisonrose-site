@@ -708,12 +708,12 @@ async function renderEvenementsPage() {
 function injectChrome(activeKey) {
   const navMarkup = `
     <div class="util">
-      <span>Prochain rendez-vous —</span> <strong>Estampes Auversoises · 29 mai 2026</strong>
+      <span>Lieu culturel · Résidence d'artistes · Tisseur de liens</span> <strong>Auvers-sur-Oise · 30 km de Paris</strong>
     </div>
     <header class="nav" id="nav">
       <div class="nav-inner">
         <a href="index.html" class="brand">
-          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-mark" aria-hidden="true"><img src="assets/brand-logo.png" alt="" /></span>
           <span class="brand-text">
             <span class="a">La Maison Rose</span>
             <span class="b">de Wallerand · Auvers-sur-Oise</span>
@@ -745,42 +745,42 @@ function injectChrome(activeKey) {
           <div class="brand-blk">
             <h4>La Maison Rose</h4>
             <span class="a">de Wallerand</span>
-            <p>Maison d'art et d'estampes.<br/>Association loi 1901, fondée en 1987 à Auvers-sur-Oise.</p>
+            <p>Ancien atelier d'été de Charles-François Daubigny, devenu lieu culturel, résidence d'artistes et espace de transmission à Auvers-sur-Oise.</p>
           </div>
           <div>
             <h4>Visiter</h4>
             <ul>
-              <li>14 rue des Vignes</li>
+              <li>59 rue Daubigny</li>
               <li>95430 Auvers-sur-Oise</li>
-              <li>Mer–Dim · 14h–18h</li>
+              <li>Selon la programmation et sur rendez-vous</li>
               <li><a href="contact.html">Itinéraire →</a></li>
             </ul>
           </div>
           <div class="contact">
             <h4>Contact</h4>
             <ul>
-              <li><a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></li>
-              <li>+33 (0)1 30 36 00 00</li>
-              <li><a href="#">Instagram →</a></li>
-              <li><a href="#">Facebook →</a></li>
+              <li><a href="mailto:mulrichm@hotmail.com">mulrichm@hotmail.com</a></li>
+              <li><a href="tel:+33615375672">06 15 37 56 72</a></li>
+              <li><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener">Instagram →</a></li>
+              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener">HelloAsso →</a></li>
             </ul>
           </div>
-          <div class="news">
-            <h4>Lettre saisonnière</h4>
-            <p style="font-size:14px; margin-bottom:18px;">Quatre fois l'an, l'actualité de la Maison, les stages à venir et les invitations privées.</p>
-            <form id="newsForm">
-              <input type="email" placeholder="Votre adresse e-mail" required />
-              <button type="submit">S'inscrire</button>
-              <div class="ok" id="newsOk">Merci, à très bientôt.</div>
-            </form>
+          <div>
+            <h4>Suivre la programmation</h4>
+            <p class="foot-note">Retrouvez l'agenda, les stages et les liens d'inscription sur le site et sur HelloAsso, sans paiement ni espace membre interne.</p>
+            <ul style="margin-top: 18px;">
+              <li><a href="evenements.html">Agenda des événements →</a></li>
+              <li><a href="stages.html">Cours et stages de gravure →</a></li>
+              <li><a href="adherer.html">Adhérer ou soutenir →</a></li>
+            </ul>
           </div>
         </div>
         <div class="foot-bot">
-          <div>© 2026 La Maison Rose de Wallerand · SIREN 343 567 891</div>
+          <div>© 2026 La Maison Rose de Wallerand</div>
           <div class="links">
-            <a href="#">Mentions légales</a>
-            <a href="#">Politique de confidentialité</a>
-            <a href="#">Crédits</a>
+            <a href="index.html">Accueil</a>
+            <a href="contact.html">Contact</a>
+            <a href="admin/">Admin</a>
           </div>
         </div>
       </div>

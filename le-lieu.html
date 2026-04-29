@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Le Lieu — La Maison Rose de Wallerand</title>
-<meta name="description" content="Trois ateliers, un jardin de tilleuls, une presse Hopkinson de 1924 — découvrez La Maison Rose, lieu d'art à Auvers-sur-Oise." />
+<meta name="description" content="Découvrez La Maison Rose de Wallerand : ancien atelier d'été de Charles-François Daubigny, lieu culturel et résidence d'artistes à Auvers-sur-Oise." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
@@ -23,7 +23,7 @@
   .ph-2::after { content: ""; position: absolute; inset: 35% 30%; background: radial-gradient(circle, rgba(232,196,184,.85) 0%, transparent 70%); }
   .ph-3 { background: linear-gradient(180deg, #F2EBE1 0%, #DCD2C4 100%); }
   .ph-3::after { content: ""; position: absolute; inset: 20%; background: repeating-linear-gradient(90deg, rgba(26,22,20,.4) 0 1px, transparent 1px 9px); }
-  .ph-4 { background: linear-gradient(45deg, #B8654F 0%, #8E4636 100%); }
+  .ph-4 { background: linear-gradient(45deg, #B8654F 0%, #8E4636 100%), url("assets/official-presse.jpg") center/cover; background-blend-mode: multiply; }
   .ph-4::after { content: ""; position: absolute; inset: 15%; border: 1px solid rgba(250,246,241,.45); background: repeating-linear-gradient(0deg, transparent 0 12px, rgba(250,246,241,.08) 12px 13px); }
   .ph-5 { background: radial-gradient(ellipse at 30% 30%, #E8C4B8, transparent 60%), linear-gradient(180deg, #F2EBE1, #E8DDD0); }
   .ph-5::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 25% 60%, rgba(184,101,79,.6) 0 8%, transparent 9%), radial-gradient(circle at 55% 40%, rgba(26,22,20,.4) 0 5%, transparent 6%), radial-gradient(circle at 75% 70%, rgba(184,101,79,.4) 0 6%, transparent 7%); }
@@ -94,6 +94,9 @@
     .place-grid-large { grid-template-columns: 1fr; grid-auto-rows: 220px; }
     .pg.t, .pg.w { grid-column: auto; grid-row: auto; }
     .visit-card { padding: 32px 24px; }
+    .visit-card .row { display: block; padding: 12px 0; }
+    .visit-card .row .v { display: block; margin-top: 6px; }
+    .map .lbl-here { left: 16px; right: 16px; top: auto; bottom: 16px; transform: none; }
   }
 </style>
 </head>
@@ -105,20 +108,20 @@
   <div class="page-hero-grid">
     <div class="reveal">
       <div class="crumbs"><a href="index.html">Accueil</a> · Le Lieu</div>
-      <h1>Une maison <em>habitée</em> par l'art et le temps.</h1>
+      <h1>Un lieu historique <em>tourné vers l'avenir.</em></h1>
     </div>
-    <p class="lede reveal d2">Au cœur d'Auvers-sur-Oise, à quelques pas de la maison du docteur Gachet, La Maison Rose ouvre ses portes depuis bientôt quarante ans.</p>
+    <p class="lede reveal d2">À 30 km de Paris, aux portes du Vexin, la Maison Rose est un lieu culturel singulier installé dans l'ancien atelier d'été de Charles-François Daubigny.</p>
   </div>
 </section>
 
 <section class="wrap">
   <div class="place-grid-large">
     <div class="pg t reveal"><div class="ph ph-1"></div><span class="lbl">Façade</span></div>
-    <div class="pg reveal d2"><div class="ph ph-2"></div><span class="lbl">Atelier de gravure</span></div>
-    <div class="pg reveal d3"><div class="ph ph-3"></div><span class="lbl">Bibliothèque de papiers</span></div>
-    <div class="pg w reveal"><div class="ph ph-4"></div><span class="lbl">La presse Hopkinson, 1924</span></div>
-    <div class="pg reveal d2"><div class="ph ph-5"></div><span class="lbl">Encres de Charbonnel</span></div>
-    <div class="pg reveal d3"><div class="ph ph-6"></div><span class="lbl">Le jardin</span></div>
+    <div class="pg reveal d2"><div class="ph ph-2"></div><span class="lbl">Atelier de 62 m²</span></div>
+    <div class="pg reveal d3"><div class="ph ph-3"></div><span class="lbl">6 m sous plafond</span></div>
+    <div class="pg w reveal"><div class="ph ph-4"></div><span class="lbl">La presse et l'atelier</span></div>
+    <div class="pg reveal d2"><div class="ph ph-5"></div><span class="lbl">Trois chambres</span></div>
+    <div class="pg reveal d3"><div class="ph ph-6"></div><span class="lbl">Patio et vie de maison</span></div>
   </div>
 </section>
 
@@ -127,17 +130,16 @@
     <div class="history-inner">
       <div class="history-text reveal">
         <span class="num-tag">— Histoire</span>
-        <h2>Quatre décennies de <em>gravure.</em></h2>
-        <p>Acquise en 1972 par le peintre Wallerand, la maison du 14 rue des Vignes était d'abord son atelier privé. En 1987, il en fait le siège d'une association ouverte aux artistes de passage et aux apprentis graveurs.</p>
-        <p>Aujourd'hui, le lieu accueille trois ateliers en activité, une presse historique, et continue d'inviter chaque année des artistes en résidence.</p>
+        <h2>De Daubigny à <em>la Maison Rose d'aujourd'hui.</em></h2>
+        <p>En 1870, Charles-François Daubigny achète la grange attenante à sa maison pour en faire un atelier d'été où il peut peindre de grandes toiles et recevoir ses amis artistes.</p>
+        <p>Depuis, le lieu a gardé sa vocation de foyer d'artistes. Plus récemment, Wallerand y a vécu de 2014 à 2021 et lui a redonné un nouvel élan de résidence, d'exposition et de transmission.</p>
       </div>
       <div class="timeline reveal d2">
-        <div class="ev"><span class="yr">1972</span><h4>Wallerand s'installe à Auvers</h4><p>Acquisition de la maison de la rue des Vignes.</p></div>
-        <div class="ev"><span class="yr">1987</span><h4>Naissance de l'association</h4><p>Premiers stages d'initiation à la gravure ouverts au public.</p></div>
-        <div class="ev"><span class="yr">1996</span><h4>Acquisition de la presse</h4><p>La presse Hopkinson de 1924 rejoint l'atelier principal.</p></div>
-        <div class="ev"><span class="yr">2009</span><h4>Disparition de Wallerand</h4><p>L'association poursuit son œuvre. Création des Estampes Auversoises.</p></div>
-        <div class="ev"><span class="yr">2018</span><h4>Rénovation des ateliers</h4><p>Trois espaces de travail entièrement repensés.</p></div>
-        <div class="ev"><span class="yr">2026</span><h4>Année anniversaire</h4><p>39 ans d'existence. Programmation spéciale d'expositions.</p></div>
+        <div class="ev"><span class="yr">1870</span><h4>Daubigny crée son atelier d'été</h4><p>La grange attenante devient un lieu de travail et d'accueil pour ses amis artistes.</p></div>
+        <div class="ev"><span class="yr">1886</span><h4>Karl Daubigny prolonge l'histoire</h4><p>L'atelier reste lié à la famille Daubigny jusqu'à la mort de Karl, fils du peintre.</p></div>
+        <div class="ev"><span class="yr">2014</span><h4>Wallerand s'y installe</h4><p>Le peintre réactive la vocation d'atelier et de foyer d'artistes du lieu.</p></div>
+        <div class="ev"><span class="yr">2021</span><h4>Un élan qui continue</h4><p>Après la disparition de Wallerand en novembre 2021, l'association poursuit son projet artistique.</p></div>
+        <div class="ev"><span class="yr">Aujourd'hui</span><h4>Résidences, stages et événements</h4><p>La Maison Rose accueille un public large et des artistes en résidence tout au long de l'année.</p></div>
       </div>
     </div>
   </div>
@@ -150,23 +152,23 @@
         <span class="num-tag">— Visiter</span>
         <h2>Venir à <span class="it">la Maison.</span></h2>
       </div>
-      <p class="right reveal d2">L'entrée est libre du mercredi au dimanche, 14h–18h. Pour les groupes et les visites guidées, prendre contact à l'avance.</p>
+      <p class="right reveal d2">La résidence est disponible toute l'année et les visites se font selon la programmation ou sur prise de contact préalable.</p>
     </div>
     <div class="visit-grid">
       <div class="visit-card reveal">
         <h3>Informations pratiques</h3>
-        <div class="row"><span class="k">Adresse</span><span class="v">14 rue des Vignes, 95430 Auvers-sur-Oise</span></div>
-        <div class="row"><span class="k">Ouverture</span><span class="v">Mer–Dim · 14h–18h</span></div>
-        <div class="row"><span class="k">Entrée</span><span class="v">Libre</span></div>
-        <div class="row"><span class="k">Visite guidée</span><span class="v">Sur rendez-vous</span></div>
-        <div class="row"><span class="k">Train</span><span class="v">Ligne H · Auvers-sur-Oise</span></div>
-        <div class="row"><span class="k">Stationnement</span><span class="v">Place de la Mairie</span></div>
+        <div class="row"><span class="k">Adresse</span><span class="v">59 rue Daubigny, 95430 Auvers-sur-Oise</span></div>
+        <div class="row"><span class="k">Lieu</span><span class="v">Ancien atelier d'été de Charles-François Daubigny</span></div>
+        <div class="row"><span class="k">Capacité</span><span class="v">3 chambres indépendantes, cuisine équipée, 2 salles de bain, patio</span></div>
+        <div class="row"><span class="k">Atelier</span><span class="v">62 m² avec 6 m sous plafond</span></div>
+        <div class="row"><span class="k">Accès</span><span class="v">À 30 km de Paris, au cœur du centre historique d'Auvers-sur-Oise</span></div>
+        <div class="row"><span class="k">Visite</span><span class="v">Selon l'agenda et sur rendez-vous</span></div>
       </div>
       <div class="visit-text reveal d2">
-        <h2>À deux pas du <em>chemin Daubigny.</em></h2>
-        <p>La Maison Rose se trouve dans le vieux Auvers, à dix minutes à pied de la gare et à proximité immédiate du musée Daubigny et de l'auberge Ravoux.</p>
-        <p>Une visite peut facilement se prolonger par une promenade jusqu'à l'église ou aux champs peints par Van Gogh — un après-midi entier au cœur de l'histoire impressionniste.</p>
-        <a href="contact.html" class="btn btn-primary">Demander un itinéraire <span class="arr">→</span></a>
+        <h2>Un lieu atypique, <em>plein de charme.</em></h2>
+        <p>La Maison Rose donne aux artistes la possibilité de résider, travailler et exposer dans un cadre historique chargé d'histoire et de vibrations artistiques.</p>
+        <p>Le projet s'appuie sur ce lieu patrimonial pour mieux explorer le présent, accueillir de nouveaux artistes et proposer au public une programmation vivante.</p>
+        <a href="contact.html" class="btn btn-primary">Préparer une visite <span class="arr">→</span></a>
       </div>
     </div>
     <div class="map reveal" style="margin-top: 60px;">
@@ -175,7 +177,7 @@
       <div class="road r2"></div>
       <div class="road r3"></div>
       <span class="pin"></span>
-      <span class="lbl-here">La Maison Rose</span>
+      <span class="lbl-here">59 rue Daubigny</span>
     </div>
   </div>
 </section>

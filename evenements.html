@@ -68,13 +68,35 @@
 
   @media (max-width: 1024px) {
     .feat-grid { grid-template-columns: 1fr; gap: 50px; }
-    .ev-row { grid-template-columns: 100px 1fr; gap: 20px; }
-    .ev-row .ev-action, .ev-row p { display: none; }
+    .ev-row { grid-template-columns: 100px 1fr auto; gap: 18px; align-items: start; }
+    .ev-row p { grid-column: 2 / -1; display: block; }
+    .ev-row .ev-action { display: flex; }
     .past-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    .feat { padding: 56px 0 82px; }
+    .feat-meta { gap: 16px; margin: 22px 0; padding: 18px 0; }
+    .agenda { padding: 84px 0; }
+    .ev-row {
+      grid-template-columns: 78px 1fr;
+      gap: 14px;
+      padding: 24px 0;
+    }
+    .ev-row p,
+    .ev-row .ev-action {
+      grid-column: 2;
+    }
+    .ev-row:hover {
+      background: transparent;
+      padding-left: 0;
+      padding-right: 0;
+      margin: 0;
+    }
+    .ev-date .day { font-size: 38px; }
+    .past { padding: 82px 0; }
   }
   @media (max-width: 600px) {
     .past-grid { grid-template-columns: 1fr; }
-    .ev-date .day { font-size: 42px; }
   }
 </style>
 </head>
@@ -88,7 +110,7 @@
       <div class="crumbs"><a href="index.html">Accueil</a> · Événements</div>
       <h1>Une saison <em>vivante.</em></h1>
     </div>
-    <p class="lede reveal d2">Estampes Auversoises, expositions, vernissages, concerts au jardin et lectures : la Maison s'ouvre régulièrement au public. Entrée libre la plupart du temps.</p>
+    <p class="lede reveal d2">Expositions, performances artistiques, conférences, concerts, ateliers et rendez-vous publics : la programmation fait vivre la Maison Rose tout au long de l'année.</p>
   </div>
 </section>
 
@@ -100,10 +122,10 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="left reveal">
-        <span class="num-tag">— Agenda 2026</span>
+        <span class="num-tag">— Agenda</span>
         <h2>Tous les <span class="it">rendez-vous.</span></h2>
       </div>
-      <p class="right reveal d2">Une dizaine de rendez-vous publics par saison. Inscription en ligne pour les soirées sur réservation.</p>
+      <p class="right reveal d2">Le programme rassemble les rendez-vous à venir et garde la mémoire des saisons précédentes au même endroit.</p>
     </div>
 
     <div class="ev-list reveal" id="events-upcoming">
@@ -118,7 +140,7 @@
       <span class="num-tag">— Archives</span>
       <h2>Saisons <span class="it">passées.</span></h2>
     </div>
-    <p class="right reveal d2">Quelques rendez-vous marquants des dernières années.</p>
+    <p class="right reveal d2">Quelques rendez-vous marquants déjà passés, conservés comme mémoire du lieu.</p>
   </div>
   <div class="past-grid" id="events-past">
     <div class="empty-note">Chargement des archives…</div>

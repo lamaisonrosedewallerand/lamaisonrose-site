@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Contact — La Maison Rose de Wallerand</title>
-<meta name="description" content="Nous écrire, venir nous voir, organiser une visite de groupe. Toutes les coordonnées de La Maison Rose à Auvers-sur-Oise." />
+<meta name="description" content="Adresse, e-mail, téléphone et accès à La Maison Rose de Wallerand à Auvers-sur-Oise." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
@@ -56,6 +56,11 @@
     .ct-grid { grid-template-columns: 1fr; gap: 40px; }
     .ct-form { padding: 32px 24px; }
   }
+  @media (max-width: 680px) {
+    .row2 { grid-template-columns: 1fr; gap: 18px; }
+    .ct { padding: 72px 0; }
+    .map .lbl { left: 16px; right: 16px; top: auto; bottom: 16px; transform: none; }
+  }
 </style>
 </head>
 <body>
@@ -68,40 +73,40 @@
       <div class="crumbs"><a href="index.html">Accueil</a> · Contact</div>
       <h1>Nous <em>écrire,</em> venir nous voir.</h1>
     </div>
-    <p class="lede reveal d2">Pour toute question concernant les stages, les visites de groupe, les résidences ou les locations d'atelier — nous répondons sous 48h.</p>
+    <p class="lede reveal d2">Pour une résidence, un stage, une exposition ou une visite, le plus direct est de nous écrire ou de nous appeler. Le site ne stocke aucun message.</p>
   </div>
 </section>
 
 <section class="ct wrap">
   <div class="ct-grid">
     <form class="ct-form reveal" id="ctForm">
-      <h3>Vous nous <em>écrivez</em></h3>
-      <p class="lede">Tous les champs marqués d'un astérisque (*) sont obligatoires.</p>
+      <h3>Préparer un <em>e-mail</em></h3>
+      <p class="lede">Le formulaire ci-dessous ouvre votre messagerie avec un message déjà préparé. Aucune donnée n'est enregistrée sur le site.</p>
 
       <div class="row2">
-        <div class="field"><label>Prénom *</label><input type="text" required /></div>
-        <div class="field"><label>Nom *</label><input type="text" required /></div>
+        <div class="field"><label>Prénom *</label><input type="text" name="first_name" required /></div>
+        <div class="field"><label>Nom *</label><input type="text" name="last_name" required /></div>
       </div>
       <div class="row2">
-        <div class="field"><label>E-mail *</label><input type="email" required /></div>
-        <div class="field"><label>Téléphone</label><input type="tel" /></div>
+        <div class="field"><label>E-mail *</label><input type="email" name="email" required /></div>
+        <div class="field"><label>Téléphone</label><input type="tel" name="phone" /></div>
       </div>
       <div class="field">
         <label>Sujet *</label>
-        <select required>
+        <select name="topic" required>
           <option value="">— Choisir —</option>
           <option>Renseignements stages</option>
           <option>Visite de groupe</option>
           <option>Résidence d'artiste</option>
-          <option>Location d'atelier</option>
+          <option>Événement ou exposition</option>
           <option>Presse &amp; partenariats</option>
           <option>Autre</option>
         </select>
       </div>
-      <div class="field"><label>Votre message *</label><textarea required></textarea></div>
+      <div class="field"><label>Votre message *</label><textarea name="message" required></textarea></div>
       <div class="submit">
-        <button type="submit" class="btn btn-primary">Envoyer <span class="arr">→</span></button>
-        <span class="ok">Merci, votre message est en route. Nous revenons vers vous sous 48h.</span>
+        <button type="submit" class="btn btn-primary">Ouvrir mon e-mail <span class="arr">→</span></button>
+        <span class="ok">Votre messagerie s'ouvre avec le message prérempli.</span>
       </div>
     </form>
 
@@ -109,27 +114,27 @@
       <h3>Nos <em>coordonnées</em></h3>
       <div class="blk">
         <div class="lbl">Adresse</div>
-        <div class="val">14 rue des Vignes<br/>95430 Auvers-sur-Oise</div>
+        <div class="val">59 rue Daubigny<br/>95430 Auvers-sur-Oise</div>
       </div>
       <div class="blk">
         <div class="lbl">E-mail</div>
-        <div class="val"><a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></div>
+        <div class="val"><a href="mailto:mulrichm@hotmail.com">mulrichm@hotmail.com</a></div>
       </div>
       <div class="blk">
         <div class="lbl">Téléphone</div>
-        <div class="val">+33 (0)1 30 36 00 00</div>
+        <div class="val"><a href="tel:+33615375672">+33 6 15 37 56 72</a></div>
       </div>
       <div class="blk">
-        <div class="lbl">Horaires d'ouverture</div>
-        <div class="val">Mer–Dim · 14h–18h<br/>Visites guidées sur RDV</div>
+        <div class="lbl">Accueil</div>
+        <div class="val">Selon la programmation<br/>et sur rendez-vous</div>
       </div>
       <div class="blk">
-        <div class="lbl">Réseaux</div>
-        <div class="val"><a href="#">Instagram</a> · <a href="#">Facebook</a></div>
+        <div class="lbl">Instagram</div>
+        <div class="val"><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener">@lamaisonrosedewallerand</a></div>
       </div>
       <div class="blk">
-        <div class="lbl">Administratif</div>
-        <div class="val" style="font-size: 14px; font-style: normal; font-family: inherit; color: var(--grey);">Association loi 1901 · SIREN 343 567 891 · APE 9001Z</div>
+        <div class="lbl">Pratique</div>
+        <div class="val" style="font-size: 14px; font-style: normal; font-family: inherit; color: var(--grey);">Les inscriptions, adhésions et paiements restent gérés sur HelloAsso. Le site sert uniquement à présenter la programmation et à vous orienter.</div>
       </div>
     </div>
   </div>
@@ -141,7 +146,7 @@
     <div class="road r1"></div>
     <div class="road r2"></div>
     <span class="pin"></span>
-    <span class="lbl">14 rue des Vignes</span>
+    <span class="lbl">59 rue Daubigny</span>
   </div>
 </section>
 
@@ -152,8 +157,19 @@
   injectChrome('contact');
   document.getElementById('ctForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    e.target.classList.add('sent');
-    window.scrollTo({ top: e.target.offsetTop - 100, behavior: 'smooth' });
+    const data = new FormData(e.target);
+    const fullName = `${data.get('first_name') || ''} ${data.get('last_name') || ''}`.trim();
+    const subject = data.get('topic') || 'Message depuis le site';
+    const body = [
+      `Nom : ${fullName}`,
+      `E-mail : ${data.get('email') || ''}`,
+      `Téléphone : ${data.get('phone') || ''}`,
+      '',
+      'Message :',
+      data.get('message') || ''
+    ].join('\n');
+
+    window.location.href = `mailto:mulrichm@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 </script>
 </body>

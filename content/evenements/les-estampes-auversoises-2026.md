@@ -1,16 +1,16 @@
 ---
-title: "Les Estampes Auversoises 2026"
+title: "Les Estampes Auversoises — deuxième édition"
 date: "2026-05-29"
-time: "Vernissage a 18h30"
-location: "La Maison Rose de Wallerand"
-image: ""
-entry: "Entree libre"
+time: "10h - 18h en semaine · 10h - 20h les weekends"
+location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: "assets/uploads/les-estampes-auversoises-2026.jpg"
+entry: "Entrée libre"
 helloasso_url: ""
 status: "a-venir"
 featured: true
 ---
-Les Estampes Auversoises s'inscrivent comme un rendez-vous fort du lieu autour
-de l'estampe et des artistes.
+Du 29 mai au 14 juin 2026.
 
-L'evenement participe au rayonnement de la Maison Rose et a son ambition
-culturelle.
+Deuxième édition des Estampes Auversoises à la Maison Rose de Wallerand.
+
+Vernissage le vendredi 29 mai à partir de 18h.
