@@ -23,10 +23,14 @@ Architecture retenue:
     decap/
       auth.js
       callback.js
+    helloasso/
+      checkout.js
+      checkout-status.js
   assets/
     data/
       stages.json
       evenements.json
+      site-settings.json
     site.css
     site.js
     uploads/
@@ -126,6 +130,35 @@ Valeur conseillee pour `GITHUB_OAUTH_SCOPE`:
 - `public_repo` si le repo reste public
 - `repo` si le repo devient prive
 
+### 4. Variables pour le formulaire contact
+
+Pour que le formulaire de `contact.html` envoie un e-mail directement sans ouvrir
+Mail, ajouter:
+
+- `RESEND_API_KEY`
+- `CONTACT_FORM_TO` (optionnel)
+- `CONTACT_FORM_FROM` (optionnel)
+- `CONTACT_FORM_SUBJECT_PREFIX` (optionnel)
+
+Sans `RESEND_API_KEY`, le formulaire reste visible mais l'envoi ne partira pas.
+
+### 5. Variables pour HelloAsso Checkout
+
+Pour activer le checkout direct depuis `adherer.html`, ajouter:
+
+- `HELLOASSO_CLIENT_ID`
+- `HELLOASSO_CLIENT_SECRET`
+
+Optionnels:
+
+- `HELLOASSO_API_BASE_URL`
+- `HELLOASSO_ORGANIZATION_SLUG`
+
+Par defaut, le projet utilise l'API de production `https://api.helloasso.com/v5`.
+Tu peux passer en sandbox en mettant:
+
+- `HELLOASSO_API_BASE_URL=https://api.helloasso-sandbox.com/v5`
+
 ## GitHub OAuth App
 
 Decap CMS a besoin d'une application OAuth GitHub pour connecter l'editeur.
@@ -166,10 +199,20 @@ Le site ne gere pas:
 - les inscrits
 - les comptes utilisateurs
 
-Le site affiche seulement:
+Le site affiche et prepare:
 
 - les informations du stage ou de l'evenement
 - un bouton vers HelloAsso si un lien est renseigne
+- un checkout direct sur `adherer.html` qui cree une intention de paiement via
+  l'API HelloAsso puis redirige l'utilisateur vers la page de paiement officielle
+
+Le flux checkout utilise:
+
+1. `POST /organizations/{organizationSlug}/checkout-intents`
+2. redirection vers `redirectUrl`
+3. verification du retour via `GET /organizations/{organizationSlug}/checkout-intents/{checkoutIntentId}`
+
+Les textes et montants proposes se reglent dans `/admin > Reglages du site`.
 
 ## Domaine OVH plus tard
 

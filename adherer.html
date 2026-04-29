@@ -67,6 +67,94 @@
   .donate .amt:hover, .donate .amt.on { background: var(--ink); color: var(--cream); border-color: var(--ink); }
   .donate small { display: block; margin-top: 18px; color: var(--grey-soft); font-size: 12px; letter-spacing: 0.04em; }
 
+  .checkout-api { padding: 0 0 110px; }
+  .checkout-return {
+    margin-bottom: 18px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    background: var(--cream-2);
+  }
+  .checkout-return p { margin: 0; color: var(--grey); }
+  .checkout-return.is-ok { border-color: rgba(110, 82, 56, .26); background: rgba(184, 130, 111, .09); }
+  .checkout-return.is-error { border-color: rgba(107, 64, 48, .25); background: rgba(107, 64, 48, .08); }
+  .checkout-return.is-pending { border-color: rgba(74, 69, 64, .18); }
+  .checkout-shell { background: var(--cream-2); border: 1px solid var(--line); padding: 18px; }
+  .checkout-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr); gap: 20px; align-items: start; }
+  .checkout-form, .checkout-aside { background: var(--cream); padding: 28px; }
+  .checkout-form h3, .checkout-aside h3 { font-size: 28px; margin-bottom: 8px; }
+  .checkout-form h3 em, .checkout-aside h3 em { font-style: italic; color: var(--terre); }
+  .checkout-form .lede, .checkout-aside p { color: var(--grey); }
+  .checkout-form .lede { margin-bottom: 24px; font-size: 15px; }
+  .checkout-form .field { margin-bottom: 18px; }
+  .checkout-form .field.is-hidden { display: none; }
+  .checkout-form label { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--grey); margin-bottom: 8px; }
+  .checkout-form input,
+  .checkout-form select,
+  .checkout-form textarea {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+  }
+  .checkout-form textarea { min-height: 92px; resize: vertical; }
+  .checkout-form input:focus,
+  .checkout-form select:focus,
+  .checkout-form textarea:focus { border-color: var(--terre); }
+  .checkout-form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .checkout-form .submit { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
+  .checkout-form .ok,
+  .checkout-form .err {
+    display: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+  }
+  .checkout-form .ok { color: var(--terre); }
+  .checkout-form .err { color: var(--terre-dark); }
+  .checkout-form .ok.show,
+  .checkout-form .err.show { display: block; }
+  .checkout-form button[disabled] { opacity: .72; pointer-events: none; }
+  .checkout-form .mini { margin-top: 14px; color: var(--grey-soft); font-size: 13px; }
+  .checkout-form.is-disabled { opacity: .85; }
+  .checkout-amounts { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .checkout-amounts .amt {
+    padding: 12px 20px;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--ink);
+    transition: all .25s;
+  }
+  .checkout-amounts .amt:hover,
+  .checkout-amounts .amt.on { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .checkout-aside .lvl { display: block; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--terre); margin-bottom: 16px; }
+  .checkout-aside .summary {
+    margin: 24px 0;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    background: var(--cream-2);
+  }
+  .checkout-aside .summary strong { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--grey); margin-bottom: 6px; }
+  .checkout-aside .summary p { margin: 0; color: var(--ink); }
+  .checkout-aside ul { list-style: none; margin: 0 0 24px; }
+  .checkout-aside li { padding: 10px 0; border-bottom: 1px solid rgba(26,22,20,.08); color: var(--grey); display: flex; gap: 10px; }
+  .checkout-aside li::before { content: "—"; color: var(--terre); flex-shrink: 0; }
+  .checkout-disabled {
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    border: 1px dashed var(--line);
+    background: rgba(184, 130, 111, .08);
+    color: var(--grey);
+  }
+
   .helloasso-block { padding: 110px 0; }
   .helloasso-shell { background: var(--cream-2); padding: 22px; border: 1px solid var(--line); }
   .helloasso-frame,
@@ -96,6 +184,7 @@
   @media (max-width: 1024px) {
     .tiers { grid-template-columns: 1fr; }
     .why-grid { grid-template-columns: 1fr; gap: 50px; }
+    .checkout-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 820px) {
     .tier .price {
@@ -106,6 +195,7 @@
     .why-img {
       aspect-ratio: 4 / 3;
     }
+    .checkout-api { padding-bottom: 84px; }
     .helloasso-block { padding: 84px 0; }
   }
   @media (max-width: 680px) {
@@ -117,6 +207,11 @@
     .why { padding: 84px 0; }
     .why .pull { padding: 22px 0 22px 18px; font-size: 22px; }
     .donate { padding: 82px 0; }
+    .checkout-shell { padding: 12px; }
+    .checkout-form, .checkout-aside { padding: 22px 18px; }
+    .checkout-form .row2 { grid-template-columns: 1fr; gap: 16px; }
+    .checkout-form .submit { align-items: stretch; }
+    .checkout-amounts .amt { width: calc(50% - 5px); justify-content: center; font-size: 19px; }
     .helloasso-shell { padding: 12px; }
     .faq { padding: 88px 0; }
     .faq-item .q { font-size: 20px; align-items: flex-start; gap: 14px; }
@@ -197,11 +292,90 @@
   <div class="wrap">
     <span class="num-tag reveal">— HelloAsso</span>
     <h2 class="reveal d2">Un point unique pour <em>adhérer ou soutenir.</em></h2>
-    <p class="reveal d3">Retrouvez la page officielle de l'association sur HelloAsso pour consulter les actions en cours et les formulaires disponibles.</p>
+    <p class="reveal d3">Le site prépare votre demande de paiement, puis vous redirige vers HelloAsso pour finaliser l'encaissement sur une page sécurisée.</p>
     <div class="reveal d4">
       <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-primary">Ouvrir la page HelloAsso <span class="arr">→</span></a>
     </div>
     <small>Le site vitrine n'encaisse rien directement et ne conserve aucune donnée de paiement.</small>
+  </div>
+</section>
+
+<section class="checkout-api wrap">
+  <div class="sec-head">
+    <div class="left reveal">
+      <span class="num-tag">— Checkout API</span>
+      <h2>Préparer votre <span class="it">paiement</span> ici.</h2>
+    </div>
+    <p class="right reveal d2">Le formulaire ci-dessous crée un checkout HelloAsso avec les bonnes informations, puis vous envoie vers la page de paiement officielle.</p>
+  </div>
+
+  <div class="checkout-return reveal" id="helloasso-checkout-return" hidden></div>
+
+  <div class="checkout-shell reveal">
+    <div class="checkout-grid">
+      <form class="checkout-form" id="haCheckoutForm">
+        <h3>Créer un <em>checkout</em></h3>
+        <p class="lede">Choisissez le type de soutien, indiquez votre montant puis continuez vers HelloAsso.</p>
+
+        <p class="checkout-disabled" id="helloasso-checkout-disabled" hidden>Le checkout direct est en cours d'activation sur ce déploiement. Le lien HelloAsso ci-dessous reste disponible.</p>
+
+        <div class="field is-hidden"><label>Société</label><input type="text" name="company" autocomplete="off" tabindex="-1" /></div>
+
+        <div class="field">
+          <label>Type de soutien *</label>
+          <select name="purpose" required>
+            <option value="support">Soutien libre</option>
+            <option value="membership">Adhésion</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Montants suggérés</label>
+          <div class="checkout-amounts" data-checkout-amounts></div>
+        </div>
+
+        <div class="field">
+          <label>Montant en euros *</label>
+          <input type="number" name="amount" min="10" step="1" inputmode="decimal" required />
+        </div>
+
+        <div class="row2">
+          <div class="field"><label>Prénom *</label><input type="text" name="first_name" required /></div>
+          <div class="field"><label>Nom *</label><input type="text" name="last_name" required /></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>E-mail *</label><input type="email" name="email" required /></div>
+          <div class="field"><label>Téléphone</label><input type="tel" name="phone" /></div>
+        </div>
+        <div class="field">
+          <label>Message optionnel</label>
+          <textarea name="message" placeholder="Un mot pour l'association, une precision sur votre soutien, etc."></textarea>
+        </div>
+
+        <div class="submit">
+          <button type="submit" class="btn btn-primary">Continuer vers HelloAsso <span class="arr">→</span></button>
+          <span class="ok" data-checkout-ok></span>
+          <span class="err" data-checkout-error></span>
+        </div>
+        <p class="mini">Au moment du paiement, HelloAsso pourra proposer une contribution volontaire pour soutenir son modele solidaire.</p>
+      </form>
+
+      <aside class="checkout-aside">
+        <span class="lvl">— Paiement sécurisé</span>
+        <h3>Vous serez redirigé vers <em>HelloAsso.</em></h3>
+        <p>Le site ne stocke ni carte bancaire ni compte utilisateur. Il prépare simplement un checkout propre pour l'association.</p>
+        <div class="summary">
+          <strong>Récapitulatif</strong>
+          <p data-checkout-summary>Soutien a La Maison Rose de Wallerand</p>
+        </div>
+        <ul>
+          <li>100% du montant principal est versé à l'association</li>
+          <li>Le paiement final se fait sur l'interface sécurisée HelloAsso</li>
+          <li>Un retour de confirmation est affiché ici après paiement</li>
+        </ul>
+        <a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" class="btn btn-ghost" data-site-helloasso>Ouvrir la page HelloAsso <span class="arr">→</span></a>
+      </aside>
+    </div>
   </div>
 </section>
 
@@ -246,6 +420,7 @@
 <script src="assets/site.js"></script>
 <script>
   injectChrome('adherer');
+  initHelloAssoCheckout();
   // FAQ
   document.querySelectorAll('.faq-item').forEach(it => {
     it.addEventListener('click', () => it.classList.toggle('open'));

@@ -14,7 +14,13 @@ const DEFAULT_SITE_SETTINGS = {
   address_line_2: "95430 Auvers-sur-Oise",
   instagram_url: "https://www.instagram.com/lamaisonrosedewallerand/",
   helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
+  helloasso_organization_slug: "la-maison-rose-de-wallerand",
   home_hero_image: "assets/official-house.jpg",
+  helloasso_checkout_membership_item_name: "Adhesion a La Maison Rose de Wallerand",
+  helloasso_checkout_support_item_name: "Soutien a La Maison Rose de Wallerand",
+  helloasso_checkout_default_amount: 50,
+  helloasso_checkout_min_amount: 10,
+  helloasso_checkout_suggested_amounts: "20,50,100,250",
   helloasso_widget_url: "",
   helloasso_widget_height: 780
 };
@@ -56,6 +62,26 @@ function normaliseWidgetUrl(value) {
   }
 
   return trimmed.includes("/widget") ? trimmed : `${trimmed.replace(/\/$/, "")}/widget`;
+}
+
+function formatEuroAmount(value) {
+  const amount = Number(value);
+
+  if (!Number.isFinite(amount)) {
+    return "";
+  }
+
+  return new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR"
+  }).format(amount);
+}
+
+function parseSuggestedAmounts(value) {
+  return String(value || "")
+    .split(",")
+    .map((entry) => Number(String(entry).trim().replace(",", ".")))
+    .filter((amount) => Number.isFinite(amount) && amount > 0);
 }
 
 function truncateText(value, limit = 180) {
@@ -875,6 +901,21 @@ function initContactForm() {
   }
 
   form.dataset.bound = "true";
+  let formEnabled = true;
+
+  fetchPublicConfig()
+    .then((config) => {
+      if (config.contactFormEnabled === false) {
+        formEnabled = false;
+        updateContactFormStatus(
+          form,
+          "error",
+          "L'envoi direct est en cours d'activation sur cette version du site."
+        );
+      }
+    })
+    .catch(() => {});
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const button = form.querySelector('button[type="submit"]');
@@ -883,6 +924,15 @@ function initContactForm() {
 
     updateContactFormStatus(form, "", "");
     form.classList.remove("sent");
+
+    if (!formEnabled) {
+      updateContactFormStatus(
+        form,
+        "error",
+        "L'envoi direct n'est pas encore active sur ce deploiement."
+      );
+      return;
+    }
 
     if (button) {
       button.disabled = true;
@@ -923,6 +973,286 @@ function initContactForm() {
       if (button) {
         button.disabled = false;
         button.innerHTML = button.dataset.label || "Envoyer";
+      }
+    }
+  });
+}
+
+function updateCheckoutFormStatus(form, type, message) {
+  const ok = form.querySelector("[data-checkout-ok]");
+  const err = form.querySelector("[data-checkout-error]");
+
+  if (ok) {
+    ok.textContent = type === "ok" ? message : "";
+    ok.classList.toggle("show", type === "ok");
+  }
+
+  if (err) {
+    err.textContent = type === "error" ? message : "";
+    err.classList.toggle("show", type === "error");
+  }
+}
+
+function updateCheckoutReturnState(mount, type, message) {
+  if (!mount) {
+    return;
+  }
+
+  mount.hidden = !message;
+  mount.classList.remove("is-ok", "is-error", "is-pending");
+
+  if (!message) {
+    mount.innerHTML = "";
+    return;
+  }
+
+  if (type) {
+    mount.classList.add(`is-${type}`);
+  }
+
+  mount.innerHTML = `<p>${escapeHtml(message)}</p>`;
+}
+
+function setCheckoutSummary(form, settings) {
+  const amountField = form.querySelector('[name="amount"]');
+  const purposeField = form.querySelector('[name="purpose"]');
+  const summary = form.querySelector("[data-checkout-summary]");
+  const amount = Number(String(amountField?.value || "").replace(",", "."));
+  const purpose = purposeField?.value === "membership" ? "membership" : "support";
+  const itemName =
+    purpose === "membership"
+      ? settings.helloasso_checkout_membership_item_name
+      : settings.helloasso_checkout_support_item_name;
+
+  if (!summary) {
+    return;
+  }
+
+  form.querySelectorAll("[data-checkout-amount]").forEach((button) => {
+    button.classList.toggle(
+      "on",
+      Number(button.getAttribute("data-checkout-amount")) === amount
+    );
+  });
+
+  summary.textContent =
+    Number.isFinite(amount) && amount > 0
+      ? `${itemName} · ${formatEuroAmount(amount)}`
+      : itemName;
+}
+
+function renderCheckoutAmountButtons(form, settings) {
+  const mount = form.querySelector("[data-checkout-amounts]");
+  const amountField = form.querySelector('[name="amount"]');
+
+  if (!mount || !amountField) {
+    return;
+  }
+
+  const suggestedAmounts = parseSuggestedAmounts(settings.helloasso_checkout_suggested_amounts);
+
+  mount.innerHTML = suggestedAmounts
+    .map(
+      (amount) => `
+        <button type="button" class="amt" data-checkout-amount="${amount}">
+          ${escapeHtml(formatEuroAmount(amount))}
+        </button>
+      `
+    )
+    .join("");
+
+  mount.querySelectorAll("[data-checkout-amount]").forEach((button) => {
+    button.addEventListener("click", () => {
+      amountField.value = button.getAttribute("data-checkout-amount") || "";
+      mount
+        .querySelectorAll("[data-checkout-amount]")
+        .forEach((item) => item.classList.toggle("on", item === button));
+      amountField.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  });
+}
+
+async function reconcileCheckoutReturn(mount) {
+  const params = new URLSearchParams(window.location.search);
+  const checkoutIntentId = params.get("checkoutIntentId");
+  const code = params.get("code") || params.get("helloasso") || "";
+
+  if (!checkoutIntentId) {
+    if (code === "error") {
+      updateCheckoutReturnState(
+        mount,
+        "error",
+        "Le paiement n'a pas abouti. Vous pouvez reessayer ou ouvrir directement HelloAsso."
+      );
+    }
+
+    return;
+  }
+
+  updateCheckoutReturnState(
+    mount,
+    "pending",
+    "Verification du paiement HelloAsso en cours..."
+  );
+
+  try {
+    const response = await fetch(
+      `/api/helloasso/checkout-status?checkoutIntentId=${encodeURIComponent(checkoutIntentId)}`,
+      {
+        cache: "no-store"
+      }
+    );
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.message || "Impossible de verifier le paiement HelloAsso.");
+    }
+
+    if (result.status === "succeeded" || result.order) {
+      const orderId = result.order && result.order.id ? ` Reference ${result.order.id}.` : "";
+      updateCheckoutReturnState(
+        mount,
+        "ok",
+        `Paiement confirme. Merci pour votre soutien.${orderId}`
+      );
+      return;
+    }
+
+    if (code && code !== "succeeded") {
+      updateCheckoutReturnState(
+        mount,
+        "error",
+        "Le paiement a ete interrompu ou n'a pas encore ete valide."
+      );
+      return;
+    }
+
+    updateCheckoutReturnState(
+      mount,
+      "pending",
+      "Le paiement a ete renvoye par HelloAsso mais n'est pas encore confirme. Rechargez la page dans un instant."
+    );
+  } catch (error) {
+    updateCheckoutReturnState(
+      mount,
+      "error",
+      error.message || "Impossible de verifier le paiement HelloAsso pour le moment."
+    );
+  }
+}
+
+async function initHelloAssoCheckout() {
+  const form = document.getElementById("haCheckoutForm");
+
+  if (!form || form.dataset.bound === "true") {
+    return;
+  }
+
+  form.dataset.bound = "true";
+
+  const amountField = form.querySelector('[name="amount"]');
+  const purposeField = form.querySelector('[name="purpose"]');
+  const button = form.querySelector('button[type="submit"]');
+  const returnState = document.getElementById("helloasso-checkout-return");
+  const disabledNote = document.getElementById("helloasso-checkout-disabled");
+
+  let settings = { ...DEFAULT_SITE_SETTINGS };
+  let checkoutEnabled = false;
+
+  try {
+    const [loadedSettings, config] = await Promise.all([
+      fetchSiteSettings(),
+      fetchPublicConfig()
+    ]);
+    settings = loadedSettings;
+    checkoutEnabled = Boolean(config.helloAssoCheckoutEnabled);
+  } catch (error) {
+    console.warn("Impossible d'initialiser le checkout HelloAsso.", error);
+  }
+
+  renderCheckoutAmountButtons(form, settings);
+
+  if (amountField && !amountField.value) {
+    amountField.value = String(Number(settings.helloasso_checkout_default_amount) || 50);
+  }
+
+  if (amountField) {
+    amountField.min = String(Number(settings.helloasso_checkout_min_amount) || 10);
+    amountField.addEventListener("input", () => setCheckoutSummary(form, settings));
+  }
+
+  if (purposeField) {
+    purposeField.addEventListener("change", () => setCheckoutSummary(form, settings));
+  }
+
+  setCheckoutSummary(form, settings);
+
+  if (!checkoutEnabled) {
+    form.classList.add("is-disabled");
+
+    if (button) {
+      button.disabled = true;
+    }
+
+    if (disabledNote) {
+      disabledNote.hidden = false;
+    }
+  } else if (disabledNote) {
+    disabledNote.hidden = true;
+  }
+
+  await reconcileCheckoutReturn(returnState);
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    updateCheckoutFormStatus(form, "", "");
+
+    if (!checkoutEnabled) {
+      updateCheckoutFormStatus(
+        form,
+        "error",
+        "Le checkout HelloAsso n'est pas encore active sur ce deploiement."
+      );
+      return;
+    }
+
+    const payload = Object.fromEntries(new FormData(form).entries());
+
+    if (button) {
+      button.disabled = true;
+      button.dataset.label = button.innerHTML;
+      button.innerHTML = "Redirection vers HelloAsso…";
+    }
+
+    try {
+      const response = await fetch("/api/helloasso/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.redirectUrl) {
+        throw new Error(
+          result.message ||
+            "Le paiement HelloAsso n'a pas pu etre initialise pour le moment."
+        );
+      }
+
+      window.location.href = result.redirectUrl;
+    } catch (error) {
+      updateCheckoutFormStatus(
+        form,
+        "error",
+        error.message ||
+          "Le paiement HelloAsso n'a pas pu etre initialise pour le moment."
+      );
+
+      if (button) {
+        button.disabled = false;
+        button.innerHTML = button.dataset.label || "Continuer";
       }
     }
   });
@@ -1169,6 +1499,7 @@ function injectChrome(activeKey) {
 
 window.injectChrome = injectChrome;
 window.initContactForm = initContactForm;
+window.initHelloAssoCheckout = initHelloAssoCheckout;
 
 document.addEventListener("DOMContentLoaded", async () => {
   registerReveals(document);

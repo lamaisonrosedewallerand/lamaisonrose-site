@@ -32,7 +32,13 @@ collections:
           - { label: "Adresse ligne 2", name: "address_line_2", widget: "string" }
           - { label: "Lien Instagram", name: "instagram_url", widget: "string", required: false }
           - { label: "Lien HelloAsso principal", name: "helloasso_url", widget: "string", required: false }
+          - { label: "Slug organisation HelloAsso", name: "helloasso_organization_slug", widget: "string", required: false, hint: "Exemple : la-maison-rose-de-wallerand" }
           - { label: "Image hero accueil", name: "home_hero_image", widget: "image", required: false }
+          - { label: "Nom article HelloAsso adhesion", name: "helloasso_checkout_membership_item_name", widget: "string", required: false }
+          - { label: "Nom article HelloAsso soutien", name: "helloasso_checkout_support_item_name", widget: "string", required: false }
+          - { label: "Montant checkout par defaut", name: "helloasso_checkout_default_amount", widget: "number", value_type: "int", min: 1, required: false, default: 50 }
+          - { label: "Montant checkout minimum", name: "helloasso_checkout_min_amount", widget: "number", value_type: "int", min: 1, required: false, default: 10 }
+          - { label: "Montants suggeres checkout", name: "helloasso_checkout_suggested_amounts", widget: "string", required: false, hint: "Exemple : 20,50,100,250" }
           - { label: "URL widget HelloAsso", name: "helloasso_widget_url", widget: "string", required: false, hint: "Exemple : .../adhesions/nom/widget ou .../formulaires/1/widget" }
           - { label: "Hauteur widget HelloAsso", name: "helloasso_widget_height", widget: "number", value_type: "int", min: 500, required: false, default: 780 }
           - { label: "Note interne", name: "body", widget: "markdown", required: false }

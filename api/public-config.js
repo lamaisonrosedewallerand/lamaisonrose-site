@@ -29,6 +29,9 @@ export default function handler(req, res) {
   res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=600");
   res.status(200).json({
     ...buildMapsUrls(),
-    contactFormEnabled: Boolean(process.env.RESEND_API_KEY)
+    contactFormEnabled: Boolean(process.env.RESEND_API_KEY),
+    helloAssoCheckoutEnabled: Boolean(
+      process.env.HELLOASSO_CLIENT_ID && process.env.HELLOASSO_CLIENT_SECRET
+    )
   });
 }
