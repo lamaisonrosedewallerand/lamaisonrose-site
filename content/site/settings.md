@@ -1,5 +1,5 @@
 ---
-announcement_mode: custom
+announcement_mode: auto
 announcement_text: FEEFEFFEEFFE
 announcement_link: ""
 contact_email: contact@lamaisonrosedewallerand.com
