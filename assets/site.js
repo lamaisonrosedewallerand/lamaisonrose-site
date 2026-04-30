@@ -83,7 +83,9 @@ function clearLegacyTranslateArtifacts() {
     .forEach((node) => node.remove());
 
   document.documentElement.setAttribute("translate", "no");
+  document.documentElement.classList.add("notranslate");
   document.body?.setAttribute("translate", "no");
+  document.body?.classList.add("notranslate");
   document.body?.style?.removeProperty("top");
 
   let notranslateMeta = document.querySelector('meta[name="google"]');
