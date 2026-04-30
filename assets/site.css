@@ -160,8 +160,9 @@ img { max-width: 100%; display: block; }
   padding: 8px 10px;
   border-radius: 999px;
   font: inherit;
+  font-weight: 600;
   font-size: 11px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background .25s, color .25s;
@@ -172,6 +173,33 @@ img { max-width: 100%; display: block; }
 .lang-btn.is-active {
   background: var(--ink);
   color: var(--cream);
+}
+body[data-lang="en"] .brand-text .a {
+  font-size: 17px;
+  font-style: normal;
+  letter-spacing: 0.01em;
+}
+body[data-lang="en"] .brand-text .b {
+  letter-spacing: 0.16em;
+}
+body[data-lang="en"] .menu {
+  gap: 20px;
+}
+body[data-lang="en"] .menu a {
+  font-size: 12px;
+}
+body[data-lang="en"] .page-hero-copy {
+  max-width: 18rem;
+}
+body[data-lang="en"] .page-hero .lede {
+  max-width: 31ch;
+}
+body[data-lang="en"] .hero h1 {
+  max-width: 10.5ch;
+}
+body[data-lang="en"] .hero-sub,
+body[data-lang="en"] .hero-lede {
+  max-width: 32rem;
 }
 .nav-cta {
   display: inline-flex; align-items: center; gap: 8px;
@@ -203,33 +231,6 @@ img { max-width: 100%; display: block; }
 .burger svg { display: block; }
 .burger svg path { transition: stroke .25s; }
 .burger:hover svg path { stroke: var(--terre); }
-.google-translate-shell {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
-.goog-te-banner-frame.skiptranslate,
-.goog-te-balloon-frame,
-#goog-gt-tt,
-.goog-tooltip,
-.goog-tooltip:hover {
-  display: none !important;
-}
-body {
-  top: 0 !important;
-}
-.goog-te-gadget,
-.goog-te-combo,
-.goog-logo-link {
-  font-size: 0 !important;
-}
-.goog-te-gadget span,
-.goog-te-gadget img {
-  display: none !important;
-}
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -709,6 +710,10 @@ footer {
     display: none;
   }
 
+  body[data-lang="en"] .brand-text .a {
+    font-size: 14px;
+  }
+
   .nav-actions {
     gap: 8px;
   }
@@ -781,6 +786,10 @@ footer {
 
   .page-hero-copy {
     max-width: 17rem;
+  }
+
+  body[data-lang="en"] .page-hero-copy {
+    max-width: 18.5rem;
   }
 
   .page-hero-grid {

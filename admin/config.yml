@@ -54,12 +54,17 @@ collections:
     summary: "{{title}} - {{date}}"
     fields:
       - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Titre (EN)", name: "title_en", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "date" }
       - { label: "Horaire", name: "time", widget: "string", required: false }
+      - { label: "Horaire (EN)", name: "time_en", widget: "string", required: false }
       - { label: "Prix", name: "price", widget: "string", required: false }
+      - { label: "Prix (EN)", name: "price_en", widget: "string", required: false }
       - { label: "Duree", name: "duration", widget: "string", required: false }
+      - { label: "Duree (EN)", name: "duration_en", widget: "string", required: false }
       - { label: "Nombre de places", name: "places", widget: "number", value_type: "int", min: 0, required: false }
       - { label: "Niveau", name: "level", widget: "string", required: false }
+      - { label: "Niveau (EN)", name: "level_en", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Lien HelloAsso", name: "helloasso_url", widget: "string", required: false }
       - label: "Statut"
@@ -68,6 +73,7 @@ collections:
         options: ["ouvert", "complet", "passe"]
         default: "ouvert"
       - { label: "Mettre en avant sur l'accueil", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Résumé court (EN)", name: "summary_en", widget: "text", required: false, hint: "Résumé anglais utilisé sur les cartes et les blocs mis en avant." }
       - { label: "Description", name: "body", widget: "markdown" }
 
   - name: "evenements"
@@ -78,15 +84,19 @@ collections:
     summary: "{{title}} - {{date}}"
     fields:
       - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Titre (EN)", name: "title_en", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "date" }
       - { label: "Horaire", name: "time", widget: "string", required: false }
+      - { label: "Horaire (EN)", name: "time_en", widget: "string", required: false }
       - { label: "Lieu", name: "location", widget: "string", required: false }
+      - { label: "Lieu (EN)", name: "location_en", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image", required: false }
       - label: "Entree"
         name: "entry"
         widget: "select"
         options: ["Entree libre", "Entree payante"]
         default: "Entree libre"
+      - { label: "Entrée (EN)", name: "entry_en", widget: "string", required: false }
       - { label: "Lien HelloAsso", name: "helloasso_url", widget: "string", required: false }
       - label: "Statut"
         name: "status"
@@ -94,4 +104,5 @@ collections:
         options: ["a-venir", "passe"]
         default: "a-venir"
       - { label: "Mettre en avant sur l'accueil", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Résumé court (EN)", name: "summary_en", widget: "text", required: false, hint: "Résumé anglais utilisé sur les cartes et les blocs mis en avant." }
       - { label: "Description", name: "body", widget: "markdown" }

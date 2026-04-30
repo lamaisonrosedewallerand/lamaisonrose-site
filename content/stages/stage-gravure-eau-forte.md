@@ -1,15 +1,21 @@
 ---
 title: "Stage gravure Eau-forte"
+title_en: "Etching workshop"
 date: "2026-02-28"
 time: "10h - 17h"
+time_en: "10 am - 5 pm"
 price: "Sur demande"
+price_en: "On request"
 duration: "2 jours"
+duration_en: "2 days"
 places: ""
 level: "Tous niveaux"
+level_en: "All levels"
 image: "assets/uploads/stage-gravure-eau-forte-2026.jpg"
 helloasso_url: ""
 status: "passe"
 featured: false
+summary_en: "Etching workshop at the Pink House of Wallerand, running over two days. Registration required before 25 February through the association contact."
 ---
 Le samedi 28 février et dimanche 1er mars 2026.
 

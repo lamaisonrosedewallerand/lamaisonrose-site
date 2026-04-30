@@ -1,3 +1,13 @@
+import {
+  SITE_LANGUAGE_STORAGE_KEY,
+  SITE_SOURCE_LANGUAGE,
+  SITE_SUPPORTED_LANGUAGES,
+  getLocaleForLanguage,
+  getPageKeyFromPath,
+  getStaticPageCopy,
+  getUiTranslation
+} from "./site-translations.js";
+
 const DATA_URLS = {
   stages: "assets/data/stages.json",
   evenements: "assets/data/evenements.json",
@@ -39,12 +49,53 @@ let revealObserver;
 let countdownTimer;
 let publicConfigPromise;
 let helloAssoResizeBound = false;
-let googleTranslatePromise;
-let translationRefreshTimer = 0;
 
-const SITE_LANGUAGE_STORAGE_KEY = "maisonrose-language";
-const SITE_SOURCE_LANGUAGE = "fr";
-const SITE_SUPPORTED_LANGUAGES = new Set(["fr", "en"]);
+function expireCookie(name, domain = "") {
+  const domainSegment = domain ? ` domain=${domain};` : "";
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; path=/;${domainSegment} SameSite=Lax`;
+}
+
+function clearLegacyTranslateArtifacts() {
+  const hostname = window.location.hostname;
+  const hostnameBits = hostname.split(".").filter(Boolean);
+  const baseDomain =
+    hostnameBits.length >= 2 ? hostnameBits.slice(-2).join(".") : "";
+
+  expireCookie("googtrans");
+
+  if (hostname) {
+    expireCookie("googtrans", hostname);
+  }
+
+  if (hostname.startsWith("www.")) {
+    expireCookie("googtrans", hostname.replace(/^www\./, ""));
+  }
+
+  if (baseDomain && baseDomain !== hostname) {
+    expireCookie("googtrans", baseDomain);
+    expireCookie("googtrans", `.${baseDomain}`);
+  }
+
+  document
+    .querySelectorAll(
+      'iframe.goog-te-banner-frame, iframe.goog-te-menu-frame, .goog-te-spinner-pos, #goog-gt-tt'
+    )
+    .forEach((node) => node.remove());
+
+  document.documentElement.setAttribute("translate", "no");
+  document.body?.setAttribute("translate", "no");
+  document.body?.style?.removeProperty("top");
+
+  let notranslateMeta = document.querySelector('meta[name="google"]');
+
+  if (!notranslateMeta) {
+    notranslateMeta = document.createElement("meta");
+    notranslateMeta.setAttribute("name", "google");
+    document.head.append(notranslateMeta);
+  }
+
+  notranslateMeta.setAttribute("content", "notranslate");
+}
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -73,6 +124,16 @@ function normaliseWidgetUrl(value) {
   return trimmed.includes("/widget") ? trimmed : `${trimmed.replace(/\/$/, "")}/widget`;
 }
 
+function getCurrentLanguage() {
+  const docLanguage = document.documentElement.getAttribute("lang");
+
+  if (SITE_SUPPORTED_LANGUAGES.has(docLanguage)) {
+    return docLanguage;
+  }
+
+  return getPreferredLanguage();
+}
+
 function getPreferredLanguage() {
   try {
     const stored = window.localStorage.getItem(SITE_LANGUAGE_STORAGE_KEY);
@@ -97,15 +158,12 @@ function setPreferredLanguage(language) {
   }
 }
 
-function setGoogleTranslateCookie(language) {
-  const value = SITE_SUPPORTED_LANGUAGES.has(language) ? language : SITE_SOURCE_LANGUAGE;
-  const cookieValue = `/fr/${value}`;
-  const maxAge = 60 * 60 * 24 * 365;
+function setDocumentLanguage(language) {
+  const safeLanguage = SITE_SUPPORTED_LANGUAGES.has(language) ? language : SITE_SOURCE_LANGUAGE;
+  document.documentElement.setAttribute("lang", safeLanguage);
 
-  document.cookie = `googtrans=${cookieValue};path=/;max-age=${maxAge}`;
-
-  if (window.location.hostname && window.location.hostname.includes(".")) {
-    document.cookie = `googtrans=${cookieValue};path=/;domain=.${window.location.hostname};max-age=${maxAge}`;
+  if (document.body) {
+    document.body.dataset.lang = safeLanguage;
   }
 }
 
@@ -117,122 +175,174 @@ function updateLanguageButtons(language) {
   });
 }
 
-function initGoogleTranslateElement() {
-  const mount = document.getElementById("google_translate_element");
+function t(path, fallback = "") {
+  return getUiTranslation(getCurrentLanguage(), path, fallback);
+}
 
-  if (
-    !mount ||
-    mount.dataset.ready === "true" ||
-    !window.google ||
-    !window.google.translate ||
-    !window.google.translate.TranslateElement
-  ) {
+function localizeField(item, fieldName, fallback = "") {
+  if (!item || typeof item !== "object") {
+    return fallback;
+  }
+
+  const language = getCurrentLanguage();
+
+  if (language === "en") {
+    const englishKey = `${fieldName}_en`;
+    const englishValue = item[englishKey];
+
+    if (englishValue !== undefined && englishValue !== null && String(englishValue).trim()) {
+      return englishValue;
+    }
+  }
+
+  const value = item[fieldName];
+  return value !== undefined && value !== null && String(value).trim() ? value : fallback;
+}
+
+function localizeSummary(item) {
+  const englishSummary = getCurrentLanguage() === "en" ? String(item.summary_en || "").trim() : "";
+
+  if (englishSummary) {
+    return englishSummary;
+  }
+
+  return item.descriptionText || item.body || "";
+}
+
+function localizeStageLevel(value, item = null) {
+  const literal =
+    item && item !== null
+      ? localizeField(item, "level", value || t("stage.allLevels"))
+      : value || t("stage.allLevels");
+
+  if (getCurrentLanguage() !== "en") {
+    return literal || t("stage.allLevels");
+  }
+
+  const normalized = normalizeText(literal);
+
+  if (!normalized) {
+    return t("stage.allLevels");
+  }
+
+  if (normalized.includes("debut") || normalized.includes("begin")) {
+    return t("stage.filters.beginner");
+  }
+
+  if (normalized.includes("inter")) {
+    return t("stage.filters.intermediate");
+  }
+
+  if (normalized.includes("avance") || normalized.includes("advanced")) {
+    return t("stage.filters.advanced");
+  }
+
+  if (normalized.includes("tous niveaux") || normalized.includes("all levels")) {
+    return t("stage.allLevels");
+  }
+
+  return literal;
+}
+
+function localizePrice(value, item = null) {
+  const literal =
+    item && item !== null ? localizeField(item, "price", value || t("stage.info")) : value || t("stage.info");
+
+  if (getCurrentLanguage() !== "en") {
+    return literal;
+  }
+
+  const normalized = normalizeText(literal);
+
+  if (normalized === "sur demande") {
+    return t("stage.onRequest");
+  }
+
+  if (normalized === "infos") {
+    return t("stage.info");
+  }
+
+  return literal;
+}
+
+function localizeEntry(value, item = null) {
+  const literal =
+    item && item !== null
+      ? localizeField(item, "entry", value || t("event.freeEntry"))
+      : value || t("event.freeEntry");
+
+  if (getCurrentLanguage() !== "en") {
+    return literal;
+  }
+
+  const normalized = normalizeText(literal);
+
+  if (normalized.includes("libre") || normalized.includes("free")) {
+    return t("event.freeEntry");
+  }
+
+  if (normalized.includes("payante") || normalized.includes("ticket")) {
+    return t("event.paidEntry");
+  }
+
+  return literal;
+}
+
+function applyNodeTranslation(node, spec, language) {
+  if (!node || !spec) {
     return;
   }
 
-  new window.google.translate.TranslateElement(
-    {
-      pageLanguage: SITE_SOURCE_LANGUAGE,
-      includedLanguages: "fr,en",
-      autoDisplay: false,
-      layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
-    },
-    "google_translate_element"
-  );
-
-  mount.dataset.ready = "true";
-}
-
-function ensureGoogleTranslateScript() {
-  if (window.google && window.google.translate && window.google.translate.TranslateElement) {
-    initGoogleTranslateElement();
-    return Promise.resolve();
+  if (spec.text) {
+    node.textContent = spec.text[language] ?? spec.text.fr ?? "";
   }
 
-  if (googleTranslatePromise) {
-    return googleTranslatePromise;
+  if (spec.html) {
+    node.innerHTML = spec.html[language] ?? spec.html.fr ?? "";
   }
 
-  googleTranslatePromise = new Promise((resolve, reject) => {
-    window.googleTranslateElementInit = () => {
-      initGoogleTranslateElement();
-      resolve();
-    };
-
-    const existingScript = document.querySelector('script[data-google-translate="true"]');
-
-    if (existingScript) {
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    script.async = true;
-    script.defer = true;
-    script.dataset.googleTranslate = "true";
-    script.onerror = () => reject(new Error("Impossible de charger Google Translate."));
-    document.head.appendChild(script);
-  });
-
-  return googleTranslatePromise;
+  if (spec.attrs) {
+    Object.entries(spec.attrs).forEach(([attribute, values]) => {
+      node.setAttribute(attribute, values[language] ?? values.fr ?? "");
+    });
+  }
 }
 
-function waitForGoogleTranslateCombo() {
-  return new Promise((resolve, reject) => {
-    const deadline = Date.now() + 8000;
+function applyStaticPageTranslations() {
+  const language = getCurrentLanguage();
+  const pageKey = getPageKeyFromPath(window.location.pathname);
+  const copy = getStaticPageCopy(pageKey);
 
-    const tick = () => {
-      const combo = document.querySelector(".goog-te-combo");
+  if (!copy) {
+    return;
+  }
 
-      if (combo) {
-        resolve(combo);
-        return;
-      }
+  if (copy.title) {
+    document.title = copy.title[language] ?? copy.title.fr ?? document.title;
+  }
 
-      if (Date.now() > deadline) {
-        reject(new Error("Le sélecteur Google Translate est introuvable."));
-        return;
-      }
+  const metaDescription = document.querySelector('meta[name="description"]');
 
-      window.setTimeout(tick, 120);
-    };
+  if (metaDescription && copy.description) {
+    const fallbackDescription = metaDescription.getAttribute("content") || "";
+    metaDescription.setAttribute(
+      "content",
+      copy.description[language] ?? copy.description.fr ?? fallbackDescription
+    );
+  }
 
-    tick();
+  (copy.nodes || []).forEach((entry) => {
+    document.querySelectorAll(entry.selector).forEach((node) => {
+      applyNodeTranslation(node, entry, language);
+    });
   });
 }
 
-async function syncPreferredLanguage() {
+function applyLanguage() {
   const language = getPreferredLanguage();
+  setDocumentLanguage(language);
   updateLanguageButtons(language);
-  document.documentElement.setAttribute("lang", language);
-
-  if (language === SITE_SOURCE_LANGUAGE) {
-    return;
-  }
-
-  try {
-    setGoogleTranslateCookie(language);
-    await ensureGoogleTranslateScript();
-    const combo = await waitForGoogleTranslateCombo();
-
-    if (combo.value !== language) {
-      combo.value = language;
-      combo.dispatchEvent(new Event("change"));
-    }
-  } catch (error) {
-    console.warn("Impossible d'activer la version anglaise.", error);
-  }
-}
-
-function scheduleTranslationRefresh() {
-  if (getPreferredLanguage() === SITE_SOURCE_LANGUAGE) {
-    return;
-  }
-
-  window.clearTimeout(translationRefreshTimer);
-  translationRefreshTimer = window.setTimeout(() => {
-    syncPreferredLanguage();
-  }, 180);
+  applyStaticPageTranslations();
 }
 
 function initLanguageSwitcher() {
@@ -258,13 +368,11 @@ function initLanguageSwitcher() {
       }
 
       setPreferredLanguage(language);
-      setGoogleTranslateCookie(language);
       window.location.reload();
     });
   });
 
-  updateLanguageButtons(getPreferredLanguage());
-  syncPreferredLanguage();
+  applyLanguage();
 }
 
 function formatEuroAmount(value) {
@@ -274,7 +382,7 @@ function formatEuroAmount(value) {
     return "";
   }
 
-  return new Intl.NumberFormat("fr-FR", {
+  return new Intl.NumberFormat(getLocaleForLanguage(getCurrentLanguage()), {
     style: "currency",
     currency: "EUR"
   }).format(amount);
@@ -361,7 +469,7 @@ function formatLongDate(value) {
     return value || "";
   }
 
-  return new Intl.DateTimeFormat("fr-FR", {
+  return new Intl.DateTimeFormat(getLocaleForLanguage(getCurrentLanguage()), {
     day: "numeric",
     month: "long",
     year: "numeric"
@@ -376,8 +484,10 @@ function formatShortMonth(value) {
   }
 
   return {
-    day: new Intl.DateTimeFormat("fr-FR", { day: "2-digit" }).format(parsed),
-    month: new Intl.DateTimeFormat("fr-FR", {
+    day: new Intl.DateTimeFormat(getLocaleForLanguage(getCurrentLanguage()), {
+      day: "2-digit"
+    }).format(parsed),
+    month: new Intl.DateTimeFormat(getLocaleForLanguage(getCurrentLanguage()), {
       month: "short",
       year: "2-digit"
     })
@@ -393,7 +503,7 @@ function formatMonthYear(value) {
     return "";
   }
 
-  return new Intl.DateTimeFormat("fr-FR", {
+  return new Intl.DateTimeFormat(getLocaleForLanguage(getCurrentLanguage()), {
     month: "long",
     year: "numeric"
   }).format(parsed);
@@ -432,7 +542,7 @@ function normalizeText(value) {
 function levelCategory(value) {
   const normalized = normalizeText(value);
 
-  if (normalized.includes("debut")) {
+  if (normalized.includes("debut") || normalized.includes("begin")) {
     return "deb";
   }
 
@@ -440,7 +550,7 @@ function levelCategory(value) {
     return "int";
   }
 
-  if (normalized.includes("avance")) {
+  if (normalized.includes("avance") || normalized.includes("advanced")) {
     return "adv";
   }
 
@@ -713,19 +823,23 @@ function imageTag(url, alt, className = "") {
 
 function formatPrice(value) {
   if (!value) {
-    return "Infos";
+    return t("stage.info");
   }
 
   return String(value).replace(/\bEUR\b/gi, "€");
 }
 
 function renderStageMedia(stage, index) {
+  const stageTitle = localizeField(stage, "title", "Stage");
+  const stageLevel = localizeStageLevel(stage.level, stage);
+  const stagePrice = localizePrice(stage.price, stage);
+
   if (stage.image) {
     return `
       <div class="stage-img has-photo">
-        ${imageTag(stage.image, stage.title || "Stage", "stage-photo")}
-        <span class="badge">${escapeHtml(stage.level || "Tous niveaux")}</span>
-        <span class="pricetag">${escapeHtml(formatPrice(stage.price))}</span>
+        ${imageTag(stage.image, stageTitle, "stage-photo")}
+        <span class="badge">${escapeHtml(stageLevel)}</span>
+        <span class="pricetag">${escapeHtml(formatPrice(stagePrice))}</span>
       </div>
     `;
   }
@@ -735,49 +849,58 @@ function renderStageMedia(stage, index) {
   return `
     <div class="stage-img">
       <div class="ph ${placeholder}"></div>
-      <span class="badge">${escapeHtml(stage.level || "Tous niveaux")}</span>
-      <span class="pricetag">${escapeHtml(formatPrice(stage.price))}</span>
+      <span class="badge">${escapeHtml(stageLevel)}</span>
+      <span class="pricetag">${escapeHtml(formatPrice(stagePrice))}</span>
     </div>
   `;
 }
 
 function renderStageAction(stage) {
   if (stage.status === "complet") {
-    return '<span class="reg reg-disabled">Complet</span>';
+    return `<span class="reg reg-disabled">${escapeHtml(t("stage.full"))}</span>`;
   }
 
   if (stage.status === "passe") {
-    return '<span class="reg reg-disabled">Terminé</span>';
+    return `<span class="reg reg-disabled">${escapeHtml(t("stage.ended"))}</span>`;
   }
 
   if (stage.helloasso_url) {
-    return `<a href="${escapeAttr(stage.helloasso_url)}" target="_blank" rel="noopener" class="reg">S'inscrire <span class="arr">→</span></a>`;
+    return `<a href="${escapeAttr(stage.helloasso_url)}" target="_blank" rel="noopener" class="reg">${t(
+      "stage.register"
+    )} <span class="arr">→</span></a>`;
   }
 
-  return '<span class="reg reg-disabled">Lien à venir</span>';
+  return `<span class="reg reg-disabled">${escapeHtml(t("stage.linkSoon"))}</span>`;
 }
 
 function renderStageCard(stage, index, revealClass = "") {
   const cardClass = ["stage-card", "reveal", revealClass].filter(Boolean).join(" ");
+  const localizedTitle = localizeField(stage, "title", "Stage");
+  const localizedLevel = localizeStageLevel(stage.level, stage);
+  const localizedTime = localizeField(stage, "time", stage.time || stage.duration || "");
+  const localizedDuration = localizeField(stage, "duration", stage.duration || "");
+  const localizedSummary = localizeSummary(stage);
   const meta = [
     formatLongDate(stage.date),
-    stage.time || stage.duration || "",
-    stage.places ? `${stage.places} places` : ""
+    localizedTime || localizedDuration || "",
+    stage.places ? `${stage.places} ${t("stage.places")}` : ""
   ].filter(Boolean);
 
   return `
-    <article class="${cardClass}" data-cat="${levelCategory(stage.level)}" data-status="${escapeAttr(
+    <article class="${cardClass}" data-cat="${levelCategory(localizedLevel || stage.level)}" data-status="${escapeAttr(
       stage.status || ""
     )}">
       ${renderStageMedia(stage, index)}
-      <h3>${escapeHtml(stage.title || "Stage")}</h3>
+      <h3>${escapeHtml(localizedTitle)}</h3>
       <div class="meta">
         ${meta.map((entry) => `<span>${escapeHtml(entry)}</span>`).join("")}
       </div>
-      <p>${escapeHtml(truncateText(stage.descriptionText || stage.body, 170))}</p>
+      <p>${escapeHtml(truncateText(localizedSummary, 170))}</p>
       <div class="actions">
         ${renderStageAction(stage)}
-        <span class="more">${escapeHtml(stage.status === "passe" ? "Archive" : stage.level || "Tous niveaux")}</span>
+        <span class="more">${escapeHtml(
+          stage.status === "passe" ? t("stage.archive") : localizedLevel || t("stage.allLevels")
+        )}</span>
       </div>
     </article>
   `;
@@ -789,13 +912,13 @@ function renderEmptyNote(message) {
 
 function renderFeatureVisual(event, variant) {
   const imageClass = variant === "home" ? "hl-img" : "img";
-  const defaultText = variant === "home" ? "Estampes" : "Estampes";
-  const defaultSubtitle = escapeHtml(event.title || "La Maison Rose");
+  const defaultText = localizeField(event, "title", t("event.generic"));
+  const defaultSubtitle = escapeHtml(defaultText);
 
   if (event.image) {
     return `
       <div class="${imageClass} has-photo">
-        ${imageTag(event.image, event.title || "Événement", "event-photo")}
+        ${imageTag(event.image, defaultText, "event-photo")}
       </div>
     `;
   }
@@ -844,95 +967,100 @@ function startCountdown(event) {
 }
 
 function renderHomeFeaturedEventBlock(event) {
+  const localizedTitle = localizeField(event, "title", t("event.generic"));
+  const localizedLocation = localizeField(event, "location", "La Maison Rose");
+  const localizedEntry = localizeEntry(event.entry, event);
+  const localizedSummary = localizeSummary(event);
+  const monthBits = formatShortMonth(event.date);
+
   return `
     <div class="headline-grid">
       <div class="headline-text reveal">
-        <span class="tag">Événement à la une</span>
-        <h2>${escapeHtml(event.title || "Événement")}</h2>
+        <span class="tag">${escapeHtml(t("event.featuredHome"))}</span>
+        <h2>${escapeHtml(localizedTitle)}</h2>
         <div class="headline-meta">
-          <div><div class="lbl">Date</div><div class="val">${escapeHtml(formatLongDate(
+          <div><div class="lbl">${escapeHtml(t("event.date"))}</div><div class="val">${escapeHtml(formatLongDate(
             event.date
           ))}</div></div>
-          <div><div class="lbl">Lieu</div><div class="val">${escapeHtml(
-            event.location || "La Maison Rose"
+          <div><div class="lbl">${escapeHtml(t("event.place"))}</div><div class="val">${escapeHtml(
+            localizedLocation
           )}</div></div>
-          <div><div class="lbl">Entrée</div><div class="val">${escapeHtml(
-            event.entry || "Entrée libre"
+          <div><div class="lbl">${escapeHtml(t("event.entry"))}</div><div class="val">${escapeHtml(
+            localizedEntry
           )}</div></div>
         </div>
-        <p>${escapeHtml(truncateText(event.descriptionText || event.body, 240))}</p>
+        <p>${escapeHtml(truncateText(localizedSummary, 240))}</p>
         <div class="countdown" id="countdown">
-          <div class="cell"><span class="n" data-k="d">—</span><span class="l">Jours</span></div>
-          <div class="cell"><span class="n" data-k="h">—</span><span class="l">Heures</span></div>
-          <div class="cell"><span class="n" data-k="m">—</span><span class="l">Minutes</span></div>
-          <div class="cell"><span class="n" data-k="s">—</span><span class="l">Secondes</span></div>
+          <div class="cell"><span class="n" data-k="d">—</span><span class="l">${escapeHtml(t("event.days"))}</span></div>
+          <div class="cell"><span class="n" data-k="h">—</span><span class="l">${escapeHtml(t("event.hours"))}</span></div>
+          <div class="cell"><span class="n" data-k="m">—</span><span class="l">${escapeHtml(t("event.minutes"))}</span></div>
+          <div class="cell"><span class="n" data-k="s">—</span><span class="l">${escapeHtml(t("event.seconds"))}</span></div>
         </div>
         <div class="cta-row">
           ${
             event.helloasso_url
               ? `<a href="${escapeAttr(
                   event.helloasso_url
-                )}" target="_blank" rel="noopener" class="btn btn-primary">Réserver ma venue <span class="arr">→</span></a>`
-              : '<a href="evenements.html" class="btn btn-primary">Voir l\'agenda <span class="arr">→</span></a>'
+                )}" target="_blank" rel="noopener" class="btn btn-primary">${t("event.reserve")}</a>`
+              : `<a href="evenements.html" class="btn btn-primary">${t("event.agenda")}</a>`
           }
-          <a href="evenements.html" class="btn btn-ghost">Programme complet</a>
+          <a href="evenements.html" class="btn btn-ghost">${escapeHtml(t("event.fullProgram"))}</a>
         </div>
       </div>
       <div class="headline-visual reveal d2">
         ${renderFeatureVisual(event, "home")}
-        <div class="hl-corner"><span>${escapeHtml(
-          formatShortMonth(event.date).day
-        )}<strong>${escapeHtml(
-          formatShortMonth(event.date).month.split(" ")[0] || "date"
-        )}</strong>${escapeHtml(
-          formatShortMonth(event.date).month.split(" ")[1] || ""
-        )}</span></div>
+        <div class="hl-corner"><span>${escapeHtml(monthBits.day)}<strong>${escapeHtml(
+          monthBits.month.split(" ")[0] || "date"
+        )}</strong>${escapeHtml(monthBits.month.split(" ")[1] || "")}</span></div>
       </div>
     </div>
   `;
 }
 
 function renderEventsFeaturedBlock(event) {
+  const localizedTitle = localizeField(event, "title", t("event.generic"));
+  const localizedTime = localizeField(event, "time", "À préciser");
+  const localizedLocation = localizeField(event, "location", "La Maison Rose");
+  const localizedEntry = localizeEntry(event.entry, event);
+  const localizedSummary = localizeSummary(event);
+  const monthBits = formatShortMonth(event.date);
+
   return `
     <div class="feat-grid">
       <div class="reveal">
-        <span class="tag">À la une</span>
-        <h2>${escapeHtml(event.title || "Événement")}</h2>
+        <span class="tag">${escapeHtml(t("event.featuredPage"))}</span>
+        <h2>${escapeHtml(localizedTitle)}</h2>
         <div class="feat-meta">
-          <div><div class="lbl">Date</div><div class="val">${escapeHtml(formatLongDate(
+          <div><div class="lbl">${escapeHtml(t("event.date"))}</div><div class="val">${escapeHtml(formatLongDate(
             event.date
           ))}</div></div>
-          <div><div class="lbl">Horaires</div><div class="val">${escapeHtml(
-            event.time || "À préciser"
+          <div><div class="lbl">${escapeHtml(t("event.schedule"))}</div><div class="val">${escapeHtml(
+            localizedTime
           )}</div></div>
-          <div><div class="lbl">Lieu</div><div class="val">${escapeHtml(
-            event.location || "La Maison Rose"
+          <div><div class="lbl">${escapeHtml(t("event.place"))}</div><div class="val">${escapeHtml(
+            localizedLocation
           )}</div></div>
-          <div><div class="lbl">Entrée</div><div class="val">${escapeHtml(
-            event.entry || "Entrée libre"
+          <div><div class="lbl">${escapeHtml(t("event.entry"))}</div><div class="val">${escapeHtml(
+            localizedEntry
           )}</div></div>
         </div>
-        <p>${escapeHtml(truncateText(event.descriptionText || event.body, 260))}</p>
+        <p>${escapeHtml(truncateText(localizedSummary, 260))}</p>
         <div class="cta-row">
           ${
             event.helloasso_url
               ? `<a href="${escapeAttr(
                   event.helloasso_url
-                )}" target="_blank" rel="noopener" class="btn btn-primary">Réserver ma venue <span class="arr">→</span></a>`
-              : '<a href="contact.html" class="btn btn-primary">Nous contacter <span class="arr">→</span></a>'
+                )}" target="_blank" rel="noopener" class="btn btn-primary">${t("event.reserve")}</a>`
+              : `<a href="contact.html" class="btn btn-primary">${t("event.contact")}</a>`
           }
-          <a href="contact.html" class="btn btn-ghost">Informations pratiques</a>
+          <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
         </div>
       </div>
       <div class="feat-visual reveal d2">
         ${renderFeatureVisual(event, "events")}
-        <div class="feat-corner"><span>${escapeHtml(
-          formatShortMonth(event.date).day
-        )}<strong>${escapeHtml(
-          formatShortMonth(event.date).month.split(" ")[0] || "date"
-        )}</strong>${escapeHtml(
-          formatShortMonth(event.date).month.split(" ")[1] || ""
-        )}</span></div>
+        <div class="feat-corner"><span>${escapeHtml(monthBits.day)}<strong>${escapeHtml(
+          monthBits.month.split(" ")[0] || "date"
+        )}</strong>${escapeHtml(monthBits.month.split(" ")[1] || "")}</span></div>
       </div>
     </div>
   `;
@@ -940,13 +1068,19 @@ function renderEventsFeaturedBlock(event) {
 
 function renderEventRow(event) {
   const dateBits = formatShortMonth(event.date);
+  const localizedTitle = localizeField(event, "title", t("event.generic"));
+  const localizedEntry = localizeEntry(event.entry, event);
+  const localizedLocation = localizeField(event, "location", "Auvers-sur-Oise");
+  const localizedSummary = localizeSummary(event);
   const wrapperStart = event.helloasso_url
     ? `<a href="${escapeAttr(
         event.helloasso_url
       )}" target="_blank" rel="noopener" class="ev-row">`
     : '<article class="ev-row">';
   const wrapperEnd = event.helloasso_url ? "</a>" : "</article>";
-  const category = event.entry ? `${event.entry} · ${event.location || "Auvers-sur-Oise"}` : event.location;
+  const category = localizedEntry
+    ? `${localizedEntry} · ${localizedLocation}`
+    : localizedLocation;
 
   return `
     ${wrapperStart}
@@ -954,10 +1088,10 @@ function renderEventRow(event) {
         dateBits.day
       )}</span><span class="mo">${escapeHtml(dateBits.month)}</span></div>
       <div>
-        <h3>${escapeHtml(event.title || "Événement")}</h3>
-        <span class="ev-cat">${escapeHtml(category || "Événement")}</span>
+        <h3>${escapeHtml(localizedTitle)}</h3>
+        <span class="ev-cat">${escapeHtml(category || t("event.generic"))}</span>
       </div>
-      <p>${escapeHtml(truncateText(event.descriptionText || event.body, 150))}</p>
+      <p>${escapeHtml(truncateText(localizedSummary, 150))}</p>
       <div class="ev-action"><span class="arrow">${event.helloasso_url ? "→" : "•"}</span></div>
     ${wrapperEnd}
   `;
@@ -1004,7 +1138,6 @@ function applySiteSettingsToDom(settings) {
   setHref("[data-site-instagram]", settings.instagram_url);
   setHref("[data-site-helloasso]", settings.helloasso_url);
   applyHomeHeroImage(settings.home_hero_image);
-  scheduleTranslationRefresh();
 }
 
 async function resolveUtilityAnnouncement(settings) {
@@ -1014,7 +1147,7 @@ async function resolveUtilityAnnouncement(settings) {
 
   if (settings.announcement_mode === "custom" && settings.announcement_text) {
     return {
-      prefix: "Actualité",
+      prefix: t("common.utility.news"),
       main: settings.announcement_text,
       href: settings.announcement_link || "evenements.html"
     };
@@ -1028,15 +1161,15 @@ async function resolveUtilityAnnouncement(settings) {
 
   if (!nextEvent) {
     return {
-      prefix: "Lieu culturel · Résidence d'artistes",
-      main: "Auvers-sur-Oise · 30 km de Paris",
+      prefix: t("common.utility.defaultPrefix"),
+      main: t("common.utility.defaultMain"),
       href: "le-lieu.html"
     };
   }
 
   return {
-    prefix: "Prochain événement",
-    main: `${nextEvent.title} — ${formatLongDate(nextEvent.date)}`,
+    prefix: t("common.utility.nextEvent"),
+    main: `${localizeField(nextEvent, "title", t("event.generic"))} — ${formatLongDate(nextEvent.date)}`,
     href: nextEvent.helloasso_url || "evenements.html"
   };
 }
@@ -1104,13 +1237,12 @@ function renderHelloAssoWidget(settings) {
   if (!widgetUrl) {
     mount.innerHTML = `
       <div class="helloasso-fallback">
-        <p>Aucun widget HelloAsso n'est affiché pour le moment. Retrouvez les campagnes actives, adhésions ou soutiens directement sur la page HelloAsso de l'association.</p>
+        <p>${escapeHtml(t("helloasso.noWidget"))}</p>
         <a href="${escapeAttr(
           settings.helloasso_url
-        )}" target="_blank" rel="noopener" class="btn btn-primary">Ouvrir HelloAsso <span class="arr">→</span></a>
+        )}" target="_blank" rel="noopener" class="btn btn-primary">${t("helloasso.open")}</a>
       </div>
     `;
-    scheduleTranslationRefresh();
     return;
   }
 
@@ -1127,7 +1259,6 @@ function renderHelloAssoWidget(settings) {
   `;
 
   bindHelloAssoResize();
-  scheduleTranslationRefresh();
 }
 
 async function hydrateMaps() {
@@ -1151,8 +1282,6 @@ async function hydrateMaps() {
       link.setAttribute("href", config.googleMapsDirectionsUrl);
     }
   });
-
-  scheduleTranslationRefresh();
 }
 
 function updateContactFormStatus(form, type, message) {
@@ -1187,7 +1316,7 @@ function initContactForm() {
         updateContactFormStatus(
           form,
           "error",
-          "L'envoi direct est en cours d'activation sur cette version du site."
+          t("contact.disabled")
         );
       }
     })
@@ -1206,7 +1335,7 @@ function initContactForm() {
       updateContactFormStatus(
         form,
         "error",
-        "L'envoi direct n'est pas encore active sur ce deploiement."
+        t("contact.inactive")
       );
       return;
     }
@@ -1214,7 +1343,7 @@ function initContactForm() {
     if (button) {
       button.disabled = true;
       button.dataset.label = button.innerHTML;
-      button.innerHTML = "Envoi en cours…";
+      button.innerHTML = t("contact.sending");
     }
 
     try {
@@ -1227,8 +1356,7 @@ function initContactForm() {
 
       if (!response.ok) {
         throw new Error(
-          result.message ||
-            "Le message n'a pas pu être envoyé pour le moment. Réessaie dans un instant."
+          result.message || t("contact.error")
         );
       }
 
@@ -1237,19 +1365,18 @@ function initContactForm() {
       updateContactFormStatus(
         form,
         "ok",
-        "Merci, votre message a bien été envoyé à l'association."
+        t("contact.success")
       );
     } catch (error) {
       updateContactFormStatus(
         form,
         "error",
-        error.message ||
-          "Le message n'a pas pu être envoyé. Vérifie la configuration du formulaire sur Vercel."
+        error.message || t("contact.configError")
       );
     } finally {
       if (button) {
         button.disabled = false;
-        button.innerHTML = button.dataset.label || "Envoyer";
+        button.innerHTML = button.dataset.label || t("contact.send");
       }
     }
   });
@@ -1576,18 +1703,19 @@ async function initHelloAssoCheckout() {
 function renderPastEventCard(event, index, revealClass = "") {
   const cardClass = ["past-card", "reveal", revealClass].filter(Boolean).join(" ");
   const placeholder = PLACEHOLDERS.event[index % PLACEHOLDERS.event.length];
+  const localizedTitle = localizeField(event, "title", t("event.archive"));
 
   return `
     <article class="${cardClass}">
       <div class="img ${event.image ? "has-photo" : ""}">
         ${
           event.image
-            ? imageTag(event.image, event.title || "Événement passé", "event-photo")
+            ? imageTag(event.image, localizedTitle, "event-photo")
             : `<div class="ph ${placeholder}"></div>`
         }
       </div>
-      <span class="yr">— ${escapeHtml(formatMonthYear(event.date) || "Archive")}</span>
-      <h4>${escapeHtml(event.title || "Événement passé")}</h4>
+      <span class="yr">— ${escapeHtml(formatMonthYear(event.date) || t("event.archive"))}</span>
+      <h4>${escapeHtml(localizedTitle)}</h4>
     </article>
   `;
 }
@@ -1603,15 +1731,13 @@ async function renderHomeFeaturedEvent() {
   const featured = chooseFeatured(events);
 
   if (!featured) {
-    mount.innerHTML = renderEmptyNote("Aucun événement à la une pour le moment.");
-    scheduleTranslationRefresh();
+    mount.innerHTML = renderEmptyNote(t("event.emptyFeatured"));
     return;
   }
 
   mount.innerHTML = renderHomeFeaturedEventBlock(featured);
   startCountdown(featured);
   registerReveals(mount);
-  scheduleTranslationRefresh();
 }
 
 async function renderStagesPage() {
@@ -1633,7 +1759,7 @@ async function renderStagesPage() {
           renderStageCard(stage, index, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")
         )
         .join("")
-    : renderEmptyNote("Aucun stage à venir pour le moment.");
+    : renderEmptyNote(t("stage.empty"));
 
   if (archiveMount && archiveWrap) {
     if (archived.length) {
@@ -1650,7 +1776,6 @@ async function renderStagesPage() {
 
   registerReveals(document);
   initStageFilters();
-  scheduleTranslationRefresh();
 }
 
 async function renderEvenementsPage() {
@@ -1672,13 +1797,13 @@ async function renderEvenementsPage() {
   if (featureMount) {
     featureMount.innerHTML = featured
       ? renderEventsFeaturedBlock(featured)
-      : renderEmptyNote("Aucun événement à la une pour le moment.");
+      : renderEmptyNote(t("event.emptyFeatured"));
   }
 
   if (upcomingMount) {
     upcomingMount.innerHTML = upcoming.length
       ? upcoming.map((event) => renderEventRow(event)).join("")
-      : renderEmptyNote("Aucun autre rendez-vous à venir pour le moment.");
+      : renderEmptyNote(t("event.emptyUpcoming"));
   }
 
   if (pastMount) {
@@ -1688,19 +1813,22 @@ async function renderEvenementsPage() {
             renderPastEventCard(event, index, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")
           )
           .join("")
-      : renderEmptyNote("Les archives d'événements apparaîtront ici.");
+      : renderEmptyNote(t("event.emptyPast"));
   }
 
   registerReveals(document);
-  scheduleTranslationRefresh();
 }
 
 function injectChrome(activeKey) {
+  const language = getPreferredLanguage();
+  clearLegacyTranslateArtifacts();
+  setDocumentLanguage(language);
+
   const navMarkup = `
     <div class="util" id="site-util">
       <a href="evenements.html" id="site-util-link">
-        <span id="site-util-prefix">Lieu culturel · Résidence d'artistes</span>
-        <strong id="site-util-main">Auvers-sur-Oise · 30 km de Paris</strong>
+        <span id="site-util-prefix">${escapeHtml(t("common.utility.defaultPrefix"))}</span>
+        <strong id="site-util-main">${escapeHtml(t("common.utility.defaultMain"))}</strong>
       </a>
     </div>
     <header class="nav" id="nav">
@@ -1708,35 +1836,34 @@ function injectChrome(activeKey) {
         <a href="index.html" class="brand">
           <span class="brand-mark" aria-hidden="true"><img src="assets/brand-logo.png" alt="" /></span>
           <span class="brand-text">
-            <span class="a">La Maison Rose</span>
-            <span class="b">de Wallerand · Auvers-sur-Oise</span>
+            <span class="a">${escapeHtml(t("common.brandPrimary"))}</span>
+            <span class="b">${escapeHtml(t("common.brandSecondary"))}</span>
           </span>
         </a>
         <nav>
           <ul class="menu" id="site-menu">
-            <li><a href="index.html" data-k="home">Accueil</a></li>
-            <li><a href="le-lieu.html" data-k="lieu">Le Lieu</a></li>
-            <li><a href="stages.html" data-k="stages">Stages &amp; Cours</a></li>
-            <li><a href="evenements.html" data-k="events">Événements</a></li>
-            <li><a href="wallerand.html" data-k="wallerand">Wallerand</a></li>
-            <li><a href="association.html" data-k="assoc">L'Association</a></li>
-            <li><a href="contact.html" data-k="contact">Contact</a></li>
-            <li class="menu-mobile-only"><a href="adherer.html" data-k="adherer">Adhérer</a></li>
+            <li><a href="index.html" data-k="home">${escapeHtml(t("common.nav.home"))}</a></li>
+            <li><a href="le-lieu.html" data-k="lieu">${escapeHtml(t("common.nav.lieu"))}</a></li>
+            <li><a href="stages.html" data-k="stages">${escapeHtml(t("common.nav.stages"))}</a></li>
+            <li><a href="evenements.html" data-k="events">${escapeHtml(t("common.nav.events"))}</a></li>
+            <li><a href="wallerand.html" data-k="wallerand">${escapeHtml(t("common.nav.wallerand"))}</a></li>
+            <li><a href="association.html" data-k="assoc">${escapeHtml(t("common.nav.assoc"))}</a></li>
+            <li><a href="contact.html" data-k="contact">${escapeHtml(t("common.nav.contact"))}</a></li>
+            <li class="menu-mobile-only"><a href="adherer.html" data-k="adherer">${escapeHtml(t("common.nav.adherer"))}</a></li>
           </ul>
         </nav>
         <div class="nav-actions">
-          <div class="lang-switch" aria-label="Version du site">
+          <div class="lang-switch" aria-label="${escapeAttr(language === "en" ? "Site language" : "Version du site")}">
             <button type="button" class="lang-btn" data-lang-switch="fr" aria-pressed="true">FR</button>
             <button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false">EN</button>
           </div>
-          <a href="adherer.html" class="nav-cta" data-k="adherer">Adhérer <span class="arr">→</span></a>
-          <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="site-menu">
+          <a href="adherer.html" class="nav-cta" data-k="adherer">${escapeHtml(t("common.nav.adherer"))} <span class="arr">→</span></a>
+          <button class="burger" aria-label="${escapeAttr(language === "en" ? "Menu" : "Menu")}" aria-expanded="false" aria-controls="site-menu">
             <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
           </button>
         </div>
       </div>
     </header>
-    <div id="google_translate_element" class="google-translate-shell" aria-hidden="true"></div>
   `;
 
   const footerMarkup = `
@@ -1744,52 +1871,52 @@ function injectChrome(activeKey) {
       <div class="wrap">
         <div class="foot-grid">
           <div class="brand-blk">
-            <h4>La Maison Rose</h4>
-            <span class="a">de Wallerand</span>
-            <p>Ancien atelier d'été de Charles-François Daubigny, devenu lieu culturel, résidence d'artistes et espace de transmission à Auvers-sur-Oise.</p>
+            <h4>${escapeHtml(t("common.footer.brandTitle"))}</h4>
+            <span class="a">${escapeHtml(t("common.footer.brandSubtitle"))}</span>
+            <p>${escapeHtml(t("common.footer.brandDescription"))}</p>
           </div>
           <div>
-            <h4>Visiter</h4>
+            <h4>${escapeHtml(t("common.footer.visitTitle"))}</h4>
             <ul>
               <li data-site-address-line-1>59 rue Daubigny</li>
               <li data-site-address-line-2>95430 Auvers-sur-Oise</li>
-              <li>Selon la programmation et sur rendez-vous</li>
-              <li><a href="contact.html">Itinéraire →</a></li>
+              <li>${escapeHtml(t("common.footer.visitWhen"))}</li>
+              <li><a href="contact.html">${escapeHtml(t("common.footer.directions"))}</a></li>
             </ul>
           </div>
           <div class="contact">
-            <h4>Contact</h4>
+            <h4>${escapeHtml(t("common.footer.contactTitle"))}</h4>
             <ul>
               <li><a href="mailto:contact@lamaisonrosedewallerand.com" data-site-email>contact@lamaisonrosedewallerand.com</a></li>
               <li><a href="tel:+33615375672" data-site-phone>+33 6 15 37 56 72</a></li>
               <li><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener" data-site-instagram>@lamaisonrosedewallerand</a></li>
-              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" data-site-helloasso>HelloAsso →</a></li>
+              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" data-site-helloasso>${escapeHtml(t("common.footer.helloasso"))}</a></li>
             </ul>
           </div>
           <div>
-            <h4>Suivre la programmation</h4>
-            <p class="foot-note">Retrouvez l'agenda, les stages et les liens d'inscription sur le site et sur HelloAsso, sans paiement ni espace membre interne.</p>
+            <h4>${escapeHtml(t("common.footer.followTitle"))}</h4>
+            <p class="foot-note">${escapeHtml(t("common.footer.followNote"))}</p>
             <ul style="margin-top: 18px;">
-              <li><a href="evenements.html">Agenda des événements →</a></li>
-              <li><a href="stages.html">Cours et stages de gravure →</a></li>
-              <li><a href="adherer.html">Adhérer ou soutenir →</a></li>
+              <li><a href="evenements.html">${escapeHtml(t("common.footer.events"))}</a></li>
+              <li><a href="stages.html">${escapeHtml(t("common.footer.stages"))}</a></li>
+              <li><a href="adherer.html">${escapeHtml(t("common.footer.join"))}</a></li>
             </ul>
           </div>
         </div>
         <div class="foot-support">
           <div class="foot-support-copy">
-            <span class="ey">Avec le soutien de</span>
-            <p>Patrimoine d’Île-de-France · Région Île-de-France</p>
+            <span class="ey">${escapeHtml(t("common.footer.supportEyebrow"))}</span>
+            <p>${escapeHtml(t("common.footer.supportText"))}</p>
           </div>
           <div class="foot-support-logo">
             <img src="/assets/uploads/logo-patrimoine-ile-de-france.jpg" alt="Logo Patrimoine d’Île-de-France et Région Île-de-France" loading="lazy" />
           </div>
         </div>
         <div class="foot-bot">
-          <div>© 2026 La Maison Rose de Wallerand</div>
+          <div>${escapeHtml(t("common.footer.copyright"))}</div>
           <div class="links">
-            <a href="index.html">Accueil</a>
-            <a href="contact.html">Contact</a>
+            <a href="index.html">${escapeHtml(t("common.nav.home"))}</a>
+            <a href="contact.html">${escapeHtml(t("common.nav.contact"))}</a>
             <a href="admin/">Admin</a>
           </div>
         </div>
@@ -1821,13 +1948,13 @@ function injectChrome(activeKey) {
   initSmoothAnchors();
   initBurger();
   initLanguageSwitcher();
+  applyLanguage();
 
   fetchSiteSettings()
     .then(async (settings) => {
       applySiteSettingsToDom(settings);
       renderHelloAssoWidget(settings);
       applyUtilityAnnouncement(await resolveUtilityAnnouncement(settings));
-      scheduleTranslationRefresh();
     })
     .catch((error) => {
       console.warn("Impossible d'appliquer les réglages du site.", error);
@@ -1839,6 +1966,7 @@ window.initContactForm = initContactForm;
 window.initHelloAssoCheckout = initHelloAssoCheckout;
 
 document.addEventListener("DOMContentLoaded", async () => {
+  clearLegacyTranslateArtifacts();
   registerReveals(document);
   initNavScroll();
   initNewsletterForm();
@@ -1852,7 +1980,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderEvenementsPage(),
       hydrateMaps()
     ]);
-    scheduleTranslationRefresh();
+    applyLanguage();
   } catch (error) {
     console.error(error);
   }

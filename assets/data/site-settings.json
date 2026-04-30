@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-04-29T15:33:59.447Z",
+  "generatedAt": "2026-04-30T14:16:45.093Z",
   "item": {
     "slug": "settings",
     "announcement_mode": "auto",
-    "announcement_text": "FEEFEFFEEFFE",
+    "announcement_text": "",
     "announcement_link": "",
     "contact_email": "contact@lamaisonrosedewallerand.com",
     "contact_phone": "+33 6 15 37 56 72",
@@ -12,7 +12,7 @@
     "instagram_url": "https://www.instagram.com/lamaisonrosedewallerand/",
     "helloasso_url": "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
     "helloasso_organization_slug": "la-maison-rose-de-wallerand",
-    "home_hero_image": "/assets/uploads/maison-rose-facade-hero.jpg",
+    "home_hero_image": "/assets/uploads/maison-rose-facade-complete.jpg",
     "helloasso_checkout_membership_item_name": "Adhesion individuelle a La Maison Rose de Wallerand",
     "helloasso_checkout_membership_amount": 20,
     "helloasso_checkout_membership_couple_item_name": "Adhesion couple a La Maison Rose de Wallerand",
