@@ -15,10 +15,10 @@ const UI_TRANSLATIONS = {
       nav: {
         home: "Accueil",
         lieu: "Le Lieu",
-        stages: "Stages & Cours",
+        stages: "Stages",
         events: "Événements",
         wallerand: "Wallerand",
-        assoc: "L'Association",
+        assoc: "Association",
         contact: "Contact",
         adherer: "Adhérer"
       },
@@ -125,7 +125,7 @@ const UI_TRANSLATIONS = {
         stages: "Workshops",
         events: "Events",
         wallerand: "Wallerand",
-        assoc: "The Association",
+        assoc: "About",
         contact: "Contact",
         adherer: "Join"
       },
