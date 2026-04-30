@@ -207,7 +207,8 @@ body[data-lang="en"] .menu {
   gap: clamp(12px, 1.4vw, 20px);
 }
 body[data-lang="en"] .menu a {
-  font-size: 12px;
+  font-size: 13px;
+  letter-spacing: 0.025em;
 }
 body[data-lang="en"] .page-hero-copy {
   max-width: 18rem;
@@ -551,7 +552,7 @@ footer {
   }
 
   body[data-lang="en"] .menu a {
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.02em;
   }
 }
