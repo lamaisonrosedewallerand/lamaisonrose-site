@@ -39,6 +39,12 @@ let revealObserver;
 let countdownTimer;
 let publicConfigPromise;
 let helloAssoResizeBound = false;
+let googleTranslatePromise;
+let translationRefreshTimer = 0;
+
+const SITE_LANGUAGE_STORAGE_KEY = "maisonrose-language";
+const SITE_SOURCE_LANGUAGE = "fr";
+const SITE_SUPPORTED_LANGUAGES = new Set(["fr", "en"]);
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -65,6 +71,200 @@ function normaliseWidgetUrl(value) {
   }
 
   return trimmed.includes("/widget") ? trimmed : `${trimmed.replace(/\/$/, "")}/widget`;
+}
+
+function getPreferredLanguage() {
+  try {
+    const stored = window.localStorage.getItem(SITE_LANGUAGE_STORAGE_KEY);
+
+    if (SITE_SUPPORTED_LANGUAGES.has(stored)) {
+      return stored;
+    }
+  } catch (error) {
+    console.warn("Impossible de lire la langue enregistrée.", error);
+  }
+
+  return SITE_SOURCE_LANGUAGE;
+}
+
+function setPreferredLanguage(language) {
+  const value = SITE_SUPPORTED_LANGUAGES.has(language) ? language : SITE_SOURCE_LANGUAGE;
+
+  try {
+    window.localStorage.setItem(SITE_LANGUAGE_STORAGE_KEY, value);
+  } catch (error) {
+    console.warn("Impossible d'enregistrer la langue choisie.", error);
+  }
+}
+
+function setGoogleTranslateCookie(language) {
+  const value = SITE_SUPPORTED_LANGUAGES.has(language) ? language : SITE_SOURCE_LANGUAGE;
+  const cookieValue = `/fr/${value}`;
+  const maxAge = 60 * 60 * 24 * 365;
+
+  document.cookie = `googtrans=${cookieValue};path=/;max-age=${maxAge}`;
+
+  if (window.location.hostname && window.location.hostname.includes(".")) {
+    document.cookie = `googtrans=${cookieValue};path=/;domain=.${window.location.hostname};max-age=${maxAge}`;
+  }
+}
+
+function updateLanguageButtons(language) {
+  document.querySelectorAll("[data-lang-switch]").forEach((button) => {
+    const isActive = button.dataset.langSwitch === language;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", isActive ? "true" : "false");
+  });
+}
+
+function initGoogleTranslateElement() {
+  const mount = document.getElementById("google_translate_element");
+
+  if (
+    !mount ||
+    mount.dataset.ready === "true" ||
+    !window.google ||
+    !window.google.translate ||
+    !window.google.translate.TranslateElement
+  ) {
+    return;
+  }
+
+  new window.google.translate.TranslateElement(
+    {
+      pageLanguage: SITE_SOURCE_LANGUAGE,
+      includedLanguages: "fr,en",
+      autoDisplay: false,
+      layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+    },
+    "google_translate_element"
+  );
+
+  mount.dataset.ready = "true";
+}
+
+function ensureGoogleTranslateScript() {
+  if (window.google && window.google.translate && window.google.translate.TranslateElement) {
+    initGoogleTranslateElement();
+    return Promise.resolve();
+  }
+
+  if (googleTranslatePromise) {
+    return googleTranslatePromise;
+  }
+
+  googleTranslatePromise = new Promise((resolve, reject) => {
+    window.googleTranslateElementInit = () => {
+      initGoogleTranslateElement();
+      resolve();
+    };
+
+    const existingScript = document.querySelector('script[data-google-translate="true"]');
+
+    if (existingScript) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    script.async = true;
+    script.defer = true;
+    script.dataset.googleTranslate = "true";
+    script.onerror = () => reject(new Error("Impossible de charger Google Translate."));
+    document.head.appendChild(script);
+  });
+
+  return googleTranslatePromise;
+}
+
+function waitForGoogleTranslateCombo() {
+  return new Promise((resolve, reject) => {
+    const deadline = Date.now() + 8000;
+
+    const tick = () => {
+      const combo = document.querySelector(".goog-te-combo");
+
+      if (combo) {
+        resolve(combo);
+        return;
+      }
+
+      if (Date.now() > deadline) {
+        reject(new Error("Le sélecteur Google Translate est introuvable."));
+        return;
+      }
+
+      window.setTimeout(tick, 120);
+    };
+
+    tick();
+  });
+}
+
+async function syncPreferredLanguage() {
+  const language = getPreferredLanguage();
+  updateLanguageButtons(language);
+  document.documentElement.setAttribute("lang", language);
+
+  if (language === SITE_SOURCE_LANGUAGE) {
+    return;
+  }
+
+  try {
+    setGoogleTranslateCookie(language);
+    await ensureGoogleTranslateScript();
+    const combo = await waitForGoogleTranslateCombo();
+
+    if (combo.value !== language) {
+      combo.value = language;
+      combo.dispatchEvent(new Event("change"));
+    }
+  } catch (error) {
+    console.warn("Impossible d'activer la version anglaise.", error);
+  }
+}
+
+function scheduleTranslationRefresh() {
+  if (getPreferredLanguage() === SITE_SOURCE_LANGUAGE) {
+    return;
+  }
+
+  window.clearTimeout(translationRefreshTimer);
+  translationRefreshTimer = window.setTimeout(() => {
+    syncPreferredLanguage();
+  }, 180);
+}
+
+function initLanguageSwitcher() {
+  const buttons = document.querySelectorAll("[data-lang-switch]");
+
+  if (!buttons.length) {
+    return;
+  }
+
+  buttons.forEach((button) => {
+    if (button.dataset.bound === "true") {
+      return;
+    }
+
+    button.dataset.bound = "true";
+    button.addEventListener("click", () => {
+      const language = SITE_SUPPORTED_LANGUAGES.has(button.dataset.langSwitch)
+        ? button.dataset.langSwitch
+        : SITE_SOURCE_LANGUAGE;
+
+      if (language === getPreferredLanguage()) {
+        return;
+      }
+
+      setPreferredLanguage(language);
+      setGoogleTranslateCookie(language);
+      window.location.reload();
+    });
+  });
+
+  updateLanguageButtons(getPreferredLanguage());
+  syncPreferredLanguage();
 }
 
 function formatEuroAmount(value) {
@@ -804,6 +1004,7 @@ function applySiteSettingsToDom(settings) {
   setHref("[data-site-instagram]", settings.instagram_url);
   setHref("[data-site-helloasso]", settings.helloasso_url);
   applyHomeHeroImage(settings.home_hero_image);
+  scheduleTranslationRefresh();
 }
 
 async function resolveUtilityAnnouncement(settings) {
@@ -909,6 +1110,7 @@ function renderHelloAssoWidget(settings) {
         )}" target="_blank" rel="noopener" class="btn btn-primary">Ouvrir HelloAsso <span class="arr">→</span></a>
       </div>
     `;
+    scheduleTranslationRefresh();
     return;
   }
 
@@ -925,6 +1127,7 @@ function renderHelloAssoWidget(settings) {
   `;
 
   bindHelloAssoResize();
+  scheduleTranslationRefresh();
 }
 
 async function hydrateMaps() {
@@ -948,6 +1151,8 @@ async function hydrateMaps() {
       link.setAttribute("href", config.googleMapsDirectionsUrl);
     }
   });
+
+  scheduleTranslationRefresh();
 }
 
 function updateContactFormStatus(form, type, message) {
@@ -1399,12 +1604,14 @@ async function renderHomeFeaturedEvent() {
 
   if (!featured) {
     mount.innerHTML = renderEmptyNote("Aucun événement à la une pour le moment.");
+    scheduleTranslationRefresh();
     return;
   }
 
   mount.innerHTML = renderHomeFeaturedEventBlock(featured);
   startCountdown(featured);
   registerReveals(mount);
+  scheduleTranslationRefresh();
 }
 
 async function renderStagesPage() {
@@ -1443,6 +1650,7 @@ async function renderStagesPage() {
 
   registerReveals(document);
   initStageFilters();
+  scheduleTranslationRefresh();
 }
 
 async function renderEvenementsPage() {
@@ -1484,6 +1692,7 @@ async function renderEvenementsPage() {
   }
 
   registerReveals(document);
+  scheduleTranslationRefresh();
 }
 
 function injectChrome(activeKey) {
@@ -1516,6 +1725,10 @@ function injectChrome(activeKey) {
           </ul>
         </nav>
         <div class="nav-actions">
+          <div class="lang-switch" aria-label="Version du site">
+            <button type="button" class="lang-btn" data-lang-switch="fr" aria-pressed="true">FR</button>
+            <button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false">EN</button>
+          </div>
           <a href="adherer.html" class="nav-cta" data-k="adherer">Adhérer <span class="arr">→</span></a>
           <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="site-menu">
             <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
@@ -1523,6 +1736,7 @@ function injectChrome(activeKey) {
         </div>
       </div>
     </header>
+    <div id="google_translate_element" class="google-translate-shell" aria-hidden="true"></div>
   `;
 
   const footerMarkup = `
@@ -1606,12 +1820,14 @@ function injectChrome(activeKey) {
   initNewsletterForm();
   initSmoothAnchors();
   initBurger();
+  initLanguageSwitcher();
 
   fetchSiteSettings()
     .then(async (settings) => {
       applySiteSettingsToDom(settings);
       renderHelloAssoWidget(settings);
       applyUtilityAnnouncement(await resolveUtilityAnnouncement(settings));
+      scheduleTranslationRefresh();
     })
     .catch((error) => {
       console.warn("Impossible d'appliquer les réglages du site.", error);
@@ -1636,6 +1852,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderEvenementsPage(),
       hydrateMaps()
     ]);
+    scheduleTranslationRefresh();
   } catch (error) {
     console.error(error);
   }

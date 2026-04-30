@@ -142,6 +142,37 @@ img { max-width: 100%; display: block; }
   gap: 12px;
   justify-self: end;
 }
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.72);
+}
+.lang-btn {
+  border: 0;
+  background: transparent;
+  color: var(--grey);
+  min-width: 38px;
+  min-height: 34px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s, color .25s;
+}
+.lang-btn:hover {
+  color: var(--ink);
+}
+.lang-btn.is-active {
+  background: var(--ink);
+  color: var(--cream);
+}
 .nav-cta {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 18px;
@@ -172,6 +203,33 @@ img { max-width: 100%; display: block; }
 .burger svg { display: block; }
 .burger svg path { transition: stroke .25s; }
 .burger:hover svg path { stroke: var(--terre); }
+.google-translate-shell {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.goog-te-banner-frame.skiptranslate,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+.goog-te-gadget,
+.goog-te-combo,
+.goog-logo-link {
+  font-size: 0 !important;
+}
+.goog-te-gadget span,
+.goog-te-gadget img {
+  display: none !important;
+}
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -421,6 +479,16 @@ footer {
     letter-spacing: 0.12em;
     white-space: nowrap;
   }
+  .lang-switch {
+    padding: 3px;
+  }
+  .lang-btn {
+    min-width: 34px;
+    min-height: 32px;
+    padding: 7px 8px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
   .page-hero-grid { grid-template-columns: 1fr; gap: 32px; }
   .foot-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
 }
@@ -643,6 +711,18 @@ footer {
 
   .nav-actions {
     gap: 8px;
+  }
+
+  .lang-switch {
+    gap: 2px;
+  }
+
+  .lang-btn {
+    min-width: 30px;
+    min-height: 30px;
+    padding: 6px 7px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
   }
 
   .nav-cta {
