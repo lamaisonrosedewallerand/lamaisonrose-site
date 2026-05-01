@@ -731,11 +731,13 @@ footer {
   }
 
   .page-hero {
-    padding: 56px 0 44px;
+    padding: 48px 0 42px;
   }
 
   .page-hero-grid {
-    gap: 24px;
+    width: 100%;
+    max-width: none;
+    gap: 20px;
     align-items: start;
     justify-items: start;
     padding: 0;
@@ -747,17 +749,18 @@ footer {
   .page-hero h1 {
     max-width: none;
     width: 100%;
-    font-size: clamp(34px, 7vw, 48px);
+    font-size: clamp(42px, 8vw, 58px);
     margin-bottom: 18px;
-    line-height: 0.96;
+    line-height: 0.98;
     letter-spacing: -0.02em;
+    overflow-wrap: normal;
   }
 
   .page-hero .lede {
-    max-width: 32ch;
+    max-width: min(100%, 36rem);
     width: 100%;
-    font-size: 16px;
-    line-height: 1.72;
+    font-size: clamp(18px, 3.6vw, 21px);
+    line-height: 1.56;
     text-wrap: pretty;
   }
 
@@ -877,47 +880,46 @@ footer {
   }
 
   .page-hero {
-    padding: 40px 0 48px;
+    padding: 32px 0 38px;
   }
 
   .page-hero .crumbs {
-    padding-left: 2px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     font-size: 10px;
     letter-spacing: 0.16em;
     line-height: 1.6;
   }
 
   .page-hero .lede {
-    max-width: var(--hero-mobile-lede, 22ch);
+    max-width: 100%;
     width: 100%;
     font-family: 'Inter', system-ui, sans-serif;
     font-style: normal;
-    font-size: 15px;
-    line-height: 1.76;
+    font-size: clamp(18px, 4.8vw, 20px);
+    line-height: 1.56;
     text-wrap: pretty;
-    margin-top: 2px;
+    margin-top: 0;
   }
 
   .page-hero h1 {
-    max-width: var(--hero-mobile-title, 10.2ch);
+    max-width: none;
     width: 100%;
-    font-size: var(--hero-mobile-title-size, clamp(30px, 10vw, 38px));
-    margin-bottom: 18px;
-    line-height: 0.99;
-    letter-spacing: -0.015em;
+    font-size: clamp(44px, 12vw, 54px);
+    margin-bottom: 16px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
   .page-hero-copy {
-    max-width: var(--hero-mobile-copy, 20rem);
+    max-width: none;
     width: 100%;
-    padding-right: 2px;
   }
 
   .page-hero-grid {
-    max-width: min(100%, var(--hero-mobile-grid-max, 22rem));
-    gap: 20px;
-    padding: 0 var(--hero-mobile-inner, 8px);
+    max-width: none;
+    gap: 16px;
+    padding: 0;
     background: transparent;
     border: 0;
     border-radius: 0;
