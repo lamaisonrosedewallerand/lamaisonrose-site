@@ -604,8 +604,8 @@ footer {
   }
 }
 @media (max-width: 600px) {
-  .wrap { padding: 0 22px; }
-  .nav-inner { padding: 16px 22px; }
+  .wrap { padding: 0 32px; }
+  .nav-inner { padding: 16px 32px; }
   .foot-grid { grid-template-columns: 1fr; }
   .foot-support {
     align-items: flex-start;
@@ -616,8 +616,8 @@ footer {
   display: flex;
   position: absolute;
   top: calc(100% + 10px);
-  left: 22px;
-  right: 22px;
+  left: 32px;
+  right: 32px;
   padding: 20px;
   flex-direction: column;
   align-items: flex-start;
@@ -806,11 +806,11 @@ footer {
   }
 
   .wrap {
-    padding: 0 28px;
+    padding: 0 32px;
   }
 
   .nav-inner {
-    padding: 14px 28px;
+    padding: 14px 32px;
     gap: 10px;
   }
 
@@ -891,21 +891,21 @@ footer {
   }
 
   .page-hero .lede {
-    max-width: none;
+    max-width: 30ch;
     width: 100%;
     font-family: 'Inter', system-ui, sans-serif;
     font-style: normal;
-    font-size: 15px;
-    line-height: 1.62;
+    font-size: 14.5px;
+    line-height: 1.68;
     text-wrap: pretty;
   }
 
   .page-hero h1 {
     max-width: none;
     width: 100%;
-    font-size: clamp(28px, 8.8vw, 34px);
+    font-size: clamp(25px, 7.8vw, 31px);
     margin-bottom: 14px;
-    line-height: 1.02;
+    line-height: 0.98;
     letter-spacing: -0.015em;
   }
 
@@ -923,7 +923,7 @@ footer {
   }
 
   .page-hero h1 .line + .line {
-    margin-top: 0.02em;
+    margin-top: 0.05em;
   }
 
   .sec-head {
@@ -932,8 +932,9 @@ footer {
   }
 
   .sec-head .right {
-    font-size: 15px;
-    line-height: 1.68;
+    max-width: 31ch;
+    font-size: 14.5px;
+    line-height: 1.72;
   }
 
   .foot-support {
