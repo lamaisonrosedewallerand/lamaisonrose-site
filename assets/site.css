@@ -211,10 +211,10 @@ body[data-lang="en"] .menu a {
   letter-spacing: 0.025em;
 }
 body[data-lang="en"] .page-hero-copy {
-  max-width: 18rem;
+  max-width: 27rem;
 }
 body[data-lang="en"] .page-hero .lede {
-  max-width: 31ch;
+  max-width: 37ch;
 }
 body[data-lang="en"] .hero h1 {
   max-width: 10.5ch;
@@ -765,6 +765,11 @@ footer {
     text-wrap: pretty;
   }
 
+  body[data-lang="en"] .page-hero-copy,
+  body[data-lang="en"] .page-hero .lede {
+    max-width: 100%;
+  }
+
   .sec-head {
     margin-bottom: 40px;
     gap: 20px;
@@ -796,11 +801,11 @@ footer {
   }
 
   .wrap {
-    padding: 0 26px;
+    padding: 0 28px;
   }
 
   .nav-inner {
-    padding: 14px 26px;
+    padding: 14px 28px;
     gap: 10px;
   }
 
@@ -900,6 +905,10 @@ footer {
   .page-hero-copy {
     max-width: none;
     width: 100%;
+  }
+
+  body[data-lang="en"] .page-hero h1 {
+    max-width: 9.6ch;
   }
 
   .page-hero-grid {
