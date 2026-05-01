@@ -877,10 +877,11 @@ footer {
   }
 
   .page-hero {
-    padding: 34px 0 42px;
+    padding: 40px 0 48px;
   }
 
   .page-hero .crumbs {
+    padding-left: 2px;
     margin-bottom: 16px;
     font-size: 10px;
     letter-spacing: 0.16em;
@@ -888,32 +889,35 @@ footer {
   }
 
   .page-hero .lede {
-    max-width: var(--measure-mobile);
+    max-width: var(--hero-mobile-lede, 22ch);
     width: 100%;
     font-family: 'Inter', system-ui, sans-serif;
     font-style: normal;
     font-size: 15px;
     line-height: 1.76;
     text-wrap: pretty;
+    margin-top: 2px;
   }
 
   .page-hero h1 {
-    max-width: none;
+    max-width: var(--hero-mobile-title, 10.2ch);
     width: 100%;
-    font-size: clamp(32px, 9.4vw, 40px);
-    margin-bottom: 16px;
-    line-height: 0.96;
+    font-size: var(--hero-mobile-title-size, clamp(30px, 10vw, 38px));
+    margin-bottom: 18px;
+    line-height: 0.99;
     letter-spacing: -0.015em;
   }
 
   .page-hero-copy {
-    max-width: 24rem;
+    max-width: var(--hero-mobile-copy, 20rem);
     width: 100%;
+    padding-right: 2px;
   }
 
   .page-hero-grid {
-    gap: 18px;
-    padding: 0;
+    max-width: min(100%, var(--hero-mobile-grid-max, 22rem));
+    gap: 20px;
+    padding: 0 var(--hero-mobile-inner, 8px);
     background: transparent;
     border: 0;
     border-radius: 0;
