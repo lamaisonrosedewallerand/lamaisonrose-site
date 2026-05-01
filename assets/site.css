@@ -216,6 +216,21 @@ body[data-lang="en"] .page-hero-copy {
 body[data-lang="en"] .page-hero .lede {
   max-width: 37ch;
 }
+body[data-lang="en"] .page-hero h1 {
+  max-width: 12ch;
+}
+body[data-lang="en"] .page-hero h1 .line {
+  display: inline;
+}
+body[data-lang="en"] .page-hero h1 .line::after {
+  content: " ";
+}
+body[data-lang="en"] .page-hero h1 .line:last-child::after {
+  content: "";
+}
+body[data-lang="en"] .page-hero h1 .line + .line {
+  margin-top: 0;
+}
 body[data-lang="en"] .hero h1 {
   max-width: 10.5ch;
 }
@@ -321,6 +336,9 @@ body[data-lang="en"] .hero-lede {
 .page-hero h1 .line {
   display: block;
   text-wrap: balance;
+}
+.page-hero h1 .line::after {
+  content: "";
 }
 .page-hero h1 .line + .line {
   margin-top: -0.04em;
@@ -919,8 +937,20 @@ footer {
     border-radius: 0;
   }
 
+  .page-hero h1 .line {
+    display: inline;
+  }
+
+  .page-hero h1 .line::after {
+    content: " ";
+  }
+
+  .page-hero h1 .line:last-child::after {
+    content: "";
+  }
+
   .page-hero h1 .line + .line {
-    margin-top: 0.04em;
+    margin-top: 0;
   }
 
   .sec-head {
