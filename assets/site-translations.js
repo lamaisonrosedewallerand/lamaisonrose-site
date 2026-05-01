@@ -285,7 +285,7 @@ const STATIC_PAGE_COPY = {
     nodes: [
       { selector: ".page-hero .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · Le Lieu", en: "<a href=\"index.html\">Home</a> · The House" } },
       { selector: ".page-hero h1", html: { fr: "<span class=\"line\">Un lieu historique</span><em class=\"line\">tourné vers l'avenir.</em>", en: "<span class=\"line\">A historic house</span><em class=\"line\">turned toward the future.</em>" } },
-      { selector: ".page-hero .lede", text: { fr: "À 30 km de Paris, la Maison Rose réactive l'ancien atelier d'été de Charles-François Daubigny, au cœur d'Auvers-sur-Oise.", en: "30 km from Paris, the Pink House brings Charles-François Daubigny's former summer studio back to life in the heart of Auvers-sur-Oise." } },
+      { selector: ".page-hero .lede", text: { fr: "À Auvers-sur-Oise, la Maison Rose redonne vie à l'ancien atelier d'été de Charles-François Daubigny.", en: "In Auvers-sur-Oise, the Pink House brings Charles-François Daubigny's former summer studio back to life." } },
       { selector: ".place-grid-large .pg:nth-child(1) .lbl", text: { fr: "Façade", en: "Front façade" } },
       { selector: ".place-grid-large .pg:nth-child(2) .lbl", text: { fr: "Exposition & accrochages", en: "Exhibitions & hanging" } },
       { selector: ".place-grid-large .pg:nth-child(3) .lbl", text: { fr: "Détails du lieu", en: "Architectural details" } },
@@ -342,7 +342,7 @@ const STATIC_PAGE_COPY = {
     nodes: [
       { selector: ".page-hero .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · Stages &amp; Cours", en: "<a href=\"index.html\">Home</a> · Workshops" } },
       { selector: ".page-hero h1", html: { fr: "<span class=\"line\">Apprendre <em>le geste,</em></span><span class=\"line\">l'encre, la presse.</span>", en: "<span class=\"line\">Learn <em>gesture,</em></span><span class=\"line\">ink and press.</span>" } },
-      { selector: ".page-hero .lede", text: { fr: "Stages de gravure, du premier geste à l'impression, selon les techniques et niveaux proposés.", en: "Small-group engraving workshops, from the first mark to the final print, across the techniques taught at the house." } },
+      { selector: ".page-hero .lede", text: { fr: "Stages de gravure en petit groupe, du premier geste à l'impression.", en: "Small-group engraving workshops, from the first mark to the final print." } },
       { selector: ".filters .filter:nth-child(1)", text: { fr: "Tous les stages", en: "All workshops" } },
       { selector: ".filters .filter:nth-child(2)", text: { fr: "Débutant", en: "Beginner" } },
       { selector: ".filters .filter:nth-child(3)", text: { fr: "Intermédiaire", en: "Intermediate" } },
@@ -373,7 +373,7 @@ const STATIC_PAGE_COPY = {
     nodes: [
       { selector: ".page-hero .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · Événements", en: "<a href=\"index.html\">Home</a> · Events" } },
       { selector: ".page-hero h1", html: { fr: "<span class=\"line\">Une saison</span><em class=\"line\">vivante.</em>", en: "<span class=\"line\">A lively</span><em class=\"line\">season.</em>" } },
-      { selector: ".page-hero .lede", text: { fr: "Expositions, conférences, concerts et ateliers composent une saison vivante tout au long de l'année.", en: "Exhibitions, talks, concerts and workshops shape a lively cultural season all year round." } },
+      { selector: ".page-hero .lede", text: { fr: "Expositions, concerts, rencontres et ateliers rythment la saison.", en: "Exhibitions, concerts, talks and workshops shape the season." } },
       { selector: "#events-featured .empty-note", text: { fr: "Chargement de l'événement à la une…", en: "Loading the featured event…" } },
       { selector: ".agenda .sec-head .left .num-tag", text: { fr: "— Agenda", en: "— Agenda" } },
       { selector: ".agenda .sec-head .left h2", html: { fr: "Tous les <span class=\"it\">rendez-vous.</span>", en: "All the <span class=\"it\">dates.</span>" } },
@@ -397,7 +397,7 @@ const STATIC_PAGE_COPY = {
     nodes: [
       { selector: ".page-hero .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · L'Association", en: "<a href=\"index.html\">Home</a> · The Association" } },
       { selector: ".page-hero h1", html: { fr: "<span class=\"line\">Une association</span><span class=\"line\">de <em>passionnés.</em></span>", en: "<span class=\"line\">An association</span><span class=\"line\">of <em>passionate people.</em></span>" } },
-      { selector: ".page-hero .lede", text: { fr: "Association loi 1901, la Maison Rose ouvre l'accès à la culture dans un lieu patrimonial d'Auvers-sur-Oise.", en: "The Pink House is a non-profit association opening culture to a wide audience in a remarkable heritage house in Auvers-sur-Oise." } },
+      { selector: ".page-hero .lede", text: { fr: "Association loi 1901, la Maison Rose ouvre l'accès à la culture à Auvers-sur-Oise.", en: "A non-profit association opening culture to a wide audience in Auvers-sur-Oise." } },
       { selector: ".miss .sec-head .left .num-tag", text: { fr: "— Nos missions", en: "— Our missions" } },
       { selector: ".miss .sec-head .left h2", html: { fr: "Trois <span class=\"it\">engagements.</span>", en: "Three lasting <span class=\"it\">commitments.</span>" } },
       { selector: ".miss .sec-head .right", text: { fr: "Faire vivre un patrimoine artistique vivant, accueillir la création contemporaine et transmettre des savoir-faire dans un lieu accessible et inspirant.", en: "Keeping artistic heritage alive, welcoming contemporary creation and passing on skills in a place that remains accessible and inspiring." } },
@@ -451,7 +451,7 @@ const STATIC_PAGE_COPY = {
     nodes: [
       { selector: ".page-hero .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · Contact", en: "<a href=\"index.html\">Home</a> · Contact" } },
       { selector: ".page-hero h1", html: { fr: "<span class=\"line\">Nous <em>écrire,</em></span><span class=\"line\">venir nous voir.</span>", en: "<span class=\"line\">Write to us,</span><span class=\"line\"><em>come and visit.</em></span>" } },
-      { selector: ".page-hero .lede", text: { fr: "Pour une résidence, un stage ou une visite, écrivez-nous ou appelez-nous. Le site transmet votre demande directement à l'association.", en: "For a residency, a workshop or a visit, write to us or call us. Your message goes straight to the association." } },
+      { selector: ".page-hero .lede", text: { fr: "Pour une résidence, un stage ou une visite, écrivez-nous ou appelez-nous directement.", en: "For a residency, workshop or visit, write to us or call directly." } },
       { selector: ".ct-form h3", html: { fr: "Envoyer un <em>message</em>", en: "Send a <em>message</em>" } },
       { selector: ".ct-form .lede", text: { fr: "Le formulaire envoie directement votre message à l'association depuis le site. Aucune donnée n'est stockée ici.", en: "This form sends your message directly to the association from the site. No data is stored here." } },
       { selector: "label[for=\"contact-first-name\"]", text: { fr: "Prénom *", en: "First name *" } },
