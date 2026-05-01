@@ -751,15 +751,17 @@ footer {
   }
 
   .page-hero h1 {
-    max-width: 11.5ch;
-    font-size: clamp(38px, 9.6vw, 58px);
+    max-width: none;
+    width: 100%;
+    font-size: clamp(34px, 8.8vw, 52px);
     margin-bottom: 16px;
     line-height: 0.94;
     letter-spacing: -0.022em;
   }
 
   .page-hero .lede {
-    max-width: 36ch;
+    max-width: none;
+    width: 100%;
     font-size: 15px;
     line-height: 1.68;
     text-wrap: pretty;
@@ -875,7 +877,7 @@ footer {
   }
 
   .page-hero {
-    padding: 28px 0 30px;
+    padding: 26px 0 28px;
   }
 
   .page-hero .crumbs {
@@ -886,20 +888,22 @@ footer {
   }
 
   .page-hero .lede {
-    max-width: 34ch;
+    max-width: none;
+    width: 100%;
     font-family: 'Inter', system-ui, sans-serif;
     font-style: normal;
-    font-size: 15px;
-    line-height: 1.68;
+    font-size: 16px;
+    line-height: 1.64;
     text-wrap: pretty;
   }
 
   .page-hero h1 {
-    max-width: 10.8ch;
-    font-size: clamp(38px, 11vw, 50px);
+    max-width: none;
+    width: 100%;
+    font-size: clamp(31px, 9.6vw, 40px);
     margin-bottom: 14px;
-    line-height: 0.94;
-    letter-spacing: -0.024em;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
   }
 
   .page-hero-copy {
@@ -907,12 +911,8 @@ footer {
     width: 100%;
   }
 
-  body[data-lang="en"] .page-hero h1 {
-    max-width: 9.6ch;
-  }
-
   .page-hero-grid {
-    gap: 18px;
+    gap: 16px;
     padding: 0;
     background: transparent;
     border: 0;
@@ -920,7 +920,7 @@ footer {
   }
 
   .page-hero h1 .line + .line {
-    margin-top: 0.02em;
+    margin-top: 0.04em;
   }
 
   .sec-head {
