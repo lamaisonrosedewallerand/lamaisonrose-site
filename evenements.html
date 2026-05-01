@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260501g" />
+<link rel="stylesheet" href="assets/site.css?v=20260501h" />
 <style>
   .feat { padding: 80px 0 120px; overflow: clip; }
   .feat-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
@@ -75,10 +75,10 @@
     .past-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 820px) {
-    .feat { padding: 56px 0 82px; }
-    .feat-grid { gap: 28px; }
+    .feat { padding: 68px 0 88px; }
+    .feat-grid { gap: 34px; }
     .feat-grid > .reveal:first-child {
-      padding: 18px 18px 20px;
+      padding: 24px 22px 26px;
       background: rgba(255,255,255,.72);
       border: 1px solid var(--line);
     }
@@ -97,7 +97,7 @@
     .feat-corner span strong { font-size: 18px; }
     .feat h2 {
       font-size: clamp(34px, 9vw, 48px);
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
     .feat-meta {
       display: grid;
@@ -113,15 +113,15 @@
       border-bottom: 1px solid var(--line);
     }
     .feat-meta > div:last-child { border-bottom: 0; }
-    .feat p { max-width: none; margin-bottom: 22px; font-size: 15px; }
-    .agenda { padding: 84px 0; }
+    .feat p { max-width: 30ch; margin-bottom: 24px; font-size: 15px; line-height: 1.7; }
+    .agenda { padding: 88px 0; }
     .ev-row {
       grid-template-columns: 72px 1fr;
       gap: 12px 16px;
-      padding: 16px;
+      padding: 18px;
       background: rgba(255,255,255,.68);
       border: 1px solid var(--line);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .ev-row p,
     .ev-row .ev-action {
@@ -132,18 +132,18 @@
     }
     .ev-row:hover {
       background: rgba(255,255,255,.68);
-      padding-left: 16px;
-      padding-right: 16px;
-      margin: 0 0 12px;
+      padding-left: 18px;
+      padding-right: 18px;
+      margin: 0 0 14px;
     }
     .ev-date .day { font-size: 38px; }
-    .past { padding: 82px 0; }
+    .past { padding: 88px 0; }
   }
   @media (max-width: 700px) {
-    .feat { padding: 54px 0 74px; }
-    .feat-grid { gap: 26px; }
+    .feat { padding: 58px 0 76px; }
+    .feat-grid { gap: 28px; }
     .feat-grid > .reveal:first-child {
-      padding: 20px 18px;
+      padding: 24px 22px;
     }
     .feat h2 {
       font-size: clamp(28px, 10vw, 38px);
@@ -151,7 +151,7 @@
       margin-bottom: 14px;
     }
     .feat-meta {
-      margin: 16px 0 18px;
+      margin: 18px 0 22px;
     }
     .feat-meta > div {
       padding: 10px 0;
@@ -166,8 +166,8 @@
     }
     .feat p {
       font-size: 14px;
-      line-height: 1.55;
-      margin-bottom: 18px;
+      line-height: 1.68;
+      margin-bottom: 20px;
     }
     .feat-visual {
       aspect-ratio: 6 / 5;
@@ -179,11 +179,11 @@
       font-size: 9px;
       letter-spacing: 0.28em;
     }
-    .agenda { padding: 68px 0; }
+    .agenda { padding: 72px 0; }
     .ev-row {
       grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 14px;
+      gap: 10px;
+      padding: 18px;
     }
     .ev-date {
       display: flex;
@@ -195,8 +195,8 @@
       grid-column: 1;
     }
     .ev-row:hover {
-      padding: 14px;
-      margin: 0 0 12px;
+      padding: 18px;
+      margin: 0 0 14px;
     }
     .ev-date .day { font-size: 32px; }
     .ev-date .mo { font-size: 12px; letter-spacing: 0.18em; }
@@ -208,8 +208,8 @@
     }
     .ev-row .ev-cat { font-size: 10px; letter-spacing: 0.14em; }
     .ev-row p {
-      font-size: 13px;
-      line-height: 1.55;
+      font-size: 14px;
+      line-height: 1.66;
     }
     .ev-row .ev-action {
       width: 100%;
@@ -221,7 +221,7 @@
     }
   }
   @media (max-width: 600px) {
-    .past-grid { grid-template-columns: 1fr; }
+    .past-grid { grid-template-columns: 1fr; gap: 22px; }
   }
 </style>
 </head>
@@ -274,7 +274,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260501d"></script>
+<script src="assets/site.bundle.js?v=20260501e"></script>
 <script>injectChrome('events');</script>
 </body>
 </html>

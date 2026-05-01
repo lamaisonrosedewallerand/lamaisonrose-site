@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260501g" />
+<link rel="stylesheet" href="assets/site.css?v=20260501h" />
 <style>
   .join { background: var(--rose); padding: 130px 0; position: relative; overflow: hidden; }
   .join::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(26,22,20,.025) 0 1px, transparent 1px 14px); pointer-events: none; }
@@ -202,12 +202,12 @@
     .why-img {
       aspect-ratio: 4 / 3;
     }
-    .checkout-api { padding-bottom: 84px; }
-    .helloasso-block { padding: 84px 0; }
+    .checkout-api { padding-bottom: 80px; }
+    .helloasso-block { padding: 80px 0; }
   }
   @media (max-width: 680px) {
-    .join { padding: 76px 0 82px; }
-    .join-head { margin-bottom: 42px; padding: 0 4px; }
+    .join { padding: 78px 0 84px; }
+    .join-head { margin-bottom: 40px; padding: 0; max-width: 32rem; margin-inline: auto; }
     .join-head .crumbs {
       margin-bottom: 12px;
       font-size: 10px;
@@ -221,23 +221,29 @@
       text-wrap: balance;
     }
     .join-head p {
-      max-width: 30rem;
+      max-width: 29ch;
       font-size: 18px;
-      line-height: 1.54;
+      line-height: 1.66;
       text-wrap: balance;
     }
+    .tiers { gap: 18px; }
     .tier { padding: 32px 24px; }
     .tier .price .a { font-size: clamp(28px, 10vw, 42px); }
-    .why { padding: 84px 0; }
+    .why { padding: 80px 0; }
+    .why p { line-height: 1.7; max-width: 31ch; }
     .why .pull { padding: 22px 0 22px 18px; font-size: 22px; }
-    .donate { padding: 82px 0; }
+    .donate { padding: 78px 0; }
+    .donate p { line-height: 1.7; max-width: 30ch; }
     .checkout-shell { padding: 12px; }
-    .checkout-form, .checkout-aside { padding: 22px 18px; }
+    .checkout-form, .checkout-aside { padding: 24px 22px; }
     .checkout-form .row2 { grid-template-columns: 1fr; gap: 16px; }
     .checkout-form .submit { align-items: stretch; }
+    .checkout-form .submit .btn { width: 100%; }
     .checkout-amounts .amt { width: calc(50% - 5px); justify-content: center; font-size: 19px; }
     .helloasso-shell { padding: 12px; }
-    .faq { padding: 88px 0; }
+    .helloasso-fallback { padding: 28px 22px; }
+    .helloasso-fallback p { line-height: 1.68; }
+    .faq { padding: 80px 0; }
     .faq-item .q { font-size: 20px; align-items: flex-start; gap: 14px; }
   }
 </style>
@@ -334,7 +340,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260501d"></script>
+<script src="assets/site.bundle.js?v=20260501e"></script>
 <script>
   injectChrome('adherer');
   // FAQ

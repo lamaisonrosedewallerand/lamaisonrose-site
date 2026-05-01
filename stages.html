@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260501g" />
+<link rel="stylesheet" href="assets/site.css?v=20260501h" />
 <style>
   .filters {
     display: flex; gap: 10px; flex-wrap: wrap;
@@ -89,9 +89,9 @@
     .filters {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      padding: 22px 0 24px;
-      margin-bottom: 30px;
+      gap: 12px;
+      padding: 30px 0 36px;
+      margin-bottom: 38px;
       overflow: visible;
       margin-left: 0;
       margin-right: 0;
@@ -101,17 +101,18 @@
     }
     .filter {
       min-width: 0;
+      min-height: 46px;
       padding: 12px 14px;
       font-size: 11px;
       letter-spacing: 0.08em;
       text-align: center;
     }
     .stage-grid {
-      gap: 26px;
-      padding-bottom: 42px;
+      gap: 32px;
+      padding-bottom: 56px;
     }
     .stage-card {
-      padding: 0 0 16px;
+      padding: 0 0 18px;
       border-bottom: 1px solid var(--line);
     }
     .stage-img {
@@ -129,9 +130,9 @@
       margin-bottom: 10px;
     }
     .stage-card p {
-      font-size: 13px;
-      line-height: 1.55;
-      margin-bottom: 14px;
+      font-size: 14px;
+      line-height: 1.66;
+      margin-bottom: 16px;
     }
     .stage-card .actions {
       flex-direction: column;
@@ -145,11 +146,19 @@
       text-align: center;
     }
     .info-block {
-      padding: 64px 0;
+      padding: 80px 0;
     }
     .info-block h2 {
-      margin-bottom: 28px;
+      margin-bottom: 34px;
       font-size: clamp(30px, 10vw, 42px);
+    }
+    .info-card {
+      padding: 18px 0 0;
+      border-top: 1px solid var(--line);
+    }
+    .info-card:first-child {
+      padding-top: 0;
+      border-top: 0;
     }
     .info-card h4 {
       font-size: 22px;
@@ -157,7 +166,7 @@
     }
     .info-card p {
       font-size: 14px;
-      line-height: 1.58;
+      line-height: 1.68;
     }
   }
   @media (max-width: 600px) {
@@ -229,7 +238,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260501d"></script>
+<script src="assets/site.bundle.js?v=20260501e"></script>
 <script>injectChrome('stages');</script>
 </body>
 </html>

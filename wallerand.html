@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260501g" />
+<link rel="stylesheet" href="assets/site.css?v=20260501h" />
 <style>
   .w-hero { background: var(--ink); color: #E8DDD0; padding: 100px 0 110px; position: relative; overflow: hidden; border-bottom: 0; }
   .w-hero::before { content: ""; position: absolute; top: -10%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(184,101,79,.18), transparent 70%); }
@@ -88,7 +88,7 @@
     .work--wide { grid-column: span 1; }
   }
   @media (max-width: 820px) {
-    .w-hero { padding: 64px 0 74px; }
+    .w-hero { padding: 72px 0 80px; }
     .w-hero-grid { gap: 28px; }
     .w-portrait {
       max-width: 420px;
@@ -100,15 +100,15 @@
       margin: 12px 0 18px;
     }
     .w-text p { font-size: 15px; line-height: 1.62; }
-    .bio { padding: 88px 0; }
+    .bio { padding: 80px 0; }
     .bio aside ul { display: grid; gap: 10px; }
     .bio aside li { padding: 12px 0; }
-    .works { padding: 88px 0; }
-    .works-intro { margin: -6px 0 30px; font-size: 15px; }
+    .works { padding: 80px 0; }
+    .works-intro { margin: -6px 0 32px; font-size: 15px; line-height: 1.7; max-width: 31ch; }
   }
   @media (max-width: 680px) {
     .w-hero {
-      padding: 56px 0 62px;
+      padding: 60px 0 68px;
     }
     .w-hero .crumbs {
       margin-bottom: 12px;
@@ -123,8 +123,9 @@
     }
     .w-text p {
       font-size: 15px;
-      line-height: 1.62;
+      line-height: 1.72;
       text-wrap: balance;
+      max-width: 30ch;
     }
     .w-text .yrs { margin-bottom: 18px; font-size: 18px; }
     .bio-grid { gap: 26px; }
@@ -134,7 +135,8 @@
     }
     .bio article p {
       font-size: 14px;
-      line-height: 1.62;
+      line-height: 1.7;
+      max-width: 31ch;
     }
     .w-text .yrs { margin-bottom: 18px; }
     .bio article .pull { padding: 22px 0 22px 18px; font-size: 22px; }
@@ -233,7 +235,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260501d"></script>
+<script src="assets/site.bundle.js?v=20260501e"></script>
 <script>injectChrome('wallerand');</script>
 </body>
 </html>
