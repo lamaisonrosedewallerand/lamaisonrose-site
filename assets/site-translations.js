@@ -562,6 +562,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".bio aside li:nth-child(4) a", text: { fr: "Transmission", en: "Transmission" } },
       { selector: ".bio aside li:nth-child(5) a", text: { fr: "Héritage", en: "Legacy" } },
       { selector: ".works h2", html: { fr: "Quelques <em>œuvres</em>.", en: "A few <em>works</em>." } },
+      { selector: ".works .works-intro", html: { fr: "Sélection de six œuvres directement issues du dossier d'archives de Wallerand, dont <em>Le Cri</em>, pour donner à voir une première matière du travail.", en: "A selection of six works taken directly from Wallerand's archive, including <em>The Scream</em>, offering a first glimpse into the body of work." } },
       { selector: ".works .work:nth-child(1) .cap", text: { fr: "Peintures", en: "Paintings" } },
       { selector: ".works .work:nth-child(2) .cap", text: { fr: "Photographies", en: "Photographs" } },
       { selector: ".works .work:nth-child(3) .cap", text: { fr: "Dessins", en: "Drawings" } },
