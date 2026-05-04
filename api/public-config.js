@@ -1,4 +1,4 @@
-const DEFAULT_QUERY = "59 rue Daubigny, 95430 Auvers-sur-Oise";
+const DEFAULT_QUERY = "La Maison Rose de Wallerand, Auvers-sur-Oise";
 
 function buildMapsUrls() {
   const query = encodeURIComponent(process.env.GOOGLE_MAPS_QUERY || DEFAULT_QUERY);

@@ -11,11 +11,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/site.css?v=20260504a" />
 <style>
-  .w-hero { background: var(--ink); color: #E8DDD0; padding: 100px 0 110px; position: relative; overflow: hidden; border-bottom: 0; }
+  .w-hero { background: var(--ink); color: #E8DDD0; padding: 86px 0 92px; position: relative; overflow: hidden; border-bottom: 0; }
   .w-hero::before { content: ""; position: absolute; top: -10%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(184,101,79,.18), transparent 70%); }
   .w-hero .crumbs { color: rgba(232,221,208,.6); margin-bottom: 22px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
   .w-hero .crumbs a:hover { color: var(--rose); }
-  .w-hero-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: center; position: relative; }
+  .w-hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 64px; align-items: center; position: relative; }
   .w-portrait { aspect-ratio: 3/4; position: relative; overflow: hidden; }
   .w-portrait .ph { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 35%, #C68876 0%, #6B4030 60%, #2B2522 100%); }
   .w-portrait .ph::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, rgba(0,0,0,0) 0 14%, rgba(0,0,0,.55) 50%), repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 4px); }
@@ -25,10 +25,29 @@
   .w-portrait .corner.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
   .w-text h1 { color: var(--cream); font-size: clamp(48px, 6vw, 90px); line-height: 1; margin: 16px 0 24px; }
   .w-text h1 em { color: var(--rose); font-style: italic; }
-  .w-text .yrs { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--rose); margin-bottom: 28px; }
-  .w-text p { color: rgba(232,221,208,.78); margin-bottom: 18px; max-width: 580px; }
+  .w-text .yrs { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--rose); margin-bottom: 18px; }
+  .w-scroll-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border: 1px solid rgba(232,221,208,.18);
+    background: rgba(255,255,255,.04);
+    color: rgba(232,221,208,.9);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .w-scroll-cue strong {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    color: var(--cream);
+  }
+  .w-scroll-cue:hover { border-color: rgba(232,221,208,.4); color: var(--cream); }
 
-  .bio { padding: 130px 0; }
+  .bio { padding: 112px 0 130px; }
   .bio-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; }
   .bio aside { position: sticky; top: 100px; align-self: start; }
   .bio aside h4 { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 18px; color: var(--terre); }
@@ -88,7 +107,7 @@
     .work--wide { grid-column: span 1; }
   }
   @media (max-width: 820px) {
-    .w-hero { padding: 72px 0 80px; }
+    .w-hero { padding: 60px 0 72px; }
     .w-hero-grid { gap: 28px; }
     .w-portrait {
       max-width: 420px;
@@ -99,7 +118,6 @@
       font-size: clamp(36px, 10vw, 52px);
       margin: 12px 0 18px;
     }
-    .w-text p { font-size: 15px; line-height: 1.62; }
     .bio { padding: 80px 0; }
     .bio aside ul { display: grid; gap: 10px; }
     .bio aside li { padding: 12px 0; }
@@ -108,7 +126,7 @@
   }
   @media (max-width: 680px) {
     .w-hero {
-      padding: 44px 0 56px;
+      padding: 38px 0 50px;
     }
     .w-hero .crumbs {
       margin-bottom: 12px;
@@ -120,12 +138,13 @@
       font-size: clamp(34px, 10.2vw, 44px);
       line-height: 1;
     }
-    .w-text p {
-      font-size: 15px;
-      line-height: 1.6;
-      max-width: 100%;
-    }
     .w-text .yrs { margin-bottom: 18px; font-size: 18px; }
+    .w-scroll-cue {
+      width: 100%;
+      justify-content: space-between;
+      padding: 12px 14px;
+      font-size: 11px;
+    }
     .bio-grid { gap: 26px; }
     .bio article h2 {
       font-size: clamp(28px, 9vw, 40px);
@@ -160,13 +179,13 @@
         <span class="num-tag" style="color: var(--rose);">— Hommage</span>
         <h1>Wallerand,<br/><em>un élan qui perdure.</em></h1>
         <p class="yrs">1964 — novembre 2021</p>
-        <p>De 2014 à 2021, Wallerand redonne à la Maison Rose sa vocation d'atelier et de foyer d'artistes. L'association poursuit aujourd'hui cet héritage vivant.</p>
+        <a href="#wallerand-histoire" class="w-scroll-cue">Faire défiler <strong>Découvrir l'histoire de Wallerand</strong></a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="bio">
+<section class="bio" id="wallerand-histoire">
   <div class="wrap">
     <div class="bio-grid">
       <aside class="reveal">

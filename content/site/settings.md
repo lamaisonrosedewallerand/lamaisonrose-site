@@ -4,12 +4,15 @@ announcement_text: ""
 announcement_link: ""
 contact_email: contact@lamaisonrosedewallerand.com
 contact_phone: +33 6 15 37 56 72
-address_line_1: 59 rue Daubigny
-address_line_2: 95430 Auvers-sur-Oise
+address_line_1: La Maison Rose de Wallerand
+address_line_2: 59 rue Daubigny · 95430 Auvers-sur-Oise
 instagram_url: https://www.instagram.com/lamaisonrosedewallerand/
 helloasso_url: https://www.helloasso.com/associations/la-maison-rose-de-wallerand
 helloasso_organization_slug: la-maison-rose-de-wallerand
 home_hero_image: /assets/uploads/maison-rose-facade-complete.jpg
+google_maps_embed_url: https://www.google.com/maps?q=La%20Maison%20Rose%20de%20Wallerand%2C%20Auvers-sur-Oise&output=embed
+google_maps_directions_url: https://www.google.com/maps/dir/?api=1&destination=La%20Maison%20Rose%20de%20Wallerand%2C%20Auvers-sur-Oise
+google_maps_place_url: https://www.google.com/maps/place/La+Maison+Rose+de+Wallerand/@49.0729009,2.1675315,17z/data=!3m1!4b1!4m6!3m5!1s0x47e65ee560d6e41f:0x49a3399293493d80!8m2!3d49.0728974!4d2.1701064!16s%2Fg%2F11fr3l6t3t
 helloasso_checkout_membership_item_name: Adhesion individuelle a La Maison Rose de Wallerand
 helloasso_checkout_membership_amount: 20
 helloasso_checkout_membership_couple_item_name: Adhesion couple a La Maison Rose de Wallerand

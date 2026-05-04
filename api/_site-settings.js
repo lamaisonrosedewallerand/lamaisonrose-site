@@ -1,6 +1,8 @@
 import { readFile } from "node:fs/promises";
 
 const DEFAULT_SITE_SETTINGS = {
+  address_line_1: "La Maison Rose de Wallerand",
+  address_line_2: "59 rue Daubigny · 95430 Auvers-sur-Oise",
   helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
   helloasso_organization_slug: "la-maison-rose-de-wallerand",
   helloasso_checkout_membership_item_name: "Adhesion individuelle a La Maison Rose de Wallerand",

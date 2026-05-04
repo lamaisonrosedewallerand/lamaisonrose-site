@@ -20,12 +20,18 @@ const DEFAULT_SITE_SETTINGS = {
   announcement_link: "",
   contact_email: "contact@lamaisonrosedewallerand.com",
   contact_phone: "+33 6 15 37 56 72",
-  address_line_1: "59 rue Daubigny",
-  address_line_2: "95430 Auvers-sur-Oise",
+  address_line_1: "La Maison Rose de Wallerand",
+  address_line_2: "59 rue Daubigny · 95430 Auvers-sur-Oise",
   instagram_url: "https://www.instagram.com/lamaisonrosedewallerand/",
   helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
   helloasso_organization_slug: "la-maison-rose-de-wallerand",
   home_hero_image: "/assets/uploads/maison-rose-facade-hero.jpg",
+  google_maps_embed_url:
+    "https://www.google.com/maps?q=La%20Maison%20Rose%20de%20Wallerand%2C%20Auvers-sur-Oise&output=embed",
+  google_maps_directions_url:
+    "https://www.google.com/maps/dir/?api=1&destination=La%20Maison%20Rose%20de%20Wallerand%2C%20Auvers-sur-Oise",
+  google_maps_place_url:
+    "https://www.google.com/maps/place/La+Maison+Rose+de+Wallerand/@49.0729009,2.1675315,17z/data=!3m1!4b1!4m6!3m5!1s0x47e65ee560d6e41f:0x49a3399293493d80!8m2!3d49.0728974!4d2.1701064!16s%2Fg%2F11fr3l6t3t",
   helloasso_checkout_membership_item_name: "Adhesion individuelle a La Maison Rose de Wallerand",
   helloasso_checkout_membership_amount: 20,
   helloasso_checkout_membership_couple_item_name: "Adhesion couple a La Maison Rose de Wallerand",
@@ -850,17 +856,35 @@ function formatPrice(value) {
   return String(value).replace(/\bEUR\b/gi, "€");
 }
 
+function shouldRenderStagePrice(stage, localizedPrice) {
+  if (stage.status === "passe") {
+    return false;
+  }
+
+  const normalized = normalizeText(localizedPrice);
+
+  return Boolean(
+    localizedPrice &&
+      normalized &&
+      normalized !== "sur demande" &&
+      normalized !== "on request" &&
+      normalized !== "info" &&
+      normalized !== "infos"
+  );
+}
+
 function renderStageMedia(stage, index) {
   const stageTitle = localizeField(stage, "title", "Stage");
-  const stageLevel = localizeStageLevel(stage.level, stage);
   const stagePrice = localizePrice(stage.price, stage);
+  const priceTag = shouldRenderStagePrice(stage, stagePrice)
+    ? `<span class="pricetag">${escapeHtml(formatPrice(stagePrice))}</span>`
+    : "";
 
   if (stage.image) {
     return `
       <div class="stage-img has-photo">
         ${imageTag(stage.image, stageTitle, "stage-photo")}
-        <span class="badge">${escapeHtml(stageLevel)}</span>
-        <span class="pricetag">${escapeHtml(formatPrice(stagePrice))}</span>
+        ${priceTag}
       </div>
     `;
   }
@@ -870,8 +894,7 @@ function renderStageMedia(stage, index) {
   return `
     <div class="stage-img">
       <div class="ph ${placeholder}"></div>
-      <span class="badge">${escapeHtml(stageLevel)}</span>
-      <span class="pricetag">${escapeHtml(formatPrice(stagePrice))}</span>
+      ${priceTag}
     </div>
   `;
 }
@@ -882,7 +905,7 @@ function renderStageAction(stage) {
   }
 
   if (stage.status === "passe") {
-    return `<span class="reg reg-disabled">${escapeHtml(t("stage.ended"))}</span>`;
+    return "";
   }
 
   if (stage.helloasso_url) {
@@ -897,10 +920,10 @@ function renderStageAction(stage) {
 function renderStageCard(stage, index, revealClass = "") {
   const cardClass = ["stage-card", "reveal", revealClass].filter(Boolean).join(" ");
   const localizedTitle = localizeField(stage, "title", "Stage");
-  const localizedLevel = localizeStageLevel(stage.level, stage);
   const localizedTime = localizeField(stage, "time", stage.time || stage.duration || "");
   const localizedDuration = localizeField(stage, "duration", stage.duration || "");
   const localizedSummary = localizeSummary(stage);
+  const stageAction = renderStageAction(stage);
   const meta = [
     formatLongDate(stage.date),
     localizedTime || localizedDuration || "",
@@ -917,12 +940,7 @@ function renderStageCard(stage, index, revealClass = "") {
         ${meta.map((entry) => `<span>${escapeHtml(entry)}</span>`).join("")}
       </div>
       <p>${escapeHtml(truncateText(localizedSummary, 170))}</p>
-      <div class="actions">
-        ${renderStageAction(stage)}
-        <span class="more">${escapeHtml(
-          stage.status === "passe" ? t("stage.archive") : localizedLevel || t("stage.allLevels")
-        )}</span>
-      </div>
+      ${stageAction ? `<div class="actions">${stageAction}</div>` : ""}
     </article>
   `;
 }
@@ -989,10 +1007,9 @@ function startCountdown(event) {
 
 function renderHomeFeaturedEventBlock(event) {
   const localizedTitle = localizeField(event, "title", t("event.generic"));
-  const localizedLocation = localizeField(event, "location", "La Maison Rose");
+  const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
   const localizedEntry = localizeEntry(event.entry, event);
   const localizedSummary = localizeSummary(event);
-  const monthBits = formatShortMonth(event.date);
 
   return `
     <div class="headline-grid">
@@ -1030,9 +1047,6 @@ function renderHomeFeaturedEventBlock(event) {
       </div>
       <div class="headline-visual reveal d2">
         ${renderFeatureVisual(event, "home")}
-        <div class="hl-corner"><span>${escapeHtml(monthBits.day)}<strong>${escapeHtml(
-          monthBits.month.split(" ")[0] || "date"
-        )}</strong>${escapeHtml(monthBits.month.split(" ")[1] || "")}</span></div>
       </div>
     </div>
   `;
@@ -1041,11 +1055,9 @@ function renderHomeFeaturedEventBlock(event) {
 function renderEventsFeaturedBlock(event) {
   const localizedTitle = localizeField(event, "title", t("event.generic"));
   const localizedTime = localizeField(event, "time", "À préciser");
-  const localizedLocation = localizeField(event, "location", "La Maison Rose");
+  const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
   const localizedEntry = localizeEntry(event.entry, event);
   const localizedSummary = localizeSummary(event);
-  const monthBits = formatShortMonth(event.date);
-
   return `
     <div class="feat-grid">
       <div class="reveal">
@@ -1079,9 +1091,6 @@ function renderEventsFeaturedBlock(event) {
       </div>
       <div class="feat-visual reveal d2">
         ${renderFeatureVisual(event, "events")}
-        <div class="feat-corner"><span>${escapeHtml(monthBits.day)}<strong>${escapeHtml(
-          monthBits.month.split(" ")[0] || "date"
-        )}</strong>${escapeHtml(monthBits.month.split(" ")[1] || "")}</span></div>
       </div>
     </div>
   `;
@@ -1091,7 +1100,7 @@ function renderEventRow(event) {
   const dateBits = formatShortMonth(event.date);
   const localizedTitle = localizeField(event, "title", t("event.generic"));
   const localizedEntry = localizeEntry(event.entry, event);
-  const localizedLocation = localizeField(event, "location", "Auvers-sur-Oise");
+  const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
   const localizedSummary = localizeSummary(event);
   const wrapperStart = event.helloasso_url
     ? `<a href="${escapeAttr(
@@ -1290,18 +1299,21 @@ async function hydrateMaps() {
   }
 
   const config = await fetchPublicConfig();
-  const src =
-    config.googleMapsEmbedUrl ||
-    "https://www.google.com/maps?q=59%20rue%20Daubigny%2C%2095430%20Auvers-sur-Oise&output=embed";
+  const src = config.googleMapsEmbedUrl || DEFAULT_SITE_SETTINGS.google_maps_embed_url;
 
   frames.forEach((frame) => {
     frame.setAttribute("src", src);
   });
 
   document.querySelectorAll("[data-map-directions]").forEach((link) => {
-    if (config.googleMapsDirectionsUrl) {
-      link.setAttribute("href", config.googleMapsDirectionsUrl);
-    }
+    link.setAttribute(
+      "href",
+      config.googleMapsDirectionsUrl || DEFAULT_SITE_SETTINGS.google_maps_directions_url
+    );
+  });
+
+  document.querySelectorAll("[data-map-place]").forEach((link) => {
+    link.setAttribute("href", config.googleMapsPlaceUrl || DEFAULT_SITE_SETTINGS.google_maps_place_url);
   });
 }
 
@@ -1916,8 +1928,8 @@ function injectChrome(activeKey) {
           <div>
             <h4>${escapeHtml(t("common.footer.visitTitle"))}</h4>
             <ul>
-              <li data-site-address-line-1>59 rue Daubigny</li>
-              <li data-site-address-line-2>95430 Auvers-sur-Oise</li>
+              <li data-site-address-line-1>La Maison Rose de Wallerand</li>
+              <li data-site-address-line-2>59 rue Daubigny · 95430 Auvers-sur-Oise</li>
               <li>${escapeHtml(t("common.footer.visitWhen"))}</li>
               <li><a href="contact.html">${escapeHtml(t("common.footer.directions"))}</a></li>
             </ul>
