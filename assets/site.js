@@ -559,6 +559,25 @@ function levelCategory(value) {
   return "all";
 }
 
+function stageCategory(item) {
+  const literal = localizeField(item, "discipline", "gravure");
+  const normalized = normalizeText(literal);
+
+  if (
+    normalized.includes("gravure") ||
+    normalized.includes("engraving") ||
+    normalized.includes("etch") ||
+    normalized.includes("lino") ||
+    normalized.includes("pointe") ||
+    normalized.includes("aquatinte") ||
+    normalized.includes("litho")
+  ) {
+    return "gravure";
+  }
+
+  return "other";
+}
+
 function chooseFeatured(items) {
   const upcoming = items
     .filter((item) => item.status !== "passe")
@@ -889,7 +908,7 @@ function renderStageCard(stage, index, revealClass = "") {
   ].filter(Boolean);
 
   return `
-    <article class="${cardClass}" data-cat="${levelCategory(localizedLevel || stage.level)}" data-status="${escapeAttr(
+    <article class="${cardClass}" data-cat="${stageCategory(stage)}" data-status="${escapeAttr(
       stage.status || ""
     )}">
       ${renderStageMedia(stage, index)}
@@ -1310,6 +1329,23 @@ function initContactForm() {
 
   form.dataset.bound = "true";
   let formEnabled = true;
+  const params = new URLSearchParams(window.location.search);
+  const presetTopic = (params.get("topic") || params.get("subject") || "").trim();
+  const topicField = form.querySelector("#contact-topic");
+
+  if (presetTopic && topicField) {
+    const matchingOption = [...topicField.options].find(
+      (option) => normalizeText(option.value || option.textContent || "") === normalizeText(presetTopic)
+    );
+
+    if (matchingOption) {
+      topicField.value = matchingOption.value;
+    } else {
+      const extraOption = new Option(presetTopic, presetTopic, true, true);
+      topicField.add(extraOption);
+      topicField.value = presetTopic;
+    }
+  }
 
   fetchPublicConfig()
     .then((config) => {

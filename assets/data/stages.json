@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-01T17:15:06.439Z",
+  "generatedAt": "2026-05-04T11:06:03.499Z",
   "count": 4,
   "items": [
     {
@@ -14,6 +14,8 @@
       "duration": "2 jours",
       "duration_en": "2 days",
       "places": "",
+      "discipline": "Gravure",
+      "discipline_en": "Engraving",
       "level": "Tous niveaux",
       "level_en": "All levels",
       "image": "assets/uploads/stage-linogravure-avril-2026.jpg",
@@ -37,6 +39,8 @@
       "duration": "2 jours",
       "duration_en": "2 days",
       "places": "",
+      "discipline": "Gravure",
+      "discipline_en": "Engraving",
       "level": "Tous niveaux",
       "level_en": "All levels",
       "image": "assets/uploads/stage-gravure-eau-forte-2026.jpg",
@@ -60,6 +64,8 @@
       "duration": "2 jours",
       "duration_en": "2 days",
       "places": "",
+      "discipline": "Gravure",
+      "discipline_en": "Engraving",
       "level": "Tous niveaux",
       "level_en": "All levels",
       "image": "assets/uploads/stage-gravure-pointe-seche-2026.png",
@@ -83,6 +89,8 @@
       "duration": "2 jours",
       "duration_en": "2 days",
       "places": "",
+      "discipline": "Gravure",
+      "discipline_en": "Engraving",
       "level": "Tous niveaux",
       "level_en": "All levels",
       "image": "assets/uploads/stage-linogravure-fevrier-2026.jpg",

@@ -4,14 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="google" content="notranslate" />
-<title>Événements — La Maison Rose de Wallerand</title>
-<meta name="description" content="Estampes Auversoises, vernissages, concerts au jardin, lectures et résidences. Le calendrier d'une saison à La Maison Rose." />
+<title>Agenda — La Maison Rose de Wallerand</title>
+<meta name="description" content="Expositions, concerts, conférences, ateliers et rendez-vous publics : l'agenda de la Maison Rose de Wallerand à Auvers-sur-Oise." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260501l" />
+<link rel="stylesheet" href="assets/site.css?v=20260504a" />
 <style>
-  .feat { padding: 80px 0 120px; overflow: clip; }
+  .feat { padding: 80px 0 120px; overflow: hidden; }
   .feat-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
   .feat .tag { display: inline-block; padding: 6px 14px; background: var(--terre); color: var(--cream); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 28px; }
   .feat h2 { font-size: clamp(48px, 6vw, 86px); line-height: 1; margin-bottom: 24px; }
@@ -29,6 +29,27 @@
   .feat-corner span strong { display: block; font-style: normal; font-size: 22px; }
 
   .agenda { padding: 110px 0; background: var(--cream-2); }
+  .artist-callout {
+    margin-top: 28px;
+    padding: 22px 24px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.82);
+    display: grid;
+    gap: 12px;
+  }
+  .artist-callout .ey {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--terre);
+  }
+  .artist-callout p {
+    margin: 0;
+    color: var(--grey);
+    font-size: 15px;
+    line-height: 1.68;
+    max-width: 56ch;
+  }
   .ev-row {
     display: grid; grid-template-columns: 140px 1fr 1fr auto;
     gap: 40px; align-items: center;
@@ -232,10 +253,10 @@
 <section class="page-hero wrap">
   <div class="page-hero-grid">
     <div class="reveal page-hero-copy">
-      <div class="crumbs"><a href="index.html">Accueil</a> · Événements</div>
-      <h1><span class="line">Une saison</span><em class="line">vivante.</em></h1>
+      <div class="crumbs"><a href="index.html">Accueil</a> · Agenda</div>
+      <h1><span class="line">Une programmation</span><em class="line">tout au long de l'année.</em></h1>
     </div>
-    <p class="lede reveal d2">Expositions, concerts, rencontres et ateliers rythment la saison.</p>
+    <p class="lede reveal d2">Pour tous : expositions, conférences, concerts, ateliers et rendez-vous publics font vivre la Maison Rose.</p>
   </div>
 </section>
 
@@ -251,6 +272,14 @@
         <h2>Tous les <span class="it">rendez-vous.</span></h2>
       </div>
       <p class="right reveal d2">Le programme rassemble les rendez-vous à venir et garde la mémoire des saisons précédentes au même endroit.</p>
+    </div>
+
+    <div class="artist-callout reveal d2">
+      <span class="ey">— Appels à artistes</span>
+      <p>Vous préparez une candidature pour une prochaine édition ou une exposition ? Un point d'entrée dédié permet de demander les informations d'inscription artiste et les modalités des appels à venir.</p>
+      <div class="cta-row">
+        <a href="contact.html?topic=Inscription%20exposition" class="btn btn-primary">Informations pour inscription artiste <span class="arr">→</span></a>
+      </div>
     </div>
 
     <div class="ev-list reveal" id="events-upcoming">
@@ -274,7 +303,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260501e"></script>
+<script src="assets/site.bundle.js?v=20260504a"></script>
 <script>injectChrome('events');</script>
 </body>
 </html>

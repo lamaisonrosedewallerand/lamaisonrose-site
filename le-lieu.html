@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/site.css?v=20260501l" />
+<link rel="stylesheet" href="assets/site.css?v=20260504a" />
 <style>
   .place-grid-large { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: 240px; gap: 14px; padding: 80px 0; }
   .pg { overflow: hidden; position: relative; }
@@ -49,7 +49,7 @@
   .visit-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center; }
   .visit-card { background: var(--cream-2); padding: 48px; }
   .visit-card h3 { font-size: 32px; margin-bottom: 24px; }
-  .visit-card .row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .visit-card .row { display: grid; grid-template-columns: minmax(92px, 112px) minmax(0, 1fr); gap: 12px 20px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
   .visit-card .row:last-child { border-bottom: 0; }
   .visit-card .row .k { color: var(--grey-soft); letter-spacing: 0.04em; }
   .visit-card .row .v { color: var(--ink); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; }
@@ -130,11 +130,11 @@
       <div class="crumbs"><a href="index.html">Accueil</a> · Le Lieu</div>
       <h1><span class="line">Un lieu historique</span><em class="line">tourné vers l'avenir.</em></h1>
     </div>
-    <p class="lede reveal d2">À Auvers-sur-Oise, la Maison Rose redonne vie à l'ancien atelier d'été de Charles-François Daubigny.</p>
+    <p class="lede reveal d2">À 30 km de Paris, la Maison Rose de Wallerand redonne vie à l'ancien atelier d'été de Charles-François Daubigny.</p>
   </div>
 </section>
 
-<section class="wrap">
+<section class="wrap" id="visite-photo">
   <div class="place-grid-large">
     <div class="pg t reveal"><div class="ph ph-1"></div><span class="lbl">Façade</span></div>
     <div class="pg reveal d2"><div class="ph ph-2"></div><span class="lbl">Exposition &amp; accrochages</span></div>
@@ -151,15 +151,18 @@
       <div class="history-text reveal">
         <span class="num-tag">— Histoire</span>
         <h2>De Daubigny à <em>la Maison Rose d'aujourd'hui.</em></h2>
-        <p>En 1870, Charles-François Daubigny achète la grange attenante à sa maison pour en faire un atelier d'été où il peut peindre de grandes toiles et recevoir ses amis artistes.</p>
-        <p>Depuis, le lieu a gardé sa vocation de foyer d'artistes. Plus récemment, Wallerand y a vécu de 2014 à 2021 et lui a redonné un nouvel élan de résidence, d'exposition et de transmission.</p>
+        <p>En 1870, Charles-François Daubigny achète la grange à côté de sa maison pour en faire un atelier d'été où il peut peindre de grands formats et recevoir ses amis artistes.</p>
+        <p>Depuis, le lieu garde sa vocation de foyer d'artistes. Wallerand y vit de 2014 à 2021 et redonne à la Maison Rose son élan de résidence, d'exposition et de transmission.</p>
       </div>
       <div class="timeline reveal d2">
-        <div class="ev"><span class="yr">1870</span><h4>Daubigny crée son atelier d'été</h4><p>La grange attenante devient un lieu de travail et d'accueil pour ses amis artistes.</p></div>
-        <div class="ev"><span class="yr">1886</span><h4>Karl Daubigny prolonge l'histoire</h4><p>L'atelier reste lié à la famille Daubigny jusqu'à la mort de Karl, fils du peintre.</p></div>
-        <div class="ev"><span class="yr">2014</span><h4>Wallerand s'y installe</h4><p>Le peintre réactive la vocation d'atelier et de foyer d'artistes du lieu.</p></div>
-        <div class="ev"><span class="yr">2021</span><h4>Un élan qui continue</h4><p>Après la disparition de Wallerand en novembre 2021, l'association poursuit son projet artistique.</p></div>
-        <div class="ev"><span class="yr">Aujourd'hui</span><h4>Résidences, stages et événements</h4><p>La Maison Rose accueille un public large et des artistes en résidence tout au long de l'année.</p></div>
+        <div class="ev"><span class="yr">1870</span><h4>Daubigny crée son atelier d'été</h4><p>La grange à côté de sa maison devient un lieu de travail et d'accueil pour ses amis artistes.</p></div>
+        <div class="ev"><span class="yr">1878</span><h4>Mort de Charles-François Daubigny</h4><p>Le peintre disparaît, mais l'atelier d'été reste lié à la vie artistique de la famille.</p></div>
+        <div class="ev"><span class="yr">1878–1886</span><h4>Karl Daubigny prolonge l'héritage</h4><p>Jusqu'à sa mort en 1886, Karl Daubigny poursuit à Auvers l'histoire familiale et l'ancrage artistique du lieu.</p></div>
+        <div class="ev"><span class="yr">2014</span><h4>Wallerand s'y installe</h4><p>Le peintre redonne au lieu sa vocation d'atelier, de résidence et de foyer d'artistes.</p></div>
+        <div class="ev"><span class="yr">2021</span><h4>Une disparition brutale</h4><p>Après le décès brutal de Wallerand en novembre 2021, la Maison Rose entre dans une nouvelle phase de transmission.</p></div>
+        <div class="ev"><span class="yr">2022</span><h4>Naissance de l'association</h4><p>L'association La Maison Rose de Wallerand est créée pour faire vivre le lieu et poursuivre son projet culturel.</p></div>
+        <div class="ev"><span class="yr">Nov. 2024</span><h4>Label Patrimoine Île-de-France</h4><p>La Maison Rose obtient le label Patrimoine Île-de-France, reconnaissance majeure de sa valeur patrimoniale.</p></div>
+        <div class="ev"><span class="yr">Aujourd'hui</span><h4>Résidences, cours et agenda</h4><p>La Maison Rose accueille un public large, des artistes en résidence et une programmation qui se déploie toute l'année.</p></div>
       </div>
     </div>
   </div>
@@ -178,17 +181,19 @@
       <div class="visit-card reveal">
         <h3>Informations pratiques</h3>
         <div class="row"><span class="k">Adresse</span><span class="v"><span data-site-address-line-1>59 rue Daubigny</span>, <span data-site-address-line-2>95430 Auvers-sur-Oise</span></span></div>
-        <div class="row"><span class="k">Lieu</span><span class="v">Ancien atelier d'été de Charles-François Daubigny</span></div>
-        <div class="row"><span class="k">Capacité</span><span class="v">3 chambres indépendantes, cuisine équipée, 2 salles de bain, patio</span></div>
+        <div class="row"><span class="k">Lieu</span><span class="v">La Maison Rose de Wallerand</span></div>
+        <div class="row"><span class="k">Capacité</span><span class="v">156 m² au total · 3 chambres · cuisine équipée · 2 salles de bain · patio</span></div>
         <div class="row"><span class="k">Atelier</span><span class="v">62 m² avec 6 m sous plafond</span></div>
-        <div class="row"><span class="k">Accès</span><span class="v">À 30 km de Paris, au cœur du centre historique d'Auvers-sur-Oise</span></div>
+        <div class="row"><span class="k">Accès</span><span class="v">10 minutes à pied depuis la gare d'Auvers-sur-Oise (Ligne H)</span></div>
+        <div class="row"><span class="k">Parking</span><span class="v">Gratuit à 100 m de la Maison</span></div>
+        <div class="row"><span class="k">Transports</span><span class="v"><a href="https://www.auvers-sur-oise.com/" target="_blank" rel="noopener">Voir les accès via l'Office de Tourisme d'Auvers-sur-Oise ↗</a></span></div>
         <div class="row"><span class="k">Visite</span><span class="v">Selon l'agenda et sur rendez-vous</span></div>
       </div>
       <div class="visit-text reveal d2">
         <h2>Un lieu atypique, <em>plein de charme.</em></h2>
         <p>La Maison Rose donne aux artistes la possibilité de résider, travailler et exposer dans un cadre historique chargé d'histoire et de vibrations artistiques.</p>
         <p>Le projet s'appuie sur ce lieu patrimonial pour mieux explorer le présent, accueillir de nouveaux artistes et proposer au public une programmation vivante.</p>
-        <a href="contact.html" class="btn btn-primary">Préparer une visite <span class="arr">→</span></a>
+        <a href="#visite-photo" class="btn btn-primary">Visiter la Maison <span class="arr">→</span></a>
       </div>
     </div>
     <div class="map-shell reveal">
@@ -217,7 +222,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260501e"></script>
+<script src="assets/site.bundle.js?v=20260504a"></script>
 <script>injectChrome('lieu');</script>
 </body>
 </html>

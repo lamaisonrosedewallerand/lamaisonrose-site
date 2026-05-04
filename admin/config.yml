@@ -63,6 +63,8 @@ collections:
       - { label: "Duree", name: "duration", widget: "string", required: false }
       - { label: "Duree (EN)", name: "duration_en", widget: "string", required: false }
       - { label: "Nombre de places", name: "places", widget: "number", value_type: "int", min: 0, required: false }
+      - { label: "Discipline", name: "discipline", widget: "string", required: false, hint: "Exemple : Gravure, Chant, Sculpture" }
+      - { label: "Discipline (EN)", name: "discipline_en", widget: "string", required: false }
       - { label: "Niveau", name: "level", widget: "string", required: false }
       - { label: "Niveau (EN)", name: "level_en", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image", required: false }

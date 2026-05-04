@@ -12,7 +12,7 @@
   --line: #DCD2C4;
   --max: 1320px;
   --gutter-mobile: 24px;
-  --measure-mobile: 30ch;
+  --measure-mobile: 36ch;
   --section-space-mobile: 80px;
   --home-hero-image: url("/assets/uploads/maison-rose-facade-hero.jpg");
 }
@@ -45,7 +45,6 @@ h1, h2, h3, h4, .serif {
   font-weight: 400;
   color: var(--ink);
   letter-spacing: -0.005em;
-  text-wrap: balance;
 }
 .hand { font-family: 'Caveat', cursive; }
 a { color: inherit; text-decoration: none; }
@@ -143,7 +142,7 @@ img { max-width: 100%; display: block; }
   white-space: nowrap;
   text-wrap: nowrap;
   line-height: 1.1;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.03em;
   color: var(--grey);
   position: relative;
@@ -210,12 +209,12 @@ body[data-lang="en"] .menu {
   gap: clamp(12px, 1.4vw, 20px);
 }
 body[data-lang="en"] .menu a {
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.025em;
 }
-body[data-lang="en"] .page-hero-copy { max-width: 46rem; }
-body[data-lang="en"] .page-hero .lede { max-width: 42rem; }
-body[data-lang="en"] .page-hero h1 { max-width: none; }
+body[data-lang="en"] .page-hero-copy { max-width: 50rem; }
+body[data-lang="en"] .page-hero .lede { max-width: 44rem; }
+body[data-lang="en"] .page-hero h1 { max-width: 16ch; }
 body[data-lang="en"] .hero h1 { max-width: 11.5ch; }
 body[data-lang="en"] .hero-sub,
 body[data-lang="en"] .hero-lede { max-width: 34rem; }
@@ -296,40 +295,40 @@ body[data-lang="en"] .hero-lede { max-width: 34rem; }
 
 /* ---------- Page hero (interior pages) ---------- */
 .page-hero {
-  padding: 90px 0 70px;
+  padding: 76px 0 58px;
   border-bottom: 1px solid var(--line);
   position: relative;
 }
 .page-hero .crumbs {
   font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--grey-soft); margin-bottom: 22px; line-height: 1.6;
+  color: var(--grey-soft); margin-bottom: 16px; line-height: 1.6;
 }
 .page-hero .crumbs a:hover { color: var(--terre); }
 .page-hero h1 {
-  font-size: clamp(48px, 6vw, 92px);
-  line-height: 0.98; letter-spacing: -0.015em;
-  margin-bottom: 24px; max-width: 14ch;
-  text-wrap: balance;
+  font-size: clamp(38px, 4.8vw, 72px);
+  line-height: 0.96; letter-spacing: -0.015em;
+  margin-bottom: 14px; max-width: 16ch;
 }
 .page-hero-copy {
-  max-width: 44rem;
+  max-width: 50rem;
 }
 .page-hero h1 .line {
   display: block;
-  text-wrap: balance;
 }
 .page-hero h1 .line + .line {
-  margin-top: -0.04em;
+  margin-top: 0.02em;
 }
 .page-hero h1 em { color: var(--terre); font-style: italic; font-weight: 300; }
 .page-hero .lede {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-style: italic;
-  color: var(--grey); max-width: 640px; line-height: 1.5;
-  text-wrap: balance;
+  font-size: 19px; font-style: italic;
+  color: var(--grey); max-width: 42rem; line-height: 1.48;
 }
 .page-hero-grid {
-  display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr); gap: 52px; align-items: start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.84fr);
+  gap: clamp(28px, 4vw, 44px);
+  align-items: start;
 }
 
 /* ---------- Footer ---------- */
@@ -731,13 +730,13 @@ footer {
   }
 
   .page-hero {
-    padding: 40px 0 38px;
+    padding: 30px 0 30px;
   }
 
   .page-hero-grid {
     width: 100%;
     max-width: none;
-    gap: 16px;
+    gap: 12px;
     align-items: start;
     justify-items: start;
     padding: 0;
@@ -746,22 +745,30 @@ footer {
     border: 0;
   }
 
+  .page-hero .crumbs {
+    margin-bottom: 12px;
+    font-size: 10px;
+    line-height: 1.45;
+    letter-spacing: 0.14em;
+  }
+
   .page-hero h1 {
     max-width: none;
     width: 100%;
-    font-size: clamp(32px, 6.4vw, 42px);
-    margin-bottom: 14px;
-    line-height: 1.03;
-    letter-spacing: -0.02em;
+    font-size: clamp(27px, 6vw, 34px);
+    margin-bottom: 8px;
+    line-height: 0.98;
+    letter-spacing: -0.015em;
     overflow-wrap: normal;
   }
 
   .page-hero .lede {
-    max-width: none;
     width: 100%;
-    font-size: clamp(15px, 2.6vw, 17px);
-    line-height: 1.62;
-    text-wrap: pretty;
+    max-width: 34ch;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 1.58;
   }
 
   body[data-lang="en"] .page-hero-copy,
@@ -771,7 +778,7 @@ footer {
 
   .sec-head {
     margin-bottom: 36px;
-    gap: 24px;
+    gap: 18px;
   }
 
   .sec-head .right {
@@ -788,8 +795,8 @@ footer {
   }
 
   .sec-head .left h2 {
-    font-size: clamp(26px, 6vw, 34px);
-    line-height: 1.08;
+    font-size: clamp(24px, 5.4vw, 30px);
+    line-height: 1.1;
   }
 
   footer {
@@ -882,35 +889,33 @@ footer {
   }
 
   .page-hero {
-    padding: 24px 0 30px;
+    padding: 24px 0 28px;
   }
 
   .page-hero .crumbs {
     margin-bottom: 10px;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    line-height: 1.6;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    line-height: 1.45;
   }
 
   .page-hero .lede {
-    max-width: 100%;
     width: 100%;
+    max-width: none;
     font-family: 'Inter', system-ui, sans-serif;
     font-style: normal;
-    font-size: clamp(14px, 3.9vw, 16px);
-    line-height: 1.62;
-    text-wrap: pretty;
+    font-size: 15px;
+    line-height: 1.58;
     margin-top: 0;
   }
 
   .page-hero h1 {
     max-width: none;
     width: 100%;
-    font-size: clamp(28px, 9vw, 36px);
-    margin-bottom: 12px;
-    line-height: 1.04;
-    letter-spacing: -0.018em;
-    text-wrap: balance;
+    font-size: clamp(24px, 8vw, 30px);
+    margin-bottom: 8px;
+    line-height: 1;
+    letter-spacing: -0.015em;
   }
 
   .page-hero-copy {
@@ -931,30 +936,26 @@ footer {
     display: inline;
   }
 
-  .page-hero h1 .line + .line {
-    margin-top: 0;
-  }
-
   .page-hero h1 .line + .line::before {
     content: " ";
   }
 
   .sec-head {
-    gap: 14px;
-    margin-bottom: 26px;
+    gap: 12px;
+    margin-bottom: 22px;
   }
 
   .sec-head .left h2 {
-    font-size: clamp(24px, 7.2vw, 30px);
-    line-height: 1.1;
-    margin-top: 6px;
+    font-size: clamp(23px, 6.8vw, 29px);
+    line-height: 1.08;
+    margin-top: 4px;
   }
 
   .sec-head .right {
     max-width: none;
     width: 100%;
-    font-size: 14px;
-    line-height: 1.62;
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .empty-note {
