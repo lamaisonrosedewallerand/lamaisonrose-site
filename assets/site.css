@@ -652,6 +652,19 @@ footer {
   content: none;
 }
 
+.headline-visual .hl-img.has-photo.mask-badge::after,
+.feat-visual .img.has-photo.mask-badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: var(--ink);
+  border-radius: 0 0 0 999px;
+  pointer-events: none;
+}
+
 .reg.reg-disabled {
   background: transparent;
   color: var(--grey-soft);
@@ -806,6 +819,14 @@ footer {
   .foot-grid {
     gap: 36px;
     margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 700px) {
+  .headline-visual .hl-img.has-photo.mask-badge::after,
+  .feat-visual .img.has-photo.mask-badge::after {
+    width: 88px;
+    height: 88px;
   }
 }
 

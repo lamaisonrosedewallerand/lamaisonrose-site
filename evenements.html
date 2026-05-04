@@ -24,9 +24,6 @@
   .feat-visual .img { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(184,101,79,.85), rgba(26,22,20,.85)), repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 2px, transparent 2px 9px); overflow: hidden; }
   .feat-visual .img::before { content: "Estampes"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); font-family: 'Cormorant Garamond', serif; font-size: clamp(60px, 9vw, 130px); font-style: italic; color: rgba(250,246,241,.92); line-height: 0.9; text-align: center; }
   .feat-visual .img::after { content: "Auversoises 2026"; position: absolute; bottom: 8%; left: 0; right: 0; text-align: center; font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--rose); font-family: 'Inter', sans-serif; }
-  .feat-corner { position: absolute; top: -14px; right: -14px; width: 110px; height: 110px; background: var(--rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: rotate(8deg); z-index: 2; text-align: center; }
-  .feat-corner span { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--ink); line-height: 1.2; }
-  .feat-corner span strong { display: block; font-style: normal; font-size: 22px; }
 
   .agenda { padding: 110px 0; background: var(--cream-2); }
   .artist-callout {
@@ -107,15 +104,6 @@
       order: initial;
       aspect-ratio: 5 / 4;
     }
-    .feat-corner {
-      top: 14px;
-      right: 14px;
-      width: 74px;
-      height: 74px;
-      transform: rotate(4deg);
-    }
-    .feat-corner span { font-size: 11px; }
-    .feat-corner span strong { font-size: 18px; }
     .feat h2 {
       font-size: clamp(34px, 9vw, 48px);
       margin-bottom: 20px;
@@ -256,7 +244,7 @@
       <div class="crumbs"><a href="index.html">Accueil</a> · Agenda</div>
       <h1><span class="line">Une programmation</span><em class="line">tout au long de l'année.</em></h1>
     </div>
-    <p class="lede reveal d2">Pour tous : expositions, conférences, concerts, ateliers et rendez-vous publics font vivre la Maison Rose.</p>
+    <p class="lede reveal d2">Pour tous : expositions, conférences, concerts, ateliers et rendez-vous publics font vivre la Maison Rose tout au long de l'année.</p>
   </div>
 </section>
 
@@ -271,7 +259,7 @@
         <span class="num-tag">— Agenda</span>
         <h2>Tous les <span class="it">rendez-vous.</span></h2>
       </div>
-      <p class="right reveal d2">Le programme rassemble les rendez-vous à venir et garde la mémoire des saisons précédentes au même endroit.</p>
+      <p class="right reveal d2">Le programme rassemble les rendez-vous à venir et garde la mémoire des événements passés au même endroit.</p>
     </div>
 
     <div class="artist-callout reveal d2">
@@ -292,9 +280,9 @@
   <div class="sec-head">
     <div class="left reveal">
       <span class="num-tag">— Archives</span>
-      <h2>Saisons <span class="it">passées.</span></h2>
+      <h2>Événements <span class="it">passés.</span></h2>
     </div>
-    <p class="right reveal d2">Quelques rendez-vous marquants déjà passés, conservés comme mémoire du lieu.</p>
+    <p class="right reveal d2">Expositions, concerts, conférences et résidences passés, conservés comme mémoire active de la Maison Rose.</p>
   </div>
   <div class="past-grid" id="events-past">
     <div class="empty-note">Chargement des archives…</div>

@@ -832,10 +832,12 @@ function initStageFilters() {
       const filter = button.dataset.f;
       grid.querySelectorAll(".stage-card").forEach((card) => {
         const category = card.dataset.cat || "all";
+        const level = card.dataset.level || "all";
         const status = card.dataset.status || "";
         const shouldShow =
           filter === "all" ||
           category === filter ||
+          level === filter ||
           (filter === "open" && status === "ouvert");
 
         card.style.display = shouldShow ? "" : "none";
@@ -918,7 +920,14 @@ function renderStageAction(stage) {
 }
 
 function renderStageCard(stage, index, revealClass = "") {
-  const cardClass = ["stage-card", "reveal", revealClass].filter(Boolean).join(" ");
+  const cardClass = [
+    "stage-card",
+    stage.status === "passe" ? "is-archived" : "",
+    "reveal",
+    revealClass
+  ]
+    .filter(Boolean)
+    .join(" ");
   const localizedTitle = localizeField(stage, "title", "Stage");
   const localizedTime = localizeField(stage, "time", stage.time || stage.duration || "");
   const localizedDuration = localizeField(stage, "duration", stage.duration || "");
@@ -933,6 +942,8 @@ function renderStageCard(stage, index, revealClass = "") {
   return `
     <article class="${cardClass}" data-cat="${stageCategory(stage)}" data-status="${escapeAttr(
       stage.status || ""
+    )}" data-level="${escapeAttr(
+      levelCategory(localizeField(stage, "level", stage.level || t("stage.allLevels")))
     )}">
       ${renderStageMedia(stage, index)}
       <h3>${escapeHtml(localizedTitle)}</h3>
@@ -953,10 +964,17 @@ function renderFeatureVisual(event, variant) {
   const imageClass = variant === "home" ? "hl-img" : "img";
   const defaultText = localizeField(event, "title", t("event.generic"));
   const defaultSubtitle = escapeHtml(defaultText);
+  const shouldMaskPoster = String(event.image || "").includes("les-estampes-auversoises-2026");
 
   if (event.image) {
+    const classNames = [imageClass, "has-photo"];
+
+    if (shouldMaskPoster) {
+      classNames.push("mask-badge");
+    }
+
     return `
-      <div class="${imageClass} has-photo">
+      <div class="${classNames.join(" ")}">
         ${imageTag(event.image, defaultText, "event-photo")}
       </div>
     `;
@@ -1867,6 +1885,32 @@ async function renderEvenementsPage() {
   }
 
   registerReveals(document);
+}
+
+function initVisitGallery() {
+  const strip = document.querySelector("[data-visit-strip]");
+  const controls = document.querySelectorAll("[data-visit-scroll]");
+
+  if (!strip || !controls.length) {
+    return;
+  }
+
+  controls.forEach((button) => {
+    if (button.dataset.bound === "true") {
+      return;
+    }
+
+    button.dataset.bound = "true";
+    button.addEventListener("click", () => {
+      const direction = Number(button.getAttribute("data-visit-scroll") || "0");
+      const amount = Math.max(strip.clientWidth * 0.82, 280);
+
+      strip.scrollBy({
+        left: amount * direction,
+        behavior: "smooth"
+      });
+    });
+  });
 }
 
 function injectChrome(activeKey) {
