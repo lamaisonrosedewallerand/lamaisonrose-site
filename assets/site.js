@@ -2006,29 +2006,6 @@ function initVisitGallery() {
     goTo
   };
 
-  const bindArrow = (node, direction) => {
-    if (!node || node.dataset.bound === "true") {
-      return;
-    }
-
-    node.dataset.bound = "true";
-
-    node.addEventListener("pointerup", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      goTo(currentIndex + direction);
-    });
-
-    node.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") {
-        return;
-      }
-
-      event.preventDefault();
-      goTo(currentIndex + direction);
-    });
-  };
-
   const bindControl = (node, callback) => {
     if (!node || node.dataset.bound === "true") {
       return;
@@ -2056,9 +2033,6 @@ function initVisitGallery() {
       { passive: false }
     );
   };
-
-  bindArrow(previous, -1);
-  bindArrow(next, 1);
 
   thumbs.forEach((thumb, thumbIndex) => {
     bindControl(thumb, () => goTo(thumbIndex));
