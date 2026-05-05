@@ -1953,12 +1953,15 @@ function initVisitGallery() {
   const next = document.querySelector("[data-visit-next]");
   const count = document.querySelector("[data-visit-count]");
   const progress = document.querySelector("[data-visit-progress]");
+  const stage = root?.querySelector(".visit-gallery-stage");
 
   if (!root || slides.length < 2 || !previous || !next) {
     return;
   }
 
   let currentIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const render = (index) => {
@@ -1992,32 +1995,44 @@ function initVisitGallery() {
     }, 4600);
   };
 
-  if (previous.dataset.bound !== "true") {
-    previous.dataset.bound = "true";
-    previous.addEventListener("click", () => {
-      render(currentIndex - 1);
-      restartAutoplay();
-    });
-  }
+  const goTo = (index) => {
+    render(index);
+    restartAutoplay();
+  };
 
-  if (next.dataset.bound !== "true") {
-    next.dataset.bound = "true";
-    next.addEventListener("click", () => {
-      render(currentIndex + 1);
-      restartAutoplay();
-    });
-  }
-
-  thumbs.forEach((thumb, thumbIndex) => {
-    if (thumb.dataset.bound === "true") {
+  const bindControl = (node, callback) => {
+    if (!node || node.dataset.bound === "true") {
       return;
     }
 
-    thumb.dataset.bound = "true";
-    thumb.addEventListener("click", () => {
-      render(thumbIndex);
-      restartAutoplay();
+    node.dataset.bound = "true";
+    let touchHandled = false;
+
+    node.addEventListener("click", () => {
+      if (touchHandled) {
+        touchHandled = false;
+        return;
+      }
+
+      callback();
     });
+
+    node.addEventListener(
+      "touchend",
+      (event) => {
+        event.preventDefault();
+        touchHandled = true;
+        callback();
+      },
+      { passive: false }
+    );
+  };
+
+  bindControl(previous, () => goTo(currentIndex - 1));
+  bindControl(next, () => goTo(currentIndex + 1));
+
+  thumbs.forEach((thumb, thumbIndex) => {
+    bindControl(thumb, () => goTo(thumbIndex));
   });
 
   if (root.dataset.bound !== "true") {
@@ -2033,6 +2048,49 @@ function initVisitGallery() {
         restartAutoplay();
       }
     });
+  }
+
+  if (stage && stage.dataset.bound !== "true") {
+    stage.dataset.bound = "true";
+    stage.addEventListener(
+      "touchstart",
+      (event) => {
+        const touch = event.changedTouches[0];
+
+        if (!touch) {
+          return;
+        }
+
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+      },
+      { passive: true }
+    );
+
+    stage.addEventListener(
+      "touchend",
+      (event) => {
+        const touch = event.changedTouches[0];
+
+        if (!touch) {
+          return;
+        }
+
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+
+        if (Math.abs(deltaX) < 36 || Math.abs(deltaX) < Math.abs(deltaY)) {
+          return;
+        }
+
+        if (deltaX < 0) {
+          goTo(currentIndex + 1);
+        } else {
+          goTo(currentIndex - 1);
+        }
+      },
+      { passive: true }
+    );
   }
 
   render(0);

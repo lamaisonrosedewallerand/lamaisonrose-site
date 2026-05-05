@@ -749,7 +749,7 @@ footer {
   }
 
   .page-hero {
-    padding: 30px 0 30px;
+    padding: 30px 20px 30px;
   }
 
   .page-hero-grid {
@@ -779,6 +779,8 @@ footer {
     line-height: 0.98;
     letter-spacing: -0.015em;
     overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
   }
 
   .page-hero .lede {
@@ -916,7 +918,7 @@ footer {
   }
 
   .page-hero {
-    padding: 24px 0 28px;
+    padding: 24px 20px 28px;
   }
 
   .page-hero .crumbs {
@@ -943,6 +945,9 @@ footer {
     margin-bottom: 8px;
     line-height: 1;
     letter-spacing: -0.015em;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
   }
 
   .page-hero-copy {
