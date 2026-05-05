@@ -1135,28 +1135,51 @@ function renderEventRow(event) {
   const localizedEntry = localizeEntry(event.entry, event);
   const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
   const localizedSummary = localizeSummary(event);
-  const wrapperStart = event.helloasso_url
-    ? `<a href="${escapeAttr(
-        event.helloasso_url
-      )}" target="_blank" rel="noopener" class="ev-row">`
-    : '<article class="ev-row">';
-  const wrapperEnd = event.helloasso_url ? "</a>" : "</article>";
   const category = localizedEntry
     ? `${localizedEntry} · ${localizedLocation}`
     : localizedLocation;
+  const localizedTime = localizeField(event, "time", getCurrentLanguage() === "en" ? "To be confirmed" : "À préciser");
+  const detailSummary = escapeHtml(localizedSummary || "");
+  const moreLabel = escapeHtml(
+    t("event.moreDetails", getCurrentLanguage() === "en" ? "More details" : "Plus d'informations")
+  );
+  const reserveLabel = event.helloasso_url
+    ? t("event.reserve")
+    : t("event.contact");
+  const reserveHref = event.helloasso_url ? event.helloasso_url : "contact.html";
+  const reserveAttrs = event.helloasso_url ? ' target="_blank" rel="noopener"' : "";
 
   return `
-    ${wrapperStart}
-      <div class="ev-date"><span class="day">${escapeHtml(
-        dateBits.day
-      )}</span><span class="mo">${escapeHtml(dateBits.month)}</span></div>
-      <div>
-        <h3>${escapeHtml(localizedTitle)}</h3>
-        <span class="ev-cat">${escapeHtml(category || t("event.generic"))}</span>
+    <details class="ev-row ev-row--details">
+      <summary class="ev-row-summary">
+        <div class="ev-date"><span class="day">${escapeHtml(
+          dateBits.day
+        )}</span><span class="mo">${escapeHtml(dateBits.month)}</span></div>
+        <div>
+          <h3>${escapeHtml(localizedTitle)}</h3>
+          <span class="ev-cat">${escapeHtml(category || t("event.generic"))}</span>
+        </div>
+        <p>${escapeHtml(truncateText(localizedSummary, 150))}</p>
+        <div class="ev-action"><span class="arrow">${moreLabel}</span><span class="plus" aria-hidden="true">+</span></div>
+      </summary>
+      <div class="ev-panel">
+        <div class="ev-panel-grid">
+          <div class="ev-panel-meta">
+            <div><span>${escapeHtml(t("event.date"))}</span><strong>${escapeHtml(formatLongDate(event.date))}</strong></div>
+            <div><span>${escapeHtml(t("event.schedule"))}</span><strong>${escapeHtml(localizedTime)}</strong></div>
+            <div><span>${escapeHtml(t("event.place"))}</span><strong>${escapeHtml(localizedLocation)}</strong></div>
+            <div><span>${escapeHtml(t("event.entry"))}</span><strong>${escapeHtml(localizedEntry || t("event.freeEntry"))}</strong></div>
+          </div>
+          <div class="ev-panel-copy">
+            <p>${detailSummary}</p>
+            <div class="cta-row">
+              <a href="${escapeAttr(reserveHref)}"${reserveAttrs} class="btn btn-primary">${reserveLabel}</a>
+              <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <p>${escapeHtml(truncateText(localizedSummary, 150))}</p>
-      <div class="ev-action"><span class="arrow">${event.helloasso_url ? "→" : "•"}</span></div>
-    ${wrapperEnd}
+    </details>
   `;
 }
 
@@ -1947,6 +1970,7 @@ async function renderEvenementsPage() {
 
 function initVisitGallery() {
   const root = document.querySelector("[data-visit-carousel]");
+  const track = root?.querySelector("[data-visit-track]");
   const slides = [...document.querySelectorAll("[data-visit-slide]")];
   const thumbs = [...document.querySelectorAll("[data-visit-thumb]")];
   const previous = document.querySelector("[data-visit-prev]");
@@ -1955,7 +1979,7 @@ function initVisitGallery() {
   const progress = document.querySelector("[data-visit-progress]");
   const stage = root?.querySelector(".visit-gallery-stage");
 
-  if (!root || slides.length < 2 || !previous || !next) {
+  if (!root || !track || slides.length < 2 || !previous || !next) {
     return;
   }
 
@@ -1966,8 +1990,10 @@ function initVisitGallery() {
 
   const render = (index) => {
     currentIndex = (index + slides.length) % slides.length;
+    track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
     slides.forEach((slide, slideIndex) => {
       slide.classList.toggle("is-active", slideIndex === currentIndex);
+      slide.setAttribute("aria-hidden", slideIndex === currentIndex ? "false" : "true");
     });
     thumbs.forEach((thumb, thumbIndex) => {
       thumb.classList.toggle("is-active", thumbIndex === currentIndex);

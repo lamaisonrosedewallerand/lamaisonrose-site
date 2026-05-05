@@ -174,18 +174,18 @@
     -webkit-user-select: none;
     user-select: none;
   }
-  .visit-gallery-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transform: scale(1.025);
-    transition: opacity .45s ease, transform .9s ease;
-    pointer-events: none;
+  .visit-gallery-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform .55s cubic-bezier(.22, 1, .36, 1);
+    will-change: transform;
   }
-  .visit-gallery-slide.is-active {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
+  .visit-gallery-slide {
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
   }
   .visit-gallery-slide img {
     width: 100%;
@@ -458,36 +458,38 @@
         <div class="visit-gallery-stage">
           <button type="button" class="visit-gallery-btn visit-gallery-btn--prev" data-visit-prev aria-label="Voir les photos précédentes" onclick="window.maisonRoseVisitGallery && window.maisonRoseVisitGallery.prev(); return false;">←</button>
           <button type="button" class="visit-gallery-btn visit-gallery-btn--next" data-visit-next aria-label="Voir les photos suivantes" onclick="window.maisonRoseVisitGallery && window.maisonRoseVisitGallery.next(); return false;">→</button>
-          <figure class="visit-gallery-slide is-active reveal" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-7.jpg" alt="Porte rouge et roses de la Maison Rose de Wallerand" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal d2" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-2.jpg" alt="Vue intérieure vers la cour de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal d3" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-5.jpg" alt="Jardin intérieur et miroir de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-10.jpg" alt="Grande pièce de vie de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal d2" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-11.jpg" alt="Vue sur la mezzanine de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal d3" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-9.jpg" alt="Salon et table d'accueil de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-12.jpg" alt="Pièce jaune de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal d2" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-13.jpg" alt="Escalier et circulation intérieure de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal d3" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-14.jpg" alt="Salle d'eau de la Maison Rose" loading="lazy" />
-          </figure>
-          <figure class="visit-gallery-slide reveal" data-visit-slide>
-            <img src="/assets/uploads/maison-rose-visite-diapo-15.jpg" alt="Chambre de résidence de la Maison Rose" loading="lazy" />
-          </figure>
+          <div class="visit-gallery-track" data-visit-track>
+            <figure class="visit-gallery-slide is-active reveal" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-7.jpg" alt="Porte rouge et roses de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d2" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-2.jpg" alt="Vue intérieure vers la cour de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d3" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-5.jpg" alt="Jardin intérieur et miroir de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-10.jpg" alt="Grande pièce de vie de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d2" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-11.jpg" alt="Vue sur la mezzanine de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d3" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-9.jpg" alt="Salon et table d'accueil de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-12.jpg" alt="Pièce jaune de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d2" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-13.jpg" alt="Escalier et circulation intérieure de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d3" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-14.jpg" alt="Salle d'eau de la Maison Rose" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-visite-diapo-15.jpg" alt="Chambre de résidence de la Maison Rose" loading="lazy" />
+            </figure>
+          </div>
         </div>
         <div class="visit-gallery-thumbs" data-visit-thumbs>
           <button type="button" class="visit-thumb is-active" data-visit-thumb="0" aria-label="Voir la porte rouge et les roses">
@@ -549,7 +551,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260505f"></script>
+<script src="assets/site.bundle.js?v=20260505g"></script>
 <script>injectChrome('lieu'); initVisitGallery();</script>
 </body>
 </html>
