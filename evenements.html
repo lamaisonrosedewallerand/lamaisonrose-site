@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260505c" />
+<link rel="stylesheet" href="assets/site.css?v=20260506a" />
 <style>
   .feat { padding: 80px 0 120px; overflow: hidden; }
   .feat-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
@@ -52,6 +52,7 @@
   .ev-row {
     border-bottom: 1px solid var(--line);
     transition: background .3s;
+    overflow: hidden;
   }
   .ev-row--details[open] {
     background: rgba(255,255,255,.62);
@@ -64,15 +65,13 @@
     align-items: center;
     padding: 32px 0;
     cursor: pointer;
-    transition: background .3s;
+    transition: background .3s, box-shadow .3s;
   }
   .ev-row-summary::-webkit-details-marker { display: none; }
   .ev-row:hover .ev-row-summary,
   .ev-row[open] .ev-row-summary {
     background: rgba(255,255,255,.5);
-    padding-left: 16px;
-    padding-right: 16px;
-    margin: 0 -16px;
+    box-shadow: inset 0 0 0 1px rgba(220,210,196,.82);
   }
   .ev-date { font-family: 'Cormorant Garamond', serif; }
   .ev-date .day { font-size: 56px; line-height: 0.9; color: var(--terre); display: block; }
@@ -140,6 +139,10 @@
     font-size: 15px;
     line-height: 1.75;
     max-width: 56ch;
+  }
+  .ev-panel-copy {
+    display: flex;
+    align-items: flex-start;
   }
 
   .past { padding: 100px 0; }
@@ -279,6 +282,9 @@
       letter-spacing: 0.28em;
     }
     .agenda { padding: 72px 0; }
+    .agenda .sec-head {
+      margin-bottom: 30px;
+    }
     .ev-row-summary {
       grid-template-columns: 1fr;
       gap: 10px;
@@ -315,7 +321,27 @@
       height: 40px;
     }
     .ev-panel-meta strong { font-size: 18px; }
-    .ev-panel-copy p { font-size: 14px; line-height: 1.7; }
+    .ev-panel-copy {
+      width: 100%;
+    }
+    .past {
+      padding: 82px 0 92px;
+    }
+    .past .sec-head {
+      margin-bottom: 28px;
+      gap: 14px;
+    }
+    .past .sec-head .right {
+      font-size: 14px;
+      line-height: 1.68;
+    }
+    .past-card .img {
+      margin-bottom: 16px;
+    }
+    .past-card h4 {
+      font-size: 24px;
+      line-height: 1.08;
+    }
   }
   @media (max-width: 600px) {
     .past-grid { grid-template-columns: 1fr; gap: 22px; }
@@ -379,7 +405,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260505g"></script>
+<script src="assets/site.bundle.js?v=20260506a"></script>
 <script>injectChrome('events');</script>
 </body>
 </html>

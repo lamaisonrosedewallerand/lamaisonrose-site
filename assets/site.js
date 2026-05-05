@@ -1139,7 +1139,6 @@ function renderEventRow(event) {
     ? `${localizedEntry} · ${localizedLocation}`
     : localizedLocation;
   const localizedTime = localizeField(event, "time", getCurrentLanguage() === "en" ? "To be confirmed" : "À préciser");
-  const detailSummary = escapeHtml(localizedSummary || "");
   const moreLabel = escapeHtml(
     t("event.moreDetails", getCurrentLanguage() === "en" ? "More details" : "Plus d'informations")
   );
@@ -1165,13 +1164,11 @@ function renderEventRow(event) {
       <div class="ev-panel">
         <div class="ev-panel-grid">
           <div class="ev-panel-meta">
-            <div><span>${escapeHtml(t("event.date"))}</span><strong>${escapeHtml(formatLongDate(event.date))}</strong></div>
             <div><span>${escapeHtml(t("event.schedule"))}</span><strong>${escapeHtml(localizedTime)}</strong></div>
             <div><span>${escapeHtml(t("event.place"))}</span><strong>${escapeHtml(localizedLocation)}</strong></div>
             <div><span>${escapeHtml(t("event.entry"))}</span><strong>${escapeHtml(localizedEntry || t("event.freeEntry"))}</strong></div>
           </div>
           <div class="ev-panel-copy">
-            <p>${detailSummary}</p>
             <div class="cta-row">
               <a href="${escapeAttr(reserveHref)}"${reserveAttrs} class="btn btn-primary">${reserveLabel}</a>
               <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
