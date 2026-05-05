@@ -2,11 +2,13 @@
 announcement_mode: auto
 announcement_text: ""
 announcement_link: ""
+announcement_rotation_seconds: 6
 contact_email: contact@lamaisonrosedewallerand.com
 contact_phone: +33 6 15 37 56 72
 address_line_1: La Maison Rose de Wallerand
 address_line_2: 59 rue Daubigny · 95430 Auvers-sur-Oise
 instagram_url: https://www.instagram.com/lamaisonrosedewallerand/
+facebook_url: https://www.facebook.com/profile.php?id=100089640846307
 helloasso_url: https://www.helloasso.com/associations/la-maison-rose-de-wallerand
 helloasso_organization_slug: la-maison-rose-de-wallerand
 home_hero_image: /assets/uploads/maison-rose-facade-complete.jpg

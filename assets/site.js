@@ -18,11 +18,13 @@ const DEFAULT_SITE_SETTINGS = {
   announcement_mode: "auto",
   announcement_text: "",
   announcement_link: "",
+  announcement_rotation_seconds: 6,
   contact_email: "contact@lamaisonrosedewallerand.com",
   contact_phone: "+33 6 15 37 56 72",
   address_line_1: "La Maison Rose de Wallerand",
   address_line_2: "59 rue Daubigny · 95430 Auvers-sur-Oise",
   instagram_url: "https://www.instagram.com/lamaisonrosedewallerand/",
+  facebook_url: "https://www.facebook.com/profile.php?id=100089640846307",
   helloasso_url: "https://www.helloasso.com/associations/la-maison-rose-de-wallerand",
   helloasso_organization_slug: "la-maison-rose-de-wallerand",
   home_hero_image: "/assets/uploads/maison-rose-facade-hero.jpg",
@@ -1197,6 +1199,7 @@ function applySiteSettingsToDom(settings) {
     settings.contact_phone
   );
   setHref("[data-site-instagram]", settings.instagram_url);
+  setHref("[data-site-facebook]", settings.facebook_url);
   setHref("[data-site-helloasso]", settings.helloasso_url);
   applyHomeHeroImage(settings.home_hero_image);
 }
@@ -1248,7 +1251,7 @@ async function resolveUtilityAnnouncement(settings) {
   });
 }
 
-function applyUtilityAnnouncement(announcements) {
+function applyUtilityAnnouncement(announcements, rotationSeconds = 6) {
   const util = document.getElementById("site-util");
   const link = document.getElementById("site-util-link");
   const prefix = document.getElementById("site-util-prefix");
@@ -1266,6 +1269,7 @@ function applyUtilityAnnouncement(announcements) {
     : announcements
       ? [announcements]
       : [];
+  const intervalMs = Math.max(3, Number(rotationSeconds) || 6) * 1000;
 
   if (!items.length) {
     util.hidden = true;
@@ -1302,7 +1306,7 @@ function applyUtilityAnnouncement(announcements) {
       applyItem(items[currentIndex]);
       util.classList.remove("is-changing");
     }, 210);
-  }, 5000);
+  }, intervalMs);
 }
 
 function bindHelloAssoResize() {
@@ -2106,6 +2110,7 @@ function injectChrome(activeKey) {
               <li><a href="mailto:contact@lamaisonrosedewallerand.com" data-site-email>contact@lamaisonrosedewallerand.com</a></li>
               <li><a href="tel:+33615375672" data-site-phone>+33 6 15 37 56 72</a></li>
               <li><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener" data-site-instagram>@lamaisonrosedewallerand</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=100089640846307" target="_blank" rel="noopener" data-site-facebook>Facebook</a></li>
               <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" data-site-helloasso>${escapeHtml(t("common.footer.helloasso"))}</a></li>
             </ul>
           </div>
@@ -2170,7 +2175,10 @@ function injectChrome(activeKey) {
     .then(async (settings) => {
       applySiteSettingsToDom(settings);
       renderHelloAssoWidget(settings);
-      applyUtilityAnnouncement(await resolveUtilityAnnouncement(settings));
+      applyUtilityAnnouncement(
+        await resolveUtilityAnnouncement(settings),
+        settings.announcement_rotation_seconds
+      );
     })
     .catch((error) => {
       console.warn("Impossible d'appliquer les réglages du site.", error);

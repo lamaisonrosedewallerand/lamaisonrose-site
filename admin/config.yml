@@ -26,11 +26,13 @@ collections:
             default: "auto"
           - { label: "Texte annonce personnalisee", name: "announcement_text", widget: "string", required: false }
           - { label: "Lien annonce personnalisee", name: "announcement_link", widget: "string", required: false }
+          - { label: "Rotation bandeau header (secondes)", name: "announcement_rotation_seconds", widget: "number", value_type: "int", min: 3, required: false, default: 6 }
           - { label: "E-mail principal", name: "contact_email", widget: "string" }
           - { label: "Telephone", name: "contact_phone", widget: "string" }
           - { label: "Adresse ligne 1", name: "address_line_1", widget: "string" }
           - { label: "Adresse ligne 2", name: "address_line_2", widget: "string" }
           - { label: "Lien Instagram", name: "instagram_url", widget: "string", required: false }
+          - { label: "Lien Facebook", name: "facebook_url", widget: "string", required: false }
           - { label: "Lien HelloAsso principal", name: "helloasso_url", widget: "string", required: false }
           - { label: "Slug organisation HelloAsso", name: "helloasso_organization_slug", widget: "string", required: false, hint: "Exemple : la-maison-rose-de-wallerand" }
           - { label: "Image hero accueil", name: "home_hero_image", widget: "image", required: false }
