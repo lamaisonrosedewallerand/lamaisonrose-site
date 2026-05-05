@@ -55,6 +55,9 @@ let revealObserver;
 let countdownTimer;
 let publicConfigPromise;
 let helloAssoResizeBound = false;
+let utilityRotationTimer;
+let utilityTransitionTimer;
+let visitGalleryTimer;
 
 function expireCookie(name, domain = "") {
   const domainSegment = domain ? ` domain=${domain};` : "";
@@ -812,38 +815,48 @@ function initBurger() {
 }
 
 function initStageFilters() {
-  const buttons = [...document.querySelectorAll(".filter[data-f]")];
+  const panel = document.querySelector(".filters");
+  const disciplineSelect = document.querySelector('[data-stage-filter="discipline"]');
+  const levelSelect = document.querySelector('[data-stage-filter="level"]');
   const grid = document.getElementById("stages-grid");
 
-  if (!buttons.length || !grid) {
+  if (!panel || !disciplineSelect || !levelSelect || !grid) {
     return;
   }
 
-  buttons.forEach((button) => {
-    if (button.dataset.bound === "true") {
+  const cards = [...grid.querySelectorAll(".stage-card")];
+
+  if (!cards.length) {
+    panel.hidden = true;
+    return;
+  }
+
+  panel.hidden = false;
+
+  const applyFilters = () => {
+    const discipline = disciplineSelect.value || "all";
+    const level = levelSelect.value || "all";
+
+    cards.forEach((card) => {
+      const cardDiscipline = card.dataset.cat || "all";
+      const cardLevel = card.dataset.level || "all";
+      const matchesDiscipline = discipline === "all" || cardDiscipline === discipline;
+      const matchesLevel = level === "all" || cardLevel === level;
+
+      card.style.display = matchesDiscipline && matchesLevel ? "" : "none";
+    });
+  };
+
+  [disciplineSelect, levelSelect].forEach((select) => {
+    if (select.dataset.bound === "true") {
       return;
     }
 
-    button.dataset.bound = "true";
-    button.addEventListener("click", () => {
-      buttons.forEach((other) => other.classList.remove("on"));
-      button.classList.add("on");
-
-      const filter = button.dataset.f;
-      grid.querySelectorAll(".stage-card").forEach((card) => {
-        const category = card.dataset.cat || "all";
-        const level = card.dataset.level || "all";
-        const status = card.dataset.status || "";
-        const shouldShow =
-          filter === "all" ||
-          category === filter ||
-          level === filter ||
-          (filter === "open" && status === "ouvert");
-
-        card.style.display = shouldShow ? "" : "none";
-      });
-    });
+    select.dataset.bound = "true";
+    select.addEventListener("change", applyFilters);
   });
+
+  applyFilters();
 }
 
 function imageTag(url, alt, className = "") {
@@ -1190,15 +1203,17 @@ function applySiteSettingsToDom(settings) {
 
 async function resolveUtilityAnnouncement(settings) {
   if (settings.announcement_mode === "off") {
-    return null;
+    return [];
   }
 
+  const items = [];
+
   if (settings.announcement_mode === "custom" && settings.announcement_text) {
-    return {
+    items.push({
       prefix: t("common.utility.news"),
       main: settings.announcement_text,
       href: settings.announcement_link || "evenements.html"
-    };
+    });
   }
 
   const events = await fetchCollection("evenements");
@@ -1207,22 +1222,33 @@ async function resolveUtilityAnnouncement(settings) {
     .sort(sortByDateAscending);
   const nextEvent = upcoming[0];
 
-  if (!nextEvent) {
-    return {
-      prefix: t("common.utility.defaultPrefix"),
-      main: t("common.utility.defaultMain"),
-      href: "le-lieu.html"
-    };
+  if (nextEvent) {
+    items.push({
+      prefix: t("common.utility.nextEvent"),
+      main: `${localizeField(nextEvent, "title", t("event.generic"))} — ${formatLongDate(nextEvent.date)}`,
+      href: nextEvent.helloasso_url || "evenements.html"
+    });
   }
 
-  return {
-    prefix: t("common.utility.nextEvent"),
-    main: `${localizeField(nextEvent, "title", t("event.generic"))} — ${formatLongDate(nextEvent.date)}`,
-    href: nextEvent.helloasso_url || "evenements.html"
-  };
+  items.push(
+    {
+      prefix: t("common.utility.visitPrefix"),
+      main: t("common.utility.visitMain"),
+      href: "le-lieu.html"
+    },
+    {
+      prefix: t("common.utility.housePrefix"),
+      main: t("common.utility.houseMain"),
+      href: "le-lieu.html#visite-maison"
+    }
+  );
+
+  return items.filter((item, index, collection) => {
+    return collection.findIndex((candidate) => candidate.main === item.main) === index;
+  });
 }
 
-function applyUtilityAnnouncement(announcement) {
+function applyUtilityAnnouncement(announcements) {
   const util = document.getElementById("site-util");
   const link = document.getElementById("site-util-link");
   const prefix = document.getElementById("site-util-prefix");
@@ -1232,23 +1258,51 @@ function applyUtilityAnnouncement(announcement) {
     return;
   }
 
-  if (!announcement) {
+  window.clearInterval(utilityRotationTimer);
+  window.clearTimeout(utilityTransitionTimer);
+
+  const items = Array.isArray(announcements)
+    ? announcements.filter(Boolean)
+    : announcements
+      ? [announcements]
+      : [];
+
+  if (!items.length) {
     util.hidden = true;
     return;
   }
 
-  util.hidden = false;
-  prefix.textContent = announcement.prefix;
-  main.textContent = announcement.main;
-  link.setAttribute("href", announcement.href || "evenements.html");
+  const applyItem = (item) => {
+    util.hidden = false;
+    prefix.textContent = item.prefix;
+    main.textContent = item.main;
+    link.setAttribute("href", item.href || "evenements.html");
 
-  if (/^https?:\/\//.test(announcement.href || "")) {
-    link.setAttribute("target", "_blank");
-    link.setAttribute("rel", "noopener");
-  } else {
-    link.removeAttribute("target");
-    link.removeAttribute("rel");
+    if (/^https?:\/\//.test(item.href || "")) {
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noopener");
+    } else {
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+    }
+  };
+
+  let currentIndex = 0;
+  applyItem(items[currentIndex]);
+
+  if (items.length === 1) {
+    return;
   }
+
+  utilityRotationTimer = window.setInterval(() => {
+    util.classList.add("is-changing");
+    currentIndex = (currentIndex + 1) % items.length;
+
+    utilityTransitionTimer = window.setTimeout(() => {
+      applyItem(items[currentIndex]);
+      util.classList.remove("is-changing");
+    }, 210);
+  }, 5000);
 }
 
 function bindHelloAssoResize() {
@@ -1888,29 +1942,97 @@ async function renderEvenementsPage() {
 }
 
 function initVisitGallery() {
-  const strip = document.querySelector("[data-visit-strip]");
-  const controls = document.querySelectorAll("[data-visit-scroll]");
+  const root = document.querySelector("[data-visit-carousel]");
+  const slides = [...document.querySelectorAll("[data-visit-slide]")];
+  const thumbs = [...document.querySelectorAll("[data-visit-thumb]")];
+  const previous = document.querySelector("[data-visit-prev]");
+  const next = document.querySelector("[data-visit-next]");
+  const count = document.querySelector("[data-visit-count]");
+  const progress = document.querySelector("[data-visit-progress]");
 
-  if (!strip || !controls.length) {
+  if (!root || slides.length < 2 || !previous || !next) {
     return;
   }
 
-  controls.forEach((button) => {
-    if (button.dataset.bound === "true") {
+  let currentIndex = 0;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const render = (index) => {
+    currentIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle("is-active", slideIndex === currentIndex);
+    });
+    thumbs.forEach((thumb, thumbIndex) => {
+      thumb.classList.toggle("is-active", thumbIndex === currentIndex);
+      thumb.setAttribute("aria-pressed", thumbIndex === currentIndex ? "true" : "false");
+    });
+
+    if (count) {
+      count.textContent = `${currentIndex + 1} / ${slides.length}`;
+    }
+
+    if (progress) {
+      progress.style.width = `${((currentIndex + 1) / slides.length) * 100}%`;
+    }
+  };
+
+  const restartAutoplay = () => {
+    window.clearInterval(visitGalleryTimer);
+
+    if (prefersReducedMotion) {
       return;
     }
 
-    button.dataset.bound = "true";
-    button.addEventListener("click", () => {
-      const direction = Number(button.getAttribute("data-visit-scroll") || "0");
-      const amount = Math.max(strip.clientWidth * 0.82, 280);
+    visitGalleryTimer = window.setInterval(() => {
+      render(currentIndex + 1);
+    }, 4600);
+  };
 
-      strip.scrollBy({
-        left: amount * direction,
-        behavior: "smooth"
-      });
+  if (previous.dataset.bound !== "true") {
+    previous.dataset.bound = "true";
+    previous.addEventListener("click", () => {
+      render(currentIndex - 1);
+      restartAutoplay();
+    });
+  }
+
+  if (next.dataset.bound !== "true") {
+    next.dataset.bound = "true";
+    next.addEventListener("click", () => {
+      render(currentIndex + 1);
+      restartAutoplay();
+    });
+  }
+
+  thumbs.forEach((thumb, thumbIndex) => {
+    if (thumb.dataset.bound === "true") {
+      return;
+    }
+
+    thumb.dataset.bound = "true";
+    thumb.addEventListener("click", () => {
+      render(thumbIndex);
+      restartAutoplay();
     });
   });
+
+  if (root.dataset.bound !== "true") {
+    root.dataset.bound = "true";
+    root.addEventListener("mouseenter", () => window.clearInterval(visitGalleryTimer));
+    root.addEventListener("mouseleave", restartAutoplay);
+    root.addEventListener("focusin", () => window.clearInterval(visitGalleryTimer));
+    root.addEventListener("focusout", restartAutoplay);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        window.clearInterval(visitGalleryTimer);
+      } else {
+        restartAutoplay();
+      }
+    });
+  }
+
+  render(0);
+  restartAutoplay();
 }
 
 function injectChrome(activeKey) {

@@ -6,7 +6,7 @@ time: ""
 time_en: ""
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
 location_en: "The Pink House of Wallerand, Auvers-sur-Oise"
-image: ""
+image: "https://static.wixstatic.com/media/4a53fa_758166b2724945978d173e981c741c6d~mv2.jpg"
 entry: "Entrée libre"
 entry_en: "Free entry"
 helloasso_url: ""
@@ -15,4 +15,3 @@ featured: false
 summary_en: "Archive of a media feature around the Pink House of Wallerand."
 ---
 Archive d'un rendez-vous média autour de la Maison Rose de Wallerand.
-
