@@ -62,9 +62,20 @@
   }
   @media (max-width: 820px) {
     .miss { padding: 88px 0 76px; }
+    .miss .sec-head {
+      margin-bottom: 24px;
+      gap: 10px;
+    }
+    .miss .sec-head .left {
+      max-width: none;
+      width: 100%;
+    }
+    .miss .sec-head .left h2 {
+      font-size: clamp(30px, 9vw, 40px);
+      line-height: 1.02;
+    }
     .miss-grid { gap: 18px; }
     .miss h3 { font-size: 24px; margin-bottom: 10px; }
-    .miss .sec-head { margin-bottom: 32px; }
     .miss-grid > div {
       padding: 22px 20px;
       background: rgba(255,255,255,.72);
@@ -201,7 +212,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260505c"></script>
+<script src="assets/site.bundle.js?v=20260505e"></script>
 <script>injectChrome('assoc');</script>
 </body>
 </html>
