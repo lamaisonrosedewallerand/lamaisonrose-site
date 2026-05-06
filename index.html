@@ -84,6 +84,20 @@
   .countdown .cell .l { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-soft); }
   .headline-visual { position: relative; aspect-ratio: 4/5; }
   .hl-img { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(184,101,79,.85), rgba(26,22,20,.85)), repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 2px, transparent 2px 9px); overflow: hidden; }
+  .headline-visual .hl-img.has-photo {
+    background: rgba(255,255,255,.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .headline-visual .hl-img.has-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    padding: 12px;
+    background: rgba(255,255,255,.82);
+  }
   .hl-img::before { content: "Estampes"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); font-family: 'Cormorant Garamond', serif; font-size: clamp(60px, 9vw, 130px); font-style: italic; color: rgba(250,246,241,.92); letter-spacing: -0.02em; line-height: 0.9; text-align: center; white-space: pre; }
   .hl-img::after { content: "Auversoises\A 2026"; white-space: pre; position: absolute; bottom: 8%; left: 0; right: 0; text-align: center; font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--rose); font-family: 'Inter', sans-serif; }
   .hl-corner { position: absolute; top: -14px; right: -14px; width: 110px; height: 110px; background: var(--rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; transform: rotate(8deg); z-index: 2; }
@@ -174,6 +188,9 @@
     .headline-visual {
       aspect-ratio: 5 / 4;
     }
+    .headline-visual .hl-img.has-photo img {
+      padding: 8px;
+    }
     .hl-corner { top: 12px; right: 12px; width: 84px; height: 84px; }
     .hl-corner span { font-size: 12px; }
     .hl-corner span strong { font-size: 18px; }
@@ -222,7 +239,10 @@
     .countdown .cell .n { font-size: 28px; }
     .countdown .cell .l { font-size: 9px; letter-spacing: 0.18em; }
     .headline-visual {
-      aspect-ratio: 6 / 5;
+      aspect-ratio: 4 / 5;
+    }
+    .headline-visual .hl-img.has-photo img {
+      padding: 8px;
     }
     .hl-corner {
       top: 10px;
