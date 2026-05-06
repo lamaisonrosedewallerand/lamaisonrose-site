@@ -195,9 +195,14 @@
   }
   .visit-gallery-thumbs {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(110px, 148px);
     gap: 14px;
     margin-top: 18px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(184,101,79,.65) rgba(26,22,20,.08);
   }
   .visit-thumb {
     border: 1px solid transparent;
@@ -209,6 +214,7 @@
     opacity: .82;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    scroll-snap-align: start;
   }
   .visit-thumb.is-active {
     border-color: var(--terre);
@@ -337,7 +343,7 @@
     .visit-gallery-stage .visit-gallery-btn--prev { left: 12px; }
     .visit-gallery-stage .visit-gallery-btn--next { right: 12px; }
     .visit-gallery-thumbs {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-columns: minmax(96px, 118px);
       gap: 10px;
     }
     .map-actions { gap: 12px; margin-top: 14px; }
@@ -367,22 +373,22 @@
   </div>
   <div class="place-preview-grid">
     <figure class="place-shot place-shot--hero reveal">
-      <img src="/assets/uploads/maison-rose-visite-diapo-7.jpg" alt="Porte rouge et roses de la Maison Rose de Wallerand" loading="lazy" />
+      <img src="/assets/uploads/maison-rose-tour-01.jpg" alt="Vue de la Maison Rose de Wallerand" loading="lazy" />
     </figure>
     <div class="place-shot--stack">
       <figure class="place-shot place-shot--stack-top reveal d2">
-        <img src="/assets/uploads/maison-rose-visite-diapo-2.jpg" alt="Vue intérieure vers la cour de la Maison Rose" loading="lazy" />
+        <img src="/assets/uploads/maison-rose-tour-07.jpg" alt="Vue intérieure de la Maison Rose de Wallerand" loading="lazy" />
       </figure>
       <figure class="place-shot place-shot--stack-bottom reveal d3">
-        <img src="/assets/uploads/maison-rose-visite-diapo-10.jpg" alt="Grande pièce de vie de la Maison Rose" loading="lazy" />
+        <img src="/assets/uploads/maison-rose-tour-12.jpg" alt="Pièce de la Maison Rose de Wallerand" loading="lazy" />
       </figure>
     </div>
     <div class="place-shot--stack">
       <figure class="place-shot place-shot--stack-top reveal d2">
-        <img src="/assets/uploads/maison-rose-visite-diapo-12.jpg" alt="Pièce jaune de la Maison Rose" loading="lazy" />
+        <img src="/assets/uploads/maison-rose-tour-16.jpg" alt="Autre vue de la Maison Rose de Wallerand" loading="lazy" />
       </figure>
       <figure class="place-shot place-shot--stack-bottom reveal d3">
-        <img src="/assets/uploads/maison-rose-visite-diapo-5.jpg" alt="Jardin intérieur et miroir de la Maison Rose" loading="lazy" />
+        <img src="/assets/uploads/maison-rose-tour-20.jpg" alt="Détail de visite de la Maison Rose de Wallerand" loading="lazy" />
       </figure>
     </div>
   </div>
@@ -450,77 +456,137 @@
         <div class="visit-gallery-controls reveal d2" aria-label="Navigation visite de la Maison Rose">
           <div class="visit-gallery-status">
             <div class="visit-gallery-progress" aria-hidden="true"><span data-visit-progress></span></div>
-            <span class="visit-gallery-count" data-visit-count>1 / 10</span>
+            <span class="visit-gallery-count" data-visit-count>1 / 20</span>
           </div>
         </div>
       </div>
       <div class="visit-carousel" data-visit-carousel>
         <div class="visit-gallery-stage">
-          <button type="button" class="visit-gallery-btn visit-gallery-btn--prev" data-visit-prev aria-label="Voir les photos précédentes" onclick="window.maisonRoseVisitGallery && window.maisonRoseVisitGallery.prev(); return false;">←</button>
-          <button type="button" class="visit-gallery-btn visit-gallery-btn--next" data-visit-next aria-label="Voir les photos suivantes" onclick="window.maisonRoseVisitGallery && window.maisonRoseVisitGallery.next(); return false;">→</button>
+          <button type="button" class="visit-gallery-btn visit-gallery-btn--prev" data-visit-prev aria-label="Voir les photos précédentes">←</button>
+          <button type="button" class="visit-gallery-btn visit-gallery-btn--next" data-visit-next aria-label="Voir les photos suivantes">→</button>
           <div class="visit-gallery-track" data-visit-track>
             <figure class="visit-gallery-slide is-active reveal" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-7.jpg" alt="Porte rouge et roses de la Maison Rose de Wallerand" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-01.jpg" alt="Vue 1 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal d2" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-2.jpg" alt="Vue intérieure vers la cour de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-02.jpg" alt="Vue 2 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal d3" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-5.jpg" alt="Jardin intérieur et miroir de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-03.jpg" alt="Vue 3 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-10.jpg" alt="Grande pièce de vie de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-04.jpg" alt="Vue 4 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal d2" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-11.jpg" alt="Vue sur la mezzanine de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-05.jpg" alt="Vue 5 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal d3" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-9.jpg" alt="Salon et table d'accueil de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-06.jpg" alt="Vue 6 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-12.jpg" alt="Pièce jaune de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-07.jpg" alt="Vue 7 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal d2" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-13.jpg" alt="Escalier et circulation intérieure de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-08.jpg" alt="Vue 8 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal d3" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-14.jpg" alt="Salle d'eau de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-09.jpg" alt="Vue 9 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
             <figure class="visit-gallery-slide reveal" data-visit-slide>
-              <img src="/assets/uploads/maison-rose-visite-diapo-15.jpg" alt="Chambre de résidence de la Maison Rose" loading="lazy" />
+              <img src="/assets/uploads/maison-rose-tour-10.jpg" alt="Vue 10 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d2" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-11.jpg" alt="Vue 11 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d3" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-12.jpg" alt="Vue 12 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-13.jpg" alt="Vue 13 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d2" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-14.jpg" alt="Vue 14 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d3" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-15.jpg" alt="Vue 15 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-16.jpg" alt="Vue 16 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d2" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-17.jpg" alt="Vue 17 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d3" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-18.jpg" alt="Vue 18 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-19.jpg" alt="Vue 19 de la Maison Rose de Wallerand" loading="lazy" />
+            </figure>
+            <figure class="visit-gallery-slide reveal d2" data-visit-slide>
+              <img src="/assets/uploads/maison-rose-tour-20.jpg" alt="Vue 20 de la Maison Rose de Wallerand" loading="lazy" />
             </figure>
           </div>
         </div>
         <div class="visit-gallery-thumbs" data-visit-thumbs>
-          <button type="button" class="visit-thumb is-active" data-visit-thumb="0" aria-label="Voir la porte rouge et les roses">
-            <img src="/assets/uploads/maison-rose-visite-diapo-7.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb is-active" data-visit-thumb="0" aria-label="Voir la vue 1">
+            <img src="/assets/uploads/maison-rose-tour-01.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="1" aria-label="Voir la vue vers la cour">
-            <img src="/assets/uploads/maison-rose-visite-diapo-2.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="1" aria-label="Voir la vue 2">
+            <img src="/assets/uploads/maison-rose-tour-02.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="2" aria-label="Voir le jardin intérieur">
-            <img src="/assets/uploads/maison-rose-visite-diapo-5.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="2" aria-label="Voir la vue 3">
+            <img src="/assets/uploads/maison-rose-tour-03.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="3" aria-label="Voir la grande pièce de vie">
-            <img src="/assets/uploads/maison-rose-visite-diapo-10.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="3" aria-label="Voir la vue 4">
+            <img src="/assets/uploads/maison-rose-tour-04.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="4" aria-label="Voir la mezzanine">
-            <img src="/assets/uploads/maison-rose-visite-diapo-11.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="4" aria-label="Voir la vue 5">
+            <img src="/assets/uploads/maison-rose-tour-05.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="5" aria-label="Voir le salon">
-            <img src="/assets/uploads/maison-rose-visite-diapo-9.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="5" aria-label="Voir la vue 6">
+            <img src="/assets/uploads/maison-rose-tour-06.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="6" aria-label="Voir la pièce jaune">
-            <img src="/assets/uploads/maison-rose-visite-diapo-12.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="6" aria-label="Voir la vue 7">
+            <img src="/assets/uploads/maison-rose-tour-07.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="7" aria-label="Voir l'escalier">
-            <img src="/assets/uploads/maison-rose-visite-diapo-13.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="7" aria-label="Voir la vue 8">
+            <img src="/assets/uploads/maison-rose-tour-08.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="8" aria-label="Voir la salle d'eau">
-            <img src="/assets/uploads/maison-rose-visite-diapo-14.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="8" aria-label="Voir la vue 9">
+            <img src="/assets/uploads/maison-rose-tour-09.jpg" alt="" loading="lazy" />
           </button>
-          <button type="button" class="visit-thumb" data-visit-thumb="9" aria-label="Voir la chambre">
-            <img src="/assets/uploads/maison-rose-visite-diapo-15.jpg" alt="" loading="lazy" />
+          <button type="button" class="visit-thumb" data-visit-thumb="9" aria-label="Voir la vue 10">
+            <img src="/assets/uploads/maison-rose-tour-10.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="10" aria-label="Voir la vue 11">
+            <img src="/assets/uploads/maison-rose-tour-11.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="11" aria-label="Voir la vue 12">
+            <img src="/assets/uploads/maison-rose-tour-12.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="12" aria-label="Voir la vue 13">
+            <img src="/assets/uploads/maison-rose-tour-13.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="13" aria-label="Voir la vue 14">
+            <img src="/assets/uploads/maison-rose-tour-14.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="14" aria-label="Voir la vue 15">
+            <img src="/assets/uploads/maison-rose-tour-15.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="15" aria-label="Voir la vue 16">
+            <img src="/assets/uploads/maison-rose-tour-16.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="16" aria-label="Voir la vue 17">
+            <img src="/assets/uploads/maison-rose-tour-17.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="17" aria-label="Voir la vue 18">
+            <img src="/assets/uploads/maison-rose-tour-18.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="18" aria-label="Voir la vue 19">
+            <img src="/assets/uploads/maison-rose-tour-19.jpg" alt="" loading="lazy" />
+          </button>
+          <button type="button" class="visit-thumb" data-visit-thumb="19" aria-label="Voir la vue 20">
+            <img src="/assets/uploads/maison-rose-tour-20.jpg" alt="" loading="lazy" />
           </button>
         </div>
       </div>
@@ -551,7 +617,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260505g"></script>
-<script>injectChrome('lieu'); initVisitGallery();</script>
+<script src="assets/site.bundle.js?v=20260506a"></script>
+<script>injectChrome('lieu');</script>
 </body>
 </html>

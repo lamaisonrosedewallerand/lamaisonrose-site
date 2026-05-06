@@ -2060,6 +2060,8 @@ function initVisitGallery() {
   thumbs.forEach((thumb, thumbIndex) => {
     bindControl(thumb, () => goTo(thumbIndex));
   });
+  bindControl(previous, () => goTo(currentIndex - 1));
+  bindControl(next, () => goTo(currentIndex + 1));
 
   if (root.dataset.bound !== "true") {
     root.dataset.bound = "true";
@@ -2291,5 +2293,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     applyLanguage();
   } catch (error) {
     console.error(error);
+  } finally {
+    initVisitGallery();
   }
 });
