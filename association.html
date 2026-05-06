@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260505c" />
+<link rel="stylesheet" href="assets/site.css?v=20260506c" />
 <style>
   .miss { padding: 110px 0; }
   .miss-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
@@ -63,7 +63,8 @@
   @media (max-width: 820px) {
     .miss { padding: 88px 0 76px; }
     .miss .sec-head {
-      margin-bottom: 24px;
+      display: block;
+      margin-bottom: 28px;
       gap: 10px;
     }
     .miss .sec-head .left {
@@ -72,7 +73,9 @@
     }
     .miss .sec-head .left h2 {
       font-size: clamp(30px, 9vw, 40px);
-      line-height: 1.02;
+      line-height: 1.04;
+      max-width: 11ch;
+      margin: 0;
     }
     .miss-grid { gap: 18px; }
     .miss h3 { font-size: 24px; margin-bottom: 10px; }
@@ -167,7 +170,7 @@
     </div>
     <div class="team-grid">
       <div class="person reveal">
-        <div class="img"><img src="/assets/uploads/maison-rose-exposition.jpg" alt="Visiteur découvrant une exposition à la Maison Rose" loading="lazy" /></div>
+        <div class="img"><img src="/assets/uploads/maison-rose-public.jpg" alt="Public réuni à la Maison Rose de Wallerand" loading="lazy" /></div>
         <span class="role">— Expositions</span>
         <h4>Expositions &amp; estampes</h4>
         <p>Les Estampes Auversoises, les expositions temporaires et les accrochages thématiques donnent leur rythme à la saison.</p>
@@ -179,13 +182,13 @@
         <p>Le lieu accueille des artistes qui viennent travailler, séjourner et exposer dans un cadre patrimonial et inspirant.</p>
       </div>
       <div class="person reveal d3">
-        <div class="img"><img src="/assets/uploads/maison-rose-accrochage.jpg" alt="Accrochage d'œuvres dans l'une des pièces de la Maison Rose" loading="lazy" /></div>
+        <div class="img"><img src="/assets/uploads/maison-rose-stage-atelier.jpg" alt="Stage de pratique artistique à la Maison Rose" loading="lazy" /></div>
         <span class="role">— Transmission</span>
         <h4>Stages &amp; ateliers</h4>
         <p>Gravure, initiation, jeunes publics et ateliers ponctuels prolongent l'esprit d'atelier et la circulation des savoirs.</p>
       </div>
       <div class="person reveal d4">
-        <div class="img"><img src="/assets/uploads/maison-rose-vie-du-lieu.jpg" alt="Rencontre et moment de vie culturelle à la Maison Rose" loading="lazy" /></div>
+        <div class="img"><img src="/assets/uploads/maison-rose-musiciennes.jpg" alt="Musiciennes invitées à la Maison Rose de Wallerand" loading="lazy" /></div>
         <span class="role">— Rencontres</span>
         <h4>Conférences, concerts, performances</h4>
         <p>La Maison Rose ouvre ses portes à des formats variés pour faire vivre la culture dans toute sa diversité.</p>
@@ -212,7 +215,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260505g"></script>
+<script src="assets/site.bundle.js?v=20260506c"></script>
 <script>injectChrome('assoc');</script>
 </body>
 </html>

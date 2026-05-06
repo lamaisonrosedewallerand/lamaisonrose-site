@@ -30,7 +30,7 @@ const UI_TRANSLATIONS = {
         visitPrefix: "Venir à la Maison Rose",
         visitMain: "10 min à pied de la gare · parking gratuit à 100 m",
         housePrefix: "Atelier & résidence",
-        houseMain: "62 m² sous verrière · maison de 156 m²"
+        houseMain: "62 m² d’atelier · maison de 156 m²"
       },
       footer: {
         brandTitle: "La Maison Rose",
@@ -49,7 +49,7 @@ const UI_TRANSLATIONS = {
         stages: "Les cours et stages →",
         join: "Adhérer ou soutenir →",
         supportEyebrow: "Avec le soutien de",
-        supportText: "Patrimoine d’Île-de-France · Région Île-de-France",
+        supportText: "Patrimoine remarquable d’Île-de-France · Région Île-de-France",
         copyright: "© 2026 La Maison Rose de Wallerand"
       }
     },
@@ -147,7 +147,7 @@ const UI_TRANSLATIONS = {
         visitPrefix: "Visiting the Pink House",
         visitMain: "10 min walk from station · free parking 100 m away",
         housePrefix: "Studio & residency",
-        houseMain: "62 m² beneath the glass roof · 156 m² house"
+        houseMain: "62 m² studio · 156 m² house"
       },
       footer: {
         brandTitle: "The Pink House",
@@ -166,7 +166,7 @@ const UI_TRANSLATIONS = {
         stages: "Courses & workshops →",
         join: "Join or support →",
         supportEyebrow: "With the support of",
-        supportText: "Île-de-France Heritage · Île-de-France Region",
+        supportText: "Remarkable Heritage of Île-de-France · Île-de-France Region",
         copyright: "© 2026 The Pink House of Wallerand"
       }
     },
@@ -263,7 +263,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".hero .cta-row .btn-ghost", text: { fr: "Voir l'agenda", en: "See the agenda" } },
       { selector: ".hero .hv-frame .img", attrs: { "aria-label": { fr: "Façade de la Maison Rose", en: "Front façade of the Pink House" } } },
       { selector: ".hero .hv-tag.t1 .lbl", text: { fr: "Atelier", en: "Studio" } },
-      { selector: ".hero .hv-tag.t1 .val", html: { fr: "<strong>62 m²</strong> · sous la verrière", en: "<strong>62 m²</strong> · beneath the glass roof" } },
+      { selector: ".hero .hv-tag.t1 .val", html: { fr: "<strong>62 m²</strong> d’atelier · maison de 156 m²", en: "<strong>62 m²</strong> studio · 156 m² house" } },
       { selector: ".hero .hv-tag.t2 .lbl", text: { fr: "Maison Rose", en: "Pink House" } },
       { selector: ".hero .hv-tag.t2 .val", html: { fr: "<strong>156 m²</strong> · 3 chambres · patio", en: "<strong>156 m²</strong> · 3 rooms · patio" } },
       { selector: ".hero .scroll-hint span:first-child", text: { fr: "Découvrir", en: "Discover" } },
@@ -323,8 +323,8 @@ const STATIC_PAGE_COPY = {
       { selector: ".timeline .ev:nth-child(5) p", text: { fr: "Après le décès brutal de Wallerand en novembre 2021, la Maison Rose entre dans une nouvelle phase de transmission.", en: "After Wallerand's sudden death in November 2021, the Pink House enters a new phase of transmission." } },
       { selector: ".timeline .ev:nth-child(6) h4", text: { fr: "Naissance de l'association", en: "The association is founded" } },
       { selector: ".timeline .ev:nth-child(6) p", text: { fr: "L'association La Maison Rose de Wallerand est créée pour faire vivre le lieu et poursuivre son projet culturel.", en: "The Pink House of Wallerand association is founded to keep the house alive and carry its cultural project forward." } },
-      { selector: ".timeline .ev:nth-child(7) h4", text: { fr: "Label Patrimoine Île-de-France", en: "Île-de-France Heritage label" } },
-      { selector: ".timeline .ev:nth-child(7) p", text: { fr: "En novembre 2024, la Maison Rose obtient le label Patrimoine Île-de-France.", en: "In November 2024, the Pink House receives the Île-de-France Heritage label." } },
+      { selector: ".timeline .ev:nth-child(7) h4", text: { fr: "Label Patrimoine remarquable d’Île-de-France", en: "Remarkable Heritage of Île-de-France label" } },
+      { selector: ".timeline .ev:nth-child(7) p", text: { fr: "En novembre 2024, la Maison Rose obtient le label Patrimoine remarquable d’Île-de-France.", en: "In November 2024, the Pink House receives the Remarkable Heritage of Île-de-France label." } },
       { selector: ".timeline .ev:nth-child(8) h4", text: { fr: "Résidences, cours et agenda", en: "Residencies, courses and agenda" } },
       { selector: ".timeline .ev:nth-child(8) p", text: { fr: "La Maison Rose accueille un public large, des artistes en résidence et une programmation qui se déploie toute l'année.", en: "The Pink House welcomes a broad audience, artists in residence and a programme unfolding throughout the year." } },
       { selector: ".visit .sec-head .left .num-tag", text: { fr: "— Visiter", en: "— Visit" } },
@@ -351,7 +351,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".visit-text p:nth-of-type(2)", text: { fr: "Le projet s'appuie sur ce lieu patrimonial pour mieux explorer le présent, accueillir de nouveaux artistes et proposer au public une programmation vivante.", en: "The project relies on this heritage site to explore the present, welcome new artists and offer the public a lively programme." } },
       { selector: ".visit-gallery .sec-head .left .num-tag", text: { fr: "— Parcourir", en: "— Explore" } },
       { selector: ".visit-gallery .sec-head .left h2", html: { fr: "Visiter <span class=\"it\">la Maison Rose.</span>", en: "Explore <span class=\"it\">the Pink House.</span>" } },
-      { selector: ".visit-gallery .sec-head .right", text: { fr: "Façade, entrée, verrière, salon, accrochage, chambre, patio et jardin : une visite photo fluide pour entrer dans l'atmosphère du lieu.", en: "Façade, entrance, glass roof, salon, hanging walls, bedroom, patio and garden: a fluid photo visit that lets you step into the atmosphere of the house." } },
+      { selector: ".visit-gallery .sec-head .right", text: { fr: "Façade, cour, verrière, cuisine, grande pièce, mezzanine et chambres : une visite photo plus fidèle pour découvrir la Maison Rose avant votre venue.", en: "Façade, courtyard, glass roof, kitchen, main room, mezzanine and bedrooms: a fuller photo visit to discover the Pink House before your visit." } },
       { selector: ".map", attrs: { title: { fr: "Carte La Maison Rose de Wallerand", en: "Map — The Pink House of Wallerand" } } },
       { selector: ".map-note", text: { fr: "Retrouvez directement La Maison Rose de Wallerand dans Google Maps pour préparer votre venue.", en: "Find the Pink House of Wallerand directly in Google Maps and prepare your visit." } },
       { selector: "[data-map-directions]", text: { fr: "Ouvrir l'itinéraire", en: "Open directions" } }

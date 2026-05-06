@@ -1968,12 +1968,12 @@ async function renderEvenementsPage() {
 function initVisitGallery() {
   const root = document.querySelector("[data-visit-carousel]");
   const track = root?.querySelector("[data-visit-track]");
-  const slides = [...document.querySelectorAll("[data-visit-slide]")];
-  const thumbs = [...document.querySelectorAll("[data-visit-thumb]")];
-  const previous = document.querySelector("[data-visit-prev]");
-  const next = document.querySelector("[data-visit-next]");
-  const count = document.querySelector("[data-visit-count]");
-  const progress = document.querySelector("[data-visit-progress]");
+  const slides = [...root?.querySelectorAll("[data-visit-slide]") || []];
+  const thumbs = [...root?.querySelectorAll("[data-visit-thumb]") || []];
+  const previous = root?.querySelector("[data-visit-prev]");
+  const next = root?.querySelector("[data-visit-next]");
+  const count = root?.querySelector("[data-visit-count]");
+  const progress = root?.querySelector("[data-visit-progress]");
   const stage = root?.querySelector(".visit-gallery-stage");
 
   if (!root || !track || slides.length < 2 || !previous || !next) {
@@ -1981,17 +1981,27 @@ function initVisitGallery() {
   }
 
   let currentIndex = 0;
-  let touchStartX = 0;
-  let touchStartY = 0;
+  let scrollSyncTimer = 0;
+  let autoAdvanceTimer = 0;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const render = (index) => {
+  const getSlideOffset = (index) => {
+    const target = slides[index];
+    if (!target) {
+      return 0;
+    }
+
+    return target.offsetLeft - track.offsetLeft;
+  };
+
+  const syncUi = (index) => {
     currentIndex = (index + slides.length) % slides.length;
-    track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+
     slides.forEach((slide, slideIndex) => {
       slide.classList.toggle("is-active", slideIndex === currentIndex);
       slide.setAttribute("aria-hidden", slideIndex === currentIndex ? "false" : "true");
     });
+
     thumbs.forEach((thumb, thumbIndex) => {
       thumb.classList.toggle("is-active", thumbIndex === currentIndex);
       thumb.setAttribute("aria-pressed", thumbIndex === currentIndex ? "true" : "false");
@@ -2006,20 +2016,49 @@ function initVisitGallery() {
     }
   };
 
+  const scrollToIndex = (index, behavior = prefersReducedMotion ? "auto" : "smooth") => {
+    syncUi(index);
+    const nextLeft = getSlideOffset(currentIndex);
+
+    track.scrollTo({
+      left: nextLeft,
+      behavior
+    });
+  };
+
+  const updateFromScroll = () => {
+    const positions = slides.map((_, index) => getSlideOffset(index));
+    let nextIndex = 0;
+    let minDistance = Number.POSITIVE_INFINITY;
+
+    positions.forEach((left, index) => {
+      const distance = Math.abs(track.scrollLeft - left);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        nextIndex = index;
+      }
+    });
+
+    if (nextIndex !== currentIndex) {
+      syncUi(nextIndex);
+    }
+  };
+
   const restartAutoplay = () => {
-    window.clearInterval(visitGalleryTimer);
+    window.clearInterval(autoAdvanceTimer);
 
     if (prefersReducedMotion) {
       return;
     }
 
-    visitGalleryTimer = window.setInterval(() => {
-      render(currentIndex + 1);
+    autoAdvanceTimer = window.setInterval(() => {
+      scrollToIndex(currentIndex + 1);
     }, 4600);
   };
 
   const goTo = (index) => {
-    render(index);
+    scrollToIndex(index);
     restartAutoplay();
   };
 
@@ -2063,65 +2102,40 @@ function initVisitGallery() {
   bindControl(previous, () => goTo(currentIndex - 1));
   bindControl(next, () => goTo(currentIndex + 1));
 
+  if (track.dataset.bound !== "true") {
+    track.dataset.bound = "true";
+    track.addEventListener(
+      "scroll",
+      () => {
+        window.clearTimeout(scrollSyncTimer);
+        scrollSyncTimer = window.setTimeout(updateFromScroll, 50);
+      },
+      { passive: true }
+    );
+  }
+
   if (root.dataset.bound !== "true") {
     root.dataset.bound = "true";
-    root.addEventListener("mouseenter", () => window.clearInterval(visitGalleryTimer));
+    root.addEventListener("mouseenter", () => window.clearInterval(autoAdvanceTimer));
     root.addEventListener("mouseleave", restartAutoplay);
-    root.addEventListener("focusin", () => window.clearInterval(visitGalleryTimer));
+    root.addEventListener("focusin", () => window.clearInterval(autoAdvanceTimer));
     root.addEventListener("focusout", restartAutoplay);
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
-        window.clearInterval(visitGalleryTimer);
+        window.clearInterval(autoAdvanceTimer);
       } else {
         restartAutoplay();
       }
     });
   }
 
-  if (stage && stage.dataset.bound !== "true") {
-    stage.dataset.bound = "true";
-    stage.addEventListener(
-      "touchstart",
-      (event) => {
-        const touch = event.changedTouches[0];
-
-        if (!touch) {
-          return;
-        }
-
-        touchStartX = touch.clientX;
-        touchStartY = touch.clientY;
-      },
-      { passive: true }
-    );
-
-    stage.addEventListener(
-      "touchend",
-      (event) => {
-        const touch = event.changedTouches[0];
-
-        if (!touch) {
-          return;
-        }
-
-        const deltaX = touch.clientX - touchStartX;
-        const deltaY = touch.clientY - touchStartY;
-
-        if (Math.abs(deltaX) < 36 || Math.abs(deltaX) < Math.abs(deltaY)) {
-          return;
-        }
-
-        if (deltaX < 0) {
-          goTo(currentIndex + 1);
-        } else {
-          goTo(currentIndex - 1);
-        }
-      },
-      { passive: true }
-    );
+  if (stage) {
+    stage.setAttribute("tabindex", "-1");
   }
 
-  render(0);
+  track.scrollLeft = 0;
+  syncUi(0);
+  track.scrollTo({ left: 0, behavior: "auto" });
   restartAutoplay();
 }
 
@@ -2216,7 +2230,7 @@ function injectChrome(activeKey) {
             <p>${escapeHtml(t("common.footer.supportText"))}</p>
           </div>
           <div class="foot-support-logo">
-            <img src="/assets/uploads/logo-patrimoine-ile-de-france.jpg" alt="Logo Patrimoine d’Île-de-France et Région Île-de-France" loading="lazy" />
+            <img src="/assets/uploads/logo-patrimoine-ile-de-france.jpg" alt="Logo Patrimoine remarquable d’Île-de-France et Région Île-de-France" loading="lazy" />
           </div>
         </div>
         <div class="foot-bot">
