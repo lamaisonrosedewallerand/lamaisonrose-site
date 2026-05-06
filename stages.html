@@ -98,11 +98,19 @@
   }
   .stage-card .more:hover { color: var(--terre); }
   .archive-grid .stage-card.is-archived .stage-img {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 5;
+    background: rgba(255,255,255,.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .archive-grid .stage-card.is-archived .stage-img.has-photo img {
-    object-fit: cover;
-    object-position: center 32%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    padding: 10px;
+    background: rgba(255,255,255,.82);
   }
 
   .info-block { background: var(--cream-2); padding: 100px 0; }
@@ -142,6 +150,12 @@
     .stage-img {
       aspect-ratio: 6 / 5;
       margin-bottom: 16px;
+    }
+    .archive-grid .stage-card.is-archived .stage-img {
+      aspect-ratio: 4 / 5;
+    }
+    .archive-grid .stage-card.is-archived .stage-img.has-photo img {
+      padding: 8px;
     }
     .stage-card h3 {
       font-size: 22px;
