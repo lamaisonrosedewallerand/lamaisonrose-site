@@ -1109,7 +1109,6 @@ function renderHomeFeaturedEventBlock(event) {
           )}</div></div>
         </div>
         <p>${escapeHtml(truncateText(localizedSummary, 240))}</p>
-        ${renderHomeArtistSlider()}
         <div class="cta-row">
           ${
             event.helloasso_url
@@ -1124,6 +1123,9 @@ function renderHomeFeaturedEventBlock(event) {
       <div class="headline-visual reveal d2">
         ${renderFeatureVisual(event, "home")}
       </div>
+      <div class="headline-slider reveal d3">
+        ${renderHomeArtistSlider()}
+      </div>
     </div>
   `;
 }
@@ -1131,8 +1133,6 @@ function renderHomeFeaturedEventBlock(event) {
 function renderHomeArtistSlider() {
   const slidesMarkup = HOME_ARTIST_SPOTLIGHTS.map((spotlight, index) => {
     const title = localizeField(spotlight, "title", "");
-    const summary = localizeField(spotlight, "summary", "");
-    const eyebrow = localizeField(spotlight, "eyebrow", "");
 
     return `
       <article class="artist-slide${index === 0 ? " is-active" : ""}" data-artist-slide aria-hidden="${
@@ -1140,11 +1140,6 @@ function renderHomeArtistSlider() {
       }">
         <div class="artist-slide-media">
           ${imageTag(spotlight.image, title, "artist-photo")}
-        </div>
-        <div class="artist-slide-copy">
-          <span class="artist-slide-eyebrow">${escapeHtml(eyebrow)}</span>
-          <h3>${escapeHtml(title)}</h3>
-          <p>${escapeHtml(summary)}</p>
         </div>
       </article>
     `;
@@ -1164,13 +1159,9 @@ function renderHomeArtistSlider() {
   ).join("");
 
   return `
-    <section class="artist-spotlight reveal d2" data-home-artist-slider aria-label="${escapeAttr(
+    <section class="artist-spotlight" data-home-artist-slider aria-label="${escapeAttr(
       t("home.sliderLabel")
     )}">
-      <div class="artist-spotlight-head">
-        <span class="artist-kicker">${escapeHtml(t("home.sliderEyebrow"))}</span>
-        <p>${escapeHtml(t("home.sliderIntro"))}</p>
-      </div>
       <div class="artist-slider-shell">
         <div class="artist-slider-stage">
           ${slidesMarkup}
@@ -1179,7 +1170,6 @@ function renderHomeArtistSlider() {
           <div class="artist-slider-dots" aria-label="${escapeAttr(t("home.sliderNav"))}">
             ${dotsMarkup}
           </div>
-          <span class="artist-slider-note">${escapeHtml(t("home.sliderNote"))}</span>
         </div>
       </div>
     </section>

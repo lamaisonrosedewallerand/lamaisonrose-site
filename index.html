@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260507a" />
+<link rel="stylesheet" href="assets/site.css?v=20260507b" />
 <style>
   /* Hero */
   .hero { position: relative; min-height: calc(100vh - 70px); display: flex; align-items: stretch; overflow: hidden; }
@@ -69,6 +69,7 @@
   .headline,
   .hero { overflow: hidden; }
   .headline-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
+  .headline-slider { grid-column: 1 / -1; }
   .headline-text .tag { display: inline-block; padding: 6px 14px; background: var(--terre); color: var(--cream); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 28px; }
   .headline-text h2 { font-size: clamp(44px, 5.2vw, 78px); line-height: 1; margin-bottom: 24px; }
   .headline-text h2 .it { font-style: italic; color: var(--terre); }
@@ -78,43 +79,16 @@
   .headline-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--ink); }
   .headline-meta div .val { overflow-wrap: anywhere; }
   .headline-text p { color: var(--grey); margin-bottom: 24px; max-width: 480px; }
-  .artist-spotlight { margin: 28px 0 32px; }
-  .artist-spotlight-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 18px;
-    margin-bottom: 16px;
-  }
-  .artist-kicker {
-    font-size: 10px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--terre);
-  }
-  .artist-spotlight-head p {
-    margin: 0;
-    max-width: 34ch;
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--grey);
-  }
-  .artist-slider-shell {
-    padding: 14px;
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.72);
-  }
+  .artist-spotlight { margin: 10px 0 0; }
+  .artist-slider-shell { padding: 0; }
   .artist-slider-stage {
     position: relative;
-    min-height: 252px;
+    min-height: 200px;
   }
   .artist-slide {
     position: absolute;
     inset: 0;
-    display: grid;
-    grid-template-columns: 170px minmax(0, 1fr);
-    gap: 18px;
-    align-items: stretch;
+    display: block;
     opacity: 0;
     pointer-events: none;
     transform: translateY(10px);
@@ -127,45 +101,21 @@
     transform: translateY(0);
   }
   .artist-slide-media {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 16 / 7;
     overflow: hidden;
     background: var(--cream-2);
+    border: 1px solid var(--line);
   }
   .artist-slide-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .artist-slide-copy {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .artist-slide-eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--grey-soft);
-    margin-bottom: 10px;
-  }
-  .artist-slide h3 {
-    font-size: clamp(26px, 3.2vw, 34px);
-    line-height: 1.03;
-    margin-bottom: 10px;
-  }
-  .artist-slide p {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.62;
-    color: var(--grey);
-    max-width: 30ch;
-  }
   .artist-slider-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap: 16px;
-    margin-top: 16px;
+    margin-top: 14px;
   }
   .artist-slider-dots {
     display: inline-flex;
@@ -341,22 +291,11 @@
     .headline-meta div .val {
       font-size: 17px;
     }
+    .headline-slider {
+      order: 3;
+    }
     .artist-spotlight {
-      margin: 24px 0 26px;
-    }
-    .artist-spotlight-head {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .artist-spotlight-head p {
-      max-width: none;
-      font-size: 13px;
-      line-height: 1.55;
-    }
-    .artist-slider-shell {
-      padding: 12px;
+      margin: 0;
     }
     .artist-slider-stage {
       min-height: 0;
@@ -365,35 +304,17 @@
       position: relative;
       inset: auto;
       display: none;
-      grid-template-columns: 1fr;
-      gap: 12px;
       opacity: 1;
       transform: none;
     }
     .artist-slide.is-active {
-      display: grid;
+      display: block;
     }
     .artist-slide-media {
-      aspect-ratio: 16 / 10;
-    }
-    .artist-slide h3 {
-      font-size: clamp(22px, 7vw, 28px);
-      margin-bottom: 8px;
-    }
-    .artist-slide p {
-      max-width: none;
-      font-size: 14px;
-      line-height: 1.58;
+      aspect-ratio: 16 / 9;
     }
     .artist-slider-controls {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
       margin-top: 14px;
-    }
-    .artist-slider-note {
-      font-size: 10px;
-      letter-spacing: 0.12em;
     }
     .headline-visual {
       aspect-ratio: 4 / 5;
@@ -478,10 +399,8 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="left reveal">
-        <span class="num-tag">— Découvrir la Maison</span>
         <h2>Trois <span class="it">portes</span> d'entrée.</h2>
       </div>
-      <p class="right reveal d2">Le lieu, les cours et stages, puis l'agenda : trois manières d'entrer dans la Maison Rose.</p>
     </div>
     <div class="teaser-grid">
       <a href="le-lieu.html" class="teaser reveal">
@@ -492,7 +411,7 @@
       </a>
       <a href="stages.html" class="teaser reveal d2">
         <span class="num">— 02 / Apprendre</span>
-        <h3>Stages &amp; <em>cours</em></h3>
+        <h3>Cours &amp; <em>stages</em></h3>
         <p>Techniques de gravure à l'eau-forte, aquatinte, taille-douce, pointe sèche, lithographie, transfert et impression.</p>
         <span class="more">Voir le programme →</span>
       </a>
@@ -518,7 +437,7 @@
 </main>
 <div id="site-foot"></div>
 
-<script src="assets/site.bundle.js?v=20260507a"></script>
+<script src="assets/site.bundle.js?v=20260507b"></script>
 <script>
   injectChrome('home');
 </script>
