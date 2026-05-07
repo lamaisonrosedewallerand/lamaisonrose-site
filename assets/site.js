@@ -51,6 +51,53 @@ const PLACEHOLDERS = {
   event: ["a", "b", "c"]
 };
 
+const HOME_ARTIST_SPOTLIGHTS = [
+  {
+    image: "/assets/uploads/maison-rose-musiciennes.jpg",
+    eyebrow: "— Visages invités",
+    eyebrow_en: "— Guest artists",
+    title: "Concerts et masterclasses",
+    title_en: "Concerts and masterclasses",
+    summary:
+      "Des artistes invitées, des rendez-vous musicaux et des moments de transmission qui donnent un autre visage à la Maison Rose.",
+    summary_en:
+      "Guest artists, musical encounters and moments of transmission that reveal another side of the Pink House."
+  },
+  {
+    image: "/assets/uploads/maison-rose-stage-atelier.jpg",
+    eyebrow: "— En atelier",
+    eyebrow_en: "— In the studio",
+    title: "Cours, gestes et apprentissages",
+    title_en: "Workshops, practice and learning",
+    summary:
+      "Les stages se vivent au plus près du geste, dans un atelier lumineux où artistes, intervenants et participants travaillent ensemble.",
+    summary_en:
+      "Workshops happen close to the gesture itself, in a bright studio where artists, teachers and participants work side by side."
+  },
+  {
+    image: "/assets/uploads/maison-rose-accrochage.jpg",
+    eyebrow: "— En préparation",
+    eyebrow_en: "— In preparation",
+    title: "Accrochages et expositions",
+    title_en: "Installations and exhibitions",
+    summary:
+      "Montages, accrochages et temps d'installation racontent un lieu en mouvement, pensé pour accueillir des projets à taille humaine.",
+    summary_en:
+      "Installations, exhibition setups and preparation moments reveal a place in motion, ready to host human-scale artistic projects."
+  },
+  {
+    image: "/assets/uploads/maison-rose-public.jpg",
+    eyebrow: "— La vie du lieu",
+    eyebrow_en: "— Life of the house",
+    title: "Public, rencontres et partage",
+    title_en: "Public, encounters and exchange",
+    summary:
+      "Le lieu rassemble habitants, visiteurs, artistes et curieux autour d'événements où l'on regarde, échange et découvre ensemble.",
+    summary_en:
+      "The house brings together residents, visitors, artists and newcomers through events where people look, talk and discover together."
+  }
+];
+
 const collectionCache = new Map();
 const singletonCache = new Map();
 let revealObserver;
@@ -60,6 +107,7 @@ let helloAssoResizeBound = false;
 let utilityRotationTimer;
 let utilityTransitionTimer;
 let visitGalleryTimer;
+let homeArtistSliderTimer;
 
 function expireCookie(name, domain = "") {
   const domainSegment = domain ? ` domain=${domain};` : "";
@@ -1061,12 +1109,7 @@ function renderHomeFeaturedEventBlock(event) {
           )}</div></div>
         </div>
         <p>${escapeHtml(truncateText(localizedSummary, 240))}</p>
-        <div class="countdown" id="countdown">
-          <div class="cell"><span class="n" data-k="d">—</span><span class="l">${escapeHtml(t("event.days"))}</span></div>
-          <div class="cell"><span class="n" data-k="h">—</span><span class="l">${escapeHtml(t("event.hours"))}</span></div>
-          <div class="cell"><span class="n" data-k="m">—</span><span class="l">${escapeHtml(t("event.minutes"))}</span></div>
-          <div class="cell"><span class="n" data-k="s">—</span><span class="l">${escapeHtml(t("event.seconds"))}</span></div>
-        </div>
+        ${renderHomeArtistSlider()}
         <div class="cta-row">
           ${
             event.helloasso_url
@@ -1083,6 +1126,126 @@ function renderHomeFeaturedEventBlock(event) {
       </div>
     </div>
   `;
+}
+
+function renderHomeArtistSlider() {
+  const slidesMarkup = HOME_ARTIST_SPOTLIGHTS.map((spotlight, index) => {
+    const title = localizeField(spotlight, "title", "");
+    const summary = localizeField(spotlight, "summary", "");
+    const eyebrow = localizeField(spotlight, "eyebrow", "");
+
+    return `
+      <article class="artist-slide${index === 0 ? " is-active" : ""}" data-artist-slide aria-hidden="${
+        index === 0 ? "false" : "true"
+      }">
+        <div class="artist-slide-media">
+          ${imageTag(spotlight.image, title, "artist-photo")}
+        </div>
+        <div class="artist-slide-copy">
+          <span class="artist-slide-eyebrow">${escapeHtml(eyebrow)}</span>
+          <h3>${escapeHtml(title)}</h3>
+          <p>${escapeHtml(summary)}</p>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  const dotsMarkup = HOME_ARTIST_SPOTLIGHTS.map(
+    (spotlight, index) => `
+      <button
+        type="button"
+        class="artist-dot${index === 0 ? " is-active" : ""}"
+        data-artist-dot
+        data-artist-index="${index}"
+        aria-label="${escapeAttr(localizeField(spotlight, "title", `Spotlight ${index + 1}`))}"
+        aria-pressed="${index === 0 ? "true" : "false"}"
+      ></button>
+    `
+  ).join("");
+
+  return `
+    <section class="artist-spotlight reveal d2" data-home-artist-slider aria-label="${escapeAttr(
+      t("home.sliderLabel")
+    )}">
+      <div class="artist-spotlight-head">
+        <span class="artist-kicker">${escapeHtml(t("home.sliderEyebrow"))}</span>
+        <p>${escapeHtml(t("home.sliderIntro"))}</p>
+      </div>
+      <div class="artist-slider-shell">
+        <div class="artist-slider-stage">
+          ${slidesMarkup}
+        </div>
+        <div class="artist-slider-controls">
+          <div class="artist-slider-dots" aria-label="${escapeAttr(t("home.sliderNav"))}">
+            ${dotsMarkup}
+          </div>
+          <span class="artist-slider-note">${escapeHtml(t("home.sliderNote"))}</span>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function initHomeArtistSlider(root = document) {
+  const slider = root.querySelector("[data-home-artist-slider]");
+
+  window.clearInterval(homeArtistSliderTimer);
+
+  if (!slider) {
+    return;
+  }
+
+  const slides = Array.from(slider.querySelectorAll("[data-artist-slide]"));
+  const dots = Array.from(slider.querySelectorAll("[data-artist-dot]"));
+
+  if (!slides.length) {
+    return;
+  }
+
+  let currentIndex = 0;
+
+  const setActive = (nextIndex) => {
+    currentIndex = (nextIndex + slides.length) % slides.length;
+
+    slides.forEach((slide, index) => {
+      const isActive = index === currentIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+    });
+
+    dots.forEach((dot, index) => {
+      const isActive = index === currentIndex;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+  };
+
+  const restart = () => {
+    window.clearInterval(homeArtistSliderTimer);
+
+    if (slides.length < 2) {
+      return;
+    }
+
+    homeArtistSliderTimer = window.setInterval(() => {
+      setActive(currentIndex + 1);
+    }, 4200);
+  };
+
+  dots.forEach((dot) => {
+    if (dot.dataset.bound === "true") {
+      return;
+    }
+
+    dot.dataset.bound = "true";
+    dot.addEventListener("click", () => {
+      setActive(Number(dot.dataset.artistIndex || 0));
+      restart();
+    });
+  });
+
+  setActive(0);
+  restart();
 }
 
 function renderEventsFeaturedBlock(event) {
@@ -1273,11 +1436,9 @@ async function resolveUtilityAnnouncement(settings) {
 
 function applyUtilityAnnouncement(announcements, rotationSeconds = 6) {
   const util = document.getElementById("site-util");
-  const link = document.getElementById("site-util-link");
-  const prefix = document.getElementById("site-util-prefix");
-  const main = document.getElementById("site-util-main");
+  const track = document.getElementById("site-util-track");
 
-  if (!util || !link || !prefix || !main) {
+  if (!util || !track) {
     return;
   }
 
@@ -1296,37 +1457,26 @@ function applyUtilityAnnouncement(announcements, rotationSeconds = 6) {
     return;
   }
 
-  const applyItem = (item) => {
-    util.hidden = false;
-    prefix.textContent = item.prefix;
-    main.textContent = item.main;
-    link.setAttribute("href", item.href || "evenements.html");
+  const repeatedItems = [...items, ...items];
 
-    if (/^https?:\/\//.test(item.href || "")) {
-      link.setAttribute("target", "_blank");
-      link.setAttribute("rel", "noopener");
-    } else {
-      link.removeAttribute("target");
-      link.removeAttribute("rel");
-    }
-  };
+  track.innerHTML = repeatedItems
+    .map((item) => {
+      const isExternal = /^https?:\/\//.test(item.href || "");
 
-  let currentIndex = 0;
-  applyItem(items[currentIndex]);
+      return `
+        <a href="${escapeAttr(item.href || "evenements.html")}" class="util-item"${
+          isExternal ? ' target="_blank" rel="noopener"' : ""
+        }>
+          <span>${escapeHtml(item.prefix)}</span>
+          <strong>${escapeHtml(item.main)}</strong>
+          <i class="sep" aria-hidden="true">✦</i>
+        </a>
+      `;
+    })
+    .join("");
 
-  if (items.length === 1) {
-    return;
-  }
-
-  utilityRotationTimer = window.setInterval(() => {
-    util.classList.add("is-changing");
-    currentIndex = (currentIndex + 1) % items.length;
-
-    utilityTransitionTimer = window.setTimeout(() => {
-      applyItem(items[currentIndex]);
-      util.classList.remove("is-changing");
-    }, 210);
-  }, intervalMs);
+  util.style.setProperty("--util-duration", `${Math.max(22, intervalMs / 220)}s`);
+  util.hidden = false;
 }
 
 function bindHelloAssoResize() {
@@ -1882,7 +2032,7 @@ async function renderHomeFeaturedEvent() {
   }
 
   mount.innerHTML = renderHomeFeaturedEventBlock(featured);
-  startCountdown(featured);
+  initHomeArtistSlider(mount);
   registerReveals(mount);
 }
 
@@ -2146,10 +2296,20 @@ function injectChrome(activeKey) {
 
   const navMarkup = `
     <div class="util" id="site-util">
-      <a href="evenements.html" id="site-util-link">
-        <span id="site-util-prefix">${escapeHtml(t("common.utility.defaultPrefix"))}</span>
-        <strong id="site-util-main">${escapeHtml(t("common.utility.defaultMain"))}</strong>
-      </a>
+      <div class="util-viewport" aria-label="${escapeAttr(t("common.utility.news"))}">
+        <div class="util-track" id="site-util-track">
+          <a href="evenements.html" class="util-item">
+            <span>${escapeHtml(t("common.utility.defaultPrefix"))}</span>
+            <strong>${escapeHtml(t("common.utility.defaultMain"))}</strong>
+            <i class="sep" aria-hidden="true">✦</i>
+          </a>
+          <a href="evenements.html" class="util-item" aria-hidden="true">
+            <span>${escapeHtml(t("common.utility.defaultPrefix"))}</span>
+            <strong>${escapeHtml(t("common.utility.defaultMain"))}</strong>
+            <i class="sep" aria-hidden="true">✦</i>
+          </a>
+        </div>
+      </div>
     </div>
     <header class="nav" id="nav">
       <div class="nav-inner">

@@ -111,6 +111,14 @@ const UI_TRANSLATIONS = {
         "Aucun widget HelloAsso n'est affiché pour le moment. Retrouvez les campagnes actives, adhésions ou soutiens directement sur la page HelloAsso de l'association.",
       open: "Ouvrir HelloAsso <span class=\"arr\">→</span>"
     },
+    home: {
+      sliderLabel: "Focus artistes et vie du lieu",
+      sliderEyebrow: "— Visages & rendez-vous",
+      sliderIntro:
+        "À la place du compte à rebours, quelques images de celles et ceux qui font vivre la Maison Rose, en attendant d'alimenter les prochains portraits artistes.",
+      sliderNav: "Sélection d'images artistes",
+      sliderNote: "Le slider défile seul et s'adapte au mobile."
+    },
     contact: {
       send: "Envoyer le message <span class=\"arr\">→</span>",
       sending: "Envoi en cours…",
@@ -228,6 +236,14 @@ const UI_TRANSLATIONS = {
         "No HelloAsso widget is displayed at the moment. You can still find current membership, support or campaign links directly on the association's HelloAsso page.",
       open: "Open HelloAsso <span class=\"arr\">→</span>"
     },
+    home: {
+      sliderLabel: "Artist highlights and life of the house",
+      sliderEyebrow: "— Faces & moments",
+      sliderIntro:
+        "Instead of a countdown, the home page now shows a few images of the people and artistic moments that keep the Pink House alive, ready to host future artist portraits.",
+      sliderNav: "Artist image selection",
+      sliderNote: "The slider moves on its own and stays mobile-friendly."
+    },
     contact: {
       send: "Send message <span class=\"arr\">→</span>",
       sending: "Sending…",
@@ -274,19 +290,19 @@ const STATIC_PAGE_COPY = {
       { selector: ".marquee-track", html: { fr: "<span>Eau-forte <span class=\"dot\">✦</span></span><span>Aquatinte <span class=\"dot\">✦</span></span><span>Taille-douce <span class=\"dot\">✦</span></span><span>Pointe sèche <span class=\"dot\">✦</span></span><span>Lithographie <span class=\"dot\">✦</span></span><span>Transfert &amp; impression <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span><span>Eau-forte <span class=\"dot\">✦</span></span><span>Aquatinte <span class=\"dot\">✦</span></span><span>Taille-douce <span class=\"dot\">✦</span></span><span>Pointe sèche <span class=\"dot\">✦</span></span><span>Lithographie <span class=\"dot\">✦</span></span><span>Transfert &amp; impression <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span>", en: "<span>Etching <span class=\"dot\">✦</span></span><span>Aquatint <span class=\"dot\">✦</span></span><span>Intaglio <span class=\"dot\">✦</span></span><span>Drypoint <span class=\"dot\">✦</span></span><span>Lithography <span class=\"dot\">✦</span></span><span>Transfer &amp; print <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span><span>Etching <span class=\"dot\">✦</span></span><span>Aquatint <span class=\"dot\">✦</span></span><span>Intaglio <span class=\"dot\">✦</span></span><span>Drypoint <span class=\"dot\">✦</span></span><span>Lithography <span class=\"dot\">✦</span></span><span>Transfer &amp; print <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span>" } },
       { selector: ".teasers .sec-head .left .num-tag", text: { fr: "— Découvrir la Maison", en: "— Explore the house" } },
       { selector: ".teasers .sec-head .left h2", html: { fr: "Trois <span class=\"it\">portes</span> d'entrée.", en: "Three ways <span class=\"it\">in.</span>" } },
-      { selector: ".teasers .sec-head .right", text: { fr: "Stages, événements, et l'histoire d'un lieu : trois manières d'entrer dans la Maison Rose.", en: "Workshops, events, and the story of a house: three simple ways to step into the Pink House." } },
-      { selector: ".teaser-grid .teaser:nth-child(1) .num", text: { fr: "— 01 / Apprendre", en: "— 01 / Learn" } },
-      { selector: ".teaser-grid .teaser:nth-child(1) h3", html: { fr: "Stages &amp; <em>cours</em>", en: "Workshops &amp; <em>courses</em>" } },
-      { selector: ".teaser-grid .teaser:nth-child(1) p", text: { fr: "Techniques de gravure à l'eau-forte, aquatinte, taille-douce, pointe sèche, lithographie, transfert et impression.", en: "Etching, aquatint, intaglio, drypoint, lithography, transfer and print techniques taught in small-group formats." } },
-      { selector: ".teaser-grid .teaser:nth-child(1) .more", text: { fr: "Voir le programme →", en: "See the programme →" } },
-      { selector: ".teaser-grid .teaser:nth-child(2) .num", text: { fr: "— 02 / Vivre", en: "— 02 / Experience" } },
-      { selector: ".teaser-grid .teaser:nth-child(2) h3", html: { fr: "Agenda &amp; <em>expositions</em>", en: "Agenda &amp; <em>exhibitions</em>" } },
-      { selector: ".teaser-grid .teaser:nth-child(2) p", text: { fr: "Expositions, performances artistiques, conférences, concerts, ateliers et rendez-vous ouverts à un public très large.", en: "Exhibitions, performances, talks, concerts, workshops and public encounters open to a wide audience." } },
-      { selector: ".teaser-grid .teaser:nth-child(2) .more", text: { fr: "Voir l'agenda →", en: "See what's on →" } },
-      { selector: ".teaser-grid .teaser:nth-child(3) .num", text: { fr: "— 03 / Visiter", en: "— 03 / Visit" } },
-      { selector: ".teaser-grid .teaser:nth-child(3) h3", html: { fr: "Le <em>lieu,</em> la maison", en: "The <em>house,</em> the place" } },
-      { selector: ".teaser-grid .teaser:nth-child(3) p", text: { fr: "Une maison de 156 m², un atelier lumineux, des chambres de résidence et un patio au cœur d'Auvers-sur-Oise.", en: "A 156 m² house, a light-filled studio, residency rooms and a patio in the heart of Auvers-sur-Oise." } },
-      { selector: ".teaser-grid .teaser:nth-child(3) .more", text: { fr: "Visiter →", en: "Visit →" } },
+      { selector: ".teasers .sec-head .right", text: { fr: "Le lieu, les cours et stages, puis l'agenda : trois manières d'entrer dans la Maison Rose.", en: "The house, the workshops, then the agenda: three simple ways to step into the Pink House." } },
+      { selector: ".teaser-grid .teaser:nth-child(1) .num", text: { fr: "— 01 / Visiter", en: "— 01 / Visit" } },
+      { selector: ".teaser-grid .teaser:nth-child(1) h3", html: { fr: "Le <em>lieu,</em> la maison", en: "The <em>house,</em> the place" } },
+      { selector: ".teaser-grid .teaser:nth-child(1) p", text: { fr: "Une maison de 156 m², un atelier lumineux, des chambres de résidence et un patio au cœur d'Auvers-sur-Oise.", en: "A 156 m² house, a light-filled studio, residency rooms and a patio in the heart of Auvers-sur-Oise." } },
+      { selector: ".teaser-grid .teaser:nth-child(1) .more", text: { fr: "Visiter →", en: "Visit →" } },
+      { selector: ".teaser-grid .teaser:nth-child(2) .num", text: { fr: "— 02 / Apprendre", en: "— 02 / Learn" } },
+      { selector: ".teaser-grid .teaser:nth-child(2) h3", html: { fr: "Stages &amp; <em>cours</em>", en: "Workshops &amp; <em>courses</em>" } },
+      { selector: ".teaser-grid .teaser:nth-child(2) p", text: { fr: "Techniques de gravure à l'eau-forte, aquatinte, taille-douce, pointe sèche, lithographie, transfert et impression.", en: "Etching, aquatint, intaglio, drypoint, lithography, transfer and print techniques taught in small-group formats." } },
+      { selector: ".teaser-grid .teaser:nth-child(2) .more", text: { fr: "Voir le programme →", en: "See the programme →" } },
+      { selector: ".teaser-grid .teaser:nth-child(3) .num", text: { fr: "— 03 / Vivre", en: "— 03 / Experience" } },
+      { selector: ".teaser-grid .teaser:nth-child(3) h3", html: { fr: "Agenda &amp; <em>expositions</em>", en: "Agenda &amp; <em>exhibitions</em>" } },
+      { selector: ".teaser-grid .teaser:nth-child(3) p", text: { fr: "Expositions, performances artistiques, conférences, concerts, ateliers et rendez-vous ouverts à un public très large.", en: "Exhibitions, performances, talks, concerts, workshops and public encounters open to a wide audience." } },
+      { selector: ".teaser-grid .teaser:nth-child(3) .more", text: { fr: "Voir l'agenda →", en: "See what's on →" } },
       { selector: ".wstrip .num", text: { fr: "— Hommage", en: "— Tribute" } },
       { selector: ".wstrip h2", html: { fr: "Wallerand, <em>un élan qui perdure.</em>", en: "Wallerand, <em>a momentum that endures.</em>" } },
       { selector: ".wstrip .wrap > p:last-of-type", text: { fr: "Wallerand a vécu ici de 2014 à 2021 et a redonné à la Maison Rose sa vocation d'atelier et de foyer d'artistes. Nous poursuivons aujourd'hui cet élan artistique.", en: "Wallerand lived here from 2014 to 2021 and restored the Pink House as a studio and artists' home. We continue that artistic momentum today." } },
