@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260507c" />
+<link rel="stylesheet" href="assets/site.css?v=20260507d" />
 <style>
   .place-preview { padding: 72px 0 56px; }
   .place-preview-head {
@@ -60,6 +60,19 @@
   .history-text h2 { font-size: clamp(40px, 4.6vw, 64px); line-height: 1.05; margin: 18px 0 32px; }
   .history-text h2 em { font-style: italic; color: var(--terre); }
   .history-text p { color: var(--grey); margin-bottom: 18px; }
+  .history-shot {
+    margin-top: 34px;
+    min-height: 560px;
+    overflow: hidden;
+    background: var(--cream);
+    border: 1px solid var(--line);
+  }
+  .history-shot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
 
   .timeline { position: relative; padding-left: 36px; }
   .timeline::before { content: ""; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 1px; background: var(--terre); }
@@ -274,8 +287,8 @@
     }
     .place-preview-head {
       align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 22px;
+      gap: 18px;
+      margin-bottom: 18px;
     }
     .place-preview-copy {
       font-size: 14px;
@@ -286,13 +299,22 @@
       grid-template-columns: 1fr;
       gap: 14px;
     }
+    .place-shot--stack {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
     .place-shot--hero,
     .place-shot--stack-top,
     .place-shot--stack-bottom,
     .place-shot--stack .place-shot {
-      min-height: 220px;
+      min-height: 190px;
     }
     .history { padding: 80px 0; }
+    .history-shot {
+      aspect-ratio: 4 / 3;
+      min-height: 0;
+      margin-top: 24px;
+    }
     .timeline { padding-left: 28px; }
     .ev::before { left: -26px; }
     .visit { padding: 80px 0; }
@@ -313,17 +335,36 @@
     .map { aspect-ratio: 5 / 4; }
   }
   @media (max-width: 600px) {
+    .place-preview {
+      padding: 48px 0 36px;
+    }
     .place-preview-head {
       flex-direction: column;
       align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
     }
     .place-preview-head .left {
-      display: grid;
-      gap: 8px;
+      width: 100%;
     }
     .place-preview-head .btn {
       width: 100%;
       justify-content: center;
+      min-height: 52px;
+    }
+    .place-preview-grid {
+      gap: 12px;
+    }
+    .place-shot--hero {
+      min-height: 220px;
+    }
+    .place-shot--stack {
+      gap: 12px;
+    }
+    .place-shot--stack-top,
+    .place-shot--stack-bottom,
+    .place-shot--stack .place-shot {
+      min-height: 150px;
     }
     .history-inner { gap: 32px; }
     .history-text h2 { margin: 14px 0 22px; font-size: clamp(30px, 10vw, 42px); }
@@ -388,7 +429,7 @@
       <h1><span class="line">Un lieu historique</span><em class="line">tourné vers l'avenir.</em></h1>
       <p class="lede reveal d2">Depuis 2014, le lieu renoue avec sa vocation de foyer d'artistes : l'artiste plasticien Wallerand s'y installe et redonne vie à la Maison Rose.</p>
     </div>
-    <figure class="page-hero-media page-hero-media--portrait reveal d3">
+    <figure class="page-hero-media page-hero-media--landscape reveal d3">
       <img src="/assets/uploads/maison-rose-visite-verriere.jpg" alt="La verrière de la Maison Rose de Wallerand" loading="lazy" />
     </figure>
   </div>
@@ -432,6 +473,9 @@
         <h2>De l'atelier d'été de Daubigny à <em>la Maison Rose de Wallerand.</em></h2>
         <p>En 1870, Charles-François Daubigny achète la grange à côté de sa maison pour en faire un atelier d'été où il peut peindre de grands formats et recevoir ses amis artistes.</p>
         <p>Depuis 2014, le lieu renoue avec sa vocation de foyer d'artistes : l'artiste plasticien Wallerand s'y installe et redonne à la Maison Rose un élan de résidence, de création et de transmission.</p>
+        <figure class="history-shot reveal d3">
+          <img src="/assets/uploads/maison-rose-visite-salon-public.jpg" alt="Vue de la Maison Rose animée par le public et les artistes" loading="lazy" />
+        </figure>
       </div>
       <div class="timeline reveal d2">
         <div class="ev"><span class="yr">1870</span><h4>Daubigny crée son atelier d'été</h4><p>La grange à côté de sa maison devient un lieu de travail et d'accueil pour ses amis artistes.</p></div>
@@ -645,7 +689,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260507c"></script>
+<script src="assets/site.bundle.js?v=20260507d"></script>
 <script>injectChrome('lieu');</script>
 </body>
 </html>

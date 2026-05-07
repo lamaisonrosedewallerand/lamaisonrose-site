@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260507c" />
+<link rel="stylesheet" href="assets/site.css?v=20260507d" />
 <style>
   .filters {
     display: grid;
@@ -56,6 +56,27 @@
     outline: none;
     border-color: var(--terre);
     box-shadow: 0 0 0 3px rgba(184,101,79,.12);
+  }
+  .artist-entry {
+    margin: 0 0 40px;
+    padding: 22px 24px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.82);
+    display: grid;
+    gap: 12px;
+  }
+  .artist-entry .ey {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--terre);
+  }
+  .artist-entry p {
+    margin: 0;
+    color: var(--grey);
+    font-size: 15px;
+    line-height: 1.68;
+    max-width: 56ch;
   }
 
   .stage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-bottom: 80px; }
@@ -223,9 +244,24 @@
       <h1><span class="line">Cours et stages</span><em class="line">de pratique artistique.</em></h1>
       <p class="lede reveal d2">La gravure ouvre aujourd'hui la programmation, avec une page pensée pour accueillir demain le chant, la sculpture et d'autres pratiques artistiques.</p>
     </div>
-    <figure class="page-hero-media reveal d3">
-      <img src="/assets/uploads/maison-rose-stage-atelier.jpg" alt="Stage de gravure à la Maison Rose de Wallerand" loading="lazy" />
-    </figure>
+    <div class="page-hero-media page-hero-carousel reveal d3" data-hero-carousel aria-label="Cours et stages à la Maison Rose">
+      <div class="page-hero-carousel-stage">
+        <figure class="page-hero-carousel-slide is-active" data-hero-carousel-slide aria-hidden="false">
+          <img src="/assets/uploads/maison-rose-stage-atelier.jpg" alt="Stage de gravure à la Maison Rose de Wallerand" loading="lazy" />
+        </figure>
+        <figure class="page-hero-carousel-slide" data-hero-carousel-slide aria-hidden="true">
+          <img src="/assets/uploads/maison-rose-stage-regard.jpg" alt="Participants autour d'un stage à la Maison Rose de Wallerand" loading="lazy" />
+        </figure>
+        <figure class="page-hero-carousel-slide" data-hero-carousel-slide aria-hidden="true">
+          <img src="/assets/uploads/maison-rose-public.jpg" alt="Public et participants réunis à la Maison Rose de Wallerand" loading="lazy" />
+        </figure>
+      </div>
+      <div class="page-hero-carousel-dots" aria-label="Diaporama cours et stages">
+        <button type="button" class="page-hero-carousel-dot is-active" data-hero-carousel-dot data-hero-carousel-index="0" aria-label="Photo 1" aria-pressed="true"></button>
+        <button type="button" class="page-hero-carousel-dot" data-hero-carousel-dot data-hero-carousel-index="1" aria-label="Photo 2" aria-pressed="false"></button>
+        <button type="button" class="page-hero-carousel-dot" data-hero-carousel-dot data-hero-carousel-index="2" aria-label="Photo 3" aria-pressed="false"></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -250,6 +286,14 @@
     </label>
   </div>
 
+  <div class="artist-entry reveal d2">
+    <span class="ey">— Artistes & intervenants</span>
+    <p>Vous souhaitez proposer un atelier, un cours ou une pratique artistique à la Maison Rose ? Une entrée dédiée vous permet d'envoyer directement votre proposition à l'association.</p>
+    <div class="cta-row">
+      <a href="contact.html?topic=Proposition%20d%27animation%20de%20stage" class="btn btn-primary">Proposer un atelier <span class="arr">→</span></a>
+    </div>
+  </div>
+
   <div class="stage-grid" id="stages-grid">
     <div class="empty-note">Chargement des stages…</div>
   </div>
@@ -272,18 +316,18 @@
     <div class="info-grid">
       <div class="info-card reveal">
         <span class="num-tag">— 01</span>
-        <h4>Techniques</h4>
-        <p>La programmation commence aujourd'hui par la gravure, mais le système est pensé pour accueillir aussi le chant, la sculpture et d'autres pratiques à venir.</p>
+        <h4>Disciplines artistiques</h4>
+        <p>La programmation commence aujourd'hui par la gravure. Très prochainement, le chant, la sculpture et d'autres pratiques artistiques viendront enrichir la Maison Rose.</p>
       </div>
       <div class="info-card reveal d2">
         <span class="num-tag">— 02</span>
-        <h4>Inscriptions</h4>
-        <p>Chaque fiche peut afficher un lien HelloAsso, un contact d'inscription ou des précisions sur la discipline, pour laisser l'association autonome dans ses mises à jour.</p>
+        <h4>Inscription</h4>
+        <p>Pour vous inscrire, cliquez sur la fiche du stage choisi : vous serez redirigé vers HelloAsso ou vers le contact dédié, selon les indications affichées.</p>
       </div>
       <div class="info-card reveal d3">
         <span class="num-tag">— 03</span>
-        <h4>Rythme</h4>
-        <p>Le programme évolue au fil de la saison. Quand aucun cours ou stage n'est annoncé, les archives restent consultables en attendant les prochaines dates.</p>
+        <h4>Fréquence</h4>
+        <p>Des cours, stages et formats ponctuels se déploient tout au long de l'année. Entre deux annonces, les archives restent visibles pour garder la mémoire du programme.</p>
       </div>
     </div>
   </div>
@@ -291,7 +335,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260507c"></script>
+<script src="assets/site.bundle.js?v=20260507d"></script>
 <script>injectChrome('stages');</script>
 </body>
 </html>

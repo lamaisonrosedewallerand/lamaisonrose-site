@@ -1238,6 +1238,78 @@ function initHomeArtistSlider(root = document) {
   restart();
 }
 
+function initHeroCarousels(root = document) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const carousels = Array.from(root.querySelectorAll("[data-hero-carousel]"));
+
+  carousels.forEach((carousel) => {
+    const slides = Array.from(carousel.querySelectorAll("[data-hero-carousel-slide]"));
+    const dots = Array.from(carousel.querySelectorAll("[data-hero-carousel-dot]"));
+
+    if (!slides.length) {
+      return;
+    }
+
+    window.clearInterval(carousel._heroTimer);
+
+    let currentIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
+    if (currentIndex < 0) {
+      currentIndex = 0;
+    }
+
+    const setActive = (nextIndex) => {
+      currentIndex = (nextIndex + slides.length) % slides.length;
+
+      slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === currentIndex;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      });
+
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === currentIndex;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+    };
+
+    const restart = () => {
+      window.clearInterval(carousel._heroTimer);
+
+      if (prefersReducedMotion || slides.length < 2) {
+        return;
+      }
+
+      carousel._heroTimer = window.setInterval(() => {
+        setActive(currentIndex + 1);
+      }, 4200);
+    };
+
+    dots.forEach((dot) => {
+      if (dot.dataset.heroBound === "true") {
+        return;
+      }
+
+      dot.dataset.heroBound = "true";
+      dot.addEventListener("click", () => {
+        setActive(Number(dot.dataset.heroCarouselIndex || 0));
+        restart();
+      });
+    });
+
+    if (carousel.dataset.bound !== "true") {
+      carousel.dataset.bound = "true";
+      carousel.addEventListener("mouseenter", () => window.clearInterval(carousel._heroTimer));
+      carousel.addEventListener("mouseleave", restart);
+      carousel.addEventListener("focusin", () => window.clearInterval(carousel._heroTimer));
+      carousel.addEventListener("focusout", restart);
+    }
+
+    setActive(currentIndex);
+    restart();
+  });
+}
+
 function renderEventsFeaturedBlock(event) {
   const localizedTitle = localizeField(event, "title", t("event.generic"));
   const localizedTime = localizeField(event, "time", "À préciser");
@@ -1300,6 +1372,9 @@ function renderEventRow(event) {
     : t("event.contact");
   const reserveHref = event.helloasso_url ? event.helloasso_url : "contact.html";
   const reserveAttrs = event.helloasso_url ? ' target="_blank" rel="noopener"' : "";
+  const poster = event.image
+    ? imageTag(event.image, localizedTitle, "event-photo")
+    : `<div class="ph ${PLACEHOLDERS.event[0]}"></div>`;
 
   return `
     <details class="ev-row ev-row--details">
@@ -1311,17 +1386,18 @@ function renderEventRow(event) {
           <h3>${escapeHtml(localizedTitle)}</h3>
           <span class="ev-cat">${escapeHtml(category || t("event.generic"))}</span>
         </div>
-        <p>${escapeHtml(truncateText(localizedSummary, 150))}</p>
         <div class="ev-action"><span class="arrow">${moreLabel}</span><span class="plus" aria-hidden="true">+</span></div>
       </summary>
       <div class="ev-panel">
         <div class="ev-panel-grid">
-          <div class="ev-panel-meta">
-            <div><span>${escapeHtml(t("event.schedule"))}</span><strong>${escapeHtml(localizedTime)}</strong></div>
-            <div><span>${escapeHtml(t("event.place"))}</span><strong>${escapeHtml(localizedLocation)}</strong></div>
-            <div><span>${escapeHtml(t("event.entry"))}</span><strong>${escapeHtml(localizedEntry || t("event.freeEntry"))}</strong></div>
-          </div>
+          <figure class="ev-panel-media ${event.image ? "has-photo" : ""}">${poster}</figure>
           <div class="ev-panel-copy">
+            <div class="ev-panel-meta">
+              <div><span>${escapeHtml(t("event.schedule"))}</span><strong>${escapeHtml(localizedTime)}</strong></div>
+              <div><span>${escapeHtml(t("event.place"))}</span><strong>${escapeHtml(localizedLocation)}</strong></div>
+              <div><span>${escapeHtml(t("event.entry"))}</span><strong>${escapeHtml(localizedEntry || t("event.freeEntry"))}</strong></div>
+            </div>
+            <p>${escapeHtml(localizedSummary)}</p>
             <div class="cta-row">
               <a href="${escapeAttr(reserveHref)}"${reserveAttrs} class="btn btn-primary">${reserveLabel}</a>
               <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
@@ -2006,6 +2082,47 @@ function renderPastEventCard(event, index, revealClass = "") {
   `;
 }
 
+function groupEventsByYear(events) {
+  const groups = new Map();
+
+  events.forEach((event) => {
+    const year = parseDate(event.date)?.getFullYear()?.toString() || "Archives";
+
+    if (!groups.has(year)) {
+      groups.set(year, []);
+    }
+
+    groups.get(year).push(event);
+  });
+
+  return [...groups.entries()].sort((left, right) => Number(right[0]) - Number(left[0]));
+}
+
+function renderPastEventsYear(year, events, yearIndex) {
+  const locale = getCurrentLanguage() === "en" ? "events" : "événements";
+  const cards = events
+    .map((event, index) =>
+      renderPastEventCard(event, index + yearIndex * 3, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")
+    )
+    .join("");
+
+  return `
+    <details class="past-year reveal${yearIndex % 2 === 1 ? " d2" : ""}"${yearIndex === 0 ? " open" : ""}>
+      <summary class="past-year-summary">
+        <div class="past-year-meta">
+          <span class="num-tag">— ${escapeHtml(year)}</span>
+          <h3>${escapeHtml(year)}</h3>
+        </div>
+        <span class="past-year-count">${escapeHtml(String(events.length))} ${escapeHtml(locale)}</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </summary>
+      <div class="past-year-panel">
+        <div class="past-grid">${cards}</div>
+      </div>
+    </details>
+  `;
+}
+
 async function renderHomeFeaturedEvent() {
   const mount = document.getElementById("home-featured-event");
 
@@ -2094,10 +2211,8 @@ async function renderEvenementsPage() {
 
   if (pastMount) {
     pastMount.innerHTML = archived.length
-      ? archived
-          .map((event, index) =>
-            renderPastEventCard(event, index, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")
-          )
+      ? groupEventsByYear(archived)
+          .map(([year, items], index) => renderPastEventsYear(year, items, index))
           .join("")
       : renderEmptyNote(t("event.emptyPast"));
   }
@@ -2458,6 +2573,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.error(error);
   } finally {
+    initHeroCarousels();
     initVisitGallery();
   }
 });
