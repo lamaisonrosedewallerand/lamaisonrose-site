@@ -354,12 +354,29 @@ body[data-lang="en"] .hero-lede { max-width: 34rem; }
   font-family: 'Cormorant Garamond', serif;
   font-size: 19px; font-style: italic;
   color: var(--grey); max-width: 42rem; line-height: 1.48;
+  margin-top: 8px;
 }
 .page-hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.84fr);
   gap: clamp(28px, 4vw, 44px);
-  align-items: start;
+  align-items: center;
+}
+.page-hero-media {
+  position: relative;
+  min-height: clamp(250px, 32vw, 420px);
+  overflow: hidden;
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+}
+.page-hero-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.page-hero-media--portrait img {
+  object-position: center 28%;
 }
 
 /* ---------- Footer ---------- */
@@ -538,7 +555,10 @@ footer {
     font-size: 10px;
     letter-spacing: 0.14em;
   }
-  .page-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .page-hero-grid { grid-template-columns: 1fr; gap: 24px; }
+  .page-hero-media {
+    min-height: 300px;
+  }
   .foot-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
 }
 @media (max-width: 1360px) and (min-width: 1025px) {
@@ -825,6 +845,11 @@ footer {
     line-height: 1.58;
   }
 
+  .page-hero-media {
+    width: 100%;
+    min-height: 260px;
+  }
+
   body[data-lang="en"] .page-hero-copy,
   body[data-lang="en"] .page-hero .lede {
     max-width: 100%;
@@ -1003,6 +1028,10 @@ footer {
 
   .page-hero h1 .line + .line::before {
     content: " ";
+  }
+
+  .page-hero-media {
+    min-height: 220px;
   }
 
   .sec-head {
