@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-05-07T23:52:07.619Z",
+  "count": 4,
+  "items": [
+    {
+      "slug": "01-masterclass-violoncelle",
+      "title": "Masterclass de violoncelle",
+      "title_en": "Cello masterclass",
+      "image": "/assets/uploads/maison-rose-masterclass-violoncelle.png",
+      "position": 1,
+      "active": true,
+      "body": "Visuel accueil pour les artistes invités.",
+      "descriptionText": "Visuel accueil pour les artistes invités.",
+      "descriptionHtml": "<p>Visuel accueil pour les artistes invités.</p>"
+    },
+    {
+      "slug": "02-artistes-invites",
+      "title": "Artistes invités",
+      "title_en": "Guest artists",
+      "image": "/assets/uploads/maison-rose-artistes-invites.png",
+      "position": 2,
+      "active": true,
+      "body": "Visuel accueil pour les artistes passés à la Maison Rose.",
+      "descriptionText": "Visuel accueil pour les artistes passés à la Maison Rose.",
+      "descriptionHtml": "<p>Visuel accueil pour les artistes passés à la Maison Rose.</p>"
+    },
+    {
+      "slug": "03-concerts-et-rencontres",
+      "title": "Concerts et rencontres",
+      "title_en": "Concerts and encounters",
+      "image": "/assets/uploads/maison-rose-musiciennes.jpg",
+      "position": 3,
+      "active": true,
+      "body": "Visuel accueil pour les rencontres musicales.",
+      "descriptionText": "Visuel accueil pour les rencontres musicales.",
+      "descriptionHtml": "<p>Visuel accueil pour les rencontres musicales.</p>"
+    },
+    {
+      "slug": "04-residences-dartistes",
+      "title": "Résidences d'artistes",
+      "title_en": "Artist residencies",
+      "image": "/assets/uploads/maison-rose-residence-artistes-nuit.png",
+      "position": 4,
+      "active": true,
+      "body": "Visuel accueil pour les résidences.",
+      "descriptionText": "Visuel accueil pour les résidences.",
+      "descriptionHtml": "<p>Visuel accueil pour les résidences.</p>"
+    }
+  ]
+}

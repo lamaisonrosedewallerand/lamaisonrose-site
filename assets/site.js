@@ -11,6 +11,7 @@ import {
 const DATA_URLS = {
   stages: "assets/data/stages.json",
   evenements: "assets/data/evenements.json",
+  spotlights: "assets/data/spotlights.json",
   site: "assets/data/site-settings.json"
 };
 
@@ -53,7 +54,7 @@ const PLACEHOLDERS = {
 
 const HOME_ARTIST_SPOTLIGHTS = [
   {
-    image: "/assets/uploads/maison-rose-musiciennes.jpg",
+    image: "/assets/uploads/maison-rose-masterclass-violoncelle.png",
     eyebrow: "— Visages invités",
     eyebrow_en: "— Guest artists",
     title: "Concerts et masterclasses",
@@ -64,37 +65,37 @@ const HOME_ARTIST_SPOTLIGHTS = [
       "Guest artists, musical encounters and moments of transmission that reveal another side of the Pink House."
   },
   {
-    image: "/assets/uploads/maison-rose-stage-atelier.jpg",
-    eyebrow: "— En atelier",
-    eyebrow_en: "— In the studio",
-    title: "Cours, gestes et apprentissages",
-    title_en: "Workshops, practice and learning",
+    image: "/assets/uploads/maison-rose-artistes-invites.png",
+    eyebrow: "— Artistes passés",
+    eyebrow_en: "— Visiting artists",
+    title: "Concerts, rencontres et invitations",
+    title_en: "Concerts, encounters and invitations",
     summary:
-      "Les stages se vivent au plus près du geste, dans un atelier lumineux où artistes, intervenants et participants travaillent ensemble.",
+      "La Maison Rose accueille des artistes invités, des musiciennes et des passeurs qui laissent une trace dans la programmation.",
     summary_en:
-      "Workshops happen close to the gesture itself, in a bright studio where artists, teachers and participants work side by side."
+      "The Pink House welcomes guest artists, musicians and contributors who leave their mark on the programme."
   },
   {
-    image: "/assets/uploads/maison-rose-accrochage.jpg",
-    eyebrow: "— En préparation",
-    eyebrow_en: "— In preparation",
-    title: "Accrochages et expositions",
-    title_en: "Installations and exhibitions",
+    image: "/assets/uploads/maison-rose-musiciennes.jpg",
+    eyebrow: "— Portraits invités",
+    eyebrow_en: "— Invited portraits",
+    title: "Artistes et interprètes",
+    title_en: "Artists and performers",
     summary:
-      "Montages, accrochages et temps d'installation racontent un lieu en mouvement, pensé pour accueillir des projets à taille humaine.",
+      "Des visages, des parcours et des présences qui rappellent que la Maison Rose est aussi un lieu de rencontres humaines.",
     summary_en:
-      "Installations, exhibition setups and preparation moments reveal a place in motion, ready to host human-scale artistic projects."
+      "Faces, trajectories and presences that remind us the Pink House is also a place of human encounters."
   },
   {
-    image: "/assets/uploads/maison-rose-public.jpg",
-    eyebrow: "— La vie du lieu",
-    eyebrow_en: "— Life of the house",
-    title: "Public, rencontres et partage",
-    title_en: "Public, encounters and exchange",
+    image: "/assets/uploads/maison-rose-residence-artistes-nuit.png",
+    eyebrow: "— Résidences",
+    eyebrow_en: "— Residencies",
+    title: "Résider à la Maison Rose",
+    title_en: "Living at the Pink House",
     summary:
-      "Le lieu rassemble habitants, visiteurs, artistes et curieux autour d'événements où l'on regarde, échange et découvre ensemble.",
+      "La Maison Rose accueille aussi les artistes sur le temps long, dans un lieu habité de travail, de silence et de préparation.",
     summary_en:
-      "The house brings together residents, visitors, artists and newcomers through events where people look, talk and discover together."
+      "The Pink House also welcomes artists over longer stays, in a place shaped by work, quiet and preparation."
   }
 ];
 
@@ -1087,6 +1088,39 @@ function startCountdown(event) {
 }
 
 function renderHomeFeaturedEventBlock(event) {
+  return renderHomeFeaturedEventBlockWithSpotlights(event, HOME_ARTIST_SPOTLIGHTS);
+}
+
+function normalizeSpotlights(items) {
+  return items
+    .filter((item) => item && item.image && item.active !== false)
+    .sort((left, right) => {
+      const positionLeft = Number(left.position || 999);
+      const positionRight = Number(right.position || 999);
+
+      if (positionLeft !== positionRight) {
+        return positionLeft - positionRight;
+      }
+
+      return String(left.slug || "").localeCompare(String(right.slug || ""));
+    });
+}
+
+async function getHomeArtistSpotlights() {
+  try {
+    const items = normalizeSpotlights(await fetchCollection("spotlights"));
+
+    if (items.length) {
+      return items;
+    }
+  } catch (error) {
+    console.warn("Slider artistes indisponible, repli sur les visuels par défaut.", error);
+  }
+
+  return HOME_ARTIST_SPOTLIGHTS;
+}
+
+function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
   const localizedTitle = localizeField(event, "title", t("event.generic"));
   const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
   const localizedEntry = localizeEntry(event.entry, event);
@@ -1124,14 +1158,14 @@ function renderHomeFeaturedEventBlock(event) {
         ${renderFeatureVisual(event, "home")}
       </div>
       <div class="headline-slider reveal d3">
-        ${renderHomeArtistSlider()}
+        ${renderHomeArtistSlider(spotlights)}
       </div>
     </div>
   `;
 }
 
-function renderHomeArtistSlider() {
-  const slidesMarkup = HOME_ARTIST_SPOTLIGHTS.map((spotlight, index) => {
+function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
+  const slidesMarkup = spotlights.map((spotlight, index) => {
     const title = localizeField(spotlight, "title", "");
 
     return `
@@ -1145,7 +1179,7 @@ function renderHomeArtistSlider() {
     `;
   }).join("");
 
-  const dotsMarkup = HOME_ARTIST_SPOTLIGHTS.map(
+  const dotsMarkup = spotlights.map(
     (spotlight, index) => `
       <button
         type="button"
@@ -1359,7 +1393,6 @@ function renderEventRow(event) {
   const localizedTitle = localizeField(event, "title", t("event.generic"));
   const localizedEntry = localizeEntry(event.entry, event);
   const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
-  const localizedSummary = localizeSummary(event);
   const category = localizedEntry
     ? `${localizedEntry} · ${localizedLocation}`
     : localizedLocation;
@@ -1397,7 +1430,6 @@ function renderEventRow(event) {
               <div><span>${escapeHtml(t("event.place"))}</span><strong>${escapeHtml(localizedLocation)}</strong></div>
               <div><span>${escapeHtml(t("event.entry"))}</span><strong>${escapeHtml(localizedEntry || t("event.freeEntry"))}</strong></div>
             </div>
-            <p>${escapeHtml(localizedSummary)}</p>
             <div class="cta-row">
               <a href="${escapeAttr(reserveHref)}"${reserveAttrs} class="btn btn-primary">${reserveLabel}</a>
               <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
@@ -2130,7 +2162,10 @@ async function renderHomeFeaturedEvent() {
     return;
   }
 
-  const events = await fetchCollection("evenements");
+  const [events, spotlights] = await Promise.all([
+    fetchCollection("evenements"),
+    getHomeArtistSpotlights()
+  ]);
   const featured = chooseFeatured(events);
 
   if (!featured) {
@@ -2138,7 +2173,7 @@ async function renderHomeFeaturedEvent() {
     return;
   }
 
-  mount.innerHTML = renderHomeFeaturedEventBlock(featured);
+  mount.innerHTML = renderHomeFeaturedEventBlockWithSpotlights(featured, spotlights);
   initHomeArtistSlider(mount);
   registerReveals(mount);
 }

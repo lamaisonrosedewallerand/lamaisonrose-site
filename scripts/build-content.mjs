@@ -16,6 +16,11 @@ const collections = [
     name: "evenements",
     sourceDir: path.join(rootDir, "content/evenements"),
     outputFile: path.join(rootDir, "assets/data/evenements.json")
+  },
+  {
+    name: "spotlights",
+    sourceDir: path.join(rootDir, "content/spotlights"),
+    outputFile: path.join(rootDir, "assets/data/spotlights.json")
   }
 ];
 

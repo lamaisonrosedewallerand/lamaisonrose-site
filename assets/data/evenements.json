@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-07T18:29:23.942Z",
-  "count": 24,
+  "generatedAt": "2026-05-07T23:52:07.618Z",
+  "count": 26,
   "items": [
     {
       "slug": "2022-06-03-exposition-wall-rand-art",
@@ -401,6 +401,46 @@
       "body": "Archive du programme des Journées européennes du patrimoine à la Maison Rose de Wallerand.",
       "descriptionText": "Archive du programme des Journées européennes du patrimoine à la Maison Rose de Wallerand.",
       "descriptionHtml": "<p>Archive du programme des Journées européennes du patrimoine à la Maison Rose de Wallerand.</p>"
+    },
+    {
+      "slug": "2026-03-23-atelier-initiation-sumie-enfants",
+      "title": "Atelier d'initiation à l'encre sumi-e pour les enfants de 5 à 14 ans",
+      "title_en": "Sumi-e ink initiation workshop for children aged 5 to 14",
+      "date": "2026-03-23",
+      "time": "Du 23 au 31 mars · ateliers de 2 h · gratuit · matériel fourni",
+      "time_en": "23 to 31 March · 2-hour workshops · free · materials provided",
+      "location": "La Maison Rose de Wallerand, Auvers-sur-Oise",
+      "location_en": "The Pink House of Wallerand, Auvers-sur-Oise",
+      "image": "assets/uploads/maison-rose-stage-atelier.jpg",
+      "entry": "Inscription obligatoire",
+      "entry_en": "Registration required",
+      "helloasso_url": "",
+      "status": "passe",
+      "featured": false,
+      "summary_en": "Free sumi-e initiation workshops for children aged 5 to 14, with materials provided and registration required.",
+      "body": "Du 23 au 31 mars 2026.\n\nAteliers de 2 h gratuits, matériel fourni.\n\nInscription obligatoire au 06 15 37 56 72.",
+      "descriptionText": "Du 23 au 31 mars 2026. Ateliers de 2 h gratuits, matériel fourni. Inscription obligatoire au 06 15 37 56 72.",
+      "descriptionHtml": "<p>Du 23 au 31 mars 2026.</p>\n<p>Ateliers de 2 h gratuits, matériel fourni.</p>\n<p>Inscription obligatoire au 06 15 37 56 72.</p>"
+    },
+    {
+      "slug": "2026-04-04-stage-linogravure-helene-bautista",
+      "title": "Stage de linogravure avec Hélène Bautista",
+      "title_en": "Linocut workshop with Hélène Bautista",
+      "date": "2026-04-04",
+      "time": "Les 4 et 5 avril · 10 h - 17 h",
+      "time_en": "4 and 5 April · 10 am - 5 pm",
+      "location": "La Maison Rose de Wallerand, Auvers-sur-Oise",
+      "location_en": "The Pink House of Wallerand, Auvers-sur-Oise",
+      "image": "assets/uploads/stage-linogravure-avril-2026.jpg",
+      "entry": "Inscription obligatoire",
+      "entry_en": "Registration required",
+      "helloasso_url": "",
+      "status": "passe",
+      "featured": false,
+      "summary_en": "Weekend linocut workshop at the Pink House of Wallerand, with registration required.",
+      "body": "Les 4 et 5 avril 2026, de 10 h à 17 h.\n\nStage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand.\n\nInscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.",
+      "descriptionText": "Les 4 et 5 avril 2026, de 10 h à 17 h. Stage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand. Inscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.",
+      "descriptionHtml": "<p>Les 4 et 5 avril 2026, de 10 h à 17 h.</p>\n<p>Stage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand.</p>\n<p>Inscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.</p>"
     },
     {
       "slug": "exposition-chat-au-vert",
