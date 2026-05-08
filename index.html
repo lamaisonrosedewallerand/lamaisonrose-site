@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260508a" />
+<link rel="stylesheet" href="assets/site.css?v=20260508b" />
 <style>
   /* Hero */
   .hero { position: relative; min-height: calc(100vh - 70px); display: flex; align-items: stretch; overflow: hidden; }
@@ -80,7 +80,11 @@
   .headline-meta div .val { overflow-wrap: anywhere; }
   .headline-text p { color: var(--grey); margin-bottom: 24px; max-width: 480px; }
   .artist-spotlight { margin: 10px 0 0; }
-  .artist-slider-shell { padding: 0; }
+  .artist-slider-shell {
+    max-width: 286px;
+    margin: 0 auto;
+    padding: 0;
+  }
   .artist-slider-stage {
     position: relative;
     min-height: 0;
@@ -101,9 +105,9 @@
     transform: translateY(0);
   }
   .artist-slide-media {
-    width: min(100%, 270px);
+    width: 100%;
     margin: 0 auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
     background: var(--cream-2);
     border: 1px solid var(--line);
@@ -250,8 +254,8 @@
     .headline-visual {
       aspect-ratio: 5 / 4;
     }
-    .artist-slide-media {
-      width: min(100%, 240px);
+    .artist-slider-shell {
+      max-width: 250px;
     }
     .headline-visual .hl-img.has-photo img {
       padding: 8px;
@@ -317,7 +321,7 @@
       display: block;
     }
     .artist-slide-media {
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 3 / 4;
     }
     .artist-slider-controls {
       margin-top: 14px;
@@ -443,7 +447,7 @@
 </main>
 <div id="site-foot"></div>
 
-<script src="assets/site.bundle.js?v=20260508a"></script>
+<script src="assets/site.bundle.js?v=20260508b"></script>
 <script>
   injectChrome('home');
 </script>

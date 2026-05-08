@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-07T23:57:45.927Z",
-  "count": 26,
+  "generatedAt": "2026-05-08T08:52:05.475Z",
+  "count": 28,
   "items": [
     {
       "slug": "2022-06-03-exposition-wall-rand-art",
@@ -441,6 +441,46 @@
       "body": "Les 4 et 5 avril 2026, de 10 h à 17 h.\n\nStage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand.\n\nInscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.",
       "descriptionText": "Les 4 et 5 avril 2026, de 10 h à 17 h. Stage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand. Inscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.",
       "descriptionHtml": "<p>Les 4 et 5 avril 2026, de 10 h à 17 h.</p>\n<p>Stage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand.</p>\n<p>Inscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.</p>"
+    },
+    {
+      "slug": "2026-06-05-le-docteur-gachet-la-gravure-en-partage",
+      "title": "Le docteur Gachet, la gravure en partage",
+      "title_en": "Doctor Gachet, printmaking as a shared practice",
+      "date": "2026-06-05",
+      "time": "Vendredi 5 juin à 19h",
+      "time_en": "Friday 5 June at 7 pm",
+      "location": "La Maison Rose de Wallerand, Auvers-sur-Oise",
+      "location_en": "The Pink House of Wallerand, Auvers-sur-Oise",
+      "image": "assets/uploads/docteur-gachet-gravure-partage-2026.jpg",
+      "entry": "Entrée gratuite sur réservation",
+      "entry_en": "Free entry with reservation",
+      "helloasso_url": "",
+      "status": "a-venir",
+      "featured": false,
+      "summary_en": "Talk with Wouter van der Veen on Friday 5 June at 7 pm. Free admission by reservation, with priority for association members.",
+      "body": "Causerie avec Wouter van der Veen le vendredi 5 juin à 19h.\n\nEntrée gratuite sur réservation, avec priorité aux membres de l'association.\n\nRéservation par mail : mulrichm@hotmail.com.",
+      "descriptionText": "Causerie avec Wouter van der Veen le vendredi 5 juin à 19h. Entrée gratuite sur réservation, avec priorité aux membres de l'association. Réservation par mail : mulrichm@hotmail.com.",
+      "descriptionHtml": "<p>Causerie avec Wouter van der Veen le vendredi 5 juin à 19h.</p>\n<p>Entrée gratuite sur réservation, avec priorité aux membres de l&#39;association.</p>\n<p>Réservation par mail : mulrichm@hotmail.com.</p>"
+    },
+    {
+      "slug": "2026-06-13-conference-auvers-et-les-graveurs",
+      "title": "Conférence Auvers et les graveurs",
+      "title_en": "Conference: Auvers and the printmakers",
+      "date": "2026-06-13",
+      "time": "Samedi 13 juin à 19h",
+      "time_en": "Saturday 13 June at 7 pm",
+      "location": "La Maison Rose de Wallerand, Auvers-sur-Oise",
+      "location_en": "The Pink House of Wallerand, Auvers-sur-Oise",
+      "image": "assets/uploads/conference-auvers-graveurs-2026.png",
+      "entry": "Réservé aux membres sur inscription",
+      "entry_en": "Members only, registration required",
+      "helloasso_url": "",
+      "status": "a-venir",
+      "featured": false,
+      "summary_en": "A conference revisiting Auvers and the printmakers, created by the genealogy workshop of the Auvers-sur-Oise media library and presented on Saturday 13 June at 7 pm.",
+      "body": "Créée par l'atelier généalogie de la médiathèque d'Auvers-sur-Oise en octobre 2025 et revisitée pour les Estampes Auversoises.\n\nSamedi 13 juin à 19h.\n\nOuvert seulement aux membres de l'association. Inscription obligatoire : mulrichm@hotmail.com.",
+      "descriptionText": "Créée par l'atelier généalogie de la médiathèque d'Auvers sur Oise en octobre 2025 et revisitée pour les Estampes Auversoises. Samedi 13 juin à 19h. Ouvert seulement aux membres de l'association. Inscription obligatoire : mulrichm@hotmail.com.",
+      "descriptionHtml": "<p>Créée par l&#39;atelier généalogie de la médiathèque d&#39;Auvers-sur-Oise en octobre 2025 et revisitée pour les Estampes Auversoises.</p>\n<p>Samedi 13 juin à 19h.</p>\n<p>Ouvert seulement aux membres de l&#39;association. Inscription obligatoire : mulrichm@hotmail.com.</p>"
     },
     {
       "slug": "exposition-chat-au-vert",
