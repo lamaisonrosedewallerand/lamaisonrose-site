@@ -69,7 +69,6 @@
   .headline,
   .hero { overflow: hidden; }
   .headline-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: center; }
-  .headline-slider { grid-column: 1 / -1; }
   .headline-text .tag { display: inline-block; padding: 6px 14px; background: var(--terre); color: var(--cream); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 28px; }
   .headline-text h2 { font-size: clamp(44px, 5.2vw, 78px); line-height: 1; margin-bottom: 24px; }
   .headline-text h2 .it { font-style: italic; color: var(--terre); }
@@ -79,14 +78,38 @@
   .headline-meta div .val { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--ink); }
   .headline-meta div .val { overflow-wrap: anywhere; }
   .headline-text p { color: var(--grey); margin-bottom: 24px; max-width: 480px; }
-  .artist-spotlight { margin: 10px 0 0; }
+  .headline-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px 20px;
+    flex-wrap: wrap;
+  }
+  .headline-actions .cta-row {
+    flex: 1 1 360px;
+    margin: 0;
+  }
+  .artist-spotlight {
+    margin: 0 0 2px;
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
   .artist-slider-shell {
-    max-width: 286px;
-    margin: 0 auto;
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    margin: 0;
     padding: 0;
+  }
+  .artist-slider-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey-soft);
+    white-space: nowrap;
   }
   .artist-slider-stage {
     position: relative;
+    width: 84px;
     min-height: 0;
   }
   .artist-slide {
@@ -105,33 +128,34 @@
     transform: translateY(0);
   }
   .artist-slide-media {
-    width: 100%;
+    width: 84px;
     margin: 0 auto;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background: var(--cream-2);
     border: 1px solid var(--line);
+    border-radius: 999px;
   }
   .artist-slide-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 18%;
   }
   .artist-slider-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 14px;
+    margin-top: 0;
   }
   .artist-slider-dots {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
   .artist-dot {
-    width: 10px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
     border-radius: 999px;
     border: 0;
     background: rgba(184, 101, 79, 0.28);
@@ -139,7 +163,7 @@
     transition: width .25s ease, background .25s ease;
   }
   .artist-dot.is-active {
-    width: 26px;
+    width: 16px;
     background: var(--terre);
   }
   .artist-slider-note {
@@ -272,7 +296,25 @@
     .headline-visual {
       aspect-ratio: 5 / 4;
     }
-    .artist-slider-shell { max-width: 286px; }
+    .headline-actions {
+      align-items: flex-start;
+      gap: 14px 16px;
+    }
+    .headline-actions .cta-row {
+      flex-basis: 100%;
+    }
+    .artist-spotlight {
+      margin-left: 0;
+    }
+    .artist-slider-stage {
+      width: 76px;
+    }
+    .artist-slide-media {
+      width: 76px;
+    }
+    .artist-slider-label {
+      font-size: 9px;
+    }
     .headline-visual .hl-img.has-photo img {
       padding: 8px;
     }
@@ -334,19 +376,22 @@
     .headline-meta div .val {
       font-size: 17px;
     }
-    .headline-slider {
-      order: 3;
-    }
     .artist-spotlight {
-      margin: 0;
+      margin: 0 0 0 auto;
+    }
+    .headline-actions {
+      gap: 12px;
+      align-items: flex-end;
+    }
+    .headline-actions .cta-row {
+      flex-basis: 100%;
     }
     .artist-slider-shell {
-      max-width: min(78vw, 294px);
-      margin: 0 auto;
+      gap: 6px;
     }
     .artist-slider-stage {
       min-height: 0;
-      width: 100%;
+      width: 68px;
     }
     .artist-slide {
       position: relative;
@@ -359,15 +404,16 @@
       display: block;
     }
     .artist-slide-media {
-      aspect-ratio: 3 / 4;
+      width: 68px;
+      aspect-ratio: 1 / 1;
     }
     .artist-slide-media img {
       object-fit: cover;
-      object-position: center 18%;
+      object-position: center 20%;
       background: transparent;
     }
     .artist-slider-controls {
-      margin-top: 12px;
+      margin-top: 0;
     }
     .headline-visual {
       aspect-ratio: 4 / 5;

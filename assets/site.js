@@ -1125,6 +1125,9 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
   const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
   const localizedEntry = localizeEntry(event.entry, event);
   const localizedSummary = localizeSummary(event);
+  const artistSliderMarkup = Array.isArray(spotlights) && spotlights.length
+    ? renderHomeArtistSlider(spotlights)
+    : "";
 
   return `
     <div class="headline-grid">
@@ -1143,28 +1146,29 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
           )}</div></div>
         </div>
         <p>${escapeHtml(truncateText(localizedSummary, 240))}</p>
-        <div class="cta-row">
-          ${
-            event.helloasso_url
-              ? `<a href="${escapeAttr(
-                  event.helloasso_url
-                )}" target="_blank" rel="noopener" class="btn btn-primary">${t("event.reserve")}</a>`
-              : `<a href="evenements.html" class="btn btn-primary">${t("event.agenda")}</a>`
-          }
-          <a href="evenements.html" class="btn btn-ghost">${escapeHtml(t("event.fullProgram"))}</a>
+        <div class="headline-actions">
+          <div class="cta-row">
+            ${
+              event.helloasso_url
+                ? `<a href="${escapeAttr(
+                    event.helloasso_url
+                  )}" target="_blank" rel="noopener" class="btn btn-primary">${t("event.reserve")}</a>`
+                : `<a href="evenements.html" class="btn btn-primary">${t("event.agenda")}</a>`
+            }
+            <a href="evenements.html" class="btn btn-ghost">${escapeHtml(t("event.fullProgram"))}</a>
+          </div>
+          ${artistSliderMarkup}
         </div>
       </div>
       <div class="headline-visual reveal d2">
         ${renderFeatureVisual(event, "home")}
-      </div>
-      <div class="headline-slider reveal d3">
-        ${renderHomeArtistSlider(spotlights)}
       </div>
     </div>
   `;
 }
 
 function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
+  const artistLabel = w() === "en" ? "Artists" : "Artistes";
   const slidesMarkup = spotlights.map((spotlight, index) => {
     const title = localizeField(spotlight, "title", "");
 
@@ -1197,6 +1201,7 @@ function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
       t("home.sliderLabel")
     )}">
       <div class="artist-slider-shell">
+        <span class="artist-slider-label">${escapeHtml(artistLabel)}</span>
         <div class="artist-slider-stage">
           ${slidesMarkup}
         </div>
