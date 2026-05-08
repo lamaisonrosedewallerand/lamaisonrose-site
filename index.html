@@ -215,11 +215,29 @@
     .hv-tag { padding: 10px 14px; max-width: 170px; }
     .hv-tag.t1 { top: 14px; left: 10px; transform: none; }
     .hv-tag.t2 { right: 10px; bottom: 14px; transform: none; }
-    .manifesto { padding: 84px 0 76px; }
-    .manifesto .small { margin-bottom: 24px; }
-    .manifesto h2 { margin-bottom: 30px; }
-    .manifesto-quote { max-width: 30ch; padding-top: 28px; }
-    .manifesto-quote p { font-size: 20px; line-height: 1.58; }
+    .manifesto {
+      padding: 72px 0 64px;
+      text-align: left;
+    }
+    .manifesto .small { margin-bottom: 18px; }
+    .manifesto h2 {
+      font-size: clamp(30px, 7vw, 40px);
+      line-height: 1.08;
+      max-width: none;
+      margin: 0 0 24px;
+    }
+    .manifesto-quote {
+      max-width: none;
+      margin: 0;
+      padding-top: 22px;
+    }
+    .manifesto-quote p {
+      font-size: 18px;
+      line-height: 1.54;
+      margin-bottom: 10px;
+      max-width: 24ch;
+    }
+    .manifesto-quote .sign { font-size: 22px; }
     .marquee { padding: 18px 0; }
     .marquee-track { gap: 30px; }
     .marquee-track span { font-size: 22px; }
@@ -254,9 +272,7 @@
     .headline-visual {
       aspect-ratio: 5 / 4;
     }
-    .artist-slider-shell {
-      max-width: 250px;
-    }
+    .artist-slider-shell { max-width: 320px; }
     .headline-visual .hl-img.has-photo img {
       padding: 8px;
     }
@@ -282,8 +298,25 @@
     .hv-tag.t1 { top: 12px; left: 10px; }
     .hv-tag.t2 { right: 10px; bottom: 12px; }
     .scroll-hint { display: none; }
-    .manifesto { padding: 78px 0 70px; }
-    .manifesto h2 { font-size: clamp(34px, 9vw, 48px); margin-bottom: 28px; }
+    .manifesto { padding: 64px 0 58px; }
+    .manifesto .small {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      margin-bottom: 16px;
+    }
+    .manifesto h2 {
+      font-size: clamp(28px, 7.8vw, 34px);
+      line-height: 1.08;
+      margin-bottom: 22px;
+    }
+    .manifesto-quote {
+      padding-top: 20px;
+    }
+    .manifesto-quote p {
+      font-size: 17px;
+      line-height: 1.5;
+      max-width: 22ch;
+    }
     .headline { padding: 72px 0; }
     .headline-grid { gap: 24px; }
     .headline-text {
@@ -307,8 +340,10 @@
     .artist-spotlight {
       margin: 0;
     }
+    .artist-slider-shell { max-width: 100%; }
     .artist-slider-stage {
       min-height: 0;
+      width: 100%;
     }
     .artist-slide {
       position: relative;
@@ -321,7 +356,11 @@
       display: block;
     }
     .artist-slide-media {
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 4 / 5;
+    }
+    .artist-slide-media img {
+      object-fit: contain;
+      background: var(--cream-2);
     }
     .artist-slider-controls {
       margin-top: 14px;
