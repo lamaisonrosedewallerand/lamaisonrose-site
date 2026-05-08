@@ -272,7 +272,7 @@
     .headline-visual {
       aspect-ratio: 5 / 4;
     }
-    .artist-slider-shell { max-width: 320px; }
+    .artist-slider-shell { max-width: 286px; }
     .headline-visual .hl-img.has-photo img {
       padding: 8px;
     }
@@ -340,7 +340,10 @@
     .artist-spotlight {
       margin: 0;
     }
-    .artist-slider-shell { max-width: 100%; }
+    .artist-slider-shell {
+      max-width: min(78vw, 294px);
+      margin: 0 auto;
+    }
     .artist-slider-stage {
       min-height: 0;
       width: 100%;
@@ -356,14 +359,15 @@
       display: block;
     }
     .artist-slide-media {
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 3 / 4;
     }
     .artist-slide-media img {
-      object-fit: contain;
-      background: var(--cream-2);
+      object-fit: cover;
+      object-position: center 18%;
+      background: transparent;
     }
     .artist-slider-controls {
-      margin-top: 14px;
+      margin-top: 12px;
     }
     .headline-visual {
       aspect-ratio: 4 / 5;
