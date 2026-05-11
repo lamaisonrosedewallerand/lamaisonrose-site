@@ -81,7 +81,7 @@ collections:
       - { label: "Description", name: "body", widget: "markdown" }
 
   - name: "spotlights"
-    label: "Slider artistes accueil"
+    label: "Bloc artistes accueil"
     folder: "content/spotlights"
     create: true
     slug: "{{slug}}"
@@ -89,10 +89,12 @@ collections:
     fields:
       - { label: "Titre", name: "title", widget: "string", required: false }
       - { label: "Titre (EN)", name: "title_en", widget: "string", required: false }
+      - { label: "Sur-titre", name: "eyebrow", widget: "string", required: false, hint: "Petit libellé affiché au-dessus du portrait." }
+      - { label: "Sur-titre (EN)", name: "eyebrow_en", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image" }
       - { label: "Position", name: "position", widget: "number", value_type: "int", min: 1, required: false, default: 99 }
       - { label: "Actif", name: "active", widget: "boolean", default: true, required: false }
-      - { label: "Note interne", name: "body", widget: "markdown", required: false }
+      - { label: "Note interne", name: "body", widget: "markdown", required: false, hint: "Ce bloc pilote les photos artistes visibles sur l'accueil, juste à côté de l'événement à la une." }
 
   - name: "evenements"
     label: "Evenements"
@@ -109,6 +111,9 @@ collections:
       - { label: "Lieu", name: "location", widget: "string", required: false }
       - { label: "Lieu (EN)", name: "location_en", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Audio", name: "audio_url", widget: "file", required: false, hint: "Ajoute ici un fichier audio pour l'événement (m4a, mp3, wav...)." }
+      - { label: "Titre audio", name: "audio_title", widget: "string", required: false }
+      - { label: "Titre audio (EN)", name: "audio_title_en", widget: "string", required: false }
       - label: "Entree"
         name: "entry"
         widget: "select"

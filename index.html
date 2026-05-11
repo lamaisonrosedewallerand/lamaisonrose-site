@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260508b" />
+<link rel="stylesheet" href="assets/site.css?v=20260511a" />
 <style>
   /* Hero */
   .hero { position: relative; min-height: calc(100vh - 70px); display: flex; align-items: stretch; overflow: hidden; }
@@ -80,23 +80,31 @@
   .headline-text p { color: var(--grey); margin-bottom: 24px; max-width: 480px; }
   .headline-actions {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 16px 20px;
     flex-wrap: wrap;
   }
   .artist-spotlight {
     margin: 0;
-    flex: 0 0 auto;
+    flex: 0 1 270px;
+    min-width: 240px;
   }
   .artist-slider-shell {
-    display: flex;
-    align-items: center;
+    display: grid;
     gap: 10px;
     margin: 0;
-    padding: 0;
+    padding: 14px;
+    background: rgba(255,255,255,.9);
+    border: 1px solid var(--line);
+  }
+  .artist-slider-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
   }
   .artist-slider-label {
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--grey-soft);
@@ -104,41 +112,58 @@
   }
   .artist-slider-stage {
     position: relative;
-    width: 58px;
-    min-height: 0;
+    width: 100%;
+    min-height: 110px;
   }
   .artist-slide {
-    position: absolute;
-    inset: 0;
-    display: block;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(10px);
-    transition: opacity .45s ease, transform .45s ease;
+    display: none;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
   }
   .artist-slide.is-active {
-    position: relative;
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
+    display: grid;
   }
   .artist-slide-media {
-    width: 58px;
-    margin: 0 auto;
-    aspect-ratio: 1 / 1;
+    width: 92px;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     background: var(--cream-2);
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: 20px;
   }
   .artist-slide-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 16%;
+    object-position: center 20%;
+  }
+  .artist-slide-copy {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+  }
+  .artist-slide-kicker {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terre);
+  }
+  .artist-slide-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    line-height: 0.96;
+    color: var(--ink);
+    font-weight: 500;
   }
   .artist-slider-controls {
-    display: none;
+    display: flex;
+    align-items: center;
+  }
+  .artist-slider-dots {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
   }
   .artist-dot {
     width: 7px;
@@ -284,14 +309,29 @@
       aspect-ratio: 5 / 4;
     }
     .headline-actions { gap: 14px 16px; }
+    .artist-spotlight {
+      flex-basis: 100%;
+      min-width: 0;
+      max-width: 360px;
+    }
+    .artist-slider-shell {
+      padding: 12px;
+    }
+    .artist-slide {
+      grid-template-columns: 80px minmax(0, 1fr);
+      gap: 12px;
+    }
     .artist-slider-stage {
-      width: 54px;
+      min-height: 96px;
     }
     .artist-slide-media {
-      width: 54px;
+      width: 80px;
     }
     .artist-slider-label {
       font-size: 9px;
+    }
+    .artist-slide-title {
+      font-size: 20px;
     }
     .headline-visual .hl-img.has-photo img {
       padding: 8px;
@@ -356,33 +396,36 @@
     }
     .headline-actions {
       gap: 12px;
-      align-items: center;
+      align-items: stretch;
+    }
+    .artist-spotlight {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
     }
     .artist-slider-shell {
+      padding: 12px;
       gap: 8px;
     }
-    .artist-slider-stage {
-      min-height: 0;
-      width: 50px;
-    }
     .artist-slide {
-      position: relative;
-      inset: auto;
-      display: none;
-      opacity: 1;
-      transform: none;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 10px;
     }
-    .artist-slide.is-active {
-      display: block;
+    .artist-slider-stage {
+      min-height: 84px;
+      width: 100%;
     }
     .artist-slide-media {
-      width: 50px;
-      aspect-ratio: 1 / 1;
+      width: 74px;
+      border-radius: 16px;
     }
     .artist-slide-media img {
       object-fit: cover;
       object-position: center 18%;
       background: transparent;
+    }
+    .artist-slide-title {
+      font-size: 18px;
     }
     .headline-visual {
       aspect-ratio: 4 / 5;
@@ -505,7 +548,7 @@
 </main>
 <div id="site-foot"></div>
 
-<script src="assets/site.bundle.js?v=20260508b"></script>
+<script src="assets/site.bundle.js?v=20260511a"></script>
 <script>
   injectChrome('home');
 </script>

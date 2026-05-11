@@ -302,6 +302,23 @@ body[data-lang="en"] .hero-lede { max-width: 34rem; }
 .btn-light:hover { background: var(--rose); }
 .btn .arr { display: inline-block; transition: transform .3s; }
 .btn:hover .arr { transform: translateX(4px); }
+.event-audio {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+  max-width: 360px;
+}
+.event-audio-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terre);
+}
+.event-audio audio {
+  width: 100%;
+  min-height: 42px;
+  accent-color: var(--terre);
+}
 
 /* ---------- Reveal ---------- */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s ease, transform 1s ease; }
@@ -1029,6 +1046,10 @@ footer {
     width: 100%;
     justify-content: center;
     padding: 15px 22px;
+  }
+
+  .event-audio {
+    max-width: none;
   }
 
   .cta-row {

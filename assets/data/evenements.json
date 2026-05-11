@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-11T09:39:26.045Z",
+  "generatedAt": "2026-05-11T10:03:01.430Z",
   "count": 28,
   "items": [
     {
@@ -552,6 +552,9 @@
       "location": "La Maison Rose de Wallerand, Auvers-sur-Oise",
       "location_en": "The Pink House of Wallerand, Auvers-sur-Oise",
       "image": "assets/uploads/les-estampes-auversoises-2026.jpg",
+      "audio_url": "/assets/uploads/audio-maison-rose-estampes.m4a",
+      "audio_title": "Écouter la présentation de l'événement",
+      "audio_title_en": "Listen to the event presentation",
       "entry": "Entrée libre",
       "entry_en": "Free entry",
       "helloasso_url": "",

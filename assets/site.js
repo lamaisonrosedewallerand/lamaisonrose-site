@@ -814,6 +814,25 @@ function initSmoothAnchors() {
   });
 }
 
+function scrollToCurrentHash() {
+  const hash = window.location.hash;
+
+  if (!hash || hash.length < 2) {
+    return;
+  }
+
+  const target = document.querySelector(hash);
+
+  if (!target) {
+    return;
+  }
+
+  window.setTimeout(() => {
+    const offset = target.getBoundingClientRect().top + window.scrollY - 82;
+    window.scrollTo({ top: offset, behavior: "smooth" });
+  }, 120);
+}
+
 function initBurger() {
   const nav = document.getElementById("nav");
   const burger = nav ? nav.querySelector(".burger") : null;
@@ -1128,6 +1147,7 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
   const artistSliderMarkup = Array.isArray(spotlights) && spotlights.length
     ? renderHomeArtistSlider(spotlights)
     : "";
+  const audioMarkup = renderEventAudioPlayer(event);
 
   return `
     <div class="headline-grid">
@@ -1159,6 +1179,7 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
           </div>
           ${artistSliderMarkup}
         </div>
+        ${audioMarkup}
       </div>
       <div class="headline-visual reveal d2">
         ${renderFeatureVisual(event, "home")}
@@ -1168,9 +1189,15 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
 }
 
 function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
-  const artistLabel = getCurrentLanguage() === "en" ? "Artists" : "Artistes";
+  const language = getCurrentLanguage();
+  const artistLabel = language === "en" ? "Guest artists" : "Artistes invités";
   const slidesMarkup = spotlights.map((spotlight, index) => {
     const title = localizeField(spotlight, "title", "");
+    const eyebrow = localizeField(
+      spotlight,
+      "eyebrow",
+      language === "en" ? "Invited portrait" : "Portrait invité"
+    );
 
     return `
       <article class="artist-slide${index === 0 ? " is-active" : ""}" data-artist-slide aria-hidden="${
@@ -1178,6 +1205,10 @@ function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
       }">
         <div class="artist-slide-media">
           ${imageTag(spotlight.image, title, "artist-photo")}
+        </div>
+        <div class="artist-slide-copy">
+          <span class="artist-slide-kicker">${escapeHtml(eyebrow)}</span>
+          <strong class="artist-slide-title">${escapeHtml(title || artistLabel)}</strong>
         </div>
       </article>
     `;
@@ -1201,14 +1232,16 @@ function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
       t("home.sliderLabel")
     )}">
       <div class="artist-slider-shell">
-        <span class="artist-slider-label">${escapeHtml(artistLabel)}</span>
+        <div class="artist-slider-head">
+          <span class="artist-slider-label">${escapeHtml(artistLabel)}</span>
+          <div class="artist-slider-controls">
+            <div class="artist-slider-dots" aria-label="${escapeAttr(t("home.sliderNav"))}">
+              ${dotsMarkup}
+            </div>
+          </div>
+        </div>
         <div class="artist-slider-stage">
           ${slidesMarkup}
-        </div>
-        <div class="artist-slider-controls">
-          <div class="artist-slider-dots" aria-label="${escapeAttr(t("home.sliderNav"))}">
-            ${dotsMarkup}
-          </div>
         </div>
       </div>
     </section>
@@ -1355,6 +1388,7 @@ function renderEventsFeaturedBlock(event) {
   const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
   const localizedEntry = localizeEntry(event.entry, event);
   const localizedSummary = localizeSummary(event);
+  const audioMarkup = renderEventAudioPlayer(event);
   return `
     <div class="feat-grid">
       <div class="reveal">
@@ -1385,6 +1419,7 @@ function renderEventsFeaturedBlock(event) {
           }
           <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
         </div>
+        ${audioMarkup}
       </div>
       <div class="feat-visual reveal d2">
         ${renderFeatureVisual(event, "events")}
@@ -1413,6 +1448,7 @@ function renderEventRow(event) {
   const poster = event.image
     ? imageTag(event.image, localizedTitle, "event-photo")
     : `<div class="ph ${PLACEHOLDERS.event[0]}"></div>`;
+  const audioMarkup = renderEventAudioPlayer(event);
 
   return `
     <details class="ev-row ev-row--details">
@@ -1435,6 +1471,7 @@ function renderEventRow(event) {
               <div><span>${escapeHtml(t("event.place"))}</span><strong>${escapeHtml(localizedLocation)}</strong></div>
               <div><span>${escapeHtml(t("event.entry"))}</span><strong>${escapeHtml(localizedEntry || t("event.freeEntry"))}</strong></div>
             </div>
+            ${audioMarkup}
             <div class="cta-row">
               <a href="${escapeAttr(reserveHref)}"${reserveAttrs} class="btn btn-primary">${reserveLabel}</a>
               <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
@@ -1443,6 +1480,29 @@ function renderEventRow(event) {
         </div>
       </div>
     </details>
+  `;
+}
+
+function renderEventAudioPlayer(event) {
+  const audioUrl = String(event.audio_url || "").trim();
+
+  if (!audioUrl) {
+    return "";
+  }
+
+  const audioLabel = localizeField(
+    event,
+    "audio_title",
+    getCurrentLanguage() === "en" ? "Listen to the presentation" : "Écouter la présentation"
+  );
+
+  return `
+    <div class="event-audio">
+      <span class="event-audio-label">${escapeHtml(audioLabel)}</span>
+      <audio controls preload="none">
+        <source src="${escapeAttr(audioUrl)}" type="audio/mp4" />
+      </audio>
+    </div>
   `;
 }
 
@@ -2575,6 +2635,7 @@ function injectChrome(activeKey) {
   initBurger();
   initLanguageSwitcher();
   applyLanguage();
+  scrollToCurrentHash();
 
   fetchSiteSettings()
     .then(async (settings) => {
@@ -2615,5 +2676,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   } finally {
     initHeroCarousels();
     initVisitGallery();
+    scrollToCurrentHash();
   }
 });

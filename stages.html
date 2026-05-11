@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260508b" />
+<link rel="stylesheet" href="assets/site.css?v=20260511a" />
 <style>
   .filters {
     display: grid;
@@ -77,6 +77,9 @@
     font-size: 15px;
     line-height: 1.68;
     max-width: 56ch;
+  }
+  .artist-entry .cta-row {
+    width: auto;
   }
 
   .stage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding-bottom: 80px; }
@@ -160,6 +163,20 @@
       margin-bottom: 38px;
     }
     .filter-select { min-height: 50px; }
+    .artist-entry {
+      margin: 0 0 32px;
+      padding: 20px;
+      gap: 14px;
+    }
+    .artist-entry p {
+      font-size: 14px;
+      line-height: 1.68;
+      max-width: none;
+    }
+    .artist-entry .cta-row,
+    .artist-entry .btn {
+      width: 100%;
+    }
     .stage-grid {
       gap: 32px;
       padding-bottom: 56px;
@@ -335,7 +352,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260508b"></script>
+<script src="assets/site.bundle.js?v=20260511a"></script>
 <script>injectChrome('stages');</script>
 </body>
 </html>
