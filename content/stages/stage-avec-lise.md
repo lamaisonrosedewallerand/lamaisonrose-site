@@ -1,5 +1,7 @@
 ---
 title: "STAGE AVEC LISE "
+discipline: Gravure
+level: "Débutant "
 image: /assets/uploads/le-temps-dun-cafe-chez-tagliana-2026.jpg
 status: ouvert
 featured: false
