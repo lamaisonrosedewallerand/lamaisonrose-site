@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260511a" />
+<link rel="stylesheet" href="assets/site.css?v=20260511b" />
 <style>
   /* Hero */
   .hero { position: relative; min-height: calc(100vh - 70px); display: flex; align-items: stretch; overflow: hidden; }
@@ -79,23 +79,26 @@
   .headline-meta div .val { overflow-wrap: anywhere; }
   .headline-text p { color: var(--grey); margin-bottom: 24px; max-width: 480px; }
   .headline-actions {
-    display: flex;
-    align-items: flex-end;
-    gap: 16px 20px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto minmax(320px, 380px);
+    align-items: end;
+    gap: 20px;
+    justify-content: start;
   }
+  .headline-actions .cta-row { flex-wrap: nowrap; }
   .artist-spotlight {
     margin: 0;
-    flex: 0 1 270px;
-    min-width: 240px;
+    min-width: 320px;
   }
   .artist-slider-shell {
     display: grid;
-    gap: 10px;
+    gap: 12px;
     margin: 0;
-    padding: 14px;
+    padding: 16px 18px;
     background: rgba(255,255,255,.9);
     border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 18px 40px -30px rgba(26,22,20,.32);
   }
   .artist-slider-head {
     display: flex;
@@ -113,24 +116,24 @@
   .artist-slider-stage {
     position: relative;
     width: 100%;
-    min-height: 110px;
+    min-height: 148px;
   }
   .artist-slide {
     display: none;
-    grid-template-columns: 92px minmax(0, 1fr);
-    gap: 14px;
+    grid-template-columns: 118px minmax(0, 1fr);
+    gap: 16px;
     align-items: center;
   }
   .artist-slide.is-active {
     display: grid;
   }
   .artist-slide-media {
-    width: 92px;
+    width: 118px;
     aspect-ratio: 4 / 5;
     overflow: hidden;
     background: var(--cream-2);
     border: 1px solid var(--line);
-    border-radius: 20px;
+    border-radius: 24px;
   }
   .artist-slide-media img {
     width: 100%;
@@ -151,10 +154,17 @@
   }
   .artist-slide-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
+    font-size: 30px;
     line-height: 0.96;
     color: var(--ink);
     font-weight: 500;
+  }
+  .artist-slide-summary {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--grey);
+    max-width: 26ch;
   }
   .artist-slider-controls {
     display: flex;
@@ -220,9 +230,12 @@
 
   /* Wallerand strip */
   .wstrip {
-    background:
+    background-image:
       linear-gradient(180deg, rgba(26,22,20,.88), rgba(26,22,20,.92)),
-      url("/assets/uploads/maison-rose-vie-du-lieu.jpg") center/cover;
+      var(--home-wstrip-background, url("/assets/uploads/maison-rose-vie-du-lieu.jpg"));
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     color: #E8DDD0;
     padding: 100px 0;
     text-align: center;
@@ -308,30 +321,36 @@
     .headline-visual {
       aspect-ratio: 5 / 4;
     }
-    .headline-actions { gap: 14px 16px; }
+    .headline-actions {
+      grid-template-columns: 1fr;
+      gap: 14px 16px;
+    }
     .artist-spotlight {
-      flex-basis: 100%;
       min-width: 0;
-      max-width: 360px;
+      max-width: 420px;
     }
     .artist-slider-shell {
-      padding: 12px;
+      padding: 14px 16px;
     }
     .artist-slide {
-      grid-template-columns: 80px minmax(0, 1fr);
+      grid-template-columns: 96px minmax(0, 1fr);
       gap: 12px;
     }
     .artist-slider-stage {
-      min-height: 96px;
+      min-height: 122px;
     }
     .artist-slide-media {
-      width: 80px;
+      width: 96px;
     }
     .artist-slider-label {
       font-size: 9px;
     }
     .artist-slide-title {
-      font-size: 20px;
+      font-size: 24px;
+    }
+    .artist-slide-summary {
+      font-size: 12px;
+      max-width: 30ch;
     }
     .headline-visual .hl-img.has-photo img {
       padding: 8px;
@@ -398,26 +417,29 @@
       gap: 12px;
       align-items: stretch;
     }
+    .headline-actions .cta-row {
+      flex-wrap: wrap;
+    }
     .artist-spotlight {
       width: 100%;
       max-width: none;
       min-width: 0;
     }
     .artist-slider-shell {
-      padding: 12px;
-      gap: 8px;
-    }
-    .artist-slide {
-      grid-template-columns: 74px minmax(0, 1fr);
+      padding: 14px;
       gap: 10px;
     }
+    .artist-slide {
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 12px;
+    }
     .artist-slider-stage {
-      min-height: 84px;
+      min-height: 118px;
       width: 100%;
     }
     .artist-slide-media {
-      width: 74px;
-      border-radius: 16px;
+      width: 96px;
+      border-radius: 20px;
     }
     .artist-slide-media img {
       object-fit: cover;
@@ -425,7 +447,11 @@
       background: transparent;
     }
     .artist-slide-title {
-      font-size: 18px;
+      font-size: 22px;
+    }
+    .artist-slide-summary {
+      font-size: 12px;
+      max-width: none;
     }
     .headline-visual {
       aspect-ratio: 4 / 5;
@@ -548,7 +574,7 @@
 </main>
 <div id="site-foot"></div>
 
-<script src="assets/site.bundle.js?v=20260511a"></script>
+<script src="assets/site.bundle.js?v=20260511b"></script>
 <script>
   injectChrome('home');
 </script>

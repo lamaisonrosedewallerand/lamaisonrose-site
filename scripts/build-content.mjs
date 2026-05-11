@@ -29,6 +29,20 @@ const singletons = [
     name: "site",
     sourceFile: path.join(rootDir, "content/site/settings.md"),
     outputFile: path.join(rootDir, "assets/data/site-settings.json")
+  },
+  {
+    name: "siteImages",
+    sourceFiles: [
+      path.join(rootDir, "content/site/images-home.md"),
+      path.join(rootDir, "content/site/images-lieu.md"),
+      path.join(rootDir, "content/site/images-association.md"),
+      path.join(rootDir, "content/site/images-stages.md"),
+      path.join(rootDir, "content/site/images-agenda.md"),
+      path.join(rootDir, "content/site/images-contact.md"),
+      path.join(rootDir, "content/site/images-adherer.md"),
+      path.join(rootDir, "content/site/images-wallerand.md")
+    ],
+    outputFile: path.join(rootDir, "assets/data/site-images.json")
   }
 ];
 
@@ -47,8 +61,9 @@ async function main() {
   }
 
   for (const singleton of singletons) {
-    const raw = await readFile(singleton.sourceFile, "utf8");
-    const item = parseMarkdownDocument(path.basename(singleton.sourceFile), raw);
+    const item = singleton.sourceFiles
+      ? await loadMergedSingleton(singleton.sourceFiles)
+      : await loadSingleton(singleton.sourceFile);
     const payload = {
       generatedAt: new Date().toISOString(),
       item
@@ -58,6 +73,24 @@ async function main() {
     await writeFile(singleton.outputFile, `${JSON.stringify(payload, null, 2)}\n`);
     console.log(`Built ${singleton.name}: 1 item`);
   }
+}
+
+async function loadSingleton(sourceFile) {
+  const raw = await readFile(sourceFile, "utf8");
+  return parseMarkdownDocument(path.basename(sourceFile), raw);
+}
+
+async function loadMergedSingleton(sourceFiles) {
+  const merged = {};
+
+  for (const sourceFile of sourceFiles) {
+    const raw = await readFile(sourceFile, "utf8");
+    const parsed = parseMarkdownDocument(path.basename(sourceFile), raw);
+    const { slug, body, descriptionText, descriptionHtml, image, ...item } = parsed;
+    Object.assign(merged, item);
+  }
+
+  return merged;
 }
 
 async function loadCollection(sourceDir) {

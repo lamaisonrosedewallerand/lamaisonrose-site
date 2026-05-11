@@ -12,7 +12,8 @@ const DATA_URLS = {
   stages: "assets/data/stages.json",
   evenements: "assets/data/evenements.json",
   spotlights: "assets/data/spotlights.json",
-  site: "assets/data/site-settings.json"
+  site: "assets/data/site-settings.json",
+  siteImages: "assets/data/site-images.json"
 };
 
 const DEFAULT_SITE_SETTINGS = {
@@ -728,6 +729,15 @@ async function fetchSiteSettings() {
   }
 }
 
+async function fetchSiteImages() {
+  try {
+    return await fetchSingleton("siteImages");
+  } catch (error) {
+    console.warn("Configuration des photos du site indisponible.", error);
+    return {};
+  }
+}
+
 async function fetchPublicConfig() {
   if (publicConfigPromise) {
     return publicConfigPromise;
@@ -1198,6 +1208,7 @@ function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
       "eyebrow",
       language === "en" ? "Invited portrait" : "Portrait invité"
     );
+    const summary = localizeField(spotlight, "summary", "");
 
     return `
       <article class="artist-slide${index === 0 ? " is-active" : ""}" data-artist-slide aria-hidden="${
@@ -1209,6 +1220,7 @@ function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
         <div class="artist-slide-copy">
           <span class="artist-slide-kicker">${escapeHtml(eyebrow)}</span>
           <strong class="artist-slide-title">${escapeHtml(title || artistLabel)}</strong>
+          ${summary ? `<p class="artist-slide-summary">${escapeHtml(summary)}</p>` : ""}
         </div>
       </article>
     `;
@@ -1529,6 +1541,39 @@ function applyHomeHeroImage(imageUrl) {
   const value = String(imageUrl || "").trim() || DEFAULT_SITE_SETTINGS.home_hero_image;
   const escaped = value.replace(/"/g, '\\"');
   document.documentElement.style.setProperty("--home-hero-image", `url("${escaped}")`);
+}
+
+function applyBackgroundImageVar(variableName, imageUrl) {
+  const value = String(imageUrl || "").trim();
+
+  if (!value) {
+    return;
+  }
+
+  const escaped = value.replace(/"/g, '\\"');
+  document.documentElement.style.setProperty(variableName, `url("${escaped}")`);
+}
+
+function applySiteImagesToDom(images) {
+  if (!images || typeof images !== "object") {
+    return;
+  }
+
+  document.querySelectorAll("[data-site-image]").forEach((node) => {
+    const slot = String(node.dataset.siteImage || "").trim();
+    const value = String(images[slot] || "").trim();
+
+    if (!slot || !value) {
+      return;
+    }
+
+    if (node.tagName === "IMG") {
+      node.setAttribute("src", value);
+    }
+  });
+
+  applyBackgroundImageVar("--home-wstrip-background", images.home_wstrip_background);
+  applyBackgroundImageVar("--adherer-background-image", images.adherer_background_image);
 }
 
 function applySiteSettingsToDom(settings) {
@@ -2662,6 +2707,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initNewsletterForm();
   initSmoothAnchors();
   initBurger();
+  const siteImagesPromise = fetchSiteImages();
 
   try {
     await Promise.all([
@@ -2670,6 +2716,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderEvenementsPage(),
       hydrateMaps()
     ]);
+    applySiteImagesToDom(await siteImagesPromise);
     applyLanguage();
   } catch (error) {
     console.error(error);
