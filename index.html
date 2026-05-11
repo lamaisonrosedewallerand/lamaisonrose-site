@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260511c" />
+<link rel="stylesheet" href="assets/site.css?v=20260511d" />
 <style>
   /* Hero */
   .hero { position: relative; min-height: calc(100vh - 70px); display: flex; align-items: stretch; overflow: hidden; }
@@ -79,17 +79,20 @@
   .headline-meta div .val { overflow-wrap: anywhere; }
   .headline-text p { color: var(--grey); margin-bottom: 24px; max-width: 480px; }
   .headline-actions {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
     align-items: start;
     justify-content: start;
     gap: 16px;
     margin-top: 4px;
-    max-width: 420px;
   }
   .headline-actions .cta-row {
     flex-wrap: wrap;
     align-self: start;
+  }
+  .headline-sidecar {
+    margin-top: 18px;
+    width: 100%;
   }
   .artist-spotlight {
     margin: 0;
@@ -328,10 +331,7 @@
     .headline-visual {
       aspect-ratio: 5 / 4;
     }
-    .headline-actions {
-      max-width: 420px;
-      gap: 16px;
-    }
+    .headline-actions { gap: 16px; }
     .artist-spotlight {
       min-width: 0;
       max-width: 420px;
@@ -420,11 +420,7 @@
     .headline-meta div .val {
       font-size: 17px;
     }
-    .headline-actions {
-      max-width: none;
-      gap: 14px;
-      align-items: stretch;
-    }
+    .headline-actions { gap: 14px; align-items: stretch; }
     .headline-actions .cta-row {
       flex-wrap: wrap;
     }

@@ -1187,8 +1187,8 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
             }
             <a href="evenements.html" class="btn btn-ghost">${escapeHtml(t("event.fullProgram"))}</a>
           </div>
-          ${artistSliderMarkup}
         </div>
+        ${artistSliderMarkup ? `<div class="headline-sidecar">${artistSliderMarkup}</div>` : ""}
         ${audioMarkup}
       </div>
       <div class="headline-visual reveal d2">
