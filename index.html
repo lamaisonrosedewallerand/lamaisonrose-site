@@ -80,20 +80,22 @@
   .headline-text p { color: var(--grey); margin-bottom: 24px; max-width: 480px; }
   .headline-actions {
     display: grid;
-    grid-template-columns: minmax(0, max-content) minmax(300px, 360px);
+    grid-template-columns: 1fr;
     align-items: start;
     justify-content: start;
-    gap: 14px;
+    gap: 16px;
     margin-top: 4px;
+    max-width: 420px;
   }
   .headline-actions .cta-row {
-    flex-wrap: nowrap;
-    align-self: center;
+    flex-wrap: wrap;
+    align-self: start;
   }
   .artist-spotlight {
     margin: 0;
-    min-width: 300px;
-    max-width: 360px;
+    min-width: 0;
+    max-width: 420px;
+    width: 100%;
   }
   .artist-slider-shell {
     display: grid;
@@ -169,7 +171,7 @@
     font-size: 12px;
     line-height: 1.48;
     color: var(--grey);
-    max-width: 24ch;
+    max-width: 30ch;
   }
   .artist-slider-controls {
     display: flex;
@@ -327,7 +329,7 @@
       aspect-ratio: 5 / 4;
     }
     .headline-actions {
-      grid-template-columns: 1fr;
+      max-width: 420px;
       gap: 16px;
     }
     .artist-spotlight {
@@ -419,6 +421,7 @@
       font-size: 17px;
     }
     .headline-actions {
+      max-width: none;
       gap: 14px;
       align-items: stretch;
     }
