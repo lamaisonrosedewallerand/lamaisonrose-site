@@ -1168,7 +1168,7 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
 }
 
 function renderHomeArtistSlider(spotlights = HOME_ARTIST_SPOTLIGHTS) {
-  const artistLabel = w() === "en" ? "Artists" : "Artistes";
+  const artistLabel = getCurrentLanguage() === "en" ? "Artists" : "Artistes";
   const slidesMarkup = spotlights.map((spotlight, index) => {
     const title = localizeField(spotlight, "title", "");
 
