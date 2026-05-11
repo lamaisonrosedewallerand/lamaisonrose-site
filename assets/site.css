@@ -11,7 +11,7 @@
   --grey-soft: #7A726B;
   --line: #DCD2C4;
   --max: 1320px;
-  --gutter-mobile: 24px;
+  --gutter-mobile: 20px;
   --measure-mobile: 36ch;
   --section-space-mobile: 80px;
   --home-hero-image: url("/assets/uploads/maison-rose-facade-hero.jpg");
@@ -814,6 +814,10 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .wrap {
+    padding: 0 var(--gutter-mobile);
+  }
+
   body::before {
     opacity: 0.14;
   }
@@ -878,7 +882,7 @@ footer {
   }
 
   .page-hero {
-    padding: 24px 20px 28px;
+    padding: 24px var(--gutter-mobile) 28px;
   }
 
   .page-hero-grid {
@@ -978,10 +982,6 @@ footer {
     opacity: 0.08;
   }
 
-  .wrap {
-    padding: 0 var(--gutter-mobile);
-  }
-
   .nav-inner {
     padding: 14px var(--gutter-mobile);
     gap: 10px;
@@ -1057,7 +1057,7 @@ footer {
   }
 
   .page-hero {
-    padding: 24px 20px 28px;
+    padding: 24px var(--gutter-mobile) 28px;
   }
 
   .page-hero .crumbs {
@@ -1119,6 +1119,21 @@ footer {
   .sec-head {
     gap: 12px;
     margin-bottom: 22px;
+  }
+
+  .place-preview-head,
+  .visit-grid,
+  .ct-grid,
+  .foot-support {
+    gap: 16px;
+  }
+
+  .empty-note,
+  .event-audio,
+  .page-hero-copy,
+  .sec-head .left,
+  .sec-head .right {
+    max-width: 100%;
   }
 
   .sec-head .left h2 {
