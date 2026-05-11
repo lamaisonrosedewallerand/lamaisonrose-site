@@ -38,8 +38,8 @@
             ${e.helloasso_url?`<a href="${f(e.helloasso_url)}" target="_blank" rel="noopener" class="btn btn-primary">${i("event.reserve")}</a>`:`<a href="evenements.html" class="btn btn-primary">${i("event.agenda")}</a>`}
             <a href="evenements.html" class="btn btn-ghost">${o(i("event.fullProgram"))}</a>
           </div>
-          ${a}
         </div>
+        ${a?`<div class="headline-sidecar">${a}</div>`:""}
         ${c}
       </div>
       <div class="headline-visual reveal d2">
