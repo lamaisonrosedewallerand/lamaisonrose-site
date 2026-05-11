@@ -967,6 +967,11 @@ footer {
     gap: 36px;
     margin-bottom: 48px;
   }
+
+  .event-audio audio {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 700px) {
@@ -1153,6 +1158,10 @@ footer {
     padding: 24px;
     font-size: 14px;
     line-height: 1.68;
+  }
+
+  .event-audio {
+    width: 100%;
   }
 
   .foot-grid .brand-blk p,
