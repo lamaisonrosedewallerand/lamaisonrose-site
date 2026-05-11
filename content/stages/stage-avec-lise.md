@@ -1,5 +1,7 @@
 ---
 title: "STAGE AVEC LISE "
+price: 20€
+duration: "1 journée "
 duration_en: "1 journée "
 places: 20
 discipline: Gravure
