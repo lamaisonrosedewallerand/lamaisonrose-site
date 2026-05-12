@@ -382,7 +382,7 @@ body[data-lang="en"] .brand-text .a {
   min-height: 38px;
   padding: 8px 9px;
   border-radius: 999px;
-  font-size: 0.5625rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -942,6 +942,11 @@ footer {
   max-width: 30ch;
   font-size: var(--fs-small);
   line-height: 1.68;
+}
+
+.foot-note strong {
+  color: var(--cream);
+  font-weight: 600;
 }
 
 .foot-grid ul {

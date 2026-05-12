@@ -43,14 +43,14 @@ const UI_TRANSLATIONS = {
         directions: "Itinéraire →",
         contactTitle: "Contact",
         helloasso: "HelloAsso →",
-        followTitle: "Suivre la programmation",
-        followNote:
-          "Retrouvez l'agenda, les stages et les liens d'inscription sur le site et sur HelloAsso, sans paiement ni espace membre interne.",
-        events: "L'agenda →",
-        stages: "Les cours et stages →",
-        join: "Adhérer ou soutenir →",
         supportEyebrow: "Avec le soutien de",
         supportText: "Patrimoine remarquable d’Île-de-France · Région Île-de-France",
+        supportTitle: "Soutenir l'association",
+        supportNote:
+          "Adhérer, soutenir un projet ou préparer une visite : <strong>HelloAsso reste l'entrée la plus simple</strong> pour accompagner la Maison Rose.",
+        supportPrimary: "Adhérer ou soutenir →",
+        supportHelloasso: "Ouvrir HelloAsso →",
+        supportAgenda: "Voir l'agenda →",
         copyright: "© 2026 La Maison Rose de Wallerand"
       }
     },
@@ -92,7 +92,7 @@ const UI_TRANSLATIONS = {
       minutes: "Minutes",
       seconds: "Secondes",
       reserve: "Réserver ma venue <span class=\"arr\">→</span>",
-      agenda: "Voir l'agenda <span class=\"arr\">→</span>",
+      agenda: "Découvrir le programme <span class=\"arr\">→</span>",
       fullProgram: "Programme complet",
       contact: "Nous contacter <span class=\"arr\">→</span>",
       practical: "Informations pratiques",
@@ -119,7 +119,14 @@ const UI_TRANSLATIONS = {
       sliderIntro:
         "À la place du compte à rebours, quelques images de celles et ceux qui font vivre la Maison Rose, en attendant d'alimenter les prochains portraits artistes.",
       sliderNav: "Sélection d'images artistes",
-      sliderNote: "Le slider défile seul et s'adapte au mobile."
+      sliderNote: "Le slider défile seul et s'adapte au mobile.",
+      manifestoIntro:
+        "La Maison Rose est avant tout un lieu vivant où l'on vient voir, écouter, apprendre et rencontrer.",
+      manifestoPill1: "Expositions",
+      manifestoPill2: "Performances",
+      manifestoPill3: "Concerts",
+      manifestoPill4: "Conférences",
+      manifestoPill5: "Ateliers & rencontres"
     },
     contact: {
       send: "Envoyer le message <span class=\"arr\">→</span>",
@@ -170,14 +177,14 @@ const UI_TRANSLATIONS = {
         directions: "Directions →",
         contactTitle: "Contact",
         helloasso: "HelloAsso →",
-        followTitle: "Follow the programme",
-        followNote:
-          "Find the agenda, workshops and registration links on the site and on HelloAsso, with no internal payment flow or member area.",
-        events: "The agenda →",
-        stages: "Courses & workshops →",
-        join: "Join or support →",
         supportEyebrow: "With the support of",
         supportText: "Remarkable Heritage of Île-de-France · Île-de-France Region",
+        supportTitle: "Support the association",
+        supportNote:
+          "Join, support a project or prepare a visit: <strong>HelloAsso remains the simplest gateway</strong> to support the Pink House.",
+        supportPrimary: "Join or support →",
+        supportHelloasso: "Open HelloAsso →",
+        supportAgenda: "See the agenda →",
         copyright: "© 2026 The Pink House of Wallerand"
       }
     },
@@ -219,7 +226,7 @@ const UI_TRANSLATIONS = {
       minutes: "Minutes",
       seconds: "Seconds",
       reserve: "Book my visit <span class=\"arr\">→</span>",
-      agenda: "See the agenda <span class=\"arr\">→</span>",
+      agenda: "Discover the programme <span class=\"arr\">→</span>",
       fullProgram: "Full programme",
       contact: "Contact us <span class=\"arr\">→</span>",
       practical: "Practical information",
@@ -246,7 +253,14 @@ const UI_TRANSLATIONS = {
       sliderIntro:
         "Instead of a countdown, the home page now shows a few images of the people and artistic moments that keep the Pink House alive, ready to host future artist portraits.",
       sliderNav: "Artist image selection",
-      sliderNote: "The slider moves on its own and stays mobile-friendly."
+      sliderNote: "The slider moves on its own and stays mobile-friendly.",
+      manifestoIntro:
+        "The Pink House is first and foremost a living place where people come to see, listen, learn and meet.",
+      manifestoPill1: "Exhibitions",
+      manifestoPill2: "Performances",
+      manifestoPill3: "Concerts",
+      manifestoPill4: "Talks",
+      manifestoPill5: "Workshops & encounters"
     },
     contact: {
       send: "Send message <span class=\"arr\">→</span>",
@@ -280,7 +294,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".hero .hero-sub", text: { fr: "À 10 minutes à pied de la gare d'Auvers-sur-Oise, au cœur du centre historique.", en: "A 10-minute walk from Auvers-sur-Oise station, right in the historic centre." } },
       { selector: ".hero .hero-lede", text: { fr: "Ancien atelier d'été de Charles-François Daubigny, la Maison Rose accueille des artistes en résidence, des stages de gravure et des événements culturels tout au long de l'année.", en: "Formerly Charles-François Daubigny's summer studio, the Pink House hosts artists in residence, engraving workshops and cultural events throughout the year." } },
       { selector: ".hero .cta-row .btn-primary", html: { fr: "Découvrir nos stages <span class=\"arr\">→</span>", en: "Discover our workshops <span class=\"arr\">→</span>" } },
-      { selector: ".hero .cta-row .btn-ghost", text: { fr: "Voir l'agenda", en: "See the agenda" } },
+      { selector: ".hero .cta-row .btn-ghost", text: { fr: "Découvrir le programme", en: "Discover the programme" } },
       { selector: ".hero .hv-frame .img", attrs: { "aria-label": { fr: "Façade de la Maison Rose", en: "Front façade of the Pink House" } } },
       { selector: ".hero .hv-tag.t1 .lbl", text: { fr: "Atelier", en: "Studio" } },
       { selector: ".hero .hv-tag.t1 .val", html: { fr: "<strong>62 m²</strong> d’atelier · maison de 156 m²", en: "<strong>62 m²</strong> studio · 156 m² house" } },
@@ -289,7 +303,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".hero .scroll-hint span:first-child", text: { fr: "Découvrir", en: "Discover" } },
       { selector: ".manifesto .small", text: { fr: "— L'esprit du lieu —", en: "— The spirit of the house —" } },
       { selector: ".manifesto h2", html: { fr: "Un ancien atelier d'artistes devenu <em>lieu de vie, de résidence et de transmission,</em> pour mieux explorer le présent et l'avenir.", en: "A former artists' studio turned into <em>a lived-in place of residency and transmission,</em> made to explore the present and the future." } },
-      { selector: ".manifesto-quote p", text: { fr: "La Maison Rose est avant tout un lieu vivant qui accueille expositions, performances, concerts, conférences, ateliers et rencontres.", en: "The Pink House is first and foremost a living place that welcomes exhibitions, performances, concerts, talks, workshops and encounters." } },
+      { selector: ".manifesto-quote p", text: { fr: "La Maison Rose est avant tout un lieu vivant où l'on vient voir, écouter, apprendre et rencontrer.", en: "The Pink House is first and foremost a living place where people come to see, listen, learn and meet." } },
       { selector: ".manifesto-quote .sign", text: { fr: "— La Maison Rose de Wallerand", en: "— The Pink House of Wallerand" } },
       { selector: ".marquee-track", html: { fr: "<span>Eau-forte <span class=\"dot\">✦</span></span><span>Aquatinte <span class=\"dot\">✦</span></span><span>Taille-douce <span class=\"dot\">✦</span></span><span>Pointe sèche <span class=\"dot\">✦</span></span><span>Lithographie <span class=\"dot\">✦</span></span><span>Transfert &amp; impression <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span><span>Eau-forte <span class=\"dot\">✦</span></span><span>Aquatinte <span class=\"dot\">✦</span></span><span>Taille-douce <span class=\"dot\">✦</span></span><span>Pointe sèche <span class=\"dot\">✦</span></span><span>Lithographie <span class=\"dot\">✦</span></span><span>Transfert &amp; impression <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span>", en: "<span>Etching <span class=\"dot\">✦</span></span><span>Aquatint <span class=\"dot\">✦</span></span><span>Intaglio <span class=\"dot\">✦</span></span><span>Drypoint <span class=\"dot\">✦</span></span><span>Lithography <span class=\"dot\">✦</span></span><span>Transfer &amp; print <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span><span>Etching <span class=\"dot\">✦</span></span><span>Aquatint <span class=\"dot\">✦</span></span><span>Intaglio <span class=\"dot\">✦</span></span><span>Drypoint <span class=\"dot\">✦</span></span><span>Lithography <span class=\"dot\">✦</span></span><span>Transfer &amp; print <span class=\"dot\">✦</span></span><span>Auvers-sur-Oise <span class=\"dot\">✦</span></span>" } },
       { selector: ".teasers .sec-head .left h2", html: { fr: "Trois <span class=\"it\">portes</span> d'entrée.", en: "Three ways <span class=\"it\">in.</span>" } },

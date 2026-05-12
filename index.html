@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260513a" />
+<link rel="stylesheet" href="assets/site.css?v=20260513b" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -206,16 +206,36 @@
   }
   .manifesto-quote {
     max-width: 32rem;
+    display: grid;
+    gap: 14px;
     padding-top: 20px;
     border-top: 1px solid var(--line);
   }
   .manifesto-quote p {
-    margin-bottom: 10px;
+    max-width: 28ch;
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(1.0625rem, 4.2vw, 1.375rem);
     font-style: italic;
     color: var(--grey);
     line-height: 1.54;
+  }
+  .manifesto-pills {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .manifesto-pills li {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(184, 101, 79, 0.08);
+    border: 1px solid rgba(184, 101, 79, 0.14);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terre-dark);
+    line-height: 1.2;
   }
   .manifesto-quote .sign {
     font-family: "Caveat", cursive;
@@ -519,11 +539,18 @@
   .teaser {
     background: var(--cream);
     padding: 28px 20px;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    border: 1px solid rgba(220, 210, 196, 0.9);
+    box-shadow: 0 14px 28px -24px rgba(26, 22, 20, 0.22);
+    cursor: pointer;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.25s ease, border-color 0.25s ease;
   }
   .teaser:hover {
     transform: translateY(-4px);
     box-shadow: 0 24px 40px -28px rgba(26, 22, 20, 0.25);
+  }
+  .teaser:active {
+    background: #f6ede5;
+    border-color: rgba(184, 101, 79, 0.3);
   }
   .teaser .num {
     display: block;
@@ -549,6 +576,9 @@
     line-height: 1.68;
   }
   .teaser .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 0.75rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -576,6 +606,13 @@
     color: var(--rose);
     font-size: var(--fs-eyebrow);
     letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+  .wstrip .yrs {
+    margin: 0 auto 10px;
+    color: rgba(232, 221, 208, 0.72);
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
   }
   .wstrip h2 {
@@ -675,6 +712,13 @@
     }
     .teaser {
       padding: 34px 28px;
+    }
+  }
+
+  @media (hover: none) {
+    .teaser:active {
+      transform: none;
+      box-shadow: 0 18px 32px -26px rgba(26, 22, 20, 0.22);
     }
   }
 
@@ -878,7 +922,7 @@
       <p class="hero-lede reveal d3">Ancien atelier d'été de Charles-François Daubigny, la Maison Rose accueille des artistes en résidence, des stages de gravure et des événements culturels tout au long de l'année.</p>
       <div class="cta-row reveal d4">
         <a href="stages.html" class="btn btn-primary">Découvrir nos stages <span class="arr">→</span></a>
-        <a href="evenements.html" class="btn btn-ghost">Voir l'agenda</a>
+        <a href="evenements.html" class="btn btn-ghost">Découvrir le programme</a>
       </div>
     </div>
     <div class="hero-visual reveal d3">
@@ -896,7 +940,14 @@
   <p class="small reveal">— L'esprit du lieu —</p>
   <h2 class="reveal d2">Un ancien atelier d'artistes devenu <em>lieu de vie, de résidence et de transmission,</em> pour mieux explorer le présent et l'avenir.</h2>
   <div class="manifesto-quote reveal d3">
-    <p>La Maison Rose est avant tout un lieu vivant qui accueille expositions, performances, concerts, conférences, ateliers et rencontres.</p>
+    <p data-i18n-key="home.manifestoIntro">La Maison Rose est avant tout un lieu vivant où l'on vient voir, écouter, apprendre et rencontrer.</p>
+    <ul class="manifesto-pills" aria-label="Programmation de la Maison Rose">
+      <li data-i18n-key="home.manifestoPill1">Expositions</li>
+      <li data-i18n-key="home.manifestoPill2">Performances</li>
+      <li data-i18n-key="home.manifestoPill3">Concerts</li>
+      <li data-i18n-key="home.manifestoPill4">Conférences</li>
+      <li data-i18n-key="home.manifestoPill5">Ateliers & rencontres</li>
+    </ul>
     <span class="sign">— La Maison Rose de Wallerand</span>
   </div>
 </section>
@@ -958,6 +1009,7 @@
   <div class="wrap">
     <p class="num reveal">— Hommage</p>
     <h2 class="reveal d2">Wallerand, <em>un élan qui perdure.</em></h2>
+    <p class="yrs reveal d2">1964 — 2021</p>
     <p class="reveal d3">Wallerand a vécu ici de 2014 à 2021 et a redonné à la Maison Rose sa vocation d'atelier et de foyer d'artistes. Nous poursuivons aujourd'hui cet élan artistique.</p>
     <a href="wallerand.html" class="btn btn-light reveal d4">Découvrir Wallerand <span class="arr">→</span></a>
   </div>
@@ -1005,12 +1057,12 @@
           </ul>
         </div>
         <div>
-          <h4 data-i18n-key="common.footer.followTitle">Suivre la programmation</h4>
-          <p class="foot-note" data-i18n-key="common.footer.followNote">Retrouvez l'agenda, les stages et les liens d'inscription sur le site et sur HelloAsso, sans paiement ni espace membre interne.</p>
+          <h4 data-i18n-key="common.footer.supportTitle">Soutenir l'association</h4>
+          <p class="foot-note" data-i18n-html-key="common.footer.supportNote">Adhérer, soutenir un projet ou préparer une visite : <strong>HelloAsso reste l'entrée la plus simple</strong> pour accompagner la Maison Rose.</p>
           <ul style="margin-top: 18px;">
-            <li><a href="evenements.html" data-i18n-key="common.footer.events">L'agenda →</a></li>
-            <li><a href="stages.html" data-i18n-key="common.footer.stages">Les cours et stages →</a></li>
-            <li><a href="adherer.html" data-i18n-key="common.footer.join">Adhérer ou soutenir →</a></li>
+            <li><a href="adherer.html" data-i18n-key="common.footer.supportPrimary">Adhérer ou soutenir →</a></li>
+            <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener noreferrer" data-site-helloasso data-i18n-key="common.footer.supportHelloasso">Ouvrir HelloAsso →</a></li>
+            <li><a href="evenements.html" data-i18n-key="common.footer.supportAgenda">Voir l'agenda →</a></li>
           </ul>
         </div>
       </div>
@@ -1034,7 +1086,7 @@
   </footer>
 </div>
 
-<script src="assets/site.bundle.js?v=20260513a"></script>
+<script src="assets/site.bundle.js?v=20260513b"></script>
 <script>
   injectChrome('home');
 </script>

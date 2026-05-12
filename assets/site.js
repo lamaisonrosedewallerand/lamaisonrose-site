@@ -871,31 +871,6 @@ function initNavScroll() {
   onScroll();
 }
 
-function initNewsletterForm() {
-  const newsForm = document.getElementById("newsForm");
-
-  if (!newsForm || newsForm.dataset.bound === "true") {
-    return;
-  }
-
-  newsForm.dataset.bound = "true";
-  newsForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const success = document.getElementById("newsOk");
-
-    if (success) {
-      success.classList.add("show");
-      window.setTimeout(() => success.classList.remove("show"), 4000);
-    }
-
-    const input = newsForm.querySelector("input");
-
-    if (input) {
-      input.value = "";
-    }
-  });
-}
-
 function initSmoothAnchors() {
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     if (anchor.dataset.bound === "true") {
@@ -2762,7 +2737,6 @@ function injectChrome(activeKey) {
   }
 
   initNavScroll();
-  initNewsletterForm();
   initSmoothAnchors();
   initBurger();
   initLanguageSwitcher();
@@ -2791,7 +2765,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   clearLegacyTranslateArtifacts();
   registerReveals(document);
   initNavScroll();
-  initNewsletterForm();
   initSmoothAnchors();
   initBurger();
   const siteImagesPromise = fetchSiteImages();
