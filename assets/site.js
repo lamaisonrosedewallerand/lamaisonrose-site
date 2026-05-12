@@ -741,8 +741,8 @@ function createRevealObserver() {
       });
     },
     {
-      threshold: 0.12,
-      rootMargin: "0px 0px -40px 0px"
+      threshold: 0.05,
+      rootMargin: "0px 0px -20px 0px"
     }
   );
 
@@ -922,8 +922,9 @@ function scrollToCurrentHash() {
 function initBurger() {
   const nav = document.getElementById("nav");
   const burger = nav ? nav.querySelector(".burger") : null;
+  const menu = nav ? nav.querySelector(".menu") : null;
 
-  if (!nav || !burger || burger.dataset.bound === "true") {
+  if (!nav || !burger || !menu || burger.dataset.bound === "true") {
     return;
   }
 
@@ -931,11 +932,29 @@ function initBurger() {
   const syncExpanded = () => {
     burger.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
   };
+  const focusables = () =>
+    [...nav.querySelectorAll(".menu a, .lang-btn, .nav-cta, .burger")].filter(
+      (element) =>
+        !element.hasAttribute("disabled") &&
+        element.getAttribute("aria-hidden") !== "true" &&
+        window.getComputedStyle(element).display !== "none"
+    );
+  const focusFirstMenuLink = () => {
+    const firstMenuLink = menu.querySelector("a");
+
+    if (firstMenuLink) {
+      window.setTimeout(() => firstMenuLink.focus(), 20);
+    }
+  };
 
   burger.addEventListener("click", (event) => {
     event.stopPropagation();
     nav.classList.toggle("open");
     syncExpanded();
+
+    if (nav.classList.contains("open")) {
+      focusFirstMenuLink();
+    }
   });
 
   nav.querySelectorAll(".menu a, .nav-cta").forEach((link) => {
@@ -959,12 +978,40 @@ function initBurger() {
   });
 
   window.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape" || !nav.classList.contains("open")) {
+    if (!nav.classList.contains("open")) {
       return;
     }
 
-    nav.classList.remove("open");
-    syncExpanded();
+    if (event.key === "Escape") {
+      nav.classList.remove("open");
+      syncExpanded();
+      burger.focus();
+      return;
+    }
+
+    if (event.key !== "Tab") {
+      return;
+    }
+
+    const items = focusables();
+
+    if (!items.length) {
+      return;
+    }
+
+    const first = items[0];
+    const last = items[items.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+      return;
+    }
+
+    if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 
   syncExpanded();
@@ -1080,7 +1127,7 @@ function renderStageAction(stage) {
   }
 
   if (stage.helloasso_url) {
-    return `<a href="${escapeAttr(stage.helloasso_url)}" target="_blank" rel="noopener" class="reg">${t(
+    return `<a href="${escapeAttr(stage.helloasso_url)}" target="_blank" rel="noopener noreferrer" class="reg">${t(
       "stage.register"
     )} <span class="arr">→</span></a>`;
   }
@@ -1258,7 +1305,7 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
               event.helloasso_url
                 ? `<a href="${escapeAttr(
                     event.helloasso_url
-                  )}" target="_blank" rel="noopener" class="btn btn-primary">${t("event.reserve")}</a>`
+                  )}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">${t("event.reserve")}</a>`
                 : `<a href="evenements.html" class="btn btn-primary">${t("event.agenda")}</a>`
             }
             <a href="evenements.html" class="btn btn-ghost">${escapeHtml(t("event.fullProgram"))}</a>
@@ -1502,7 +1549,7 @@ function renderEventsFeaturedBlock(event) {
             event.helloasso_url
               ? `<a href="${escapeAttr(
                   event.helloasso_url
-                )}" target="_blank" rel="noopener" class="btn btn-primary">${t("event.reserve")}</a>`
+                )}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">${t("event.reserve")}</a>`
               : `<a href="contact.html" class="btn btn-primary">${t("event.contact")}</a>`
           }
           <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
@@ -1544,7 +1591,9 @@ function renderEventRow(event) {
     : event.helloasso_url
       ? event.helloasso_url
       : "contact.html";
-  const reserveAttrs = event.helloasso_url ? ' target="_blank" rel="noopener"' : "";
+  const reserveAttrs = event.helloasso_url
+    ? ' target="_blank" rel="noopener noreferrer"'
+    : "";
   const practicalHref = isStage ? "stages.html" : "contact.html";
   const practicalLabel = isStage
     ? getCurrentLanguage() === "en"
@@ -1766,7 +1815,7 @@ function applyUtilityAnnouncement(announcements, rotationSeconds = 6) {
 
       return `
         <a href="${escapeAttr(item.href || "evenements.html")}" class="util-item"${
-          isExternal ? ' target="_blank" rel="noopener"' : ""
+          isExternal ? ' target="_blank" rel="noopener noreferrer"' : ""
         } aria-hidden="true">
           <span>${escapeHtml(item.prefix)}</span>
           <strong>${escapeHtml(item.main)}</strong>
@@ -1839,7 +1888,7 @@ function renderHelloAssoWidget(settings) {
         <p>${escapeHtml(t("helloasso.noWidget"))}</p>
         <a href="${escapeAttr(
           settings.helloasso_url
-        )}" target="_blank" rel="noopener" class="btn btn-primary">${t("helloasso.open")}</a>
+        )}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">${t("helloasso.open")}</a>
       </div>
     `;
     return;
@@ -2664,6 +2713,7 @@ function injectChrome(activeKey) {
   setDocumentLanguage(language);
 
   const navMarkup = `
+    <a href="#main" class="skip-link">${escapeHtml(language === "en" ? "Skip to main content" : "Aller au contenu principal")}</a>
     <div class="util" id="site-util">
       <div class="util-viewport" aria-label="${escapeAttr(t("common.utility.news"))}">
         <div class="util-track" id="site-util-track">
@@ -2739,20 +2789,20 @@ function injectChrome(activeKey) {
               <li><a href="mailto:contact@lamaisonrosedewallerand.com" data-site-email>contact@lamaisonrosedewallerand.com</a></li>
               <li><a href="tel:+33615375672" data-site-phone>+33 6 15 37 56 72</a></li>
               <li class="foot-socials">
-                <a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener" data-site-instagram class="foot-social-link" aria-label="Instagram">
+                <a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener noreferrer" data-site-instagram class="foot-social-link" aria-label="Instagram">
                   <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="5"></rect>
                     <circle cx="12" cy="12" r="4.25"></circle>
                     <circle cx="17.5" cy="6.5" r="1"></circle>
                   </svg>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=100089640846307" target="_blank" rel="noopener" data-site-facebook class="foot-social-link" aria-label="Facebook">
+                <a href="https://www.facebook.com/profile.php?id=100089640846307" target="_blank" rel="noopener noreferrer" data-site-facebook class="foot-social-link" aria-label="Facebook">
                   <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
                     <path d="M13.5 21v-7h2.4l.4-2.8h-2.8V9.4c0-.8.2-1.4 1.4-1.4H16V5.5c-.2 0-.9-.1-1.8-.1-1.8 0-3 1.1-3 3.2v1.8H9V14h2.4v7h2.1Z"></path>
                   </svg>
                 </a>
               </li>
-              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" data-site-helloasso>${escapeHtml(t("common.footer.helloasso"))}</a></li>
+              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener noreferrer" data-site-helloasso>${escapeHtml(t("common.footer.helloasso"))}</a></li>
             </ul>
           </div>
           <div>
@@ -2779,7 +2829,6 @@ function injectChrome(activeKey) {
           <div class="links">
             <a href="index.html">${escapeHtml(t("common.nav.home"))}</a>
             <a href="contact.html">${escapeHtml(t("common.nav.contact"))}</a>
-            <a href="admin/">Admin</a>
           </div>
         </div>
       </div>
@@ -2802,6 +2851,7 @@ function injectChrome(activeKey) {
 
     if (activeLink) {
       activeLink.classList.add("active");
+      activeLink.setAttribute("aria-current", "page");
     }
   }
 

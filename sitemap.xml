@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap/image/0.9">
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/"/>
+    <image:image>
+      <image:loc>https://lamaisonrosedewallerand.com/assets/uploads/maison-rose-facade-hero.jpg</image:loc>
+      <image:title>Façade de la Maison Rose de Wallerand à Auvers-sur-Oise</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/le-lieu.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/le-lieu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/le-lieu.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/le-lieu.html"/>
+  </url>
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/stages.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/stages.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/stages.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/stages.html"/>
+  </url>
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/evenements.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/evenements.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/evenements.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/evenements.html"/>
+  </url>
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/wallerand.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/wallerand.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/wallerand.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/wallerand.html"/>
+  </url>
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/association.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/association.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/association.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/association.html"/>
+  </url>
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/contact.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/contact.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/contact.html"/>
+  </url>
+  <url>
+    <loc>https://lamaisonrosedewallerand.com/adherer.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://lamaisonrosedewallerand.com/adherer.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamaisonrosedewallerand.com/adherer.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamaisonrosedewallerand.com/adherer.html"/>
+  </url>
+</urlset>

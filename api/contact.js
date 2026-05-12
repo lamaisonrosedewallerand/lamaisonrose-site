@@ -1,6 +1,9 @@
 const RECIPIENT = process.env.CONTACT_FORM_TO || "contact@lamaisonrosedewallerand.com";
 const SENDER = process.env.CONTACT_FORM_FROM || "La Maison Rose <onboarding@resend.dev>";
 const SUBJECT_PREFIX = process.env.CONTACT_FORM_SUBJECT_PREFIX || "[Maison Rose]";
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+const rateLimitStore = new Map();
 
 function json(res, status, payload) {
   res.status(status);
@@ -13,6 +16,62 @@ function clean(value, max = 4000) {
     .replace(/\r/g, "")
     .trim()
     .slice(0, max);
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function getClientIp(req) {
+  const forwardedFor = req.headers["x-forwarded-for"];
+
+  if (typeof forwardedFor === "string" && forwardedFor.trim()) {
+    return forwardedFor.split(",")[0].trim();
+  }
+
+  if (Array.isArray(forwardedFor) && forwardedFor.length) {
+    return String(forwardedFor[0]).trim();
+  }
+
+  return (
+    req.headers["x-real-ip"] ||
+    req.socket?.remoteAddress ||
+    req.connection?.remoteAddress ||
+    "unknown"
+  );
+}
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const existingBucket = rateLimitStore.get(ip);
+  const recentHits = (existingBucket || []).filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS);
+
+  if (recentHits.length >= RATE_LIMIT_MAX) {
+    rateLimitStore.set(ip, recentHits);
+    return true;
+  }
+
+  recentHits.push(now);
+  rateLimitStore.set(ip, recentHits);
+
+  if (rateLimitStore.size > 500) {
+    for (const [entryIp, timestamps] of rateLimitStore.entries()) {
+      const fresh = timestamps.filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS);
+
+      if (fresh.length) {
+        rateLimitStore.set(entryIp, fresh);
+      } else {
+        rateLimitStore.delete(entryIp);
+      }
+    }
+  }
+
+  return false;
 }
 
 async function readJson(req) {
@@ -67,10 +126,6 @@ function buildEmailPayload(data) {
 }
 
 function validate(data) {
-  if (data.company) {
-    return "Validation impossible.";
-  }
-
   const payload = buildEmailPayload(data);
 
   if (!payload.fullName || !payload.email || !payload.topic || !payload.message) {
@@ -90,16 +145,23 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (!process.env.RESEND_API_KEY) {
-    json(res, 503, {
-      message:
-        "Le formulaire est prêt mais l'envoi d'e-mail n'est pas encore configuré dans Vercel."
-    });
-    return;
-  }
-
   try {
     const body = await readJson(req);
+
+    if (clean(body.company, 160)) {
+      json(res, 200, { ok: true });
+      return;
+    }
+
+    const clientIp = getClientIp(req);
+
+    if (isRateLimited(clientIp)) {
+      json(res, 429, {
+        message: "Trop de tentatives en peu de temps. Merci de réessayer dans quelques minutes."
+      });
+      return;
+    }
+
     const validationMessage = validate(body);
 
     if (validationMessage) {
@@ -107,15 +169,28 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (!process.env.RESEND_API_KEY) {
+      json(res, 503, {
+        message:
+          "Le formulaire est prêt mais l'envoi d'e-mail n'est pas encore configuré dans Vercel."
+      });
+      return;
+    }
+
     const payload = buildEmailPayload(body);
+    const safeName = escapeHtml(payload.fullName);
+    const safeEmail = escapeHtml(payload.email);
+    const safePhone = escapeHtml(payload.phone || "Non renseigné");
+    const safeTopic = escapeHtml(payload.topic);
+    const safeMessage = escapeHtml(payload.message).replace(/\n/g, "<br />");
     const html = `
       <h1>Nouveau message depuis le site</h1>
-      <p><strong>Nom :</strong> ${payload.fullName}</p>
-      <p><strong>E-mail :</strong> ${payload.email}</p>
-      <p><strong>Téléphone :</strong> ${payload.phone || "Non renseigné"}</p>
-      <p><strong>Sujet :</strong> ${payload.topic}</p>
+      <p><strong>Nom :</strong> ${safeName}</p>
+      <p><strong>E-mail :</strong> ${safeEmail}</p>
+      <p><strong>Téléphone :</strong> ${safePhone}</p>
+      <p><strong>Sujet :</strong> ${safeTopic}</p>
       <hr />
-      <p>${payload.message.replace(/\n/g, "<br />")}</p>
+      <p>${safeMessage}</p>
     `;
     const text = [
       "Nouveau message depuis le site",

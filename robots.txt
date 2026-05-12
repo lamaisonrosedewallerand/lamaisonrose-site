@@ -1,0 +1,13 @@
+# Robots policy — La Maison Rose de Wallerand
+# https://lamaisonrosedewallerand.com
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /assets/data/
+Disallow: /*?lang=
+
+Crawl-delay: 1
+
+Sitemap: https://lamaisonrosedewallerand.com/sitemap.xml
