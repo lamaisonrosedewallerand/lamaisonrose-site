@@ -2677,13 +2677,18 @@ function injectChrome(activeKey) {
     </div>
     <header class="nav" id="nav">
       <div class="nav-inner">
-        <a href="index.html" class="brand">
-          <span class="brand-mark" aria-hidden="true"><img src="assets/brand-logo.png" alt="" /></span>
-          <span class="brand-text">
-            <span class="a">${escapeHtml(t("common.brandPrimary"))}</span>
-            <span class="b">${escapeHtml(t("common.brandSecondary"))}</span>
-          </span>
-        </a>
+        <div class="nav-head">
+          <a href="index.html" class="brand">
+            <span class="brand-mark" aria-hidden="true"><img src="assets/brand-logo.png" alt="" /></span>
+            <span class="brand-text">
+              <span class="a">${escapeHtml(t("common.brandPrimary"))}</span>
+              <span class="b">${escapeHtml(t("common.brandSecondary"))}</span>
+            </span>
+          </a>
+          <button class="burger" aria-label="${escapeAttr(language === "en" ? "Menu" : "Menu")}" aria-expanded="false" aria-controls="site-menu">
+            <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
+          </button>
+        </div>
         <nav>
           <ul class="menu" id="site-menu">
             <li><a href="index.html" data-k="home">${escapeHtml(t("common.nav.home"))}</a></li>
@@ -2705,9 +2710,6 @@ function injectChrome(activeKey) {
             <a href="adherer.html" class="nav-cta nav-cta--primary" data-k="adherer">${escapeHtml(t("common.nav.adherer"))} <span class="arr">→</span></a>
             <a href="stages.html#stages-grid" class="nav-cta nav-cta--secondary" data-k="ticketing">${escapeHtml(t("common.nav.ticketing"))} <span class="arr">→</span></a>
           </div>
-          <button class="burger" aria-label="${escapeAttr(language === "en" ? "Menu" : "Menu")}" aria-expanded="false" aria-controls="site-menu">
-            <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
-          </button>
         </div>
       </div>
     </header>

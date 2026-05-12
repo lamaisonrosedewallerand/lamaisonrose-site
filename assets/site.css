@@ -265,6 +265,13 @@ img {
   width: 100%;
 }
 
+.nav-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -316,7 +323,7 @@ body[data-lang="en"] .brand-text .a {
 
 .nav-actions {
   display: grid;
-  grid-template-columns: 82px minmax(0, 1fr) 44px;
+  grid-template-columns: 82px minmax(0, 1fr);
   align-items: center;
   justify-self: stretch;
   gap: 10px;
@@ -419,7 +426,6 @@ body[data-lang="en"] .brand-text .a {
   height: 44px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  justify-self: end;
   align-self: center;
   background: rgba(255, 255, 255, 0.92);
   display: inline-flex;
@@ -1157,9 +1163,13 @@ footer {
     grid-column: 1 / -1;
   }
 
+  .nav-head {
+    justify-self: start;
+  }
+
   .nav-actions {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     justify-self: end;
     width: auto;
     gap: 8px;
@@ -1296,6 +1306,10 @@ footer {
   .nav-inner {
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 24px;
+  }
+
+  .nav-head {
+    grid-column: auto;
   }
 
   .nav-inner nav {
