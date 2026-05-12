@@ -169,10 +169,10 @@ img {
 .util {
   background: var(--ink);
   color: #e8ddd0;
-  font-size: 0.6875rem;
-  letter-spacing: 0.16em;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding-block: 8px;
+  padding-block: 7px;
 }
 
 .util-viewport {
@@ -189,7 +189,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
   opacity: 0;
   transform: translateY(6px);
@@ -215,7 +215,7 @@ img {
   min-width: 0;
   color: var(--cream);
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -252,11 +252,11 @@ img {
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--gutter);
-  padding-block: 10px;
+  padding-block: 12px;
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
-  gap: 10px;
+  gap: 8px;
   position: relative;
 }
 
@@ -268,14 +268,14 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
   min-height: 44px;
 }
 
 .brand-mark {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -296,7 +296,7 @@ img {
 
 .brand-text .a {
   font-family: "Cormorant Garamond", serif;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-style: italic;
   color: var(--ink);
 }
@@ -316,27 +316,25 @@ body[data-lang="en"] .brand-text .a {
 
 .nav-actions {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: stretch;
+  grid-template-columns: 82px minmax(0, 1fr) 44px;
+  align-items: center;
   justify-self: stretch;
   gap: 10px;
   width: 100%;
-  padding: 10px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.74);
 }
 
 .nav-cta-stack {
   display: grid;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
+  width: 100%;
 }
 
 .lang-switch {
   display: inline-flex;
   align-items: center;
   gap: 2px;
+  justify-self: start;
   align-self: center;
   padding: 2px;
   border: 1px solid var(--line);
@@ -350,7 +348,7 @@ body[data-lang="en"] .brand-text .a {
   color: var(--grey);
   min-width: 40px;
   min-height: 44px;
-  padding: 10px 11px;
+  padding: 10px 10px;
   border-radius: 999px;
   font-size: 0.625rem;
   font-weight: 600;
@@ -394,9 +392,9 @@ body[data-lang="en"] .brand-text .a {
   justify-self: stretch;
   width: 100%;
   min-height: 44px;
-  padding-inline: 14px;
+  padding-inline: 12px;
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
 .nav-cta:hover {
@@ -421,6 +419,7 @@ body[data-lang="en"] .brand-text .a {
   height: 44px;
   border-radius: 999px;
   border: 1px solid var(--line);
+  justify-self: end;
   align-self: center;
   background: rgba(255, 255, 255, 0.92);
   display: inline-flex;
