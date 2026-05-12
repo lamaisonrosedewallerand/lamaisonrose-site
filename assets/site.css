@@ -830,6 +830,40 @@ footer {
   line-height: 1.72;
 }
 
+.foot-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.foot-social-link {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 221, 208, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--cream);
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.foot-social-link:hover {
+  background: var(--rose);
+  border-color: var(--rose);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.foot-social-link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
 .foot-grid li a:hover,
 .foot-grid .contact a:hover,
 .foot-bot a:hover {

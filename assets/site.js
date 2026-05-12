@@ -2619,8 +2619,20 @@ function injectChrome(activeKey) {
             <ul>
               <li><a href="mailto:contact@lamaisonrosedewallerand.com" data-site-email>contact@lamaisonrosedewallerand.com</a></li>
               <li><a href="tel:+33615375672" data-site-phone>+33 6 15 37 56 72</a></li>
-              <li><a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener" data-site-instagram>@lamaisonrosedewallerand</a></li>
-              <li><a href="https://www.facebook.com/profile.php?id=100089640846307" target="_blank" rel="noopener" data-site-facebook>Facebook</a></li>
+              <li class="foot-socials">
+                <a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener" data-site-instagram class="foot-social-link" aria-label="Instagram">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                    <circle cx="12" cy="12" r="4.25"></circle>
+                    <circle cx="17.5" cy="6.5" r="1"></circle>
+                  </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=100089640846307" target="_blank" rel="noopener" data-site-facebook class="foot-social-link" aria-label="Facebook">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                    <path d="M13.5 21v-7h2.4l.4-2.8h-2.8V9.4c0-.8.2-1.4 1.4-1.4H16V5.5c-.2 0-.9-.1-1.8-.1-1.8 0-3 1.1-3 3.2v1.8H9V14h2.4v7h2.1Z"></path>
+                  </svg>
+                </a>
+              </li>
               <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener" data-site-helloasso>${escapeHtml(t("common.footer.helloasso"))}</a></li>
             </ul>
           </div>
