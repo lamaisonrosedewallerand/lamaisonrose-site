@@ -169,19 +169,19 @@ img {
 .util {
   background: var(--ink);
   color: #e8ddd0;
-  font-size: var(--fs-small);
-  letter-spacing: 0.12em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding-block: 12px;
+  padding-block: 8px;
 }
 
 .util-viewport {
-  min-height: 1.3rem;
+  min-height: 1rem;
 }
 
 .util-track {
   display: grid;
-  min-height: 1.3rem;
+  min-height: 1rem;
 }
 
 .util-item {
@@ -189,14 +189,14 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
   opacity: 0;
   transform: translateY(6px);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
   text-align: center;
-  padding-inline: var(--gutter);
+  padding-inline: max(14px, var(--gutter));
 }
 
 .util-item.is-active {
@@ -206,6 +206,7 @@ img {
 }
 
 .util span {
+  display: none;
   opacity: 0.78;
   white-space: nowrap;
 }
@@ -214,13 +215,14 @@ img {
   min-width: 0;
   color: var(--cream);
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .util .sep {
+  display: none;
   color: var(--terre);
   opacity: 0.72;
 }
@@ -236,7 +238,7 @@ img {
   transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-@supports not (backdrop-filter: blur(10px)) {
+@supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
   .nav {
     background: rgba(250, 246, 241, 0.98);
   }
@@ -250,11 +252,11 @@ img {
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--gutter);
-  padding-block: 14px;
+  padding-block: 10px;
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
-  gap: 12px;
+  gap: 10px;
   position: relative;
 }
 
@@ -315,15 +317,19 @@ body[data-lang="en"] .brand-text .a {
 .nav-actions {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
+  align-items: stretch;
   justify-self: stretch;
   gap: 10px;
   width: 100%;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.74);
 }
 
 .nav-cta-stack {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
@@ -331,10 +337,11 @@ body[data-lang="en"] .brand-text .a {
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  padding: 3px;
+  align-self: center;
+  padding: 2px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .lang-btn {
@@ -343,11 +350,11 @@ body[data-lang="en"] .brand-text .a {
   color: var(--grey);
   min-width: 40px;
   min-height: 44px;
-  padding: 10px 12px;
+  padding: 10px 11px;
   border-radius: 999px;
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease;
@@ -387,8 +394,9 @@ body[data-lang="en"] .brand-text .a {
   justify-self: stretch;
   width: 100%;
   min-height: 44px;
-  padding-inline: 16px;
+  padding-inline: 14px;
   font-size: 0.6875rem;
+  letter-spacing: 0.14em;
 }
 
 .nav-cta:hover {
@@ -397,7 +405,7 @@ body[data-lang="en"] .brand-text .a {
 }
 
 .nav-cta--secondary {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--ink);
   border-color: var(--line);
 }
@@ -413,7 +421,8 @@ body[data-lang="en"] .brand-text .a {
   height: 44px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(250, 246, 241, 0.96);
+  align-self: center;
+  background: rgba(255, 255, 255, 0.92);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1126,6 +1135,20 @@ footer {
 }
 
 @media (min-width: 640px) {
+  .util {
+    font-size: var(--fs-small);
+    padding-block: 10px;
+  }
+
+  .util-item {
+    gap: 10px;
+  }
+
+  .util span,
+  .util .sep {
+    display: inline;
+  }
+
   .nav-inner {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
@@ -1141,6 +1164,10 @@ footer {
     justify-self: end;
     width: auto;
     gap: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
   }
 
   .nav-cta-stack {
