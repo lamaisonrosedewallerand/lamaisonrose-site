@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260512b" />
+<link rel="stylesheet" href="assets/site.css?v=20260512c" />
 <style>
   .filters {
     display: grid;
@@ -76,8 +76,9 @@
     line-height: 1.68;
     max-width: 52ch;
   }
-  .stages-ticket {
-    margin-bottom: 28px;
+  .page-hero-actions {
+    margin-top: 18px;
+    max-width: 18rem;
   }
 
   .stage-grid {
@@ -329,11 +330,14 @@
 
 <section class="page-hero wrap">
   <div class="page-hero-grid">
-    <div class="reveal page-hero-copy">
-      <div class="crumbs"><a href="index.html">Accueil</a> · Cours &amp; stages</div>
-      <h1><span class="line">Cours et stages</span><em class="line">de pratique artistique.</em></h1>
-      <p class="lede reveal d2">La gravure ouvre aujourd'hui la programmation, avec une page pensée pour accueillir demain le chant, la sculpture et d'autres pratiques artistiques.</p>
+  <div class="reveal page-hero-copy">
+    <div class="crumbs"><a href="index.html">Accueil</a> · Cours &amp; stages</div>
+    <h1><span class="line">Cours et stages</span><em class="line">de pratique artistique.</em></h1>
+    <p class="lede reveal d2">La gravure ouvre aujourd'hui la programmation, avec une page pensée pour accueillir demain le chant, la sculpture et d'autres pratiques artistiques.</p>
+    <div class="cta-row reveal d3 page-hero-actions">
+      <a href="#stages-grid" class="btn btn-primary">Voir la billetterie <span class="arr">→</span></a>
     </div>
+  </div>
     <div class="page-hero-media page-hero-carousel reveal d3" data-hero-carousel aria-label="Cours et stages à la Maison Rose">
       <div class="page-hero-carousel-stage">
         <figure class="page-hero-carousel-slide is-active" data-hero-carousel-slide aria-hidden="false">
@@ -356,13 +360,6 @@
 </section>
 
 <div class="wrap">
-  <a href="#stages-grid" class="ticket-callout stages-ticket reveal">
-    <span class="ticket-callout__eyebrow">Billetterie cours &amp; stages</span>
-    <strong class="ticket-callout__title">Parcourir les ateliers ouverts à l’inscription</strong>
-    <span class="ticket-callout__copy">Une entrée simple pour repérer les prochains stages, consulter les dates et rejoindre les liens d’inscription quand ils sont ouverts.</span>
-    <span class="ticket-callout__link">Voir la billetterie <span class="arr">→</span></span>
-  </a>
-
   <div class="filters reveal">
     <label class="filter-field">
       <span class="filter-label" data-filter-label="discipline">Pratique</span>
@@ -432,7 +429,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260512b"></script>
+<script src="assets/site.bundle.js?v=20260512c"></script>
 <script>injectChrome('stages');</script>
 </body>
 </html>
