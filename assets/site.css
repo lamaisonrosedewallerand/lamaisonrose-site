@@ -275,14 +275,14 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
   min-height: 44px;
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -303,7 +303,7 @@ img {
 
 .brand-text .a {
   font-family: "Cormorant Garamond", serif;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-style: italic;
   color: var(--ink);
 }
@@ -323,18 +323,15 @@ body[data-lang="en"] .brand-text .a {
 
 .nav-actions {
   display: grid;
-  grid-template-columns: 82px minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   justify-self: stretch;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 .nav-cta-stack {
-  display: grid;
-  gap: 8px;
-  min-width: 0;
-  width: 100%;
+  display: contents;
 }
 
 .lang-switch {
@@ -343,7 +340,7 @@ body[data-lang="en"] .brand-text .a {
   gap: 2px;
   justify-self: start;
   align-self: center;
-  padding: 2px;
+  padding: 1px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
@@ -353,13 +350,13 @@ body[data-lang="en"] .brand-text .a {
   border: 0;
   background: transparent;
   color: var(--grey);
-  min-width: 40px;
-  min-height: 44px;
-  padding: 10px 10px;
+  min-width: 34px;
+  min-height: 38px;
+  padding: 8px 9px;
   border-radius: 999px;
-  font-size: 0.625rem;
+  font-size: 0.5625rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease;
@@ -398,10 +395,14 @@ body[data-lang="en"] .brand-text .a {
   white-space: nowrap;
   justify-self: stretch;
   width: 100%;
-  min-height: 44px;
-  padding-inline: 12px;
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
+  min-height: 38px;
+  padding-inline: 10px;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+}
+
+.nav-cta .arr {
+  display: none;
 }
 
 .nav-cta:hover {
@@ -422,8 +423,8 @@ body[data-lang="en"] .brand-text .a {
 }
 
 .burger {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   border: 1px solid var(--line);
   align-self: center;
@@ -1180,11 +1181,16 @@ footer {
   }
 
   .nav-cta-stack {
+    display: grid;
     min-width: 172px;
   }
 
   .nav-cta {
     justify-self: stretch;
+  }
+
+  .nav-cta .arr {
+    display: inline-block;
   }
 
   .brand-mark {

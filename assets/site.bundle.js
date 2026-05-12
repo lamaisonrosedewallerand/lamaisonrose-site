@@ -201,13 +201,18 @@
     </div>
     <header class="nav" id="nav">
       <div class="nav-inner">
-        <a href="index.html" class="brand">
-          <span class="brand-mark" aria-hidden="true"><img src="assets/brand-logo.png" alt="" /></span>
-          <span class="brand-text">
-            <span class="a">${o(i("common.brandPrimary"))}</span>
-            <span class="b">${o(i("common.brandSecondary"))}</span>
-          </span>
-        </a>
+        <div class="nav-head">
+          <a href="index.html" class="brand">
+            <span class="brand-mark" aria-hidden="true"><img src="assets/brand-logo.png" alt="" /></span>
+            <span class="brand-text">
+              <span class="a">${o(i("common.brandPrimary"))}</span>
+              <span class="b">${o(i("common.brandSecondary"))}</span>
+            </span>
+          </a>
+          <button class="burger" aria-label="${g("Menu")}" aria-expanded="false" aria-controls="site-menu">
+            <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
+          </button>
+        </div>
         <nav>
           <ul class="menu" id="site-menu">
             <li><a href="index.html" data-k="home">${o(i("common.nav.home"))}</a></li>
@@ -229,9 +234,6 @@
             <a href="adherer.html" class="nav-cta nav-cta--primary" data-k="adherer">${o(i("common.nav.adherer"))} <span class="arr">\u2192</span></a>
             <a href="stages.html#stages-grid" class="nav-cta nav-cta--secondary" data-k="ticketing">${o(i("common.nav.ticketing"))} <span class="arr">\u2192</span></a>
           </div>
-          <button class="burger" aria-label="${g("Menu")}" aria-expanded="false" aria-controls="site-menu">
-            <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
-          </button>
         </div>
       </div>
     </header>
