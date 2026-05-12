@@ -240,6 +240,28 @@ function updateLanguageButtons(language) {
   });
 }
 
+function applyGenericTranslations() {
+  document.querySelectorAll("[data-i18n-key]").forEach((node) => {
+    const key = String(node.dataset.i18nKey || "").trim();
+
+    if (!key) {
+      return;
+    }
+
+    node.textContent = t(key, node.textContent || "");
+  });
+
+  document.querySelectorAll("[data-i18n-html-key]").forEach((node) => {
+    const key = String(node.dataset.i18nHtmlKey || "").trim();
+
+    if (!key) {
+      return;
+    }
+
+    node.innerHTML = t(key, node.innerHTML || "");
+  });
+}
+
 function t(path, fallback = "") {
   return getUiTranslation(getCurrentLanguage(), path, fallback);
 }
@@ -415,6 +437,7 @@ function applyLanguage() {
   const language = getPreferredLanguage();
   setDocumentLanguage(language);
   updateLanguageButtons(language);
+  applyGenericTranslations();
   applyStaticPageTranslations();
 }
 
@@ -930,7 +953,13 @@ function initBurger() {
 
   burger.dataset.bound = "true";
   const syncExpanded = () => {
-    burger.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+    const isOpen = nav.classList.contains("open");
+    const isEnglish = getCurrentLanguage() === "en";
+    burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    burger.setAttribute(
+      "aria-label",
+      isEnglish ? (isOpen ? "Close menu" : "Open menu") : isOpen ? "Fermer le menu" : "Ouvrir le menu"
+    );
   };
   const focusables = () =>
     [...nav.querySelectorAll(".menu a, .lang-btn, .nav-cta, .burger")].filter(
@@ -2711,148 +2740,25 @@ function injectChrome(activeKey) {
   const language = getPreferredLanguage();
   clearLegacyTranslateArtifacts();
   setDocumentLanguage(language);
+  const active = activeKey || document.body?.dataset.page || "home";
+  const activeLink = document.querySelector(`.menu a[data-k="${active}"]`);
 
-  const navMarkup = `
-    <a href="#main" class="skip-link">${escapeHtml(language === "en" ? "Skip to main content" : "Aller au contenu principal")}</a>
-    <div class="util" id="site-util">
-      <div class="util-viewport" aria-label="${escapeAttr(t("common.utility.news"))}">
-        <div class="util-track" id="site-util-track">
-          <a href="evenements.html" class="util-item is-active" aria-hidden="false">
-            <span>${escapeHtml(t("common.utility.defaultPrefix"))}</span>
-            <strong>${escapeHtml(t("common.utility.defaultMain"))}</strong>
-            <i class="sep" aria-hidden="true">✦</i>
-          </a>
-        </div>
-      </div>
-    </div>
-    <header class="nav" id="nav">
-      <div class="nav-inner">
-        <div class="nav-head">
-          <a href="index.html" class="brand">
-            <span class="brand-mark" aria-hidden="true"><img src="assets/brand-logo.png" alt="" /></span>
-            <span class="brand-text">
-              <span class="a">${escapeHtml(t("common.brandPrimary"))}</span>
-              <span class="b">${escapeHtml(t("common.brandSecondary"))}</span>
-            </span>
-          </a>
-          <button class="burger" aria-label="${escapeAttr(language === "en" ? "Menu" : "Menu")}" aria-expanded="false" aria-controls="site-menu">
-            <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
-          </button>
-        </div>
-        <nav>
-          <ul class="menu" id="site-menu">
-            <li><a href="index.html" data-k="home">${escapeHtml(t("common.nav.home"))}</a></li>
-            <li><a href="le-lieu.html" data-k="lieu">${escapeHtml(t("common.nav.lieu"))}</a></li>
-            <li><a href="stages.html" data-k="stages">${escapeHtml(t("common.nav.stages"))}</a></li>
-            <li><a href="evenements.html" data-k="events">${escapeHtml(t("common.nav.events"))}</a></li>
-            <li><a href="wallerand.html" data-k="wallerand">${escapeHtml(t("common.nav.wallerand"))}</a></li>
-            <li><a href="association.html" data-k="assoc">${escapeHtml(t("common.nav.assoc"))}</a></li>
-            <li><a href="contact.html" data-k="contact">${escapeHtml(t("common.nav.contact"))}</a></li>
-            <li class="menu-mobile-only"><a href="adherer.html" data-k="adherer">${escapeHtml(t("common.nav.adherer"))}</a></li>
-          </ul>
-        </nav>
-        <div class="nav-actions">
-          <div class="lang-switch" aria-label="${escapeAttr(language === "en" ? "Site language" : "Version du site")}">
-            <button type="button" class="lang-btn" data-lang-switch="fr" aria-pressed="true">FR</button>
-            <button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false">EN</button>
-          </div>
-          <div class="nav-cta-stack">
-            <a href="adherer.html" class="nav-cta nav-cta--primary" data-k="adherer">${escapeHtml(t("common.nav.adherer"))} <span class="arr">→</span></a>
-            <a href="stages.html#stages-grid" class="nav-cta nav-cta--secondary" data-k="ticketing">${escapeHtml(t("common.nav.ticketing"))} <span class="arr">→</span></a>
-          </div>
-        </div>
-      </div>
-    </header>
-  `;
-
-  const footerMarkup = `
-    <footer>
-      <div class="wrap">
-        <div class="foot-grid">
-          <div class="brand-blk">
-            <h4>${escapeHtml(t("common.footer.brandTitle"))}</h4>
-            <span class="a">${escapeHtml(t("common.footer.brandSubtitle"))}</span>
-            <p>${escapeHtml(t("common.footer.brandDescription"))}</p>
-          </div>
-          <div>
-            <h4>${escapeHtml(t("common.footer.visitTitle"))}</h4>
-            <ul>
-              <li data-site-address-line-1>La Maison Rose de Wallerand</li>
-              <li data-site-address-line-2>59 rue Daubigny · 95430 Auvers-sur-Oise</li>
-              <li>${escapeHtml(t("common.footer.visitWhen"))}</li>
-              <li><a href="contact.html">${escapeHtml(t("common.footer.directions"))}</a></li>
-            </ul>
-          </div>
-          <div class="contact">
-            <h4>${escapeHtml(t("common.footer.contactTitle"))}</h4>
-            <ul>
-              <li><a href="mailto:contact@lamaisonrosedewallerand.com" data-site-email>contact@lamaisonrosedewallerand.com</a></li>
-              <li><a href="tel:+33615375672" data-site-phone>+33 6 15 37 56 72</a></li>
-              <li class="foot-socials">
-                <a href="https://www.instagram.com/lamaisonrosedewallerand/" target="_blank" rel="noopener noreferrer" data-site-instagram class="foot-social-link" aria-label="Instagram">
-                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                    <circle cx="12" cy="12" r="4.25"></circle>
-                    <circle cx="17.5" cy="6.5" r="1"></circle>
-                  </svg>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=100089640846307" target="_blank" rel="noopener noreferrer" data-site-facebook class="foot-social-link" aria-label="Facebook">
-                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-                    <path d="M13.5 21v-7h2.4l.4-2.8h-2.8V9.4c0-.8.2-1.4 1.4-1.4H16V5.5c-.2 0-.9-.1-1.8-.1-1.8 0-3 1.1-3 3.2v1.8H9V14h2.4v7h2.1Z"></path>
-                  </svg>
-                </a>
-              </li>
-              <li><a href="https://www.helloasso.com/associations/la-maison-rose-de-wallerand" target="_blank" rel="noopener noreferrer" data-site-helloasso>${escapeHtml(t("common.footer.helloasso"))}</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>${escapeHtml(t("common.footer.followTitle"))}</h4>
-            <p class="foot-note">${escapeHtml(t("common.footer.followNote"))}</p>
-            <ul style="margin-top: 18px;">
-              <li><a href="evenements.html">${escapeHtml(t("common.footer.events"))}</a></li>
-              <li><a href="stages.html">${escapeHtml(t("common.footer.stages"))}</a></li>
-              <li><a href="adherer.html">${escapeHtml(t("common.footer.join"))}</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="foot-support">
-          <div class="foot-support-copy">
-            <span class="ey">${escapeHtml(t("common.footer.supportEyebrow"))}</span>
-            <p>${escapeHtml(t("common.footer.supportText"))}</p>
-          </div>
-          <div class="foot-support-logo">
-            <img src="/assets/uploads/logo-patrimoine-ile-de-france.jpg" alt="Logo Patrimoine remarquable d’Île-de-France et Région Île-de-France" loading="lazy" />
-          </div>
-        </div>
-        <div class="foot-bot">
-          <div>${escapeHtml(t("common.footer.copyright"))}</div>
-          <div class="links">
-            <a href="index.html">${escapeHtml(t("common.nav.home"))}</a>
-            <a href="contact.html">${escapeHtml(t("common.nav.contact"))}</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  `;
-
-  const navMount = document.getElementById("site-nav");
-  const footMount = document.getElementById("site-foot");
-
-  if (navMount) {
-    navMount.innerHTML = navMarkup;
+  const skipLink = document.querySelector(".skip-link");
+  if (skipLink) {
+    skipLink.textContent = language === "en" ? "Skip to main content" : "Aller au contenu principal";
   }
 
-  if (footMount) {
-    footMount.innerHTML = footerMarkup;
-  }
+  document.querySelectorAll(".lang-switch").forEach((group) => {
+    group.setAttribute("aria-label", language === "en" ? "Site language" : "Choix de la langue");
+  });
 
-  if (activeKey) {
-    const activeLink = document.querySelector(`.menu a[data-k="${activeKey}"]`);
+  document.querySelectorAll(".util-viewport").forEach((viewport) => {
+    viewport.setAttribute("aria-label", t("common.utility.news"));
+  });
 
-    if (activeLink) {
-      activeLink.classList.add("active");
-      activeLink.setAttribute("aria-current", "page");
-    }
+  if (activeLink) {
+    activeLink.classList.add("active");
+    activeLink.setAttribute("aria-current", "page");
   }
 
   initNavScroll();
