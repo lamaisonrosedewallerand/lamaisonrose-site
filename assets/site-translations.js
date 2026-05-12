@@ -20,7 +20,8 @@ const UI_TRANSLATIONS = {
         wallerand: "Wallerand",
         assoc: "L'association",
         contact: "Contact",
-        adherer: "Adhérer"
+        adherer: "Adhérer",
+        ticketing: "Billetterie"
       },
       utility: {
         defaultPrefix: "Lieu culturel · Résidence d'artistes",
@@ -146,7 +147,8 @@ const UI_TRANSLATIONS = {
         wallerand: "Wallerand",
         assoc: "About",
         contact: "Contact",
-        adherer: "Join"
+        adherer: "Join",
+        ticketing: "Booking"
       },
       utility: {
         defaultPrefix: "Cultural venue · Artist residency",
@@ -393,8 +395,6 @@ const STATIC_PAGE_COPY = {
       { selector: ".filters [data-stage-filter=\"level\"] option[value=\"deb\"]", text: { fr: "Débutant", en: "Beginner" } },
       { selector: ".filters [data-stage-filter=\"level\"] option[value=\"int\"]", text: { fr: "Intermédiaire", en: "Intermediate" } },
       { selector: ".filters [data-stage-filter=\"level\"] option[value=\"adv\"]", text: { fr: "Avancé", en: "Advanced" } },
-      { selector: ".page-hero-ticket-label", text: { fr: "Billetterie", en: "Ticketing" } },
-      { selector: ".page-hero-actions .btn-ticket", html: { fr: "Voir les stages ouverts <span class=\"arr\">→</span>", en: "See open workshops <span class=\"arr\">→</span>" } },
       { selector: ".artist-entry .ey", text: { fr: "— Artistes & intervenants", en: "— Artists & teachers" } },
       { selector: ".artist-entry p", text: { fr: "Vous souhaitez proposer un atelier, un cours ou une pratique artistique à la Maison Rose ? Une entrée dédiée vous permet d'envoyer directement votre proposition à l'association.", en: "Would you like to propose a workshop, a course or an artistic practice at the Pink House? A dedicated entry point lets you send your proposal directly to the association." } },
       { selector: ".artist-entry .btn-primary", html: { fr: "Proposer un atelier <span class=\"arr\">→</span>", en: "Propose a workshop <span class=\"arr\">→</span>" } },

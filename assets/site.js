@@ -2701,7 +2701,10 @@ function injectChrome(activeKey) {
             <button type="button" class="lang-btn" data-lang-switch="fr" aria-pressed="true">FR</button>
             <button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false">EN</button>
           </div>
-          <a href="adherer.html" class="nav-cta" data-k="adherer">${escapeHtml(t("common.nav.adherer"))} <span class="arr">→</span></a>
+          <div class="nav-cta-stack">
+            <a href="adherer.html" class="nav-cta nav-cta--primary" data-k="adherer">${escapeHtml(t("common.nav.adherer"))} <span class="arr">→</span></a>
+            <a href="stages.html#stages-grid" class="nav-cta nav-cta--secondary" data-k="ticketing">${escapeHtml(t("common.nav.ticketing"))} <span class="arr">→</span></a>
+          </div>
           <button class="burger" aria-label="${escapeAttr(language === "en" ? "Menu" : "Menu")}" aria-expanded="false" aria-controls="site-menu">
             <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"/></svg>
           </button>

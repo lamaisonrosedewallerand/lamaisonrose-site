@@ -321,6 +321,12 @@ body[data-lang="en"] .brand-text .a {
   width: 100%;
 }
 
+.nav-cta-stack {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
 .lang-switch {
   display: inline-flex;
   align-items: center;
@@ -378,12 +384,28 @@ body[data-lang="en"] .brand-text .a {
   background: var(--ink);
   color: var(--cream);
   white-space: nowrap;
-  justify-self: center;
+  justify-self: stretch;
+  width: 100%;
+  min-height: 44px;
+  padding-inline: 16px;
+  font-size: 0.6875rem;
 }
 
 .nav-cta:hover {
   background: var(--terre);
   transform: translateY(-1px);
+}
+
+.nav-cta--secondary {
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.nav-cta--secondary:hover {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  border-color: var(--terre);
 }
 
 .burger {
@@ -1114,14 +1136,19 @@ footer {
   }
 
   .nav-actions {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
     justify-self: end;
     width: auto;
     gap: 8px;
   }
 
+  .nav-cta-stack {
+    min-width: 172px;
+  }
+
   .nav-cta {
-    justify-self: auto;
+    justify-self: stretch;
   }
 
   .brand-mark {
@@ -1297,6 +1324,10 @@ footer {
 
   .burger {
     display: none;
+  }
+
+  .nav-cta-stack {
+    min-width: 184px;
   }
 
   body[data-lang="en"] .menu {
