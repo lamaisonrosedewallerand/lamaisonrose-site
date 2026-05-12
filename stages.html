@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260512a" />
+<link rel="stylesheet" href="assets/site.css?v=20260512b" />
 <style>
   .filters {
     display: grid;
@@ -75,6 +75,9 @@
     font-size: 0.9375rem;
     line-height: 1.68;
     max-width: 52ch;
+  }
+  .stages-ticket {
+    margin-bottom: 28px;
   }
 
   .stage-grid {
@@ -353,6 +356,13 @@
 </section>
 
 <div class="wrap">
+  <a href="#stages-grid" class="ticket-callout stages-ticket reveal">
+    <span class="ticket-callout__eyebrow">Billetterie cours &amp; stages</span>
+    <strong class="ticket-callout__title">Parcourir les ateliers ouverts à l’inscription</strong>
+    <span class="ticket-callout__copy">Une entrée simple pour repérer les prochains stages, consulter les dates et rejoindre les liens d’inscription quand ils sont ouverts.</span>
+    <span class="ticket-callout__link">Voir la billetterie <span class="arr">→</span></span>
+  </a>
+
   <div class="filters reveal">
     <label class="filter-field">
       <span class="filter-label" data-filter-label="discipline">Pratique</span>
@@ -422,7 +432,7 @@
 
 </main>
 <div id="site-foot"></div>
-<script src="assets/site.bundle.js?v=20260512a"></script>
+<script src="assets/site.bundle.js?v=20260512b"></script>
 <script>injectChrome('stages');</script>
 </body>
 </html>

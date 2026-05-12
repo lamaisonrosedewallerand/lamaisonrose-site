@@ -38,7 +38,9 @@ const DEFAULT_SITE_SETTINGS = {
     "https://www.google.com/maps/place/La+Maison+Rose+de+Wallerand/@49.0729009,2.1675315,17z/data=!3m1!4b1!4m6!3m5!1s0x47e65ee560d6e41f:0x49a3399293493d80!8m2!3d49.0728974!4d2.1701064!16s%2Fg%2F11fr3l6t3t",
   helloasso_checkout_membership_item_name: "Adhesion individuelle a La Maison Rose de Wallerand",
   helloasso_checkout_membership_amount: 20,
-  helloasso_checkout_membership_couple_item_name: "Adhesion couple a La Maison Rose de Wallerand",
+  helloasso_checkout_membership_family_item_name: "Adhesion famille a La Maison Rose de Wallerand",
+  helloasso_checkout_membership_family_amount: 30,
+  helloasso_checkout_membership_couple_item_name: "Adhesion famille a La Maison Rose de Wallerand",
   helloasso_checkout_membership_couple_amount: 30,
   helloasso_checkout_support_item_name: "Soutien a La Maison Rose de Wallerand",
   helloasso_checkout_default_amount: 50,
@@ -348,6 +350,14 @@ function localizeEntry(value, item = null) {
     return t("event.paidEntry");
   }
 
+  if (normalized.includes("inscription") || normalized.includes("registration")) {
+    return t("event.registrationRequired", "Registration required");
+  }
+
+  if (normalized.includes("complet") || normalized.includes("full")) {
+    return t("stage.full");
+  }
+
   return literal;
 }
 
@@ -460,7 +470,11 @@ function parseSuggestedAmounts(value) {
 
 function getCheckoutModeSettings(settings, purpose) {
   const singleAmount = Number(settings.helloasso_checkout_membership_amount) || 20;
-  const coupleAmount = Number(settings.helloasso_checkout_membership_couple_amount) || 30;
+  const familyAmount =
+    Number(
+      settings.helloasso_checkout_membership_family_amount ??
+        settings.helloasso_checkout_membership_couple_amount
+    ) || 30;
 
   if (purpose === "membership_single") {
     return {
@@ -473,14 +487,15 @@ function getCheckoutModeSettings(settings, purpose) {
     };
   }
 
-  if (purpose === "membership_couple") {
+  if (purpose === "membership_family" || purpose === "membership_couple") {
     return {
       label:
+        settings.helloasso_checkout_membership_family_item_name ||
         settings.helloasso_checkout_membership_couple_item_name ||
-        "Adhesion couple a La Maison Rose de Wallerand",
-      amount: coupleAmount,
+        "Adhesion famille a La Maison Rose de Wallerand",
+      amount: familyAmount,
       locked: true,
-      suggestedAmounts: [coupleAmount]
+      suggestedAmounts: [familyAmount]
     };
   }
 
@@ -572,6 +587,30 @@ function formatMonthYear(value) {
   }).format(parsed);
 }
 
+function getTodayFloor() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+}
+
+function isArchivedItem(item) {
+  if (!item) {
+    return false;
+  }
+
+  if (item.status === "passe") {
+    return true;
+  }
+
+  const itemDate = parseDate(item.date);
+
+  if (!itemDate) {
+    return false;
+  }
+
+  return itemDate < getTodayFloor();
+}
+
 function sortByDateAscending(left, right) {
   const leftDate = parseDate(left.date);
   const rightDate = parseDate(right.date);
@@ -641,11 +680,48 @@ function stageCategory(item) {
 
 function chooseFeatured(items) {
   const upcoming = items
-    .filter((item) => item.status !== "passe")
+    .filter((item) => !isArchivedItem(item))
     .sort(sortByDateAscending);
   const featured = upcoming.find((item) => item.featured);
 
   return featured || upcoming[0] || null;
+}
+
+function stageToAgendaItem(stage) {
+  const summary = String(stage.descriptionText || stage.body || "").trim();
+  const isFull = normalizeText(stage.status).includes("complet");
+
+  return {
+    ...stage,
+    _sourceType: "stage",
+    title_en: stage.title_en || stage.title || "",
+    time: stage.time || stage.duration || "À préciser",
+    time_en: stage.time_en || stage.duration_en || "To be confirmed",
+    location: stage.location || "La Maison Rose de Wallerand",
+    location_en: stage.location_en || "The Pink House of Wallerand",
+    entry: isFull ? "Complet" : "Sur inscription",
+    entry_en: isFull ? "Full" : "Registration required",
+    summary,
+    summary_en: stage.summary_en || summary,
+    featured: false
+  };
+}
+
+async function fetchAgendaItems() {
+  const [events, stages] = await Promise.all([
+    fetchCollection("evenements"),
+    fetchCollection("stages")
+  ]);
+
+  const stageItems = stages
+    .filter((stage) => String(stage.date || "").trim())
+    .map((stage) => stageToAgendaItem(stage));
+
+  return {
+    events,
+    stages: stageItems,
+    items: [...events, ...stageItems].sort(sortByDateAscending)
+  };
 }
 
 function createRevealObserver() {
@@ -1445,6 +1521,8 @@ function renderEventRow(event) {
   const localizedTitle = localizeField(event, "title", t("event.generic"));
   const localizedEntry = localizeEntry(event.entry, event);
   const localizedLocation = localizeField(event, "location", "La Maison Rose de Wallerand");
+  const localizedSummary = localizeSummary(event);
+  const isStage = event._sourceType === "stage";
   const category = localizedEntry
     ? `${localizedEntry} · ${localizedLocation}`
     : localizedLocation;
@@ -1452,11 +1530,27 @@ function renderEventRow(event) {
   const moreLabel = escapeHtml(
     t("event.moreDetails", getCurrentLanguage() === "en" ? "More details" : "Plus d'informations")
   );
-  const reserveLabel = event.helloasso_url
-    ? t("event.reserve")
-    : t("event.contact");
-  const reserveHref = event.helloasso_url ? event.helloasso_url : "contact.html";
+  const reserveLabel = isStage
+    ? event.helloasso_url
+      ? t("stage.register")
+      : getCurrentLanguage() === "en"
+        ? "Request registration <span class=\"arr\">→</span>"
+        : "Demander une inscription <span class=\"arr\">→</span>"
+    : event.helloasso_url
+      ? t("event.reserve")
+      : t("event.contact");
+  const reserveHref = isStage
+    ? event.helloasso_url || "contact.html?topic=Inscription%20stage#ctForm"
+    : event.helloasso_url
+      ? event.helloasso_url
+      : "contact.html";
   const reserveAttrs = event.helloasso_url ? ' target="_blank" rel="noopener"' : "";
+  const practicalHref = isStage ? "stages.html" : "contact.html";
+  const practicalLabel = isStage
+    ? getCurrentLanguage() === "en"
+      ? "See workshops"
+      : "Voir les stages"
+    : t("event.practical");
   const poster = event.image
     ? imageTag(event.image, localizedTitle, "event-photo")
     : `<div class="ph ${PLACEHOLDERS.event[0]}"></div>`;
@@ -1483,10 +1577,11 @@ function renderEventRow(event) {
               <div><span>${escapeHtml(t("event.place"))}</span><strong>${escapeHtml(localizedLocation)}</strong></div>
               <div><span>${escapeHtml(t("event.entry"))}</span><strong>${escapeHtml(localizedEntry || t("event.freeEntry"))}</strong></div>
             </div>
+            ${localizedSummary ? `<p class="ev-panel-summary">${escapeHtml(truncateText(localizedSummary, 260))}</p>` : ""}
             ${audioMarkup}
             <div class="cta-row">
               <a href="${escapeAttr(reserveHref)}"${reserveAttrs} class="btn btn-primary">${reserveLabel}</a>
-              <a href="contact.html" class="btn btn-ghost">${escapeHtml(t("event.practical"))}</a>
+              <a href="${escapeAttr(practicalHref)}" class="btn btn-ghost">${escapeHtml(practicalLabel)}</a>
             </div>
           </div>
         </div>
@@ -1612,7 +1707,7 @@ async function resolveUtilityAnnouncement(settings) {
 
   const events = await fetchCollection("evenements");
   const upcoming = events
-    .filter((item) => item.status !== "passe")
+    .filter((item) => !isArchivedItem(item))
     .sort(sortByDateAscending);
   const nextEvent = upcoming[0];
 
@@ -1665,16 +1760,14 @@ function applyUtilityAnnouncement(announcements, rotationSeconds = 6) {
     return;
   }
 
-  const repeatedItems = [...items, ...items];
-
-  track.innerHTML = repeatedItems
+  track.innerHTML = items
     .map((item) => {
       const isExternal = /^https?:\/\//.test(item.href || "");
 
       return `
         <a href="${escapeAttr(item.href || "evenements.html")}" class="util-item"${
           isExternal ? ' target="_blank" rel="noopener"' : ""
-        }>
+        } aria-hidden="true">
           <span>${escapeHtml(item.prefix)}</span>
           <strong>${escapeHtml(item.main)}</strong>
           <i class="sep" aria-hidden="true">✦</i>
@@ -1683,7 +1776,29 @@ function applyUtilityAnnouncement(announcements, rotationSeconds = 6) {
     })
     .join("");
 
-  util.style.setProperty("--util-duration", `${Math.max(22, intervalMs / 220)}s`);
+  const slides = Array.from(track.querySelectorAll(".util-item"));
+
+  const setActive = (nextIndex) => {
+    const activeIndex = (nextIndex + slides.length) % slides.length;
+
+    slides.forEach((slide, index) => {
+      const isActive = index === activeIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+    });
+  };
+
+  setActive(0);
+
+  if (slides.length > 1) {
+    let currentIndex = 0;
+
+    utilityRotationTimer = window.setInterval(() => {
+      currentIndex += 1;
+      setActive(currentIndex);
+    }, intervalMs);
+  }
+
   util.hidden = false;
 }
 
@@ -2241,7 +2356,7 @@ function groupEventsByYear(events) {
 }
 
 function renderPastEventsYear(year, events, yearIndex) {
-  const locale = getCurrentLanguage() === "en" ? "events" : "événements";
+  const locale = getCurrentLanguage() === "en" ? "items" : "rendez-vous";
   const cards = events
     .map((event, index) =>
       renderPastEventCard(event, index + yearIndex * 3, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")
@@ -2335,12 +2450,16 @@ async function renderEvenementsPage() {
     return;
   }
 
-  const events = await fetchCollection("evenements");
+  const { events, items } = await fetchAgendaItems();
   const featured = chooseFeatured(events);
-  const upcoming = events
-    .filter((item) => item.status !== "passe" && (!featured || item.slug !== featured.slug))
+  const upcoming = items
+    .filter(
+      (item) =>
+        !isArchivedItem(item) &&
+        (!featured || item._sourceType === "stage" || item.slug !== featured.slug)
+    )
     .sort(sortByDateAscending);
-  const archived = events.filter((item) => item.status === "passe").sort(sortByDateDescending);
+  const archived = items.filter((item) => isArchivedItem(item)).sort(sortByDateDescending);
 
   if (featureMount) {
     featureMount.innerHTML = featured
@@ -2548,12 +2667,7 @@ function injectChrome(activeKey) {
     <div class="util" id="site-util">
       <div class="util-viewport" aria-label="${escapeAttr(t("common.utility.news"))}">
         <div class="util-track" id="site-util-track">
-          <a href="evenements.html" class="util-item">
-            <span>${escapeHtml(t("common.utility.defaultPrefix"))}</span>
-            <strong>${escapeHtml(t("common.utility.defaultMain"))}</strong>
-            <i class="sep" aria-hidden="true">✦</i>
-          </a>
-          <a href="evenements.html" class="util-item" aria-hidden="true">
+          <a href="evenements.html" class="util-item is-active" aria-hidden="false">
             <span>${escapeHtml(t("common.utility.defaultPrefix"))}</span>
             <strong>${escapeHtml(t("common.utility.defaultMain"))}</strong>
             <i class="sep" aria-hidden="true">✦</i>

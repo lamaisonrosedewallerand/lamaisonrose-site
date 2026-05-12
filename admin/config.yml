@@ -38,8 +38,8 @@ collections:
           - { label: "Image hero accueil", name: "home_hero_image", widget: "image", required: false }
           - { label: "Nom article HelloAsso adhesion individuelle", name: "helloasso_checkout_membership_item_name", widget: "string", required: false }
           - { label: "Montant adhesion individuelle", name: "helloasso_checkout_membership_amount", widget: "number", value_type: "int", min: 1, required: false, default: 20 }
-          - { label: "Nom article HelloAsso adhesion couple", name: "helloasso_checkout_membership_couple_item_name", widget: "string", required: false }
-          - { label: "Montant adhesion couple", name: "helloasso_checkout_membership_couple_amount", widget: "number", value_type: "int", min: 1, required: false, default: 30 }
+          - { label: "Nom article HelloAsso adhesion famille", name: "helloasso_checkout_membership_family_item_name", widget: "string", required: false }
+          - { label: "Montant adhesion famille", name: "helloasso_checkout_membership_family_amount", widget: "number", value_type: "int", min: 1, required: false, default: 30 }
           - { label: "Nom article HelloAsso soutien", name: "helloasso_checkout_support_item_name", widget: "string", required: false }
           - { label: "Montant checkout par defaut", name: "helloasso_checkout_default_amount", widget: "number", value_type: "int", min: 1, required: false, default: 50 }
           - { label: "Montant checkout minimum", name: "helloasso_checkout_min_amount", widget: "number", value_type: "int", min: 1, required: false, default: 10 }
@@ -137,7 +137,7 @@ collections:
     fields:
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Titre (EN)", name: "title_en", widget: "string", required: false }
-      - { label: "Date", name: "date", widget: "date" }
+      - { label: "Date", name: "date", widget: "date", hint: "Cette date sert aussi a classer automatiquement le stage dans l'agenda." }
       - { label: "Horaire", name: "time", widget: "string", required: false }
       - { label: "Horaire (EN)", name: "time_en", widget: "string", required: false }
       - { label: "Prix", name: "price", widget: "string", required: false }
