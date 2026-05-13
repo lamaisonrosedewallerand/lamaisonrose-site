@@ -34,7 +34,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260513h" />
+<link rel="stylesheet" href="assets/site.css?v=20260513j" />
 <style>
   .feat {
     padding-block: calc(var(--section-y) * 0.9);
@@ -433,6 +433,54 @@
     padding: 8px;
     background: rgba(255, 255, 255, 0.82);
   }
+  .evt-card--archive .evt-thumb {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 24px;
+    text-align: center;
+    transition: transform 1.1s ease;
+  }
+  .past-card:hover .evt-thumb {
+    transform: scale(1.03);
+  }
+  .past-card .img.has-generated-thumb {
+    background: transparent;
+  }
+  .evt-thumb--generated {
+    background: linear-gradient(135deg, rgba(232, 196, 184, 0.9) 0%, rgba(250, 246, 241, 1) 100%);
+  }
+  .evt-thumb--concert {
+    background: linear-gradient(135deg, rgba(242, 235, 225, 1) 0%, rgba(250, 246, 241, 1) 100%);
+  }
+  .evt-thumb--atelier {
+    background: linear-gradient(135deg, rgba(232, 196, 184, 0.32) 0%, rgba(250, 246, 241, 1) 100%);
+  }
+  .evt-thumb--lecture {
+    background: linear-gradient(135deg, rgba(220, 210, 196, 0.72) 0%, rgba(250, 246, 241, 1) 100%);
+  }
+  .evt-thumb--masterclass {
+    background: linear-gradient(135deg, rgba(184, 101, 79, 0.18) 0%, rgba(250, 246, 241, 1) 100%);
+  }
+  .evt-thumb--official {
+    background: linear-gradient(135deg, rgba(184, 101, 79, 0.22) 0%, rgba(242, 235, 225, 1) 100%);
+  }
+  .evt-thumb__category {
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terre);
+    line-height: 1.2;
+  }
+  .evt-thumb__year {
+    font-size: 0.875rem;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
   .past-card .img .ph {
     position: absolute;
     inset: 0;
@@ -793,7 +841,7 @@
     </div>
   </footer>
 </div>
-<script src="assets/site.bundle.js?v=20260513h"></script>
+<script src="assets/site.bundle.js?v=20260513j"></script>
 <script>injectChrome('events');</script>
 </body>
 </html>

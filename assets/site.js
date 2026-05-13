@@ -2721,19 +2721,60 @@ async function initHelloAssoCheckout() {
   });
 }
 
+function getArchiveCategoryMeta(event) {
+  const raw = normalizeText(event.category || event.discipline || "");
+  const isEnglish = getCurrentLanguage() === "en";
+
+  if (raw.includes("concert")) {
+    return { key: "concert", label: isEnglish ? "Concert" : "Concert" };
+  }
+
+  if (raw.includes("atelier")) {
+    return { key: "atelier", label: isEnglish ? "Workshop" : "Atelier" };
+  }
+
+  if (raw.includes("lecture")) {
+    return { key: "lecture", label: isEnglish ? "Reading" : "Lecture" };
+  }
+
+  if (raw.includes("masterclass")) {
+    return { key: "masterclass", label: isEnglish ? "Masterclass" : "Masterclass" };
+  }
+
+  if (raw.includes("evenement") || raw.includes("officiel")) {
+    return { key: "official", label: isEnglish ? "Milestone" : "Événement" };
+  }
+
+  return { key: "exposition", label: isEnglish ? "Exhibition" : "Exposition" };
+}
+
+function renderArchiveThumb(event, localizedTitle) {
+  if (event.image) {
+    return imageTag(event.image, localizedTitle, "event-photo");
+  }
+
+  const { key, label } = getArchiveCategoryMeta(event);
+  const year = parseDate(event.date)?.getFullYear()?.toString() || "Archives";
+
+  return `
+    <div class="evt-thumb evt-thumb--generated evt-thumb--${escapeAttr(key)}" data-category="${escapeAttr(
+      key
+    )}" aria-label="${escapeAttr(localizedTitle)}">
+      <span class="evt-thumb__category">${escapeHtml(label)}</span>
+      <span class="evt-thumb__year">${escapeHtml(year)}</span>
+    </div>
+  `;
+}
+
 function renderPastEventCard(event, index, revealClass = "") {
-  const cardClass = ["past-card", "reveal", revealClass].filter(Boolean).join(" ");
-  const placeholder = PLACEHOLDERS.event[index % PLACEHOLDERS.event.length];
+  const cardClass = ["past-card", "evt-card--archive", "reveal", revealClass].filter(Boolean).join(" ");
   const localizedTitle = localizeField(event, "title", t("event.archive"));
+  const mediaClass = ["img", event.image ? "has-photo" : "has-generated-thumb"].filter(Boolean).join(" ");
 
   return `
     <article class="${cardClass}">
-      <div class="img ${event.image ? "has-photo" : ""}">
-        ${
-          event.image
-            ? imageTag(event.image, localizedTitle, "event-photo")
-            : `<div class="ph ${placeholder}"></div>`
-        }
+      <div class="${mediaClass}">
+        ${renderArchiveThumb(event, localizedTitle)}
       </div>
       <span class="yr">— ${escapeHtml(formatMonthYear(event.date) || t("event.archive"))}</span>
       <h4>${escapeHtml(localizedTitle)}</h4>
