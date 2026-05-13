@@ -299,7 +299,10 @@ const STATIC_PAGE_COPY = {
       en: "Cultural venue in Auvers-sur-Oise, the former artists' studio of Charles-François Daubigny. Residencies, engraving workshops, exhibitions and events throughout the year."
     },
     nodes: [
-      { selector: ".hero .eyebrow", text: { fr: "Lieu culturel · Résidence d'artistes · Tisseur de liens", en: "Cultural venue · Artist residency · A place that connects people" } },
+      { selector: ".hero .eyebrow", html: {
+        fr: "<span class=\"hero-eyebrow__chunk\"><span class=\"hero-eyebrow__item\">Lieu culturel</span><span class=\"hero-eyebrow__sep\" aria-hidden=\"true\">·</span></span><span class=\"hero-eyebrow__chunk\"><span class=\"hero-eyebrow__item\">Résidence d'artistes</span><span class=\"hero-eyebrow__sep\" aria-hidden=\"true\">·</span></span><span class=\"hero-eyebrow__item\">Tisseur de liens</span>",
+        en: "<span class=\"hero-eyebrow__chunk\"><span class=\"hero-eyebrow__item\">Cultural venue</span><span class=\"hero-eyebrow__sep\" aria-hidden=\"true\">·</span></span><span class=\"hero-eyebrow__chunk\"><span class=\"hero-eyebrow__item\">Artist residency</span><span class=\"hero-eyebrow__sep\" aria-hidden=\"true\">·</span></span><span class=\"hero-eyebrow__item\">A place that connects people</span>"
+      } },
       { selector: ".hero h1", html: { fr: "La Maison<br/><span class=\"it\">Rose</span> de Wallerand", en: "The <span class=\"it\">Pink</span> House of<br/>Wallerand" } },
       { selector: ".hero .hero-sub", text: { fr: "À 10 minutes à pied de la gare d'Auvers-sur-Oise, au cœur du centre historique.", en: "A 10-minute walk from Auvers-sur-Oise station, right in the historic centre." } },
       { selector: ".hero .hero-lede", text: { fr: "Ancien atelier d'été de Charles-François Daubigny, la Maison Rose accueille des artistes en résidence, des stages de gravure et des événements culturels tout au long de l'année.", en: "Formerly Charles-François Daubigny's summer studio, the Pink House hosts artists in residence, engraving workshops and cultural events throughout the year." } },

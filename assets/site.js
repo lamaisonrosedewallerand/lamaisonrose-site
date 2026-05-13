@@ -536,6 +536,40 @@ function ensureMobileCtaBar() {
   return bar;
 }
 
+function setupMobileCtaBarSmartHide(bar) {
+  if (!bar || bar.dataset.smartHideBound === "true" || !("IntersectionObserver" in window)) {
+    return;
+  }
+
+  const primaryCtas = [
+    ...document.querySelectorAll('main .btn-primary, main .btn.btn-primary, main button.btn-primary')
+  ].filter((cta) => !bar.contains(cta));
+
+  if (!primaryCtas.length) {
+    return;
+  }
+
+  bar.dataset.smartHideBound = "true";
+  const visibleTargets = new Set();
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleTargets.add(entry.target);
+        } else {
+          visibleTargets.delete(entry.target);
+        }
+      });
+
+      bar.classList.toggle("is-hidden-by-cta", visibleTargets.size > 0);
+    },
+    { rootMargin: "0px 0px -80px 0px", threshold: 0.5 }
+  );
+
+  primaryCtas.forEach((cta) => observer.observe(cta));
+}
+
 function setupMobileCtaBar(activeKey = document.body?.dataset.page || "home") {
   const bar = ensureMobileCtaBar();
 
@@ -574,6 +608,8 @@ function setupMobileCtaBar(activeKey = document.body?.dataset.page || "home") {
   if (visibleCtas.length === 1) {
     visibleCtas[0].style.flex = "1 1 100%";
   }
+
+  setupMobileCtaBarSmartHide(bar);
 
   if (window.matchMedia("(min-width: 1024px)").matches) {
     document.body.classList.remove("has-mobile-cta");
@@ -1436,7 +1472,9 @@ function renderStageAction(stage) {
     )} <span class="arr">→</span></a>`;
   }
 
-  return `<span class="reg reg-disabled">${escapeHtml(t("stage.linkSoon"))}</span>`;
+  return `<a href="contact.html?topic=Inscription%20stage#ctForm" class="reg">${
+    getCurrentLanguage() === "en" ? "Request registration" : "Demander une inscription"
+  } <span class="arr">→</span></a>`;
 }
 
 function renderStageCard(stage, index, revealClass = "") {

@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-05-13T14:25:40.833Z",
+  "generatedAt": "2026-05-13T15:25:45.407Z",
   "count": 5,
   "items": [
     {
       "slug": "stage-avec-lise",
-      "title": "STAGE AVEC LISE ",
-      "date": "2026-06-24T09:01:41.118Z",
+      "title": "Stage avec Lise",
+      "date": "2026-06-24",
       "price": "20€",
-      "duration": "1 journée ",
-      "duration_en": "1 journée ",
+      "duration": "1 journée",
+      "duration_en": "1 day",
       "places": 20,
       "discipline": "Gravure",
-      "level": "Débutant ",
+      "level": "Débutant",
       "image": "/assets/uploads/le-temps-dun-cafe-chez-tagliana-2026.jpg",
       "status": "ouvert",
       "featured": false,
-      "body": "fafeaf",
-      "descriptionText": "fafeaf",
-      "descriptionHtml": "<p>fafeaf</p>"
+      "body": "Stage d'une journée animé par Lise, autour de l'univers pictural d'Auvers-sur-Oise. Détails et inscription à venir : contactez l'association pour réserver.",
+      "descriptionText": "Stage d'une journée animé par Lise, autour de l'univers pictural d'Auvers sur Oise. Détails et inscription à venir : contactez l'association pour réserver.",
+      "descriptionHtml": "<p>Stage d&#39;une journée animé par Lise, autour de l&#39;univers pictural d&#39;Auvers-sur-Oise. Détails et inscription à venir : contactez l&#39;association pour réserver.</p>"
     },
     {
       "slug": "stage-de-linogravure-avril-2026",
