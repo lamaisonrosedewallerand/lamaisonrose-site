@@ -283,14 +283,14 @@ img {
   padding-inline: var(--gutter);
   padding-block: 12px;
   display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: 8px;
   position: relative;
 }
 
 .nav-inner nav {
-  grid-column: auto;
+  grid-column: 1 / -1;
   width: 100%;
 }
 
@@ -351,21 +351,19 @@ body[data-lang="en"] .brand-text .a {
 }
 
 .nav-actions {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
+  display: flex;
   align-items: center;
-  justify-self: stretch;
+  justify-self: end;
   gap: 8px;
-  width: 100%;
+  width: auto;
 }
 
 html.has-reveal .nav-actions {
-  display: none;
+  display: flex;
 }
 
 .nav-cta-stack {
-  display: grid;
-  gap: 8px;
+  display: none;
 }
 
 .lang-switch {
@@ -538,26 +536,7 @@ html.has-reveal .nav-actions {
 }
 
 .menu-mobile-only {
-  display: block;
-}
-
-.menu-mobile-utility {
-  margin-top: 6px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-}
-
-.menu-mobile-utility .lang-switch {
-  justify-self: start;
-  margin-bottom: 14px;
-}
-
-.menu-mobile-utility .nav-cta-stack {
-  gap: 10px;
-}
-
-.menu-mobile-utility .nav-cta {
-  width: 100%;
+  display: none;
 }
 
 .btn-primary {
@@ -1507,6 +1486,7 @@ body.has-mobile-cta main {
   }
 
   .nav-cta-stack {
+    display: grid;
     min-width: 184px;
   }
 

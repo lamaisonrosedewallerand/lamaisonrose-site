@@ -486,34 +486,18 @@ function syncNavContext(activeKey = document.body?.dataset.page || "home", root 
 function ensureMobileMenuUtility(activeKey = document.body?.dataset.page || "home") {
   const nav = document.getElementById("nav");
   const menu = nav ? nav.querySelector(".menu") : null;
-  const actions = nav ? nav.querySelector(".nav-actions") : null;
 
-  if (!nav || !menu || !actions) {
+  if (!nav || !menu) {
     return;
   }
 
-  let utility = menu.querySelector(".menu-mobile-utility");
+  const utility = menu.querySelector(".menu-mobile-utility");
 
-  if (!utility) {
-    utility = document.createElement("li");
-    utility.className = "menu-mobile-only menu-mobile-utility";
-    menu.appendChild(utility);
+  if (utility) {
+    utility.remove();
   }
 
-  utility.innerHTML = "";
-
-  const languageGroup = actions.querySelector(".lang-switch");
-  const ctaStack = actions.querySelector(".nav-cta-stack");
-
-  if (languageGroup) {
-    utility.appendChild(languageGroup.cloneNode(true));
-  }
-
-  if (ctaStack) {
-    utility.appendChild(ctaStack.cloneNode(true));
-  }
-
-  syncNavContext(activeKey, utility);
+  syncNavContext(activeKey, menu);
 }
 
 function ensureMobileCtaBar() {
