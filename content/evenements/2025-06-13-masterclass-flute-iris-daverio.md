@@ -3,6 +3,7 @@ title: "Masterclass de flûte traversière — Festival d'Auvers-sur-Oise"
 date: "2025-06-13"
 time: "14h30 - 18h30"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/masterclass-flute-iris-daverio-2025.jpg
 entry: "Inscription obligatoire via le site du festival : festival-auvers.com"
 status: "passe"
 featured: false

@@ -4,6 +4,7 @@ date: "2025-03-24"
 date_end: "2025-04-01"
 time: "Ateliers de 2h"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/ateliers-gravure-japonaise-enfants-2025.jpg
 entry: "Gratuit · Réservation obligatoire au 06 15 37 56 72"
 status: "passe"
 featured: false

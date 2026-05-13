@@ -3,6 +3,7 @@ title: "Inauguration de la plaque du Label Patrimoine d'intérêt régional"
 date: "2024-11-22"
 time: "17h"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/inauguration-plaque-patrimoine-2024.jpg
 entry: "Sur invitation"
 status: "passe"
 featured: false

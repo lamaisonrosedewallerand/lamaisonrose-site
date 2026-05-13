@@ -4,6 +4,7 @@ date: "2025-04-04"
 date_end: "2025-04-06"
 time: "13h-19h"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/exposition-imaginaire-2025.jpg
 entry: "Entrée libre — tout public"
 status: "passe"
 featured: false

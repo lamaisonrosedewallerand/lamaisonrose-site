@@ -3,6 +3,7 @@ title: "Nuits de la lecture — « Les nuits difficiles » de Dino Buzzati"
 date: "2025-01-23"
 time: "Début du spectacle à 20h15"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/nuits-lecture-dino-buzzati-2025.jpg
 entry: "Inscription obligatoire à mulrichm@hotmail.com ou 06 15 37 56 72"
 status: "passe"
 featured: false

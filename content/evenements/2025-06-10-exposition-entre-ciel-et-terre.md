@@ -4,6 +4,7 @@ date: "2025-06-10"
 date_end: "2025-06-29"
 time: "11h-19h tous les jours"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/exposition-entre-ciel-et-terre-2025.png
 entry: "Entrée libre — tout public"
 status: "passe"
 featured: false

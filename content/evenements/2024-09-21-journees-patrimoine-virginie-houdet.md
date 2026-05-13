@@ -4,6 +4,7 @@ date: "2024-09-21"
 date_end: "2024-09-22"
 time: "14h - 19h30"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/journees-patrimoine-virginie-houdet-2024.jpg
 entry: "Entrée libre"
 status: "passe"
 featured: false

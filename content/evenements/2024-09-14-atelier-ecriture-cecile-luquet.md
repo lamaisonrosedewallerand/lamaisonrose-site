@@ -3,6 +3,7 @@ title: "Atelier d'écriture avec Cécile Luquet et Virginie Houdet"
 date: "2024-09-14"
 time: "9h30 - 12h"
 location: "La Maison Rose de Wallerand, Auvers-sur-Oise"
+image: assets/uploads/atelier-ecriture-cecile-luquet-virginie-houdet-2024.jpg
 entry: "Inscription requise"
 status: "passe"
 featured: false
