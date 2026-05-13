@@ -4,6 +4,7 @@
   --rose: #e8c4b8;
   --rose-deep: #d4a09a;
   --terre: #b8654f;
+  --terre-deep: #9d5240;
   --terre-dark: #8e4636;
   --ink: #1a1614;
   --ink-soft: #2b2522;
@@ -197,10 +198,10 @@ img {
 .util {
   background: var(--ink);
   color: #e8ddd0;
-  font-size: 0.625rem;
-  letter-spacing: 0.08em;
+  font-size: 0.5625rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding-block: 7px;
+  padding-block: 6px;
 }
 
 .util-viewport {
@@ -224,7 +225,7 @@ img {
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
   text-align: center;
-  padding-inline: max(14px, var(--gutter));
+  padding-inline: max(12px, var(--gutter));
 }
 
 .util-item.is-active {
@@ -243,7 +244,7 @@ img {
   min-width: 0;
   color: var(--cream);
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.03em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -358,8 +359,13 @@ body[data-lang="en"] .brand-text .a {
   width: 100%;
 }
 
+html.has-reveal .nav-actions {
+  display: none;
+}
+
 .nav-cta-stack {
-  display: contents;
+  display: grid;
+  gap: 8px;
 }
 
 .lang-switch {
@@ -378,13 +384,13 @@ body[data-lang="en"] .brand-text .a {
   border: 0;
   background: transparent;
   color: var(--grey);
-  min-width: 34px;
-  min-height: 38px;
-  padding: 8px 9px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px 10px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease;
@@ -423,9 +429,9 @@ body[data-lang="en"] .brand-text .a {
   white-space: nowrap;
   justify-self: stretch;
   width: 100%;
-  min-height: 38px;
-  padding-inline: 10px;
-  font-size: 0.625rem;
+  min-height: 44px;
+  padding-inline: 16px;
+  font-size: 0.6875rem;
   letter-spacing: 0.08em;
 }
 
@@ -479,12 +485,12 @@ body[data-lang="en"] .brand-text .a {
   display: none;
   list-style: none;
   margin: 0;
-  padding: 16px;
+  padding: 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: rgba(250, 246, 241, 0.98);
   box-shadow: 0 30px 60px -40px rgba(26, 22, 20, 0.35);
-  gap: 4px;
+  gap: 6px;
 }
 
 .nav.open .menu {
@@ -499,10 +505,10 @@ body[data-lang="en"] .brand-text .a {
   display: inline-flex;
   align-items: center;
   width: 100%;
-  min-height: 44px;
+  min-height: 48px;
   padding: 12px 0;
   color: var(--grey);
-  font-size: var(--fs-small);
+  font-size: 0.9375rem;
   letter-spacing: 0.03em;
   transition: color 0.25s ease;
 }
@@ -533,6 +539,25 @@ body[data-lang="en"] .brand-text .a {
 
 .menu-mobile-only {
   display: block;
+}
+
+.menu-mobile-utility {
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.menu-mobile-utility .lang-switch {
+  justify-self: start;
+  margin-bottom: 14px;
+}
+
+.menu-mobile-utility .nav-cta-stack {
+  gap: 10px;
+}
+
+.menu-mobile-utility .nav-cta {
+  width: 100%;
 }
 
 .btn-primary {
@@ -581,6 +606,7 @@ body[data-lang="en"] .brand-text .a {
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .cta-row > * {
@@ -711,18 +737,18 @@ html.has-reveal .reveal.in {
   font-size: var(--fs-eyebrow);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--terre);
+  color: var(--terre-deep);
 }
 
 .eyebrow::before {
   content: "";
   width: 32px;
   height: 1px;
-  background: var(--terre);
+  background: var(--terre-deep);
 }
 
 .page-hero {
-  padding-block: 24px 28px;
+  padding-block: 18px 26px;
   border-bottom: 1px solid var(--line);
   position: relative;
 }
@@ -740,12 +766,29 @@ html.has-reveal .reveal.in {
 }
 
 .page-hero .crumbs {
-  font-size: 0.625rem;
-  letter-spacing: 0.16em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--grey-soft);
+  color: rgba(26, 22, 20, 0.56);
   line-height: 1.5;
   margin-bottom: 12px;
+}
+
+.page-hero .crumbs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(26, 22, 20, 0.72);
+}
+
+.page-hero .crumbs a::before {
+  content: "←";
+  font-size: 0.9em;
+  line-height: 1;
 }
 
 .page-hero .crumbs a:hover {
@@ -753,11 +796,12 @@ html.has-reveal .reveal.in {
 }
 
 .page-hero h1 {
-  font-size: var(--fs-h1);
+  font-size: clamp(2rem, 8.3vw, 4.5rem);
   line-height: 0.96;
   letter-spacing: -0.015em;
   margin-bottom: 10px;
   max-width: 14ch;
+  text-wrap: balance;
 }
 
 .page-hero h1 .line {
@@ -917,6 +961,11 @@ body[data-lang="en"] .hero-lede {
   gap: 32px;
   margin-bottom: 42px;
 }
+
+.foot-grid > :nth-child(1) { order: 1; }
+.foot-grid > :nth-child(2) { order: 2; }
+.foot-grid > :nth-child(4) { order: 3; }
+.foot-grid > :nth-child(3) { order: 4; }
 
 footer {
   background: var(--ink);
@@ -1215,31 +1264,6 @@ footer {
     justify-self: start;
   }
 
-  .nav-actions {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-self: end;
-    width: auto;
-    gap: 8px;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-  }
-
-  .nav-cta-stack {
-    display: grid;
-    min-width: 172px;
-  }
-
-  .nav-cta {
-    justify-self: stretch;
-  }
-
-  .nav-cta .arr {
-    display: inline-block;
-  }
-
   .brand-mark {
     width: 48px;
     height: 48px;
@@ -1326,7 +1350,7 @@ footer {
   }
 
   .page-hero {
-    padding-block: 40px 48px;
+    padding-block: 34px 42px;
   }
 
   .page-hero-grid {
@@ -1385,6 +1409,28 @@ footer {
     display: flex;
   }
 
+  html.has-reveal .nav-actions {
+    display: flex;
+  }
+
+  .nav-actions {
+    display: flex;
+  }
+
+  .nav-cta-stack {
+    min-width: 184px;
+  }
+
+  .nav-cta {
+    min-height: 48px;
+    padding-inline: 18px;
+    font-size: 0.75rem;
+  }
+
+  .nav-cta .arr {
+    display: inline-block;
+  }
+
   .menu a {
     width: auto;
     min-height: 48px;
@@ -1419,16 +1465,12 @@ footer {
     display: none;
   }
 
-  .nav-cta-stack {
-    min-width: 184px;
-  }
-
   body[data-lang="en"] .menu {
     gap: clamp(12px, 1.3vw, 20px);
   }
 
   .page-hero {
-    padding-block: 72px 58px;
+    padding-block: 56px 50px;
   }
 
   .page-hero-grid {
@@ -1445,6 +1487,10 @@ footer {
 
   .page-hero h1 {
     max-width: 15ch;
+  }
+
+  .page-hero .crumbs a::before {
+    content: "";
   }
 
   .page-hero h1 .line {

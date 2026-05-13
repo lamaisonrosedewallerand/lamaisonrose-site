@@ -25,12 +25,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260513d" />
+<link rel="stylesheet" href="assets/site.css?v=20260513e" />
 <style>
   .join {
     position: relative;
     overflow: hidden;
-    padding-block: var(--section-y);
+    padding-block: 48px 72px;
     background: var(--rose);
   }
   .join::before {
@@ -48,12 +48,27 @@
     text-align: left;
   }
   .join-head .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
     margin-bottom: 12px;
-    font-size: var(--fs-eyebrow);
-    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--terre-dark);
+    color: rgba(26, 22, 20, 0.56);
     line-height: 1.45;
+  }
+  .join-head .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(26, 22, 20, 0.74);
+  }
+  .join-head .crumbs a::before {
+    content: "←";
+    font-size: 0.9em;
+    line-height: 1;
   }
   .join-head .crumbs a:hover {
     color: var(--ink);
@@ -66,6 +81,7 @@
     margin: 0 0 16px;
     font-size: var(--fs-display);
     line-height: 0.96;
+    text-wrap: balance;
   }
   .join-head h1 em {
     font-style: italic;
@@ -77,6 +93,12 @@
     font-size: var(--fs-lead);
     font-style: italic;
     line-height: 1.5;
+  }
+  html.has-reveal .join-head .reveal,
+  html.has-reveal .join-head .reveal.in {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
   .tiers {
     display: grid;
@@ -595,6 +617,10 @@
   }
 
   @media (min-width: 768px) {
+    .join {
+      padding-block: 72px 96px;
+    }
+
     .join-head {
       margin-bottom: 42px;
     }
@@ -650,9 +676,16 @@
   }
 
   @media (min-width: 1024px) {
+    .join {
+      padding-block: 88px 112px;
+    }
+
     .join-head {
       margin-bottom: 56px;
       text-align: center;
+    }
+    .join-head .crumbs a::before {
+      content: "";
     }
     .join-head h1 {
       max-width: 13ch;
@@ -761,7 +794,7 @@
       <div class="crumbs reveal"><a href="index.html">Accueil</a> · Adhérer</div>
       <span class="num-tag reveal">— Soutenir la Maison</span>
       <h1 class="reveal d2">Rejoignez la Maison Rose,<br/><em>soutenez la création.</em></h1>
-      <p class="reveal d3">Le site ne gère ni paiement ni compte utilisateur : les adhésions et soutiens passent entièrement par HelloAsso.</p>
+      <p class="reveal d3">Adhésions et dons sont entièrement gérés par HelloAsso, partenaire de paiement de l'association. Vos données bancaires ne touchent jamais notre site.</p>
     </div>
     <div class="tiers">
       <article class="tier reveal">
@@ -911,7 +944,7 @@
     </div>
   </footer>
 </div>
-<script src="assets/site.bundle.js?v=20260513d"></script>
+<script src="assets/site.bundle.js?v=20260513e"></script>
 <script>
   injectChrome('adherer');
   // FAQ

@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260513d" />
+<link rel="stylesheet" href="assets/site.css?v=20260513e" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -89,6 +89,7 @@
     letter-spacing: -0.02em;
     margin-bottom: 16px;
     max-width: 11ch;
+    text-wrap: balance;
   }
   .hero h1 .it {
     font-style: italic;
@@ -113,9 +114,14 @@
   }
   .hero-visual {
     position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
   }
   .hv-frame {
     position: relative;
+    grid-column: 1 / -1;
     width: 100%;
     aspect-ratio: 4 / 5;
     overflow: hidden;
@@ -144,20 +150,14 @@
     background: radial-gradient(circle at 22% 20%, rgba(255, 255, 255, 0.18), transparent 32%), linear-gradient(180deg, transparent 45%, rgba(26, 22, 20, 0.18));
   }
   .hv-tag {
-    position: absolute;
+    position: static;
     z-index: 3;
-    max-width: calc(100% - 24px);
-    padding: 10px 14px;
-    background: rgba(250, 246, 241, 0.96);
+    max-width: none;
+    padding: 12px 14px;
+    background: rgba(250, 246, 241, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     box-shadow: 0 14px 30px -12px rgba(26, 22, 20, 0.22);
-  }
-  .hv-tag.t1 {
-    top: 12px;
-    left: 12px;
-  }
-  .hv-tag.t2 {
-    right: 12px;
-    bottom: 12px;
   }
   .hv-tag .lbl {
     display: block;
@@ -199,6 +199,7 @@
     font-size: var(--fs-h2);
     line-height: 1.08;
     font-weight: 300;
+    text-wrap: balance;
   }
   .manifesto h2 em {
     color: var(--terre);
@@ -249,19 +250,22 @@
     border-bottom: 1px solid var(--line);
     padding-block: 18px;
     background: var(--cream-2);
+    mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 40px, black calc(100% - 40px), transparent 100%);
   }
   .marquee-track {
     display: flex;
     gap: 30px;
     width: max-content;
-    animation: scroll 38s linear infinite;
+    animation: scroll 60s linear infinite;
     will-change: transform;
   }
   .marquee-track span {
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(1.375rem, 4.6vw, 1.75rem);
     font-style: italic;
-    color: var(--grey);
+    color: var(--ink);
+    opacity: 0.78;
     white-space: nowrap;
   }
   .marquee-track .dot {
@@ -302,6 +306,7 @@
     margin-bottom: 16px;
     font-size: clamp(1.875rem, 10vw, 2.5rem);
     line-height: 0.98;
+    text-wrap: balance;
   }
   .headline-text h2 .it {
     font-style: italic;
@@ -353,6 +358,7 @@
   }
   .headline-sidecar {
     width: 100%;
+    margin-top: 2px;
   }
   .artist-spotlight {
     width: 100%;
@@ -414,7 +420,7 @@
   }
   .artist-slide-title {
     font-family: "Cormorant Garamond", serif;
-    font-size: 1.375rem;
+    font-size: 1.25rem;
     line-height: 0.96;
     color: var(--ink);
     font-weight: 500;
@@ -448,7 +454,7 @@
     background: var(--terre);
   }
   .headline-visual {
-    order: -1;
+    order: 0;
     position: relative;
     aspect-ratio: 4 / 5;
   }
@@ -574,6 +580,7 @@
     color: var(--grey);
     font-size: 0.9375rem;
     line-height: 1.68;
+    text-wrap: pretty;
   }
   .teaser .more {
     display: inline-flex;
@@ -652,9 +659,6 @@
     .hv-frame {
       aspect-ratio: 16 / 11;
     }
-    .hv-tag {
-      padding: 12px 16px;
-    }
     .manifesto h2 {
       max-width: 18ch;
     }
@@ -700,7 +704,7 @@
       border-radius: 22px;
     }
     .artist-slide-title {
-      font-size: 1.5rem;
+      font-size: 1.4375rem;
     }
     .teaser-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -746,9 +750,7 @@
     }
     .hero-visual {
       min-height: 540px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
     }
     .hv-frame {
       aspect-ratio: auto;
@@ -757,6 +759,7 @@
     }
     .hv-tag {
       max-width: 200px;
+      position: absolute;
     }
     .hv-tag.t1 {
       top: 8%;
@@ -796,7 +799,7 @@
     .manifesto {
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
-      gap: 40px;
+      gap: 56px;
       align-items: start;
     }
     .manifesto .small {
@@ -811,17 +814,17 @@
       max-width: none;
       justify-self: end;
       padding-top: 0;
-      padding-left: 32px;
+      padding-left: 36px;
       border-top: 0;
       border-left: 1px solid var(--line);
     }
     .manifesto-quote p {
-      max-width: 24ch;
+      max-width: 22ch;
     }
 
     .headline-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(420px, 1.04fr);
-      gap: 64px;
+      grid-template-columns: minmax(380px, 0.94fr) minmax(0, 1fr);
+      gap: 56px;
       align-items: center;
     }
     .headline-text {
@@ -838,12 +841,12 @@
       max-width: none;
     }
     .headline-sidecar {
-      width: min(100%, 360px);
+      width: min(100%, 320px);
       margin-top: 0;
     }
     .artist-spotlight {
-      width: min(100%, 360px);
-      max-width: 360px;
+      width: min(100%, 320px);
+      max-width: 320px;
     }
     .artist-slider-shell {
       padding: 18px 20px;
@@ -852,7 +855,7 @@
       min-height: 134px;
     }
     .headline-visual {
-      order: 0;
+      order: -1;
     }
     .hl-corner {
       top: -14px;
@@ -1117,7 +1120,7 @@
   </footer>
 </div>
 
-<script src="assets/site.bundle.js?v=20260513d"></script>
+<script src="assets/site.bundle.js?v=20260513e"></script>
 <script>
   injectChrome('home');
 </script>

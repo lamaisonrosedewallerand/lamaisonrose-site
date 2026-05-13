@@ -444,6 +444,71 @@ function applyLanguage() {
   updateLanguageButtons(language);
   applyGenericTranslations();
   applyStaticPageTranslations();
+  updateFooterCopyright();
+}
+
+function updateFooterCopyright() {
+  const currentYear = String(new Date().getFullYear());
+
+  document
+    .querySelectorAll('[data-i18n-key="common.footer.copyright"]')
+    .forEach((node) => {
+      node.textContent = String(node.textContent || "").replace(/\b20\d{2}\b/, currentYear);
+    });
+}
+
+function syncNavContext(activeKey = document.body?.dataset.page || "home", root = document) {
+  const hideAdherer = activeKey === "adherer";
+  const hideTicketing = activeKey === "stages";
+
+  root.querySelectorAll('.nav-cta[data-k="adherer"]').forEach((node) => {
+    node.hidden = hideAdherer;
+  });
+
+  root.querySelectorAll('.nav-cta[data-k="ticketing"]').forEach((node) => {
+    node.hidden = hideTicketing;
+  });
+
+  root.querySelectorAll('.menu-mobile-only > a[data-k="adherer"]').forEach((node) => {
+    const item = node.closest(".menu-mobile-only");
+
+    if (item) {
+      item.hidden = hideAdherer;
+    }
+  });
+}
+
+function ensureMobileMenuUtility(activeKey = document.body?.dataset.page || "home") {
+  const nav = document.getElementById("nav");
+  const menu = nav ? nav.querySelector(".menu") : null;
+  const actions = nav ? nav.querySelector(".nav-actions") : null;
+
+  if (!nav || !menu || !actions) {
+    return;
+  }
+
+  let utility = menu.querySelector(".menu-mobile-utility");
+
+  if (!utility) {
+    utility = document.createElement("li");
+    utility.className = "menu-mobile-only menu-mobile-utility";
+    menu.appendChild(utility);
+  }
+
+  utility.innerHTML = "";
+
+  const languageGroup = actions.querySelector(".lang-switch");
+  const ctaStack = actions.querySelector(".nav-cta-stack");
+
+  if (languageGroup) {
+    utility.appendChild(languageGroup.cloneNode(true));
+  }
+
+  if (ctaStack) {
+    utility.appendChild(ctaStack.cloneNode(true));
+  }
+
+  syncNavContext(activeKey, utility);
 }
 
 function initLanguageSwitcher() {
@@ -2770,6 +2835,8 @@ function injectChrome(activeKey) {
   clearLegacyTranslateArtifacts();
   setDocumentLanguage(language);
   const active = activeKey || document.body?.dataset.page || "home";
+  ensureMobileMenuUtility(active);
+  syncNavContext(active);
   const activeLink = document.querySelector(`.menu a[data-k="${active}"]`);
 
   const skipLink = document.querySelector(".skip-link");
@@ -2818,6 +2885,8 @@ window.initHelloAssoCheckout = initHelloAssoCheckout;
 document.addEventListener("DOMContentLoaded", async () => {
   clearLegacyTranslateArtifacts();
   registerReveals(document);
+  ensureMobileMenuUtility(document.body?.dataset.page || "home");
+  syncNavContext(document.body?.dataset.page || "home");
   initNavScroll();
   initSmoothAnchors();
   initBurger();

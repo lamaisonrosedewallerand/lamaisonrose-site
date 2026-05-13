@@ -567,7 +567,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".join-head .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · Adhérer", en: "<a href=\"index.html\">Home</a> · Join" } },
       { selector: ".join-head .num-tag", text: { fr: "— Soutenir la Maison", en: "— Support the association" } },
       { selector: ".join-head h1", html: { fr: "Rejoignez la Maison Rose,<br/><em>soutenez la création.</em>", en: "Join the Pink House,<br/><em>support creation.</em>" } },
-      { selector: ".join-head p", text: { fr: "Le site ne gère ni paiement ni compte utilisateur : les adhésions et soutiens passent entièrement par HelloAsso.", en: "The site does not manage payments or user accounts: memberships and donations are handled entirely through HelloAsso." } },
+      { selector: ".join-head p", text: { fr: "Adhésions et dons sont entièrement gérés par HelloAsso, partenaire de paiement de l'association. Vos données bancaires ne touchent jamais notre site.", en: "Memberships and donations are fully handled by HelloAsso, the association's payment partner. Your bank details never pass through our site." } },
       { selector: ".tiers .tier:nth-child(1) .lvl", text: { fr: "— Adhésion", en: "— Membership" } },
       { selector: ".tiers .tier:nth-child(1) h3", text: { fr: "Adhésion individuelle", en: "Individual membership" } },
       { selector: ".tiers .tier:nth-child(1) .price .b", text: { fr: "par an", en: "per year" } },
