@@ -536,6 +536,48 @@ function ensureMobileCtaBar() {
   return bar;
 }
 
+function setupMobileCtaBarSmartHide(bar) {
+  if (!bar || !("IntersectionObserver" in window)) {
+    return;
+  }
+
+  if (bar.dataset.smartHideBound === "true") {
+    return;
+  }
+
+  const primaryCtas = [...document.querySelectorAll("main .btn-primary, main .btn.btn-primary, main button.btn-primary")].filter(
+    (cta) => !bar.contains(cta)
+  );
+
+  if (!primaryCtas.length) {
+    return;
+  }
+
+  bar.dataset.smartHideBound = "true";
+  const visibleCtas = new Set();
+
+  const sync = () => {
+    bar.classList.toggle("is-hidden-by-cta", visibleCtas.size > 0);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleCtas.add(entry.target);
+        } else {
+          visibleCtas.delete(entry.target);
+        }
+      });
+
+      sync();
+    },
+    { rootMargin: "0px 0px -80px 0px", threshold: 0.5 }
+  );
+
+  primaryCtas.forEach((cta) => observer.observe(cta));
+}
+
 function setupMobileCtaBar(activeKey = document.body?.dataset.page || "home") {
   const bar = ensureMobileCtaBar();
 
@@ -578,12 +620,14 @@ function setupMobileCtaBar(activeKey = document.body?.dataset.page || "home") {
   if (window.matchMedia("(min-width: 1024px)").matches) {
     document.body.classList.remove("has-mobile-cta");
     bar.classList.remove("is-visible");
+    bar.classList.remove("is-hidden-by-cta");
     return;
   }
 
   document.body.classList.add("has-mobile-cta");
 
   if (bar.dataset.bound === "true") {
+    setupMobileCtaBarSmartHide(bar);
     return;
   }
 
@@ -631,6 +675,8 @@ function setupMobileCtaBar(activeKey = document.body?.dataset.page || "home") {
 
     observer.observe(footer);
   }
+
+  setupMobileCtaBarSmartHide(bar);
 }
 
 function initLanguageSwitcher() {
@@ -1468,7 +1514,13 @@ function renderStageAction(stage) {
     )} <span class="arr">→</span></a>`;
   }
 
-  return `<span class="reg reg-disabled">${escapeHtml(t("stage.linkSoon"))}</span>`;
+  const contactTopic = encodeURIComponent(
+    getCurrentLanguage() === "en" ? "Workshop information" : "Renseignements stages"
+  );
+
+  return `<a href="contact.html?topic=${contactTopic}" class="reg reg-secondary">${escapeHtml(
+    t("stage.contactSoon")
+  )} <span class="arr">→</span></a>`;
 }
 
 function renderStageCard(stage, index, revealClass = "") {
@@ -1496,7 +1548,7 @@ function renderStageCard(stage, index, revealClass = "") {
       stage.status || ""
     )}" data-level="${escapeAttr(
       levelCategory(localizeField(stage, "level", stage.level || t("stage.allLevels")))
-    )}">
+    )}" data-slug="${escapeAttr(stage.slug || "")}">
       ${renderStageMedia(stage, index)}
       <h3>${escapeHtml(localizedTitle)}</h3>
       <div class="meta">

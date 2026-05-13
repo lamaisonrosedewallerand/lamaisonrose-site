@@ -63,6 +63,7 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scroll-padding-bottom: 100px;
 }
 
 body {
@@ -301,6 +302,13 @@ img {
   gap: 12px;
 }
 
+.nav-end {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 10px;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -351,15 +359,11 @@ body[data-lang="en"] .brand-text .a {
 }
 
 .nav-actions {
-  display: flex;
+  display: none;
   align-items: center;
   justify-self: end;
   gap: 8px;
   width: auto;
-}
-
-html.has-reveal .nav-actions {
-  display: flex;
 }
 
 .nav-cta-stack {
@@ -378,6 +382,16 @@ html.has-reveal .nav-actions {
   background: rgba(255, 255, 255, 0.92);
 }
 
+.nav-actions .lang-switch {
+  display: none;
+}
+
+.nav-end .lang-switch {
+  display: inline-flex;
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
 .lang-btn {
   border: 0;
   background: transparent;
@@ -392,6 +406,14 @@ html.has-reveal .nav-actions {
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease;
+}
+
+.nav-end .lang-btn {
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
 }
 
 .lang-btn:hover {
@@ -455,12 +477,12 @@ html.has-reveal .nav-actions {
 }
 
 .burger {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   border: 1px solid var(--line);
   align-self: center;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.7);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -497,6 +519,10 @@ html.has-reveal .nav-actions {
 
 .menu li {
   min-width: 0;
+}
+
+.menu-mobile-only {
+  display: none;
 }
 
 .menu a {
@@ -977,8 +1003,13 @@ footer {
   pointer-events: auto;
 }
 
+.mobile-cta-bar.is-hidden-by-cta {
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
 body.has-mobile-cta main {
-  padding-bottom: 88px;
+  padding-bottom: 100px;
 }
 
 .mobile-cta {
@@ -1451,6 +1482,18 @@ body.has-mobile-cta main {
   .nav-inner {
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 24px;
+  }
+
+  .nav-end .lang-switch {
+    display: none;
+  }
+
+  .nav-actions {
+    display: flex;
+  }
+
+  .nav-actions .lang-switch {
+    display: inline-flex;
   }
 
   .nav-head {

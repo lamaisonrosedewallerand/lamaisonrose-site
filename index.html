@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260513h" />
+<link rel="stylesheet" href="assets/site.css?v=20260513i" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -111,6 +111,18 @@
     color: var(--grey);
     font-size: var(--fs-body);
     line-height: 1.6;
+  }
+  .hero-eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.38em;
+  }
+  .hero-eyebrow__item {
+    white-space: nowrap;
+  }
+  .hero-eyebrow__sep {
+    color: var(--terre);
   }
   .hero-visual {
     position: relative;
@@ -228,6 +240,9 @@
     gap: 10px;
   }
   .manifesto-pills li {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
     padding: 8px 12px;
     border-radius: 999px;
     background: rgba(184, 101, 79, 0.08);
@@ -946,11 +961,17 @@
             <span class="b" data-i18n-key="common.brandSecondary">de Wallerand · Auvers-sur-Oise</span>
           </span>
         </a>
-        <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="site-menu">
-          <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true">
-            <path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"></path>
-          </svg>
-        </button>
+        <div class="nav-end">
+          <div class="lang-switch lang-switch--mobile" role="group" aria-label="Choix de la langue">
+            <button type="button" class="lang-btn is-active" data-lang-switch="fr" aria-pressed="true">FR</button>
+            <button type="button" class="lang-btn" data-lang-switch="en" aria-pressed="false">EN</button>
+          </div>
+          <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="site-menu">
+            <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true">
+              <path d="M0 1h22M0 7h22M0 13h22" stroke="#1A1614" stroke-width="1.5"></path>
+            </svg>
+          </button>
+        </div>
       </div>
       <nav aria-label="Navigation principale">
         <ul class="menu" id="site-menu">
@@ -982,7 +1003,13 @@
 <section class="hero" id="hero">
   <div class="hero-grid wrap">
     <div class="hero-text">
-      <div class="eyebrow reveal">Lieu culturel · Résidence d'artistes · Tisseur de liens</div>
+      <div class="eyebrow hero-eyebrow reveal">
+        <span class="hero-eyebrow__item">Lieu culturel</span>
+        <span class="hero-eyebrow__sep" aria-hidden="true">·</span>
+        <span class="hero-eyebrow__item">Résidence d'artistes</span>
+        <span class="hero-eyebrow__sep" aria-hidden="true">·</span>
+        <span class="hero-eyebrow__item">Tisseur de liens</span>
+      </div>
       <h1 class="reveal d2">La Maison<br/><span class="it">Rose</span> de Wallerand</h1>
       <p class="hero-sub reveal d3">À 10 minutes à pied de la gare d'Auvers-sur-Oise, au cœur du centre historique.</p>
       <p class="hero-lede reveal d3">Ancien atelier d'été de Charles-François Daubigny, la Maison Rose accueille des artistes en résidence, des stages de gravure et des événements culturels tout au long de l'année.</p>
@@ -1152,7 +1179,7 @@
   </footer>
 </div>
 
-<script src="assets/site.bundle.js?v=20260513h"></script>
+<script src="assets/site.bundle.js?v=20260513i"></script>
 <script>
   injectChrome('home');
 </script>
