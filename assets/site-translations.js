@@ -23,6 +23,11 @@ const UI_TRANSLATIONS = {
         adherer: "Adhérer",
         ticketing: "Billetterie"
       },
+      mobileCta: {
+        label: "Actions rapides",
+        adherer: "Adhérer <span class=\"arr\" aria-hidden=\"true\">→</span>",
+        billetterie: "Billetterie <span class=\"arr\" aria-hidden=\"true\">→</span>"
+      },
       utility: {
         defaultPrefix: "Lieu culturel · Résidence d'artistes",
         defaultMain: "10 min à pied de la gare · parking à 100 m",
@@ -156,6 +161,11 @@ const UI_TRANSLATIONS = {
         contact: "Contact",
         adherer: "Join",
         ticketing: "Booking"
+      },
+      mobileCta: {
+        label: "Quick actions",
+        adherer: "Join <span class=\"arr\" aria-hidden=\"true\">→</span>",
+        billetterie: "Tickets <span class=\"arr\" aria-hidden=\"true\">→</span>"
       },
       utility: {
         defaultPrefix: "Cultural venue · Artist residency",

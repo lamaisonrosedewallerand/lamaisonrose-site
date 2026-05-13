@@ -116,7 +116,8 @@ let utilityRotationTimer;
 let utilityTransitionTimer;
 let visitGalleryTimer;
 let homeArtistSliderTimer;
-let revealFallbackTimer;
+let revealLoadFallbackBound = false;
+let revealAbsoluteFallbackTimer;
 
 function expireCookie(name, domain = "") {
   const domainSegment = domain ? ` domain=${domain};` : "";
@@ -515,6 +516,139 @@ function ensureMobileMenuUtility(activeKey = document.body?.dataset.page || "hom
   syncNavContext(activeKey, utility);
 }
 
+function ensureMobileCtaBar() {
+  let bar = document.getElementById("mobile-cta-bar");
+
+  if (bar) {
+    return bar;
+  }
+
+  const footer = document.querySelector("#site-foot") || document.querySelector("footer");
+
+  if (!footer) {
+    return null;
+  }
+
+  bar = document.createElement("aside");
+  bar.className = "mobile-cta-bar";
+  bar.id = "mobile-cta-bar";
+  bar.setAttribute("aria-label", t("common.mobileCta.label", "Actions rapides"));
+  bar.innerHTML = `
+    <a href="adherer.html"
+       class="mobile-cta mobile-cta--primary"
+       data-cta-key="adherer"
+       data-i18n-html-key="common.mobileCta.adherer">
+      Adhérer <span class="arr" aria-hidden="true">→</span>
+    </a>
+    <a href="stages.html#stages-grid"
+       class="mobile-cta mobile-cta--secondary"
+       data-cta-key="ticketing"
+       data-i18n-html-key="common.mobileCta.billetterie">
+      Billetterie <span class="arr" aria-hidden="true">→</span>
+    </a>
+  `;
+
+  footer.insertAdjacentElement("afterend", bar);
+  return bar;
+}
+
+function setupMobileCtaBar(activeKey = document.body?.dataset.page || "home") {
+  const bar = ensureMobileCtaBar();
+
+  if (!bar) {
+    return;
+  }
+
+  bar.setAttribute("aria-label", t("common.mobileCta.label", "Actions rapides"));
+  bar.querySelectorAll(".mobile-cta").forEach((cta) => {
+    cta.hidden = false;
+    cta.style.removeProperty("flex");
+  });
+
+  const pageToHideMap = {
+    adherer: "adherer",
+    stages: "ticketing"
+  };
+  const ctaToHide = pageToHideMap[activeKey];
+
+  if (ctaToHide) {
+    const hiddenCta = bar.querySelector(`.mobile-cta[data-cta-key="${ctaToHide}"]`);
+
+    if (hiddenCta) {
+      hiddenCta.hidden = true;
+    }
+  }
+
+  const visibleCtas = [...bar.querySelectorAll(".mobile-cta:not([hidden])")];
+
+  if (!visibleCtas.length) {
+    document.body.classList.remove("has-mobile-cta");
+    bar.remove();
+    return;
+  }
+
+  if (visibleCtas.length === 1) {
+    visibleCtas[0].style.flex = "1 1 100%";
+  }
+
+  if (window.matchMedia("(min-width: 1024px)").matches) {
+    document.body.classList.remove("has-mobile-cta");
+    bar.classList.remove("is-visible");
+    return;
+  }
+
+  document.body.classList.add("has-mobile-cta");
+
+  if (bar.dataset.bound === "true") {
+    return;
+  }
+
+  bar.dataset.bound = "true";
+  let shown = false;
+  let footerInView = false;
+
+  const syncVisibility = () => {
+    if (!shown) {
+      return;
+    }
+
+    bar.classList.toggle("is-visible", !footerInView);
+  };
+
+  const show = () => {
+    if (shown) {
+      return;
+    }
+
+    shown = true;
+    window.requestAnimationFrame(syncVisibility);
+  };
+
+  const onFirstScroll = () => {
+    show();
+    window.removeEventListener("scroll", onFirstScroll);
+  };
+
+  window.addEventListener("scroll", onFirstScroll, { passive: true, once: true });
+  window.setTimeout(show, 1500);
+
+  const footer = document.querySelector("footer");
+
+  if (footer && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          footerInView = entry.isIntersecting;
+          syncVisibility();
+        });
+      },
+      { rootMargin: "0px 0px -40px 0px" }
+    );
+
+    observer.observe(footer);
+  }
+}
+
 function initLanguageSwitcher() {
   const buttons = document.querySelectorAll("[data-lang-switch]");
 
@@ -853,7 +987,18 @@ function createRevealObserver() {
     return revealObserver;
   }
 
-  if (typeof window === "undefined" || typeof window.IntersectionObserver !== "function") {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.remove("has-reveal");
+    }
+    return null;
+  }
+
+  if (typeof window.IntersectionObserver !== "function") {
     if (typeof document !== "undefined") {
       document.documentElement.classList.remove("has-reveal");
     }
@@ -880,20 +1025,53 @@ function createRevealObserver() {
   return revealObserver;
 }
 
-function scheduleRevealFallback() {
-  if (revealFallbackTimer || typeof window === "undefined") {
+function revealInViewportNow(root = document) {
+  root.querySelectorAll(".reveal:not(.in)").forEach((element) => {
+    const rect = element.getBoundingClientRect();
+
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      element.classList.add("in");
+    }
+  });
+}
+
+function forceRevealAll(root = document) {
+  root.querySelectorAll(".reveal:not(.in)").forEach((element) => {
+    element.classList.add("in");
+  });
+}
+
+function scheduleRevealFallbacks(root = document) {
+  if (typeof window === "undefined") {
     return;
   }
 
-  revealFallbackTimer = window.setTimeout(() => {
-    document.querySelectorAll(".reveal:not(.in)").forEach((element) => {
-      const rect = element.getBoundingClientRect();
+  revealInViewportNow(root);
 
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        element.classList.add("in");
-      }
-    });
-  }, 3000);
+  if (revealLoadFallbackBound) {
+    return;
+  }
+
+  revealLoadFallbackBound = true;
+
+  const onLoadPass = () => {
+    revealInViewportNow(document);
+
+    if (revealAbsoluteFallbackTimer) {
+      return;
+    }
+
+    revealAbsoluteFallbackTimer = window.setTimeout(() => {
+      forceRevealAll(document);
+    }, 5000);
+  };
+
+  if (document.readyState === "complete") {
+    onLoadPass();
+    return;
+  }
+
+  window.addEventListener("load", onLoadPass, { once: true });
 }
 
 function registerReveals(root = document) {
@@ -919,7 +1097,7 @@ function registerReveals(root = document) {
     observer.observe(element);
   });
 
-  scheduleRevealFallback();
+  scheduleRevealFallbacks(root);
 }
 
 async function fetchCollection(name) {
@@ -1316,6 +1494,41 @@ function renderStageCard(stage, index, revealClass = "") {
 
 function renderEmptyNote(message) {
   return `<div class="empty-note">${escapeHtml(message)}</div>`;
+}
+
+function renderStagesLoadFailureNote() {
+  const isEnglish = getCurrentLanguage() === "en";
+  const intro = isEnglish
+    ? "Workshops cannot be loaded right now."
+    : "Les stages ne peuvent pas être chargés pour le moment.";
+  const linkLabel = isEnglish ? "See directly on HelloAsso →" : "Voir directement sur HelloAsso →";
+
+  return `
+    <div class="empty-note">
+      ${escapeHtml(intro)}
+      <a href="${escapeAttr(DEFAULT_SITE_SETTINGS.helloasso_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(
+        linkLabel
+      )}</a>
+    </div>
+  `;
+}
+
+function renderStageCards(items, startIndex = 0) {
+  return items
+    .map((stage, index) => {
+      try {
+        return renderStageCard(
+          stage,
+          index + startIndex,
+          index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : ""
+        );
+      } catch (error) {
+        console.error(`[stages] Carte ignorée (${stage?.slug || index})`, error);
+        return "";
+      }
+    })
+    .filter(Boolean)
+    .join("");
 }
 
 function renderFeatureVisual(event, variant) {
@@ -2617,33 +2830,42 @@ async function renderStagesPage() {
 
   const archiveMount = document.getElementById("stages-archives");
   const archiveWrap = document.getElementById("stages-archives-wrap");
-  const stages = await fetchCollection("stages");
-  const upcoming = stages.filter((item) => item.status !== "passe").sort(sortByDateAscending);
-  const archived = stages.filter((item) => item.status === "passe").sort(sortByDateDescending);
+  const filters = document.querySelector(".filters");
 
-  mount.innerHTML = upcoming.length
-    ? upcoming
-        .map((stage, index) =>
-          renderStageCard(stage, index, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")
-        )
-        .join("")
-    : renderEmptyNote(t("stage.empty"));
+  try {
+    const stagesRaw = await fetchCollection("stages");
+    const stages = Array.isArray(stagesRaw) ? stagesRaw.filter((item) => item && typeof item === "object") : [];
+    const upcoming = stages.filter((item) => item.status !== "passe").sort(sortByDateAscending);
+    const archived = stages.filter((item) => item.status === "passe").sort(sortByDateDescending);
+    const upcomingMarkup = renderStageCards(upcoming, 0);
 
-  if (archiveMount && archiveWrap) {
-    if (archived.length) {
-      archiveMount.innerHTML = archived
-        .map((stage, index) =>
-          renderStageCard(stage, index + 3, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")
-        )
-        .join("");
-      archiveWrap.hidden = false;
-    } else {
+    mount.innerHTML = upcomingMarkup || renderEmptyNote(t("stage.empty"));
+
+    if (archiveMount && archiveWrap) {
+      const archivedMarkup = renderStageCards(archived, 3);
+
+      if (archivedMarkup) {
+        archiveMount.innerHTML = archivedMarkup;
+        archiveWrap.hidden = false;
+      } else {
+        archiveWrap.hidden = true;
+      }
+    }
+
+    registerReveals(document);
+    initStageFilters();
+  } catch (error) {
+    console.error("[stages] Rendu impossible:", error);
+    mount.innerHTML = renderStagesLoadFailureNote();
+
+    if (archiveWrap) {
       archiveWrap.hidden = true;
     }
-  }
 
-  registerReveals(document);
-  initStageFilters();
+    if (filters) {
+      filters.hidden = true;
+    }
+  }
 }
 
 async function renderEvenementsPage() {
@@ -2894,6 +3116,7 @@ function injectChrome(activeKey) {
   initSmoothAnchors();
   initBurger();
   initLanguageSwitcher();
+  setupMobileCtaBar(active);
   applyLanguage();
   scrollToCurrentHash();
 
@@ -2926,12 +3149,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   const siteImagesPromise = fetchSiteImages();
 
   try {
-    await Promise.all([
+    const results = await Promise.allSettled([
       renderHomeFeaturedEvent(),
       renderStagesPage(),
       renderEvenementsPage(),
       hydrateMaps()
     ]);
+
+    results.forEach((result) => {
+      if (result.status === "rejected") {
+        console.error(result.reason);
+      }
+    });
+
     applySiteImagesToDom(await siteImagesPromise);
     applyLanguage();
   } catch (error) {

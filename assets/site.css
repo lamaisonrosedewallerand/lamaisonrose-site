@@ -974,6 +974,81 @@ footer {
   margin-top: 0;
 }
 
+.mobile-cta-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(250, 246, 241, 0.96);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -8px 24px -16px rgba(26, 22, 20, 0.18);
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.mobile-cta-bar.is-visible {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+body.has-mobile-cta main {
+  padding-bottom: 88px;
+}
+
+.mobile-cta {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-cta:active {
+  transform: scale(0.97);
+}
+
+.mobile-cta--primary {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.mobile-cta--secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.mobile-cta .arr {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.mobile-cta:hover .arr,
+.mobile-cta:focus-visible .arr {
+  transform: translateX(2px);
+}
+
+.mobile-cta[hidden] {
+  display: none;
+}
+
 .foot-grid h4 {
   color: var(--cream);
   font-size: 0.75rem;
@@ -1234,6 +1309,12 @@ footer {
   .scroll-hint .line {
     animation: none !important;
   }
+
+  .mobile-cta-bar,
+  .mobile-cta,
+  .mobile-cta .arr {
+    transition: none !important;
+  }
 }
 
 @media (min-width: 640px) {
@@ -1380,6 +1461,14 @@ footer {
 }
 
 @media (min-width: 1024px) {
+  .mobile-cta-bar {
+    display: none;
+  }
+
+  body.has-mobile-cta main {
+    padding-bottom: 0;
+  }
+
   .nav-inner {
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 24px;
