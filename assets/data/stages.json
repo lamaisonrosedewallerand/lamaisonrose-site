@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-05-13T14:25:40.833Z",
+  "generatedAt": "2026-05-13T22:49:44.199Z",
   "count": 5,
   "items": [
     {
       "slug": "stage-avec-lise",
       "title": "Stage avec Lise",
+      "title_en": "Workshop with Lise",
       "date": "2026-06-24",
       "price": "20€",
       "duration": "1 journée",
@@ -12,9 +13,11 @@
       "places": 20,
       "discipline": "Gravure",
       "level": "Débutant",
+      "level_en": "Beginner",
       "image": "/assets/uploads/le-temps-dun-cafe-chez-tagliana-2026.jpg",
       "status": "ouvert",
       "featured": false,
+      "summary_en": "A one-day workshop led by Lise around the pictorial world of Auvers-sur-Oise. Details and registration will follow — contact the association to reserve.",
       "body": "Stage d'une journée animé par Lise, autour de l'univers pictural d'Auvers-sur-Oise. Détails et inscription à venir : contactez l'association pour réserver.",
       "descriptionText": "Stage d'une journée animé par Lise, autour de l'univers pictural d'Auvers sur Oise. Détails et inscription à venir : contactez l'association pour réserver.",
       "descriptionHtml": "<p>Stage d&#39;une journée animé par Lise, autour de l&#39;univers pictural d&#39;Auvers-sur-Oise. Détails et inscription à venir : contactez l&#39;association pour réserver.</p>"

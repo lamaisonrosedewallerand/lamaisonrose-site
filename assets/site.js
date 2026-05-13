@@ -209,7 +209,23 @@ function getCurrentLanguage() {
   return getPreferredLanguage();
 }
 
+function getLanguageFromUrl() {
+  try {
+    const url = new URL(window.location.href);
+    const value = url.searchParams.get("lang");
+    return SITE_SUPPORTED_LANGUAGES.has(value) ? value : "";
+  } catch (error) {
+    return "";
+  }
+}
+
 function getPreferredLanguage() {
+  const queryLanguage = getLanguageFromUrl();
+
+  if (queryLanguage) {
+    return queryLanguage;
+  }
+
   try {
     const stored = window.localStorage.getItem(SITE_LANGUAGE_STORAGE_KEY);
 

@@ -686,13 +686,21 @@ const STATIC_PAGE_COPY = {
 
 const PAGE_KEY_BY_PATH = new Map([
   ["", "index"],
+  ["index", "index"],
   ["index.html", "index"],
+  ["le-lieu", "lieu"],
   ["le-lieu.html", "lieu"],
+  ["stages", "stages"],
   ["stages.html", "stages"],
+  ["evenements", "events"],
   ["evenements.html", "events"],
+  ["association", "assoc"],
   ["association.html", "assoc"],
+  ["contact", "contact"],
   ["contact.html", "contact"],
+  ["adherer", "join"],
   ["adherer.html", "join"],
+  ["wallerand", "wallerand"],
   ["wallerand.html", "wallerand"]
 ]);
 
@@ -712,8 +720,19 @@ export function getUiTranslation(language, path, fallback = "") {
 }
 
 export function getPageKeyFromPath(pathname = "") {
-  const value = pathname.split("/").pop() || "";
-  return PAGE_KEY_BY_PATH.get(value) || "index";
+  const cleanPath = String(pathname || "")
+    .split("?")[0]
+    .split("#")[0]
+    .replace(/\/+$/, "");
+
+  if (!cleanPath || cleanPath === "/") {
+    return "index";
+  }
+
+  const value = cleanPath.split("/").pop() || "";
+  const normalizedValue = value.replace(/\.html$/i, "");
+
+  return PAGE_KEY_BY_PATH.get(value) || PAGE_KEY_BY_PATH.get(normalizedValue) || "index";
 }
 
 export function getStaticPageCopy(pageKey) {
