@@ -673,13 +673,20 @@ body[data-lang="en"] .brand-text .a {
   accent-color: var(--terre);
 }
 
+/* Fallback sans JS : le contenu reste visible. */
 .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animations seulement si le JS s'est bien lancé. */
+html.has-reveal .reveal {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.reveal.in {
+html.has-reveal .reveal.in {
   opacity: 1;
   transform: none;
 }
@@ -1153,6 +1160,13 @@ footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html.has-reveal .reveal,
+  html.has-reveal .reveal.in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
   html {
     scroll-behavior: auto;
   }

@@ -8,6 +8,10 @@ import {
   getUiTranslation
 } from "./site-translations.js";
 
+if (typeof document !== "undefined") {
+  document.documentElement.classList.add("has-reveal");
+}
+
 const DATA_URLS = {
   stages: "assets/data/stages.json",
   evenements: "assets/data/evenements.json",
@@ -112,6 +116,7 @@ let utilityRotationTimer;
 let utilityTransitionTimer;
 let visitGalleryTimer;
 let homeArtistSliderTimer;
+let revealFallbackTimer;
 
 function expireCookie(name, domain = "") {
   const domainSegment = domain ? ` domain=${domain};` : "";
@@ -764,6 +769,13 @@ function createRevealObserver() {
     return revealObserver;
   }
 
+  if (typeof window === "undefined" || typeof window.IntersectionObserver !== "function") {
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.remove("has-reveal");
+    }
+    return null;
+  }
+
   revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -784,16 +796,46 @@ function createRevealObserver() {
   return revealObserver;
 }
 
+function scheduleRevealFallback() {
+  if (revealFallbackTimer || typeof window === "undefined") {
+    return;
+  }
+
+  revealFallbackTimer = window.setTimeout(() => {
+    document.querySelectorAll(".reveal:not(.in)").forEach((element) => {
+      const rect = element.getBoundingClientRect();
+
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        element.classList.add("in");
+      }
+    });
+  }, 3000);
+}
+
 function registerReveals(root = document) {
   const observer = createRevealObserver();
+
+  if (!observer) {
+    root.querySelectorAll(".reveal").forEach((element) => element.classList.add("in"));
+    return;
+  }
 
   root.querySelectorAll(".reveal").forEach((element) => {
     if (element.classList.contains("in")) {
       return;
     }
 
+    const rect = element.getBoundingClientRect();
+
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      element.classList.add("in");
+      return;
+    }
+
     observer.observe(element);
   });
+
+  scheduleRevealFallback();
 }
 
 async function fetchCollection(name) {
