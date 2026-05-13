@@ -56,6 +56,7 @@ const UI_TRANSLATIONS = {
         supportPrimary: "Adhérer ou soutenir →",
         supportHelloasso: "Ouvrir HelloAsso →",
         supportAgenda: "Voir l'agenda →",
+        legal: "Mentions légales",
         copyright: "© 2026 La Maison Rose de Wallerand"
       }
     },
@@ -145,7 +146,9 @@ const UI_TRANSLATIONS = {
       error:
         "Le message n'a pas pu être envoyé pour le moment. Réessaie dans un instant.",
       configError:
-        "Le message n'a pas pu être envoyé. Vérifie la configuration du formulaire sur Vercel."
+        "Le message n'a pas pu être envoyé. Vérifie la configuration du formulaire sur Vercel.",
+      rgpdNote:
+        "Vos informations sont utilisées uniquement pour traiter votre demande et ne sont jamais partagées avec des tiers. <a href=\"/mentions-legales#confidentialite\">En savoir plus</a>."
     }
   },
   en: {
@@ -196,6 +199,7 @@ const UI_TRANSLATIONS = {
         supportPrimary: "Join or support →",
         supportHelloasso: "Open HelloAsso →",
         supportAgenda: "See the agenda →",
+        legal: "Legal notice",
         copyright: "© 2026 The Pink House of Wallerand"
       }
     },
@@ -285,7 +289,9 @@ const UI_TRANSLATIONS = {
       error:
         "Your message could not be sent right now. Please try again in a moment.",
       configError:
-        "Your message could not be sent. Please check the form configuration on Vercel."
+        "Your message could not be sent. Please check the form configuration on Vercel.",
+      rgpdNote:
+        "Your information is used only to process your request and is never shared with third parties. <a href=\"/mentions-legales#confidentialite\">Learn more</a>."
     }
   }
 };

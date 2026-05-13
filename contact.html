@@ -273,6 +273,9 @@
         </select>
       </div>
       <div class="field"><label for="contact-message">Votre message *</label><textarea id="contact-message" name="message" required></textarea></div>
+      <p class="form-rgpd-note" data-i18n-html-key="contact.rgpdNote" style="font-size: 0.8125rem; color: var(--grey); margin: 16px 0;">
+        Vos informations sont utilisées uniquement pour traiter votre demande et ne sont jamais partagées avec des tiers. <a href="/mentions-legales#confidentialite">En savoir plus</a>.
+      </p>
       <div class="submit">
         <button type="submit" class="btn btn-primary">Envoyer le message <span class="arr">→</span></button>
         <span class="ok" data-form-ok></span>
@@ -404,12 +407,13 @@
         <div class="links">
           <a href="index.html" data-i18n-key="common.nav.home">Accueil</a>
           <a href="contact.html" data-i18n-key="common.nav.contact">Contact</a>
+          <a href="/mentions-legales" data-i18n-key="common.footer.legal">Mentions légales</a>
         </div>
       </div>
     </div>
   </footer>
 </div>
-<script src="assets/site.bundle.js?v=20260513i"></script>
+<script src="assets/site.bundle.js?v=20260514a"></script>
 <script>
   injectChrome('contact');
   initContactForm();
