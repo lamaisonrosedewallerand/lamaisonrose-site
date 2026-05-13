@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/assets/brand-logo.png" />
 <link rel="apple-touch-icon" href="/assets/brand-logo.png" />
-<link rel="stylesheet" href="assets/site.css?v=20260513e" />
+<link rel="stylesheet" href="assets/site.css?v=20260513f" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -356,6 +356,10 @@
   .headline-actions .cta-row {
     align-self: start;
   }
+  .headline-visual-shell {
+    display: grid;
+    gap: 14px;
+  }
   .headline-sidecar {
     width: 100%;
     margin-top: 2px;
@@ -457,6 +461,21 @@
     order: 0;
     position: relative;
     aspect-ratio: 4 / 5;
+  }
+  .headline-visual-note {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    color: var(--grey);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .headline-visual-note span:last-child {
+    color: var(--terre-deep);
   }
   .hl-img {
     position: absolute;
@@ -692,6 +711,10 @@
     .headline-actions {
       gap: 18px;
     }
+    .headline-visual-note {
+      gap: 12px 20px;
+      font-size: 0.8125rem;
+    }
     .artist-slider-stage {
       min-height: 126px;
     }
@@ -825,10 +848,12 @@
     .headline-grid {
       grid-template-columns: minmax(380px, 0.94fr) minmax(0, 1fr);
       gap: 56px;
-      align-items: center;
+      align-items: start;
     }
     .headline-text {
       max-width: 42rem;
+      grid-column: 2;
+      grid-row: 1;
     }
     .headline-actions {
       grid-template-columns: 1fr;
@@ -840,9 +865,16 @@
       width: auto;
       max-width: none;
     }
+    .headline-visual-shell {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      align-self: start;
+    }
     .headline-sidecar {
       width: min(100%, 320px);
       margin-top: 0;
+      grid-column: 2;
+      grid-row: 2;
     }
     .artist-spotlight {
       width: min(100%, 320px);
@@ -1120,7 +1152,7 @@
   </footer>
 </div>
 
-<script src="assets/site.bundle.js?v=20260513e"></script>
+<script src="assets/site.bundle.js?v=20260513f"></script>
 <script>
   injectChrome('home');
 </script>

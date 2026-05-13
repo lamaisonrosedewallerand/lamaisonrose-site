@@ -194,6 +194,10 @@ function normaliseWidgetUrl(value) {
   return trimmed.includes("/widget") ? trimmed : `${trimmed.replace(/\/$/, "")}/widget`;
 }
 
+function isCompactViewport() {
+  return typeof window !== "undefined" && window.innerWidth < 480;
+}
+
 function getCurrentLanguage() {
   const docLanguage = document.documentElement.getAttribute("lang");
 
@@ -657,6 +661,21 @@ function formatLongDate(value) {
     month: "long",
     year: "numeric"
   }).format(parsed);
+}
+
+function formatCompactDate(value) {
+  const parsed = parseDate(value);
+
+  if (!parsed) {
+    return value || "";
+  }
+
+  return new Intl.DateTimeFormat(getLocaleForLanguage(getCurrentLanguage()), {
+    day: "numeric",
+    month: "short"
+  })
+    .format(parsed)
+    .replace(".", "");
 }
 
 function formatShortMonth(value) {
@@ -1404,6 +1423,12 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
     ? renderHomeArtistSlider(spotlights)
     : "";
   const audioMarkup = renderEventAudioPlayer(event);
+  const visualNote = `
+    <div class="headline-visual-note">
+      <span>${escapeHtml(localizedLocation)}</span>
+      <span>${escapeHtml(localizedEntry)}</span>
+    </div>
+  `;
 
   return `
     <div class="headline-grid">
@@ -1434,12 +1459,15 @@ function renderHomeFeaturedEventBlockWithSpotlights(event, spotlights) {
             <a href="evenements.html" class="btn btn-ghost">${escapeHtml(t("event.fullProgram"))}</a>
           </div>
         </div>
-        ${artistSliderMarkup ? `<div class="headline-sidecar">${artistSliderMarkup}</div>` : ""}
         ${audioMarkup}
       </div>
-      <div class="headline-visual reveal d2">
-        ${renderFeatureVisual(event, "home")}
+      <div class="headline-visual-shell reveal d2">
+        <div class="headline-visual">
+          ${renderFeatureVisual(event, "home")}
+        </div>
+        ${visualNote}
       </div>
+      ${artistSliderMarkup ? `<div class="headline-sidecar reveal d3">${artistSliderMarkup}</div>` : ""}
     </div>
   `;
 }
@@ -1884,9 +1912,14 @@ async function resolveUtilityAnnouncement(settings) {
   const nextEvent = upcoming[0];
 
   if (nextEvent) {
+    const compactMain = `${truncateText(
+      localizeField(nextEvent, "title", t("event.generic")),
+      isCompactViewport() ? 34 : 96
+    )} — ${isCompactViewport() ? formatCompactDate(nextEvent.date) : formatLongDate(nextEvent.date)}`;
+
     items.push({
       prefix: t("common.utility.nextEvent"),
-      main: `${localizeField(nextEvent, "title", t("event.generic"))} — ${formatLongDate(nextEvent.date)}`,
+      main: compactMain,
       href: nextEvent.helloasso_url || "evenements.html"
     });
   }
