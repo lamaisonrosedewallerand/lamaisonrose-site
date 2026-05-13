@@ -546,7 +546,19 @@ function parseDate(value) {
     return null;
   }
 
-  const parsed = new Date(`${value}T12:00:00`);
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? null : value;
+  }
+
+  const raw = String(value).trim();
+
+  if (!raw) {
+    return null;
+  }
+
+  const isDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(raw);
+  const parsed = isDateOnly ? new Date(`${raw}T12:00:00`) : new Date(raw);
+
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 

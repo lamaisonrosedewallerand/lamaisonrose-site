@@ -137,7 +137,7 @@ collections:
     fields:
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Titre (EN)", name: "title_en", widget: "string", required: false }
-      - { label: "Date", name: "date", widget: "date", hint: "Cette date sert aussi a classer automatiquement le stage dans l'agenda." }
+      - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: false, hint: "Cette date sert aussi a classer automatiquement le stage dans l'agenda." }
       - { label: "Horaire", name: "time", widget: "string", required: false }
       - { label: "Horaire (EN)", name: "time_en", widget: "string", required: false }
       - { label: "Prix", name: "price", widget: "string", required: false }
@@ -187,7 +187,7 @@ collections:
     fields:
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Titre (EN)", name: "title_en", widget: "string", required: false }
-      - { label: "Date", name: "date", widget: "date" }
+      - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: false }
       - { label: "Horaire", name: "time", widget: "string", required: false }
       - { label: "Horaire (EN)", name: "time_en", widget: "string", required: false }
       - { label: "Lieu", name: "location", widget: "string", required: false }
