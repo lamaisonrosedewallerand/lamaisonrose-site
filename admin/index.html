@@ -17,10 +17,21 @@
       }
 
       .admin-loading {
-        min-height: 100vh;
+        position: fixed;
+        inset: 0;
         display: grid;
         place-items: center;
         padding: 2rem;
+        background: rgba(247, 241, 232, 0.92);
+        backdrop-filter: blur(6px);
+        z-index: 9999;
+        transition: opacity 180ms ease, visibility 180ms ease;
+      }
+
+      .admin-loading.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
       }
 
       .admin-loading-card {
@@ -58,5 +69,63 @@
       </div>
     </div>
     <script src="https://unpkg.com/decap-cms@3.0.0/dist/decap-cms.js" crossorigin="anonymous"></script>
+    <script>
+      (function () {
+        const loadingNode = document.getElementById("admin-loading");
+
+        function hideLoading() {
+          if (!loadingNode) {
+            return;
+          }
+
+          loadingNode.classList.add("is-hidden");
+          window.setTimeout(() => loadingNode.remove(), 220);
+        }
+
+        function cmsIsReady() {
+          const root = document.getElementById("nc-root");
+          return !!(root && root.childElementCount > 0);
+        }
+
+        function maybeHideLoading() {
+          if (cmsIsReady()) {
+            hideLoading();
+            return true;
+          }
+
+          return false;
+        }
+
+        if (maybeHideLoading()) {
+          return;
+        }
+
+        const observer = new MutationObserver(() => {
+          if (maybeHideLoading()) {
+            observer.disconnect();
+          }
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+
+        window.addEventListener("load", () => {
+          window.setTimeout(maybeHideLoading, 250);
+        });
+
+        window.setTimeout(() => {
+          if (loadingNode && !cmsIsReady()) {
+            const firstParagraph = loadingNode.querySelector("p");
+
+            if (firstParagraph) {
+              firstParagraph.textContent =
+                "L'interface met un peu plus de temps a apparaitre. Si rien ne bouge, recharge la page puis connecte-toi avec GitHub.";
+            }
+          }
+        }, 5000);
+      })();
+    </script>
   </body>
 </html>
