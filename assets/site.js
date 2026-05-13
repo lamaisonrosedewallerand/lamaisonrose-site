@@ -733,6 +733,37 @@ function truncateText(value, limit = 180) {
   return singleLine.length > limit ? `${singleLine.slice(0, limit).trim()}…` : singleLine;
 }
 
+function getItemIdentity(item) {
+  if (!item || typeof item !== "object") {
+    return "";
+  }
+
+  const slug = String(item.slug || "").trim().toLowerCase();
+  const date = String(item.date || "").trim();
+  const title = normalizeText(localizeField(item, "title", item.title || ""));
+
+  return [slug || title, date].filter(Boolean).join("::");
+}
+
+function dedupeContentItems(items = []) {
+  const seen = new Set();
+
+  return items.filter((item) => {
+    const key = getItemIdentity(item);
+
+    if (!key) {
+      return true;
+    }
+
+    if (seen.has(key)) {
+      return false;
+    }
+
+    seen.add(key);
+    return true;
+  });
+}
+
 function parseDate(value) {
   if (!value) {
     return null;
@@ -955,14 +986,15 @@ async function fetchAgendaItems() {
     fetchCollection("stages")
   ]);
 
-  const stageItems = stages
+  const cleanEvents = dedupeContentItems(events);
+  const stageItems = dedupeContentItems(stages)
     .filter((stage) => String(stage.date || "").trim())
     .map((stage) => stageToAgendaItem(stage));
 
   return {
-    events,
+    events: cleanEvents,
     stages: stageItems,
-    items: [...events, ...stageItems].sort(sortByDateAscending)
+    items: dedupeContentItems([...cleanEvents, ...stageItems]).sort(sortByDateAscending)
   };
 }
 
@@ -2818,7 +2850,9 @@ async function renderStagesPage() {
 
   try {
     const stagesRaw = await fetchCollection("stages");
-    const stages = Array.isArray(stagesRaw) ? stagesRaw.filter((item) => item && typeof item === "object") : [];
+    const stages = Array.isArray(stagesRaw)
+      ? dedupeContentItems(stagesRaw.filter((item) => item && typeof item === "object"))
+      : [];
     const upcoming = stages.filter((item) => item.status !== "passe").sort(sortByDateAscending);
     const archived = stages.filter((item) => item.status === "passe").sort(sortByDateDescending);
     const upcomingMarkup = renderStageCards(upcoming, 0);
