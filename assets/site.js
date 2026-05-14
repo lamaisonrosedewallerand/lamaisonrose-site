@@ -459,12 +459,32 @@ function applyStaticPageTranslations() {
   });
 }
 
+function updateLocalizedContactLinks(root = document) {
+  const language = getCurrentLanguage();
+
+  root.querySelectorAll("[data-contact-topic-fr][data-contact-topic-en]").forEach((link) => {
+    const topic =
+      language === "en"
+        ? String(link.dataset.contactTopicEn || "").trim()
+        : String(link.dataset.contactTopicFr || "").trim();
+
+    if (!topic) {
+      return;
+    }
+
+    const anchor = String(link.dataset.contactAnchor || "").trim();
+    const hash = anchor ? `#${anchor}` : "";
+    link.setAttribute("href", `contact.html?topic=${encodeURIComponent(topic)}${hash}`);
+  });
+}
+
 function applyLanguage() {
   const language = getPreferredLanguage();
   setDocumentLanguage(language);
   updateLanguageButtons(language);
   applyGenericTranslations();
   applyStaticPageTranslations();
+  updateLocalizedContactLinks();
   updateFooterCopyright();
 }
 
@@ -2035,7 +2055,10 @@ function renderEventRow(event) {
       ? t("event.reserve")
       : t("event.contact");
   const reserveHref = isStage
-    ? event.helloasso_url || "contact.html?topic=Inscription%20stage#ctForm"
+    ? event.helloasso_url ||
+      `contact.html?topic=${encodeURIComponent(
+        getCurrentLanguage() === "en" ? "Workshop information" : "Renseignements stages"
+      )}#ctForm`
     : event.helloasso_url
       ? event.helloasso_url
       : "contact.html";

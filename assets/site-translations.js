@@ -732,7 +732,7 @@ export function getPageKeyFromPath(pathname = "") {
   const value = cleanPath.split("/").pop() || "";
   const normalizedValue = value.replace(/\.html$/i, "");
 
-  return PAGE_KEY_BY_PATH.get(value) || PAGE_KEY_BY_PATH.get(normalizedValue) || "index";
+  return PAGE_KEY_BY_PATH.get(value) || PAGE_KEY_BY_PATH.get(normalizedValue) || null;
 }
 
 export function getStaticPageCopy(pageKey) {
