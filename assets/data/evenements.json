@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-14T09:59:44.175Z",
-  "count": 42,
+  "generatedAt": "2026-05-14T10:04:46.443Z",
+  "count": 41,
   "items": [
     {
       "slug": "2022-06-03-exposition-wall-rand-art",
@@ -744,26 +744,6 @@
       "body": "Du 23 au 31 mars 2026.\n\nAteliers de 2 h gratuits, matériel fourni.\n\nInscription obligatoire au 06 15 37 56 72.",
       "descriptionText": "Du 23 au 31 mars 2026. Ateliers de 2 h gratuits, matériel fourni. Inscription obligatoire au 06 15 37 56 72.",
       "descriptionHtml": "<p>Du 23 au 31 mars 2026.</p>\n<p>Ateliers de 2 h gratuits, matériel fourni.</p>\n<p>Inscription obligatoire au 06 15 37 56 72.</p>"
-    },
-    {
-      "slug": "2026-04-04-stage-linogravure-helene-bautista",
-      "title": "Stage de linogravure avec Hélène Bautista",
-      "title_en": "Linocut workshop with Hélène Bautista",
-      "date": "2026-04-04",
-      "time": "Les 4 et 5 avril · 10 h - 17 h",
-      "time_en": "4 and 5 April · 10 am - 5 pm",
-      "location": "La Maison Rose de Wallerand, Auvers-sur-Oise",
-      "location_en": "The Pink House of Wallerand, Auvers-sur-Oise",
-      "image": "assets/uploads/stage-linogravure-avril-2026.jpg",
-      "entry": "Inscription obligatoire",
-      "entry_en": "Registration required",
-      "helloasso_url": "",
-      "status": "passe",
-      "featured": false,
-      "summary_en": "Weekend linocut workshop at the Pink House of Wallerand, with registration required.",
-      "body": "Les 4 et 5 avril 2026, de 10 h à 17 h.\n\nStage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand.\n\nInscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.",
-      "descriptionText": "Les 4 et 5 avril 2026, de 10 h à 17 h. Stage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand. Inscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.",
-      "descriptionHtml": "<p>Les 4 et 5 avril 2026, de 10 h à 17 h.</p>\n<p>Stage de linogravure animé par Hélène Bautista à la Maison Rose de Wallerand.</p>\n<p>Inscription obligatoire au h.bautista@sfr.fr ou mulrichm@hotmail.com.</p>"
     },
     {
       "slug": "2026-06-05-le-docteur-gachet-la-gravure-en-partage",
