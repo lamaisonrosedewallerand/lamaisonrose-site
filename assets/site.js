@@ -836,8 +836,14 @@ function getItemIdentity(item) {
   }
 
   const slug = String(item.slug || "").trim().toLowerCase();
-  const date = String(item.date || "").trim();
+  const date = String(item.date || item.date_start || "").trim();
   const title = normalizeText(localizeField(item, "title", item.title || ""));
+
+  // Prefer a semantic key so a stage and an event with the same title/date
+  // collapse into one agenda item even when their slugs differ.
+  if (title && date) {
+    return [date, title].join("::");
+  }
 
   return [slug || title, date].filter(Boolean).join("::");
 }
