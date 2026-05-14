@@ -4,6 +4,7 @@ import {
   SITE_SUPPORTED_LANGUAGES,
   getLocaleForLanguage,
   getPageKeyFromPath,
+  getStaticPageCopyKeyFromBody,
   getStaticPageCopy,
   getUiTranslation
 } from "./site-translations.js";
@@ -415,23 +416,37 @@ function applyNodeTranslation(node, spec, language) {
   }
 
   if (spec.text) {
-    node.textContent = spec.text[language] ?? spec.text.fr ?? "";
+    const value = spec.text[language] ?? spec.text.fr;
+
+    if (value !== undefined) {
+      node.textContent = value;
+    }
   }
 
   if (spec.html) {
-    node.innerHTML = spec.html[language] ?? spec.html.fr ?? "";
+    const value = spec.html[language] ?? spec.html.fr;
+
+    if (value !== undefined) {
+      node.innerHTML = value;
+    }
   }
 
   if (spec.attrs) {
     Object.entries(spec.attrs).forEach(([attribute, values]) => {
-      node.setAttribute(attribute, values[language] ?? values.fr ?? "");
+      const value = values[language] ?? values.fr;
+
+      if (value !== undefined) {
+        node.setAttribute(attribute, value);
+      }
     });
   }
 }
 
 function applyStaticPageTranslations() {
   const language = getCurrentLanguage();
-  const pageKey = getPageKeyFromPath(window.location.pathname);
+  const pageKey =
+    getPageKeyFromPath(window.location.pathname) ||
+    getStaticPageCopyKeyFromBody(document.body?.dataset.page || "");
   const copy = getStaticPageCopy(pageKey);
 
   if (!copy) {
@@ -2192,7 +2207,12 @@ function applySiteImagesToDom(images) {
 }
 
 function applySiteSettingsToDom(settings) {
-  setTextContent("[data-site-address-line-1]", settings.address_line_1);
+  const localizedAddressLine1 =
+    getCurrentLanguage() === "en"
+      ? "The Pink House of Wallerand"
+      : settings.address_line_1;
+
+  setTextContent("[data-site-address-line-1]", localizedAddressLine1);
   setTextContent("[data-site-address-line-2]", settings.address_line_2);
   setLinkContent(
     "[data-site-email]",
@@ -2881,7 +2901,7 @@ function groupEventsByYear(events) {
 }
 
 function renderPastEventsYear(year, events, yearIndex) {
-  const locale = getCurrentLanguage() === "en" ? "items" : "rendez-vous";
+  const locale = getCurrentLanguage() === "en" ? "events" : "rendez-vous";
   const cards = events
     .map((event, index) =>
       renderPastEventCard(event, index + yearIndex * 3, index % 3 === 1 ? "d2" : index % 3 === 2 ? "d3" : "")

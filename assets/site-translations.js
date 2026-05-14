@@ -90,6 +90,7 @@ const UI_TRANSLATIONS = {
     event: {
       featuredHome: "Événement à la une",
       featuredPage: "À la une",
+      moreDetails: "Plus d'informations",
       date: "Date",
       place: "Lieu",
       entry: "Entrée",
@@ -233,6 +234,7 @@ const UI_TRANSLATIONS = {
     event: {
       featuredHome: "Featured event",
       featuredPage: "Featured",
+      moreDetails: "More details",
       date: "Date",
       place: "Venue",
       entry: "Admission",
@@ -295,6 +297,209 @@ const UI_TRANSLATIONS = {
     }
   }
 };
+
+const LEGAL_ARTICLE_EN = String.raw`
+<header class="legal-head">
+  <p class="num-tag">— Legal information</p>
+  <h1>Legal notice <em>&amp; privacy.</em></h1>
+  <p class="legal-date">Last updated: <time datetime="2026-05-13">13 May 2026</time></p>
+</header>
+
+<nav class="toc" aria-label="Table of contents">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#editeur">Website publisher</a></li>
+    <li><a href="#publication">Publishing director</a></li>
+    <li><a href="#hebergeur">Hosting and domain name</a></li>
+    <li><a href="#conception">Design and development</a></li>
+    <li><a href="#propriete">Intellectual property</a></li>
+    <li><a href="#confidentialite">Privacy policy (GDPR)</a></li>
+    <li><a href="#cookies">Cookies and trackers</a></li>
+    <li><a href="#droit">Applicable law</a></li>
+  </ol>
+</nav>
+
+<section id="editeur">
+  <h2>1. Website publisher</h2>
+  <p>The website <strong>lamaisonrosedewallerand.com</strong> is published by:</p>
+  <ul>
+    <li><strong>La Maison Rose de Wallerand</strong></li>
+    <li>Non-profit association under French law (1901)</li>
+    <li>Registered office: 59 rue Daubigny, 95430 Auvers-sur-Oise, France</li>
+    <li>Declared at the Val-d'Oise prefecture — Official Journal publication no. 20240038, notice no. 2199 of 17 September 2024</li>
+    <li>RNA (National Register of Associations) no.: <strong>W783012366</strong></li>
+    <li>SIREN no.: <strong>924 548 712</strong></li>
+    <li>SIRET no.: <strong>924 548 712 00018</strong></li>
+    <li>APE/NAF code: <strong>9499Z</strong> — Other membership-based organisations</li>
+    <li>VAT number: <strong>FR18 924 548 712</strong></li>
+    <li>Declared activities: culture, artistic and cultural practices, promotion of art and artists</li>
+    <li>Email: <a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a></li>
+    <li>Phone: <a href="tel:+33615375672">+33 (0)6 15 37 56 72</a></li>
+  </ul>
+</section>
+
+<section id="publication">
+  <h2>2. Publishing director</h2>
+  <p>
+    In accordance with article 93-2 of French law no. 82-652 of 29 July 1982 on audiovisual communication, the publishing director is the legal representative of the association:
+  </p>
+  <p>
+    <strong>Ulrich Martin</strong>, acting as president of the association La Maison Rose de Wallerand.
+  </p>
+  <p class="small-note">
+    For any question regarding the editorial content of the website: <a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a>.
+  </p>
+</section>
+
+<section id="hebergeur">
+  <h2>3. Hosting and domain name</h2>
+  <p>The website is hosted by:</p>
+  <ul>
+    <li><strong>Vercel Inc.</strong></li>
+    <li>440 N Barranca Ave #4133, Covina, CA 91723, United States</li>
+    <li>Website: <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">vercel.com</a></li>
+  </ul>
+  <p class="small-note">
+    Technical data linked to hosting (server logs, IP addresses) is stored by Vercel according to its own privacy policy and may be stored outside the European Union. Vercel participates in the EU–US Data Privacy Framework governing personal-data transfers.
+  </p>
+
+  <h3>Domain name</h3>
+  <p>The domain name <strong>lamaisonrosedewallerand.com</strong> is registered with:</p>
+  <ul>
+    <li><strong>OVH SAS</strong></li>
+    <li>2 rue Kellermann, 59100 Roubaix, France</li>
+    <li>RCS Lille Métropole: 424 761 419</li>
+    <li>Website: <a href="https://www.ovh.com" target="_blank" rel="noopener noreferrer">ovh.com</a></li>
+  </ul>
+</section>
+
+<section id="conception">
+  <h2>4. Design and development</h2>
+  <p>The graphic design and development of the website were carried out by:</p>
+  <ul>
+    <li><strong>Premel Elowan</strong>, working under the commercial name <strong>Smooth Corp</strong></li>
+    <li>Sole trader</li>
+    <li>SIREN no.: <strong>903 252 062</strong></li>
+    <li>Email: <a href="mailto:elowan.premel@gmail.com">elowan.premel@gmail.com</a></li>
+  </ul>
+</section>
+
+<section id="propriete">
+  <h2>5. Intellectual property</h2>
+  <p>
+    All elements present on this website (texts, photographs, illustrations, logos, videos, graphics, layout, source code) are protected by copyright and by the French Intellectual Property Code. These elements remain the property of the association La Maison Rose de Wallerand or of their respective authors (artists in residence, partners, contributors).
+  </p>
+  <p>
+    Any reproduction, representation, modification, publication, adaptation or use, whether in whole or in part and by any means whatsoever, is prohibited without prior written authorisation, except where permitted by law (quotation, short educational reproduction, etc.).
+  </p>
+  <p>
+    For any request regarding reuse: <a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a>.
+  </p>
+</section>
+
+<section id="confidentialite">
+  <h2>6. Privacy policy</h2>
+
+  <h3>6.1 Data controller</h3>
+  <p>
+    The data controller for personal data collected through this website is the association <strong>La Maison Rose de Wallerand</strong>, represented by its president Ulrich Martin.
+  </p>
+  <p>
+    For any question regarding your data: <a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a>.
+  </p>
+
+  <h3>6.2 Data collected and purposes</h3>
+  <p>We collect personal data only in the following cases:</p>
+  <ul>
+    <li>
+      <strong>Contact form</strong>: name, email, phone number (optional), subject and message. This data is used exclusively to answer your request. It is never sold or transferred to third parties.
+    </li>
+    <li>
+      <strong>Membership and support for the association</strong>: memberships and donations are handled entirely by our payment partner <a href="https://www.helloasso.com" target="_blank" rel="noopener noreferrer">HelloAsso</a>. Your banking data and registration information never pass through our website. They are collected and processed by HelloAsso according to its own privacy policy, available at <a href="https://www.helloasso.com/confidentialite" target="_blank" rel="noopener noreferrer">helloasso.com/confidentialite</a>.
+    </li>
+    <li>
+      <strong>Members list</strong>: the names, first names and email addresses of members, transmitted by HelloAsso to the association, are used to inform members about the programme and to send invitations to General Assemblies.
+    </li>
+  </ul>
+
+  <h3>6.3 Legal basis for processing</h3>
+  <p>
+    Processing of data submitted through the contact form is based on your <strong>consent</strong> (article 6.1.a GDPR), expressed by voluntarily sending the form. Processing of member data is based on the <strong>performance of the membership contract</strong> (article 6.1.b GDPR).
+  </p>
+
+  <h3>6.4 Retention period</h3>
+  <ul>
+    <li><strong>Contact messages</strong>: kept for a maximum of 3 years after the last exchange.</li>
+    <li><strong>Members list</strong>: kept for the duration of the current membership and the following year.</li>
+    <li><strong>HelloAsso data</strong>: kept by HelloAsso according to its own policy.</li>
+  </ul>
+
+  <h3>6.5 Your rights</h3>
+  <p>In accordance with the General Data Protection Regulation (GDPR) and amended French Data Protection law, you have the following rights:</p>
+  <ul>
+    <li>Right of <strong>access</strong> to your personal data</li>
+    <li>Right to <strong>rectification</strong> of inaccurate information</li>
+    <li>Right to <strong>erasure</strong> (“right to be forgotten”)</li>
+    <li>Right to <strong>restriction</strong> of processing</li>
+    <li>Right to <strong>object</strong> to processing</li>
+    <li>Right to <strong>data portability</strong></li>
+    <li>Right to <strong>withdraw your consent</strong> at any time</li>
+  </ul>
+  <p>
+    To exercise these rights, contact us at <a href="mailto:contact@lamaisonrosedewallerand.com">contact@lamaisonrosedewallerand.com</a> and provide proof of identity. We will respond within one month at the latest.
+  </p>
+  <p>
+    If you believe your rights are not respected, you may lodge a complaint with the <strong>CNIL</strong>:
+    <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer">cnil.fr/fr/plaintes</a>
+    or by post at: CNIL, 3 place de Fontenoy, TSA 80715, 75334 Paris cedex 07, France.
+  </p>
+
+  <h3>6.6 Data security</h3>
+  <p>
+    We implement technical and organisational measures to protect your data: systematic HTTPS encryption (HSTS), security headers (CSP, X-Frame-Options, X-Content-Type-Options), no advertising trackers, and secure handling of contact messages.
+  </p>
+</section>
+
+<section id="cookies">
+  <h2>7. Cookies and trackers</h2>
+  <p>
+    <strong>This website does not set any advertising, analytics or social-network tracking cookies.</strong>
+    No prior consent is therefore required for standard browsing on the website.
+  </p>
+  <p>However, some third-party services we use may set cookies in specific cases:</p>
+  <ul>
+    <li>
+      <strong>Google Maps</strong> (only on the <a href="/contact">Contact</a> page): the interactive map is provided by Google. When it is displayed, Google may set technical session cookies on your device. If you prefer not to load the map, you can use the “Directions” link, which opens Google Maps in a new tab.
+    </li>
+    <li>
+      <strong>HelloAsso</strong>: if you click a “Join” or “Donate” button, you are redirected to HelloAsso's website, which then sets its own cookies. La Maison Rose de Wallerand has no access to that data.
+    </li>
+    <li>
+      <strong>Google Fonts</strong>: our typefaces are loaded from Google's servers. Google may log your browser's IP address for that request, without necessarily setting an identifying cookie.
+    </li>
+  </ul>
+  <p>
+    You can configure your browser at any time to block, delete or limit these cookies. Detailed instructions are available on the CNIL website:
+    <a href="https://www.cnil.fr/fr/cookies-et-traceurs-comment-les-maitriser" target="_blank" rel="noopener noreferrer">cnil.fr/fr/cookies-et-traceurs-comment-les-maitriser</a>.
+  </p>
+</section>
+
+<section id="droit">
+  <h2>8. Applicable law and jurisdiction</h2>
+  <p>
+    This website is governed by French law. In the event of a dispute, and after any attempt at amicable resolution has failed, only the French courts shall have jurisdiction.
+  </p>
+</section>
+
+<section>
+  <h2>Credits</h2>
+  <ul>
+    <li><strong>Photography</strong>: La Maison Rose de Wallerand and artists in residence (unless otherwise stated)</li>
+    <li><strong>Typefaces</strong>: Cormorant Garamond and Inter (Google Fonts, Open Font License)</li>
+    <li><strong>Design and development</strong>: <a href="#conception">Premel Elowan — Smooth Corp</a></li>
+  </ul>
+</section>
+`;
 
 const STATIC_PAGE_COPY = {
   index: {
@@ -362,6 +567,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".page-hero .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · Le Lieu", en: "<a href=\"index.html\">Home</a> · The House" } },
       { selector: ".page-hero h1", html: { fr: "<span class=\"line\">Un lieu historique</span><em class=\"line\">tourné vers l'avenir.</em>", en: "<span class=\"line\">A historic house</span><em class=\"line\">open to the future.</em>" } },
       { selector: ".page-hero .lede", text: { fr: "Depuis 2014, le lieu renoue avec sa vocation de foyer d'artistes : l'artiste plasticien Wallerand s'y installe et redonne vie à la Maison Rose.", en: "Since 2014, the house has renewed its vocation as an artists' home: visual artist Wallerand settled here and gave new life to the Pink House." } },
+      { selector: ".place-preview-head .left .num-tag", text: { fr: "— Premières vues", en: "— First views" } },
       { selector: ".place-preview-head .btn-primary", html: { fr: "Visiter la Maison Rose <span class=\"arr\">→</span>", en: "Visit the Pink House <span class=\"arr\">→</span>" } },
       { selector: ".history .history-text .num-tag", text: { fr: "— Histoire", en: "— History" } },
       { selector: ".history .history-text h2", html: { fr: "De l'atelier d'été de Daubigny à <em>la Maison Rose de Wallerand.</em>", en: "From Daubigny's summer studio to <em>the Pink House of Wallerand.</em>" } },
@@ -379,8 +585,10 @@ const STATIC_PAGE_COPY = {
       { selector: ".timeline .ev:nth-child(5) p", text: { fr: "Après le décès brutal de Wallerand en novembre 2021, la Maison Rose entre dans une nouvelle phase de transmission.", en: "After Wallerand's sudden death in November 2021, the Pink House enters a new phase of transmission." } },
       { selector: ".timeline .ev:nth-child(6) h4", text: { fr: "Naissance de l'association", en: "The association is founded" } },
       { selector: ".timeline .ev:nth-child(6) p", text: { fr: "L'association La Maison Rose de Wallerand est créée pour faire vivre le lieu et poursuivre le projet culturel de Wallerand.", en: "The Pink House of Wallerand association is founded to keep the house alive and continue Wallerand's cultural project." } },
+      { selector: ".timeline .ev:nth-child(7) .yr", text: { en: "Nov. 2024" } },
       { selector: ".timeline .ev:nth-child(7) h4", text: { fr: "Label Patrimoine remarquable d’Île-de-France", en: "Remarkable Heritage of Île-de-France label" } },
       { selector: ".timeline .ev:nth-child(7) p", text: { fr: "En novembre 2024, la Maison Rose obtient le label Patrimoine remarquable d’Île-de-France.", en: "In November 2024, the Pink House receives the Remarkable Heritage of Île-de-France label." } },
+      { selector: ".timeline .ev:nth-child(8) .yr", text: { en: "Today" } },
       { selector: ".timeline .ev:nth-child(8) h4", text: { fr: "Résidences, cours et agenda", en: "Residencies, courses and agenda" } },
       { selector: ".timeline .ev:nth-child(8) p", text: { fr: "La Maison Rose accueille un public large, des artistes en résidence et une programmation qui se déploie toute l'année.", en: "The Pink House welcomes a broad audience, artists in residence and a programme unfolding throughout the year." } },
       { selector: ".visit .sec-head .left .num-tag", text: { fr: "— Visiter", en: "— Visit" } },
@@ -398,7 +606,7 @@ const STATIC_PAGE_COPY = {
       { selector: ".visit-card .row:nth-child(7) .k", text: { fr: "Parking", en: "Parking" } },
       { selector: ".visit-card .row:nth-child(7) .v", text: { fr: "Gratuit à 100 m de la Maison Rose", en: "Free parking 100 m from the Pink House" } },
       { selector: ".visit-card .row:nth-child(8) .k", text: { fr: "Transports", en: "Transport" } },
-      { selector: ".visit-card .row:nth-child(8) .v", text: { fr: "Voir les accès via l'Office de Tourisme d'Auvers-sur-Oise ↗", en: "See travel details via the Auvers-sur-Oise tourist office ↗" } },
+      { selector: ".visit-card .row:nth-child(8) .v a", text: { fr: "Voir les accès via l'Office de Tourisme d'Auvers-sur-Oise ↗", en: "See travel details via the Auvers-sur-Oise tourist office ↗" } },
       { selector: ".visit-card .row:nth-child(9) .k", text: { fr: "Visite", en: "Visits" } },
       { selector: ".visit-card .row:nth-child(9) .v", text: { fr: "Selon l'agenda et sur rendez-vous", en: "According to the agenda and by appointment" } },
       { selector: ".visit-text h2", html: { fr: "Un lieu atypique, <em>plein de charme.</em>", en: "An unusual place, <em>full of character.</em>" } },
@@ -406,6 +614,9 @@ const STATIC_PAGE_COPY = {
       { selector: ".visit-text p:nth-of-type(2)", text: { fr: "Le projet s'appuie sur ce lieu patrimonial pour mieux explorer le présent, accueillir de nouveaux artistes et proposer au public une programmation vivante.", en: "The project relies on this heritage site to explore the present, welcome new artists and offer the public a lively programme." } },
       { selector: ".visit-gallery .sec-head .left .num-tag", text: { fr: "— Parcourir", en: "— Explore" } },
       { selector: ".visit-gallery .sec-head .left h2", html: { fr: "Visiter <span class=\"it\">la Maison Rose.</span>", en: "Explore <span class=\"it\">the Pink House.</span>" } },
+      { selector: ".visit-gallery-controls", attrs: { "aria-label": { fr: "Navigation visite de la Maison Rose", en: "Pink House visit gallery navigation" } } },
+      { selector: ".visit-gallery-btn--prev", attrs: { "aria-label": { fr: "Voir les photos précédentes", en: "See previous photos" } } },
+      { selector: ".visit-gallery-btn--next", attrs: { "aria-label": { fr: "Voir les photos suivantes", en: "See next photos" } } },
       { selector: ".map", attrs: { title: { fr: "Carte La Maison Rose de Wallerand", en: "Map — The Pink House of Wallerand" } } },
       { selector: ".map-note", text: { fr: "Retrouvez directement La Maison Rose de Wallerand dans Google Maps pour préparer votre venue.", en: "Find the Pink House of Wallerand directly in Google Maps and prepare your visit." } },
       { selector: "[data-map-directions]", text: { fr: "Ouvrir l'itinéraire", en: "Open directions" } }
@@ -461,7 +672,7 @@ const STATIC_PAGE_COPY = {
     nodes: [
       { selector: ".page-hero .crumbs", html: { fr: "<a href=\"index.html\">Accueil</a> · Agenda", en: "<a href=\"index.html\">Home</a> · Agenda" } },
       { selector: ".page-hero h1", html: { fr: "<span class=\"line\">Une programmation</span><em class=\"line\">tout au long de l'année.</em>", en: "<span class=\"line\">A programme</span><em class=\"line\">all year round.</em>" } },
-      { selector: ".page-hero .lede", text: { fr: "Expositions, conférences, concerts, ateliers et stages datés se retrouvent ici pour donner une lecture claire de la programmation.", en: "Exhibitions, talks, concerts, workshops and dated sessions all come together here to give a clear view of the programme." } },
+      { selector: ".page-hero .lede", text: { fr: "Pour tous : expositions, conférences, concerts, ateliers et rendez-vous publics font vivre la Maison Rose tout au long de l'année.", en: "For everyone: exhibitions, talks, concerts, workshops and public gatherings keep the Pink House alive throughout the year." } },
       { selector: "#events-featured .empty-note", text: { fr: "Chargement de l'événement à la une…", en: "Loading the featured event…" } },
       { selector: ".agenda .sec-head .left .num-tag", text: { fr: "— Agenda", en: "— Agenda" } },
       { selector: ".agenda .sec-head .left h2", html: { fr: "Tous les <span class=\"it\">rendez-vous.</span>", en: "All the <span class=\"it\">dates.</span>" } },
@@ -681,6 +892,19 @@ const STATIC_PAGE_COPY = {
       { selector: ".works .work:nth-child(5) img", attrs: { alt: { fr: "Œuvre de Wallerand, archive 4", en: "Work by Wallerand, archive 4" } } },
       { selector: ".works .work:nth-child(6) img", attrs: { alt: { fr: "L'escalier rouge, œuvre de Wallerand", en: "The red staircase, a work by Wallerand" } } }
     ]
+  },
+  legal: {
+    title: {
+      fr: "Mentions légales et politique de confidentialité — La Maison Rose de Wallerand",
+      en: "Legal notice and privacy policy — The Pink House of Wallerand"
+    },
+    description: {
+      fr: "Mentions légales, éditeur, hébergeur et politique de confidentialité du site de l'association La Maison Rose de Wallerand.",
+      en: "Legal notice, publisher details, hosting information and privacy policy for the website of La Maison Rose de Wallerand."
+    },
+    nodes: [
+      { selector: ".legal", html: { en: LEGAL_ARTICLE_EN } }
+    ]
   }
 };
 
@@ -701,7 +925,23 @@ const PAGE_KEY_BY_PATH = new Map([
   ["adherer", "join"],
   ["adherer.html", "join"],
   ["wallerand", "wallerand"],
-  ["wallerand.html", "wallerand"]
+  ["wallerand.html", "wallerand"],
+  ["mentions-legales", "legal"],
+  ["mentions-legales.html", "legal"]
+]);
+
+const PAGE_KEY_BY_BODY = new Map([
+  ["home", "index"],
+  ["index", "index"],
+  ["lieu", "lieu"],
+  ["stages", "stages"],
+  ["events", "events"],
+  ["assoc", "assoc"],
+  ["contact", "contact"],
+  ["adherer", "join"],
+  ["join", "join"],
+  ["wallerand", "wallerand"],
+  ["legal", "legal"]
 ]);
 
 function getNestedValue(object, path) {
@@ -737,6 +977,11 @@ export function getPageKeyFromPath(pathname = "") {
 
 export function getStaticPageCopy(pageKey) {
   return STATIC_PAGE_COPY[pageKey] || null;
+}
+
+export function getStaticPageCopyKeyFromBody(pageName = "") {
+  const value = String(pageName || "").trim().toLowerCase();
+  return PAGE_KEY_BY_BODY.get(value) || null;
 }
 
 export function getLocaleForLanguage(language) {

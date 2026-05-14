@@ -1,6 +1,6 @@
 ---
 title: Les Estampes Auversoises — deuxième édition
-title_en: Les Estampes Auversoises — second edition
+title_en: Auvers Prints — second edition
 date: 2026-05-29
 time: 10h - 18h en semaine · 10h - 19h les week-ends
 time_en: 10 am - 6 pm on weekdays · 10 am - 8 pm on weekends
@@ -15,8 +15,8 @@ entry_en: Free entry
 helloasso_url: ""
 status: a-venir
 featured: true
-summary_en: Second edition of Les Estampes Auversoises at the Pink House of
-  Wallerand. Opening on Friday 29 May from 6 pm.
+summary_en: Second edition of Auvers Prints at the Pink House of Wallerand.
+  Opening on Friday 29 May from 6 pm.
 ---
 Du 29 mai au 14 juin 2026.
 

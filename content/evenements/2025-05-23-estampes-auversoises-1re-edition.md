@@ -1,6 +1,6 @@
 ---
 title: "Les Estampes Auversoises — Première édition"
-title_en: "Les Estampes Auversoises — First edition"
+title_en: "Auvers Prints — First edition"
 date: "2025-05-23"
 date_end: "2025-06-08"
 time: "10h-18h en semaine · 10h-20h les week-ends"
@@ -17,6 +17,6 @@ archived: true
 milestone: true
 vernissage: "Vendredi 23 mai à 18h"
 vernissage_en: "Opening on Friday 23 May at 6 pm"
-summary_en: "Twenty printmakers of national and international renown presented their work for the first edition of Les Estampes Auversoises."
+summary_en: "Twenty printmakers of national and international renown presented their work for the first edition of Auvers Prints."
 ---
 Vingt artistes graveurs de réputation nationale et internationale présentent leurs œuvres pour la première édition des Estampes Auversoises.
